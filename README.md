@@ -43,3 +43,27 @@ Convenience: Streamlines the ordering and delivery process, making it more effic
 Security: Ensures that orders are delivered to the correct table using secure OTP confirmation.
 
 Enhanced Dining Experience: Provides a seamless and enjoyable dining experience for users within the community.
+
+## Installation
+
+### Prerequisites
+
+- Flutter SDK
+
+- Dart SDK
+
+### Clone Repository
+```HTTP 
+git clone https://github.com/YoussefElqursh/Just_Order.git
+```
+```sh
+git clone git@github.com:YoussefElqursh/Just_Order.git
+```
+### Install Dependencies
+``` in command line of an application ```
+flutter pub get
+
+### Run the App
+``` in command line of an application ```
+flutter run
+
