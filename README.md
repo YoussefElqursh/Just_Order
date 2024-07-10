@@ -66,7 +66,7 @@ flutter pub get
 flutter run
 
 ## Contributing
--Fork the repository
+- Fork the repository
 
 - Create your feature branch (git checkout -b main)
 
