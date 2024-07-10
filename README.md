@@ -67,3 +67,14 @@ flutter pub get
 ``` in command line of an application ```
 flutter run
 
+## Contributing
+
+-Fork the repository
+
+-Create your feature branch (git checkout -b main)
+
+-Commit your changes (git commit -m 'Add some updates')
+
+-Push to the branch (git push origin main)
+
+-Open a pull request
