@@ -31,7 +31,7 @@ kind: it's required and have 4 values 0,1,2,3.
 path: this is path of picture.
 */
 Widget setPhoto(
-    {required int kind, String? path, double? height, double? width}) {
+    {required kind, String? path, double? height, double? width}) {
   if (kind == 0) {
     return Image.asset(path!, height: height, width: width);
   } else if (kind == 1) {
