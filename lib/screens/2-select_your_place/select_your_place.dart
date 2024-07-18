@@ -70,7 +70,7 @@ class _SelectYourPlaceState extends State<SelectYourPlace> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(height: MediaQuery.sizeOf(context).height * 0.03),
+            SizedBox(height: MediaQuery.sizeOf(context).height * 0.01),
             const Text(
               'Scan QR Code of the table',
               style: TextStyle(
@@ -82,7 +82,7 @@ class _SelectYourPlaceState extends State<SelectYourPlace> {
               overflow: TextOverflow.ellipsis,
               maxLines: 1,
             ),
-            SizedBox(height: MediaQuery.sizeOf(context).height * 0.0326),
+            SizedBox(height: MediaQuery.sizeOf(context).height * 0.0325),
             Expanded(
               child: Stack(
                 children: [
@@ -126,7 +126,7 @@ class _SelectYourPlaceState extends State<SelectYourPlace> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 15),
                     const Text(
                       'OR',
                       style: TextStyle(
@@ -175,7 +175,6 @@ class _SelectYourPlaceState extends State<SelectYourPlace> {
                           selectedFillColor: Colors.white,
                         ),
                         animationDuration: const Duration(milliseconds: 300),
-                        enableActiveFill: true,
                         onCompleted: (value){
                           Navigator.push(
                             context,

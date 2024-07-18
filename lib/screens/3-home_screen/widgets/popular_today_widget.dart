@@ -33,73 +33,76 @@ class _PopularTodayWidgetState extends State<PopularTodayWidget> {
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Havarti',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 12,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w600,
-                ),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-              ),
-              const SizedBox(height: 5),
-              const Text(
-                'Sandwiches, Fast Food',
-                style: TextStyle(
-                  color: Color(0xFFAFAFAF),
-                  fontSize: 10,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w400,
-                ),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-              ),
-              const SizedBox(height: 5),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Icon(Icons.star, color: Colors.yellow.shade700, size: 12),
-                  const SizedBox(width: 6),
-                  const Text.rich(
-                    TextSpan(
-                      children: [
-                        TextSpan(
-                          text: '4.3',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 10,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        TextSpan(
-                          text: ' (86)',
-                          style: TextStyle(
-                            color: Color(0xFFAFAFAF),
-                            fontSize: 10,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ],
-                    ),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
+        SizedBox(
+          width: 155,
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Havarti',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 12,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w600,
                   ),
-                ],
-              ),
-            ],
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+                const SizedBox(height: 5),
+                const Text(
+                  'Sandwiches, Fast Food',
+                  style: TextStyle(
+                    color: Color(0xFFAFAFAF),
+                    fontSize: 10,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w400,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+                const SizedBox(height: 5),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(Icons.star, color: Colors.yellow.shade700, size: 12),
+                    const SizedBox(width: 6),
+                    const Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                            text: '4.3',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 10,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          TextSpan(
+                            text: ' (86)',
+                            style: TextStyle(
+                              color: Color(0xFFAFAFAF),
+                              fontSize: 10,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ],

@@ -61,60 +61,43 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               const SizedBox(width: 10),
-              const Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Delivering to',
-                    style: TextStyle(
-                      color: Color(0xFF878787),
-                      fontSize: 8,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w400,
+              const SizedBox(
+                width: 140,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Delivering to',
+                      style: TextStyle(
+                        color: Color(0xFF878787),
+                        fontSize: 8,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w400,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
                     ),
-                  ),
-                  SizedBox(height: 3),
-                  Text(
-                    'Table: 15489',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 10,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w500,
+                    SizedBox(height: 3),
+                    Text(
+                      'Table: 15489',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 10,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w500,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),
         ),
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(top: 10.0, right: 20.0),
-            child: Container(
-              width: 30,
-              height: 30,
-              alignment: Alignment.center,
-              clipBehavior: Clip.antiAlias,
-              decoration: ShapeDecoration(
-                color: const Color(0xFFF3F3F3),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(6)),
-              ),
-              child: Center(
-                child: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.shopping_cart_outlined,
-                    color: Colors.black,
-                    size: 15,
-                  ),
-                ),
-              ),
-            ),
-          ),
           Padding(
             padding: const EdgeInsets.only(right: 20.0, top: 10.0),
             child: Container(
@@ -193,6 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 25.0),
               // Popular Today
               Container(
+                width: MediaQuery.sizeOf(context).width,
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
