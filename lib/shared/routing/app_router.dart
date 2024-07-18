@@ -3,6 +3,7 @@ import 'package:just_order/screens/1-splash_screen/splash_screen.dart';
 import 'package:just_order/screens/2-select_your_place/select_your_place.dart';
 import 'package:just_order/screens/3-home_screen/home_screen.dart';
 import 'package:just_order/screens/4-restaurant_screen/restaurant_screen.dart';
+import 'package:just_order/screens/5-meal_details_screen/meal_details_screen.dart';
 
 class AppRouter {
   static Route onGenerateRoute(RouteSettings settings) {
@@ -15,6 +16,8 @@ class AppRouter {
         return HomeScreen.route();
       case 'RestaurantScreenRoute':
         return RestaurantScreen.route();
+      case 'MealDetailsScreenRoute':
+        return MealDetailsScreen.route();
       default:
         return _errorRoute();
     }
