@@ -11,7 +11,7 @@ class _HomeFilterWidgetState extends State<HomeFilterWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 96,
+      width: 100,
       height: 30,
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       clipBehavior: Clip.antiAlias,
