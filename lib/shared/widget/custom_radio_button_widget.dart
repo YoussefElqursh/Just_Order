@@ -5,18 +5,19 @@ Widget customRadioButtonWidget({
   String? extraText,
   bool hasExtraText = false,
   bool hasDivider = true,
+  required double width,
   required String label,
   required String value,
-  required String groupName,
+  String? groupName,
   required Function(String?) onChanged,
 })
 {
   return SizedBox
     (
-    width: MediaQuery.sizeOf(context).width,
+    width: width,
     child: Column(
       mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(

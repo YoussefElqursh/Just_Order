@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:just_order/shared/function/functions.dart';
 import 'package:just_order/shared/widget/custom_check_box_button_widget.dart';
 import 'package:just_order/shared/widget/custom_radio_button_widget.dart';
 
@@ -277,6 +278,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                       const SizedBox(height: 16.0),
                       customRadioButtonWidget(
                           context: context,
+                          width: MediaQuery.sizeOf(context).width,
                           hasDivider: true,
                           label: 'Medium',
                           groupName: mealSize,
@@ -289,6 +291,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                       const SizedBox(height: 10.0),
                       customRadioButtonWidget(
                           context: context,
+                          width: MediaQuery.sizeOf(context).width,
                           hasDivider: false,
                           hasExtraText: true,
                           extraText: '(+EGP 60.00)',
@@ -492,7 +495,9 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                       ),
                       const SizedBox(height: 20.0),
                       MaterialButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          navigateTo(context, 'MyCartScreenRoute');
+                        },
                         height: 42,
                         minWidth: MediaQuery.sizeOf(context).width,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),

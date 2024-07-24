@@ -101,20 +101,29 @@ class _HomeScreenState extends State<HomeScreen> {
           Padding(
             padding: const EdgeInsets.only(right: 20.0, top: 10.0),
             child: Container(
-              width: 30,
-              height: 30,
+              width: 34,
+              height: 34,
               clipBehavior: Clip.antiAlias,
               decoration: ShapeDecoration(
-                color: const Color(0xFFF3F3F3),
+                color: const Color(0xFFF4F4F4),
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(6)),
+                  borderRadius: BorderRadius.circular(8),
+                ),
               ),
               child: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                },
                 icon: const Icon(
                   Icons.notifications,
                   color: Colors.black,
-                  size: 15,
+                  size: 18,
+                ),
+                style: ButtonStyle(
+                  shape: WidgetStatePropertyAll(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
                 ),
               ),
             ),

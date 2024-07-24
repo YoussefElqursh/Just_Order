@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:just_order/screens/2-select_your_place/select_your_place.dart';
+import 'package:just_order/screens/2-select_your_place_screen/select_your_place_screen.dart';
 import 'package:just_order/shared/function/functions.dart';
 
 class SplashScreen extends StatelessWidget {
