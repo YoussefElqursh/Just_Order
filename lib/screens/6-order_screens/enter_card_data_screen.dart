@@ -88,7 +88,7 @@ class _EnterCardDataScreenState extends State<EnterCardDataScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(height: 50.0),
-                const SizedBox(
+                SizedBox(
                   width: 200,
                   height: 25,
                   child: Row(
@@ -96,9 +96,9 @@ class _EnterCardDataScreenState extends State<EnterCardDataScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      FlutterLogo(),
-                      FlutterLogo(),
-                      FlutterLogo(),
+                      setPhoto(kind: 1, path: 'assets/images/Meeza.svg', height: 20.0, width: 50.0),
+                      setPhoto(kind: 1, path: 'assets/images/Visa.svg', height: 20.0, width: 50.0),
+                      setPhoto(kind: 1, path: 'assets/images/Mastercard.svg', height: 20.0, width: 50.0),
                     ],
                   ),
                 ),

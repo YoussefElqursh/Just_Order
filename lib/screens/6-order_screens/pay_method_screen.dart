@@ -125,8 +125,8 @@ class _PayMethodScreenState extends State<PayMethodScreen> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
-                        child: const Center(
-                          child: FlutterLogo(),
+                        child: Center(
+                          child: setPhoto(kind: 1, path: 'assets/images/cash.svg', width: 20.0, height: 20.0,),
                         ),
                       ),
                       const SizedBox(width: 12.0),
@@ -190,8 +190,8 @@ class _PayMethodScreenState extends State<PayMethodScreen> {
                                 borderRadius: BorderRadius.circular(8),
                               ),
                             ),
-                            child: const Center(
-                              child: FlutterLogo(),
+                            child: Center(
+                              child: setPhoto(kind: 1, path: 'assets/images/credit.svg', width: 20.0, height: 20.0,),
                             ),
                           ),
                           const SizedBox(width: 12.0),
@@ -262,8 +262,8 @@ class _PayMethodScreenState extends State<PayMethodScreen> {
                                               borderRadius: BorderRadius.circular(8),
                                             ),
                                           ),
-                                          child: const Center(
-                                            child: FlutterLogo(),
+                                          child: Center(
+                                            child: setPhoto(kind: 1, path: 'assets/images/Visa.svg', width: 20.0, height: 20.0,),
                                           ),
                                         ),
                                         const SizedBox(width: 12.0),
@@ -325,8 +325,8 @@ class _PayMethodScreenState extends State<PayMethodScreen> {
                                               borderRadius: BorderRadius.circular(8),
                                             ),
                                           ),
-                                          child: const Center(
-                                            child: FlutterLogo(),
+                                          child:  Center(
+                                            child: setPhoto(kind: 1, path: 'assets/images/Mastercard.svg', width: 20.0, height: 20.0,),
                                           ),
                                         ),
                                         const SizedBox(width: 12.0),

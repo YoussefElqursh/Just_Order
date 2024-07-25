@@ -17,26 +17,56 @@ class _PopularTodayWidgetState extends State<PopularTodayWidget> {
       },
       child: Column(
         children: [
-          Container(
-            width: 155,
-            height: 120,
-            decoration: const ShapeDecoration(
-              image: DecorationImage(
-                image: NetworkImage("https://via.placeholder.com/155x120"),
-                fit: BoxFit.cover,
-              ),
-              shape: RoundedRectangleBorder(
-                side: BorderSide(
-                  width: 1.50,
-                  strokeAlign: BorderSide.strokeAlignCenter,
-                  color: Color(0xFFEBEBEB),
+          Stack(
+            alignment: Alignment.topRight,
+            children:[
+              Container(
+                width: 155,
+                height: 120,
+                decoration: const ShapeDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage("https://via.placeholder.com/155x120"),
+                    fit: BoxFit.cover,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(
+                      width: 1.50,
+                      strokeAlign: BorderSide.strokeAlignCenter,
+                      color: Color(0xFFEBEBEB),
+                    ),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10),
+                    ),
+                  ),
                 ),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
-                ),
               ),
-            ),
+              Padding(
+                padding: const EdgeInsets.only(top: 10.0, right: 10.0),
+                child: Container(
+                  width: 25,
+                  height: 25,
+                  clipBehavior: Clip.antiAlias,
+                  decoration: const ShapeDecoration(
+                    color: Color(0xFFF4F4F4),
+                    shape: CircleBorder(),
+                  ),
+                  child: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.favorite_border,
+                      color: Colors.black,
+                      size: 10,
+                    ),
+                    style: const ButtonStyle(
+                      shape: WidgetStatePropertyAll(
+                        CircleBorder(),
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
           ),
           SizedBox(
             width: 155,
