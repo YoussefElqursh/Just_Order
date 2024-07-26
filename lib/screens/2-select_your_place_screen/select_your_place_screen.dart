@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:just_order/screens/3-home_screen/home_screen.dart';
+import 'package:just_order/layouts/main_layout.dart';
 import 'package:just_order/shared/function/functions.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -97,7 +97,7 @@ class _SelectYourPlaceState extends State<SelectYourPlace> {
                           context,
                           MaterialPageRoute(
                             builder: (context) {
-                              return HomeScreen(
+                              return MainLayout(
                                 code: code,
                                 closeScreen: closeScreen,
                               );
@@ -180,7 +180,7 @@ class _SelectYourPlaceState extends State<SelectYourPlace> {
                             context,
                             MaterialPageRoute(
                               builder: (context) {
-                                return HomeScreen(
+                                return MainLayout(
                                   code: value,
                                   closeScreen: closeScreen,
                                 );
@@ -193,7 +193,7 @@ class _SelectYourPlaceState extends State<SelectYourPlace> {
                             context,
                             MaterialPageRoute(
                               builder: (context) {
-                                return HomeScreen(
+                                return MainLayout(
                                   code: value,
                                   closeScreen: closeScreen,
                                 );

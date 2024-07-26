@@ -7,20 +7,14 @@ import 'package:just_order/screens/3-home_screen/widgets/restaurants_widget.dart
 import 'package:just_order/shared/constant/lists.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, required this.code, required this.closeScreen});
-
-  final String code;
-  final Function() closeScreen;
+  const HomeScreen({super.key});
 
   static const String routeName = 'HomeScreenRoute';
 
   static Route route() {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
-      builder: (context) => HomeScreen(
-        code: '',
-        closeScreen: (){},
-      ),
+      builder: (context) => const HomeScreen(),
     );
   }
 
@@ -301,49 +295,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            activeIcon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search_outlined),
-            activeIcon: Icon(Icons.search),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart_outlined),
-            activeIcon: Icon(Icons.shopping_cart),
-            label: 'Cart',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
-            activeIcon: Icon(Icons.person),
-            label: 'Account',
-          ),
-        ],
-        selectedItemColor: const Color(0xFFE02C45),
-        unselectedItemColor: const Color(0xFF898888),
-        type: BottomNavigationBarType.fixed,
-
-       backgroundColor: Colors.white,
-       selectedLabelStyle: const TextStyle(
-         color: Color(0xFFE02C45),
-         fontSize: 12,
-         fontFamily: 'Inter',
-         fontWeight: FontWeight.w600,
-       ),
-       unselectedLabelStyle: const TextStyle(
-         color: Color(0xFF898888),
-         fontSize: 12,
-         fontFamily: 'Inter',
-         fontWeight: FontWeight.w600,
-       ),
-
       ),
     );
   }

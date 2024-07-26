@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:just_order/layouts/main_layout.dart';
 import 'package:just_order/screens/1-splash_screen/splash_screen.dart';
 import 'package:just_order/screens/2-select_your_place_screen/select_your_place_screen.dart';
 import 'package:just_order/screens/3-home_screen/home_screen.dart';
@@ -20,6 +21,8 @@ class AppRouter {
         return SelectYourPlace.route();
       case 'HomeScreenRoute':
         return HomeScreen.route();
+      case 'MainLayoutRoute':
+        return MainLayout.route();
       case 'RestaurantScreenRoute':
         return RestaurantScreen.route();
       case 'MealDetailsScreenRoute':
