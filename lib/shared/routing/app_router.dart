@@ -9,6 +9,7 @@ import 'package:just_order/screens/6-order_screens/my_cart_screen.dart';
 import 'package:just_order/screens/6-order_screens/pay_method_screen.dart';
 import 'package:just_order/screens/7-order_summary_screen/order_summary_screen.dart';
 import 'package:just_order/screens/8-order_confirmed_screen/order_confirmed_screen.dart';
+import 'package:just_order/screens/9-login_screen/login_screen.dart';
 
 class AppRouter {
   static Route onGenerateRoute(RouteSettings settings) {
@@ -33,6 +34,8 @@ class AppRouter {
         return OrderSummaryScreen.route();
       case 'OrderConfirmedScreenRoute':
         return OrderConfirmedScreen.route();
+      case 'LoginScreenRoute':
+        return LoginScreen.route();
       default:
         return _errorRoute();
     }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:just_order/screens/2-select_your_place_screen/select_your_place_screen.dart';
+import 'package:just_order/screens/9-login_screen/login_screen.dart';
 import 'package:just_order/shared/function/functions.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -18,7 +18,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(const Duration(seconds: 5), () {
-      navigateToWithoutBack(context, const SelectYourPlace());
+      navigateToWithoutBack(context, const LoginScreen());
     });
 
     return Scaffold(
