@@ -1,4 +1,5 @@
-import 'addition_model.dart';
+import 'package:just_order/models/meal_details_model.dart';
+
 import 'enums/item_type.dart';
 
 class Item {
@@ -9,7 +10,7 @@ class Item {
   double price;
   List<String> extras;
   bool available;
-  List<Addition> additions;
+  MealDetails? mealDetails;
 
   Item({
     required this.itemId,
@@ -19,6 +20,6 @@ class Item {
     required this.price,
     required this.extras,
     required this.available,
-    required this.additions,
+    this.mealDetails,
   });
 }

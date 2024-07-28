@@ -8,8 +8,10 @@ class User {
   String password;
   String phoneNumber;
   UserType userType;
+  bool emailVerified;
+  bool phoneNumberVerified;
   String createdAt;
-  String updatedAt;
+  String? updatedAt;
 
   User({
     required this.userId,
@@ -19,7 +21,9 @@ class User {
     required this.password,
     required this.phoneNumber,
     required this.userType,
+    required this.emailVerified,
+    required this.phoneNumberVerified,
     required this.createdAt,
-    required this.updatedAt,
+    this.updatedAt,
   });
 }

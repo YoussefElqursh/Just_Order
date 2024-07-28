@@ -4,6 +4,7 @@ class CartItem {
   int quantity;
   double price;
   String description;
+  List<String>? extras;
 
   CartItem({
     required this.cartItemId,
@@ -11,5 +12,6 @@ class CartItem {
     required this.quantity,
     required this.price,
     required this.description,
+    this.extras,
   });
 }
