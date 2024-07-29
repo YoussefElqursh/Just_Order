@@ -182,7 +182,7 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                     SizedBox(
                       width: MediaQuery.sizeOf(context).width,
                       child: ListView.separated(
-                        itemBuilder: (context, index) => const OrderComponentsWidget(),
+                        itemBuilder: (context, index) => buildOrderComponentsWidget(),
                         separatorBuilder: (context, index) => const SizedBox(height: 16.0),
                         itemCount: 3,
                         scrollDirection: Axis.vertical,

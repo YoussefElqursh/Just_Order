@@ -10,7 +10,7 @@ class Order {
   String restaurantId;
   List<CartItem> cartItems;
   String deliveryId;
-  OrederStatus status;
+  OrderStatus status;
   PaymentType paymentType;
   String invoiceId;
   String notes;

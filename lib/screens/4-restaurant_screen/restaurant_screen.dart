@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:just_order/screens/4-restaurant_screen/widget/filter_widget.dart';
+import 'package:just_order/screens/4-restaurant_screen/widgets/filter_widget.dart';
 
 class RestaurantScreen extends StatefulWidget {
   const RestaurantScreen({super.key});
@@ -336,15 +336,15 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                 SafeArea(
                   child: SizedBox(
                     height: MediaQuery.of(context).size.height,
-                    child: const TabBarView(
+                    child: TabBarView(
                       children: [
-                        FilterWidget(),
-                        FilterWidget(),
-                        FilterWidget(),
-                        FilterWidget(),
-                        FilterWidget(),
-                        FilterWidget(),
-                        FilterWidget(),
+                        buildFilterWidget(),
+                        buildFilterWidget(),
+                        buildFilterWidget(),
+                        buildFilterWidget(),
+                        buildFilterWidget(),
+                        buildFilterWidget(),
+                        buildFilterWidget(),
                       ],
                     ),
                   ),

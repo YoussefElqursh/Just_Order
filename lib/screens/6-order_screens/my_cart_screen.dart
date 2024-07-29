@@ -19,6 +19,7 @@ class MyCartScreen extends StatefulWidget {
 }
 
 class _MyCartScreenState extends State<MyCartScreen> {
+  int counter = 0 ;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -213,7 +214,20 @@ class _MyCartScreenState extends State<MyCartScreen> {
                     SizedBox(
                       width: MediaQuery.sizeOf(context).width,
                       child: ListView.separated(
-                        itemBuilder: (context, index) => const OrderCartWidget(),
+                        itemBuilder: (context, index) => buildOrderCartWidget(
+                          context: context,
+                          onPressed1: (){
+                            setState(() {
+                              counter--;
+                            });
+                          },
+                          counter: counter,
+                          onPressed2:(){
+                            setState(() {
+                              counter++;
+                            });
+                          },
+                        ),
                         separatorBuilder: (context, index) => const Padding(
                           padding: EdgeInsets.symmetric(vertical: 16.0),
                           child: Divider(height: 1, color: Color(0x4CC8C8C8),),

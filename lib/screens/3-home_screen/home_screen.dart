@@ -4,7 +4,7 @@ import 'package:just_order/screens/3-home_screen/widgets/categories_widget.dart'
 import 'package:just_order/screens/3-home_screen/widgets/filter_widget.dart';
 import 'package:just_order/screens/3-home_screen/widgets/popular_today_widget.dart';
 import 'package:just_order/screens/3-home_screen/widgets/restaurants_widget.dart';
-import 'package:just_order/shared/constant/lists.dart';
+import 'package:just_order/shared/constant/lists/lists.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -223,7 +223,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: double.infinity,
                 height: 201.0,
                 child: ListView.separated(
-                  itemBuilder: (context, index) => const PopularTodayWidget(),
+                  itemBuilder: (context, index) => buildPopularTodayWidget(context: context),
                   separatorBuilder: (context, index) => const SizedBox(width: 10.0),
                   itemCount: 5,
                   scrollDirection: Axis.horizontal,
@@ -253,7 +253,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: double.infinity,
                 height: 100.0,
                 child: ListView.separated(
-                  itemBuilder: (context, index) => const CategoriesWidget(),
+                  itemBuilder: (context, index) => buildCategoriesWidget(),
                   separatorBuilder: (context, index) => const SizedBox(width: 10.0),
                   itemCount: 5,
                   scrollDirection: Axis.horizontal,
@@ -267,7 +267,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: double.infinity,
                 height: 31.0,
                 child: ListView.separated(
-                  itemBuilder: (context, index) => const HomeFilterWidget(),
+                  itemBuilder: (context, index) => buildHomeFilterWidget(),
                   separatorBuilder: (context, index) => const SizedBox(width: 10.0),
                   itemCount: 5,
                   scrollDirection: Axis.horizontal,
@@ -280,7 +280,7 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 width: double.infinity,
                 child: ListView.separated(
-                  itemBuilder: (context, index) => const RestaurantsWidget(),
+                  itemBuilder: (context, index) => buildRestaurantsWidget(context: context),
                   separatorBuilder: (context, index) => const Padding(
                     padding: EdgeInsets.symmetric(vertical: 10.0),
                     child: Divider(height: 1, color: Colors.grey,),
