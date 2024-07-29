@@ -1,17 +1,15 @@
-import 'branch_model.dart';
+import 'package:just_order/models/item_model.dart';
 
 class Restaurant {
   String restaurantId;
   String name;
   String managerId;
-  List<Branch> branches;
+  List<Item> items;
 
   Restaurant({
     required this.restaurantId,
     required this.name,
     required this.managerId,
-    required this.branches,
+    required this.items,
   });
 }
-
-

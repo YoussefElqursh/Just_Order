@@ -1,6 +1,7 @@
 enum ItemType {
   main,
-  sub,
+  side,
   addition,
   drink,
+  meal,
 }
