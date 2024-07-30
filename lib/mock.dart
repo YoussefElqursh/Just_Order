@@ -92,93 +92,6 @@ class Mock {
       createdAt: "2020-09-01T00:00:00.000Z",
     );
 
-    mock.restaurant = Restaurant(
-      restaurantId: "1",
-      name: "elKarawan",
-      managerId: "1",
-      items: [
-        mock.item,
-        mock.item2,
-        mock.item3,
-      ],
-    );
-    mock.restaurant2 = Restaurant(
-      restaurantId: "2",
-      name: "elKedawy",
-      managerId: "2",
-      items: [
-        mock.item,
-        mock.item2,
-        mock.item3,
-      ],
-    );
-    mock.restaurant3 = Restaurant(
-      restaurantId: "3",
-      name: "amraaelsham",
-      managerId: "3",
-      items: [
-        mock.item,
-        mock.item2,
-        mock.item3,
-      ],
-    );
-
-    mock.order = Order(
-      orderId: '1',
-      userId: '1',
-      clubId: '1',
-      restaurantId: '1',
-      cartItems: [
-        mock.cartItem,
-        mock.cartItem2,
-        mock.cartItem3,
-      ],
-      deliveryId: '1',
-      status: OrderStatus.pending,
-      paymentType: PaymentType.cash,
-      invoiceId: '1',
-      notes: 'No onions',
-      orderDateTime: DateTime.now(),
-      createdAt: DateTime.now().toString(),
-    );
-    mock.order2 = Order(
-      orderId: '2',
-      userId: '2',
-      clubId: '2',
-      restaurantId: '2',
-      cartItems: [
-        mock.cartItem,
-        mock.cartItem2,
-        mock.cartItem3,
-      ],
-      deliveryId: '2',
-      status: OrderStatus.accepted,
-      paymentType: PaymentType.cash,
-      invoiceId: '2',
-      notes: 'No onions',
-      orderDateTime: DateTime.now(),
-      createdAt: DateTime.now().toString(),
-    );
-    mock.order3 = Order(
-      orderId: '3',
-      userId: '3',
-      clubId: '3',
-      restaurantId: '3',
-      cartItems: [
-        mock.cartItem,
-        mock.cartItem2,
-        mock.cartItem3,
-      ],
-      deliveryId: '3',
-      status: OrderStatus.onTheWay,
-      paymentType: PaymentType.card,
-      invoiceId: '3',
-      notes: 'No onions',
-      orderDateTime: DateTime.now(),
-      assignedDateTime: DateTime.now(),
-      createdAt: DateTime.now().toString(),
-    );
-
     mock.mealDetails = MealDetails(
       mainItems: ['Burger', 'Pizza', 'Pasta'],
       sideItems: ['Fries', 'Salad', 'Soup'],
@@ -289,23 +202,35 @@ class Mock {
       expiredAt: DateTime.now(),
     );
 
-    mock.club = Club(
-      clubId: '1',
-      name: 'Club 1',
-      location: 'Cairo',
-      restaurants: [mock.restaurant, mock.restaurant2],
+    mock.restaurant = Restaurant(
+      restaurantId: "1",
+      name: "elKarawan",
+      managerId: "1",
+      items: [
+        mock.item,
+        mock.item2,
+        mock.item3,
+      ],
     );
-    mock.club2 = Club(
-      clubId: '2',
-      name: 'Club 2',
-      location: 'Giza',
-      restaurants: [mock.restaurant, mock.restaurant3],
+    mock.restaurant2 = Restaurant(
+      restaurantId: "2",
+      name: "elKedawy",
+      managerId: "2",
+      items: [
+        mock.item,
+        mock.item2,
+        mock.item3,
+      ],
     );
-    mock.club3 = Club(
-      clubId: '3',
-      name: 'Club 3',
-      location: 'Alexandria',
-      restaurants: [mock.restaurant2, mock.restaurant3],
+    mock.restaurant3 = Restaurant(
+      restaurantId: "3",
+      name: "amraaelsham",
+      managerId: "3",
+      items: [
+        mock.item,
+        mock.item2,
+        mock.item3,
+      ],
     );
 
     mock.cartItem = CartItem(
@@ -329,6 +254,81 @@ class Mock {
       quantity: 3,
       price: 30.0,
       description: 'description',
+    );
+
+    mock.order = Order(
+      orderId: '1',
+      userId: '1',
+      clubId: '1',
+      restaurantId: '1',
+      cartItems: [
+        mock.cartItem,
+        mock.cartItem2,
+        mock.cartItem3,
+      ],
+      deliveryId: '1',
+      status: OrderStatus.pending,
+      paymentType: PaymentType.cash,
+      invoiceId: '1',
+      notes: 'No onions',
+      orderDateTime: DateTime.now(),
+      createdAt: DateTime.now().toString(),
+    );
+    mock.order2 = Order(
+      orderId: '2',
+      userId: '2',
+      clubId: '2',
+      restaurantId: '2',
+      cartItems: [
+        mock.cartItem,
+        mock.cartItem2,
+        mock.cartItem3,
+      ],
+      deliveryId: '2',
+      status: OrderStatus.accepted,
+      paymentType: PaymentType.cash,
+      invoiceId: '2',
+      notes: 'No onions',
+      orderDateTime: DateTime.now(),
+      createdAt: DateTime.now().toString(),
+    );
+    mock.order3 = Order(
+      orderId: '3',
+      userId: '3',
+      clubId: '3',
+      restaurantId: '3',
+      cartItems: [
+        mock.cartItem,
+        mock.cartItem2,
+        mock.cartItem3,
+      ],
+      deliveryId: '3',
+      status: OrderStatus.onTheWay,
+      paymentType: PaymentType.card,
+      invoiceId: '3',
+      notes: 'No onions',
+      orderDateTime: DateTime.now(),
+      assignedDateTime: DateTime.now(),
+      createdAt: DateTime.now().toString(),
+    );
+
+    mock.club = Club(
+      clubId: '1',
+      name: 'Club 1',
+      location: 'Cairo',
+      restaurants: [mock.restaurant, mock.restaurant2],
+    );
+    mock.club2 = Club(
+      clubId: '2',
+      name: 'Club 2',
+      location: 'Giza',
+      restaurants: [mock.restaurant, mock.restaurant3],
+    );
+    mock.club3 = Club(
+      clubId: '3',
+      name: 'Club 3',
+      location: 'Alexandria',
+      restaurants: [mock.restaurant2, mock.restaurant3],
     );
 
     return mock;

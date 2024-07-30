@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:just_order/screens/1-splash_screen/splash_screen.dart';
+import 'package:just_order/screens/11-profile_screen/profile_screen.dart';
 import 'package:just_order/shared/bloc_observer/bloc_observer.dart';
 import 'package:just_order/shared/routing/app_router.dart';
 
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
             ),
             onGenerateRoute: AppRouter.onGenerateRoute,
             initialRoute: SplashScreen.routeName,
+            // initialRoute: ProfileScreen.routeName,
           );
         },
     );
