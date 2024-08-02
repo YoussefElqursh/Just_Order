@@ -16,6 +16,10 @@ class Mock {
   late User user;
   late User user2;
   late User user3;
+  late User user4;
+  late User user5;
+
+  late List<User> users;
 
   late Restaurant restaurant;
   late Restaurant restaurant2;
@@ -58,7 +62,7 @@ class Mock {
       userId: "1",
       firstName: "ziad",
       lastName: "ezzat",
-      email: "ziadezzat@gmail.com",
+      email: "ziad.ezzat.kiwan@gmail.com",
       password: "123456",
       phoneNumber: "01000000000",
       userType: UserType.customer,
@@ -68,9 +72,9 @@ class Mock {
     );
     mock.user2 = User(
       userId: "2",
-      firstName: "youssif",
+      firstName: "youssef",
       lastName: "ramadan",
-      email: "yousseframadan@gmail.com",
+      email: "yousseframadan573@gmail.com",
       password: "123456",
       phoneNumber: "01000000000",
       userType: UserType.customer,
@@ -83,7 +87,7 @@ class Mock {
       userId: "3",
       firstName: "saif",
       lastName: "elden",
-      email: "saifelden@gmail.com",
+      email: "seif.shenawi191@gmail.com",
       password: "123456",
       phoneNumber: "01000000000",
       userType: UserType.customer,
@@ -91,6 +95,94 @@ class Mock {
       phoneNumberVerified: true,
       createdAt: "2020-09-01T00:00:00.000Z",
     );
+    mock.user4 = User(
+      userId: "4",
+      firstName: "mazen",
+      lastName: "",
+      email: "mazen9300@gmail.com",
+      password: "123456",
+      phoneNumber: "01000000000",
+      userType: UserType.customer,
+      emailVerified: true,
+      phoneNumberVerified: true,
+      createdAt: "2020-09-01T00:00:00.000Z",
+    );
+    mock.user5 = User(
+      userId: "5",
+      firstName: "mahmoud",
+      lastName: "ayoub",
+      email: "eng.mahmoud.ayoub@gmail.com",
+      password: "123456",
+      phoneNumber: "01000000000",
+      userType: UserType.customer,
+      emailVerified: true,
+      phoneNumberVerified: true,
+      createdAt: "2020-09-01T00:00:00.000Z",
+    );
+
+    mock.users =[
+      User(
+        userId: "1",
+        firstName: "ziad",
+        lastName: "ezzat",
+        email: "ziad.ezzat.kiwan@gmail.com",
+        password: "123456",
+        phoneNumber: "01000000000",
+        userType: UserType.customer,
+        emailVerified: true,
+        phoneNumberVerified: true,
+        createdAt: "2023-09-01T00:00:00.000Z",
+      ),
+      User(
+        userId: "2",
+        firstName: "youssef",
+        lastName: "ramadan",
+        email: "yousseframadan573@gmail.com",
+        password: "123456",
+        phoneNumber: "01000000000",
+        userType: UserType.customer,
+        emailVerified: true,
+        phoneNumberVerified: true,
+        createdAt: "2022-09-01T00:00:00.000Z",
+        updatedAt: "2023-09-01T00:00:00.000Z",
+      ),
+      User(
+        userId: "3",
+        firstName: "saif",
+        lastName: "elden",
+        email: "seif.shenawi191@gmail.com",
+        password: "123456",
+        phoneNumber: "01000000000",
+        userType: UserType.customer,
+        emailVerified: true,
+        phoneNumberVerified: true,
+        createdAt: "2020-09-01T00:00:00.000Z",
+      ),
+      User(
+        userId: "4",
+        firstName: "mazen",
+        lastName: "",
+        email: "mazen9300@gmail.com",
+        password: "123456",
+        phoneNumber: "01000000000",
+        userType: UserType.customer,
+        emailVerified: true,
+        phoneNumberVerified: true,
+        createdAt: "2020-09-01T00:00:00.000Z",
+      ),
+      User(
+        userId: "5",
+        firstName: "mahmoud",
+        lastName: "ayoub",
+        email: "eng.mahmoud.ayoub@gmail.com",
+        password: "123456",
+        phoneNumber: "01000000000",
+        userType: UserType.customer,
+        emailVerified: true,
+        phoneNumberVerified: true,
+        createdAt: "2020-09-01T00:00:00.000Z",
+      ),
+    ];
 
     mock.mealDetails = MealDetails(
       mainItems: ['Burger', 'Pizza', 'Pasta'],
