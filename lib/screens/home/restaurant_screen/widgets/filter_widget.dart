@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:just_order/screens/4-restaurant_screen/widgets/meal_widget.dart';
+import 'package:just_order/screens/home/restaurant_screen/widgets/meal_widget.dart';
 
 Widget buildFilterWidget(){
   return Padding(

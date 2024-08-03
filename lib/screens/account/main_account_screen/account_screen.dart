@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:just_order/screens/10-account_screen/widgets/account_functions_widget.dart';
+import 'package:just_order/screens/account/main_account_screen/widgets/account_functions_widget.dart';
 import 'package:just_order/shared/function/functions.dart';
 
 class AccountScreen extends StatefulWidget {

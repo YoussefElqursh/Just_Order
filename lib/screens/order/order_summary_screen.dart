@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:just_order/screens/7-order_summary_screen/widgets/order_components_widget.dart';
+import 'package:just_order/screens/order/widgets/order_components_widget.dart';
 import 'package:just_order/shared/function/functions.dart';
 
 class OrderSummaryScreen extends StatefulWidget {

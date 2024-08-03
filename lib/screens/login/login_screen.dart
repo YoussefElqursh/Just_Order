@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_order/blocs/login_cubit/login_cubit.dart';
 import 'package:just_order/blocs/login_cubit/login_state.dart';
 import 'package:just_order/repository/auth_repository/login_repository.dart';
-import 'package:just_order/screens/2-select_your_place_screen/select_your_place_screen.dart';
+import 'package:just_order/screens/QR/select_your_place_screen.dart';
 import 'package:just_order/shared/function/functions.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart' as svg;
 

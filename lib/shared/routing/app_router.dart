@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:just_order/layouts/main_layout.dart';
-import 'package:just_order/screens/1-splash_screen/splash_screen.dart';
-import 'package:just_order/screens/11-profile_screen/profile_screen.dart';
-import 'package:just_order/screens/2-select_your_place_screen/select_your_place_screen.dart';
-import 'package:just_order/screens/3-home_screen/home_screen.dart';
-import 'package:just_order/screens/4-restaurant_screen/restaurant_screen.dart';
-import 'package:just_order/screens/5-meal_details_screen/meal_details_screen.dart';
-import 'package:just_order/screens/6-order_screens/enter_card_data_screen.dart';
-import 'package:just_order/screens/6-order_screens/my_cart_screen.dart';
-import 'package:just_order/screens/6-order_screens/pay_method_screen.dart';
-import 'package:just_order/screens/7-order_summary_screen/order_summary_screen.dart';
-import 'package:just_order/screens/8-order_confirmed_screen/order_confirmed_screen.dart';
-import 'package:just_order/screens/9-login_screen/login_screen.dart';
+import 'package:just_order/screens/splash/splash_screen.dart';
+import 'package:just_order/screens/account/my_profile_screen/profile_screen.dart';
+import 'package:just_order/screens/QR/select_your_place_screen.dart';
+import 'package:just_order/screens/home/main_home_screen/home_screen.dart';
+import 'package:just_order/screens/home/restaurant_screen/restaurant_screen.dart';
+import 'package:just_order/screens/home/meal_details_screen/meal_details_screen.dart';
+import 'package:just_order/screens/payment/enter_card_data_screen.dart';
+import 'package:just_order/screens/cart/my_cart_screen.dart';
+import 'package:just_order/screens/payment/pay_method_screen.dart';
+import 'package:just_order/screens/order/order_summary_screen.dart';
+import 'package:just_order/screens/order/order_confirmed_screen.dart';
+import 'package:just_order/screens/login/login_screen.dart';
 
 class AppRouter {
   static Route onGenerateRoute(RouteSettings settings) {

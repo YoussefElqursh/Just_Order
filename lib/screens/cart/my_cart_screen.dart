@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:just_order/screens/6-order_screens/widgets/order_cart_widget.dart';
+import 'package:just_order/screens/cart/widgets/order_cart_widget.dart';
 import 'package:just_order/shared/function/functions.dart';
 
 class MyCartScreen extends StatefulWidget {
