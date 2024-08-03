@@ -12,4 +12,13 @@ class Restaurant {
     required this.managerId,
     required this.items,
   });
+
+  static fromMap(Map<String, dynamic> data) {
+    return Restaurant(
+      restaurantId: data['restaurantId'],
+      name: data['name'],
+      managerId: data['managerId'],
+      items: data['items'].map<Item>((item) => Item.fromMap(item)).toList(),
+    );
+  }
 }

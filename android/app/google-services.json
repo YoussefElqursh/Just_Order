@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1073837037972",
+    "project_id": "just-order-cbc6a",
+    "storage_bucket": "just-order-cbc6a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1073837037972:android:68733d0ac7ff243e7dd781",
+        "android_client_info": {
+          "package_name": "com.just.justorder"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVk6rBqSvlf3gYnqCqLLGq3_pBTh37SYc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
