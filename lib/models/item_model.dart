@@ -22,4 +22,19 @@ class Item {
     required this.available,
     this.mealDetails,
   });
+
+  static fromMap(item) {
+    return Item(
+      itemId: item['itemId'],
+      name: item['name'],
+      type: ItemType.values.firstWhere((e) => e.toString() == item['type']),
+      description: item['description'],
+      price: item['price'],
+      extras: item['extras'].cast<String>(),
+      available: item['available'],
+      mealDetails: item['mealDetails'] != null
+          ? MealDetails.fromMap(item['mealDetails'])
+          : null,
+    );
+  }
 }

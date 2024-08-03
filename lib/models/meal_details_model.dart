@@ -18,4 +18,17 @@ class MealDetails {
     required this.selectMultipleDrink,
     required this.selectMultipleSauce,
   });
+
+  static fromMap(item) {
+    return MealDetails(
+      mainItems: item['mainItems']?.cast<String>(),
+      sideItems: item['sideItems']?.cast<String>(),
+      drinkItems: item['drinkItems']?.cast<String>(),
+      sauceItems: item['sauceItems']?.cast<String>(),
+      selectMultipleMain: item['selectMultipleMain'],
+      selectMultipleSide: item['selectMultipleSide'],
+      selectMultipleDrink: item['selectMultipleDrink'],
+      selectMultipleSauce: item['selectMultipleSauce'],
+    );
+  }
 }
