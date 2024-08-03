@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:just_order/screens/9-login_screen/login_screen.dart';
+import 'package:just_order/screens/login/login_screen.dart';
 import 'package:just_order/shared/function/functions.dart';
 
 class SplashScreen extends StatelessWidget {

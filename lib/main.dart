@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:just_order/blocs/login_cubit/login_cubit.dart';
 import 'package:just_order/repository/auth_repository/login_repository.dart';
-import 'package:just_order/screens/1-splash_screen/splash_screen.dart';
+import 'package:just_order/screens/splash/splash_screen.dart';
 import 'package:just_order/shared/bloc_observer/bloc_observer.dart';
 import 'package:just_order/shared/routing/app_router.dart';
 
@@ -41,7 +41,6 @@ class MyApp extends StatelessWidget {
             ),
             onGenerateRoute: AppRouter.onGenerateRoute,
             initialRoute: SplashScreen.routeName,
-            // initialRoute: ProfileScreen.routeName,
           );
         },
       ),

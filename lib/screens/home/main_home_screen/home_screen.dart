@@ -1,9 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:just_order/screens/3-home_screen/widgets/categories_widget.dart';
-import 'package:just_order/screens/3-home_screen/widgets/filter_widget.dart';
-import 'package:just_order/screens/3-home_screen/widgets/popular_today_widget.dart';
-import 'package:just_order/screens/3-home_screen/widgets/restaurants_widget.dart';
+import 'package:just_order/screens/home/main_home_screen/widgets/categories_widget.dart';
+import 'package:just_order/screens/home/main_home_screen/widgets/filter_widget.dart';
+import 'package:just_order/screens/home/main_home_screen/widgets/popular_today_widget.dart';
+import 'package:just_order/screens/home/main_home_screen/widgets/restaurants_widget.dart';
 import 'package:just_order/shared/constant/lists/lists.dart';
 
 class HomeScreen extends StatefulWidget {
