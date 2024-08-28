@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget buildHomeFilterWidget(){
+Widget buildHomeFilterWidget() {
   return Container(
     width: 100,
     height: 30,
@@ -22,7 +22,11 @@ Widget buildHomeFilterWidget(){
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Icon(Icons.mobiledata_off, color: Color(0xFF898888),size: 15,),
+        Icon(
+          Icons.mobiledata_off,
+          color: Color(0xFF898888),
+          size: 15,
+        ),
         SizedBox(width: 4),
         Text(
           'Sort by',
@@ -36,9 +40,12 @@ Widget buildHomeFilterWidget(){
           maxLines: 1,
         ),
         SizedBox(width: 4),
-        Icon(Icons.keyboard_arrow_down_outlined, color: Color(0xFF898888),size: 15,),
+        Icon(
+          Icons.keyboard_arrow_down_outlined,
+          color: Color(0xFF898888),
+          size: 15,
+        ),
       ],
     ),
   );
 }
-

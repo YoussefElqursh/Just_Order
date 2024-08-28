@@ -3,7 +3,6 @@ import 'package:just_order/models/item_model.dart';
 import 'package:just_order/models/restaurant_model.dart';
 
 class UserRepository {
-
   final FirebaseFirestore _firestore;
 
   UserRepository({FirebaseFirestore? firestore})
@@ -29,7 +28,8 @@ class UserRepository {
   }
 
   Future<List<Restaurant>> getAllAccessRestaurants(String code) async {
-    final snapshot = await _firestore.collection('restaurants')
+    final snapshot = await _firestore
+        .collection('restaurants')
         .where('code', isEqualTo: code)
         .get();
     List<Restaurant> restaurants = [];

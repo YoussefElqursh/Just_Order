@@ -1,7 +1,6 @@
 import 'package:just_order/mock.dart';
 import 'package:just_order/models/user_model.dart';
 
-
 class LoginRepository {
   late Mock _mockData;
 
@@ -18,7 +17,7 @@ class LoginRepository {
     await _initializeMockData();
 
     return _mockData.users.firstWhere(
-          (user) => user.email == email && user.password == password,
+      (user) => user.email == email && user.password == password,
       orElse: () => throw Exception('Invalid email or password'),
     );
   }

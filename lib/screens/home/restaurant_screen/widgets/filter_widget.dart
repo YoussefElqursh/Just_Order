@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:just_order/screens/home/restaurant_screen/widgets/meal_widget.dart';
 
-Widget buildFilterWidget(){
+Widget buildFilterWidget() {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 20.0),
     child: Column(
@@ -26,7 +26,10 @@ Widget buildFilterWidget(){
             itemBuilder: (context, index) => buildMealWidget(context: context),
             separatorBuilder: (context, index) => const Padding(
               padding: EdgeInsets.symmetric(vertical: 10.0),
-              child: Divider(height: 1, color: Colors.grey,),
+              child: Divider(
+                height: 1,
+                color: Colors.grey,
+              ),
             ),
             itemCount: 5,
             scrollDirection: Axis.vertical,

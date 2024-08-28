@@ -3,17 +3,16 @@ import 'package:just_order/shared/function/functions.dart';
 
 Widget buildPopularTodayWidget({
   required BuildContext context,
-})
-{
+}) {
   return GestureDetector(
-    onTap: (){
+    onTap: () {
       navigateTo(context, 'RestaurantScreenRoute');
     },
     child: Column(
       children: [
         Stack(
           alignment: Alignment.topRight,
-          children:[
+          children: [
             Container(
               width: 155,
               height: 120,

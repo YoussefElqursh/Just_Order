@@ -52,7 +52,9 @@ class _LoginScreenState extends State<LoginScreen> {
               builder: (context, state) {
                 if (state is LoginLoading) {
                   return const Center(
-                    child: CircularProgressIndicator(),
+                    child: CircularProgressIndicator(
+                      color: Color(0xFFE02C45),
+                    ),
                   );
                 }
                 return SizedBox(
@@ -178,8 +180,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 child: Form(
                                   key: _formKey,
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment:
@@ -188,7 +188,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                       MaterialButton(
                                         onPressed: () {
                                           navigateToWithoutBack(
-                                              context, const SelectYourPlace());
+                                            context,
+                                            const SelectYourPlace(),
+                                          );
                                         },
                                         height: 42,
                                         minWidth:
@@ -455,9 +457,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         onPressed: () {
                                           if (_formKey.currentState!
                                               .validate()) {
-                                            context
-                                                .read<LoginCubit>()
-                                                .login(
+                                            context.read<LoginCubit>().login(
                                                   _emailController.text,
                                                   _passwordController.text,
                                                 );

@@ -24,7 +24,9 @@ class _AccountScreenState extends State<AccountScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(height: MediaQuery.sizeOf(context).width * 0.15,),
+                SizedBox(
+                  height: MediaQuery.sizeOf(context).width * 0.15,
+                ),
                 Container(
                   width: 80,
                   height: 80,
@@ -78,7 +80,9 @@ class _AccountScreenState extends State<AccountScreen> {
                     maxLines: 1,
                   ),
                 ),
-                const SizedBox(height: 12.0,),
+                const SizedBox(
+                  height: 12.0,
+                ),
                 accountFunctionWidget(
                   context: context,
                   icon: Icons.person,
@@ -115,7 +119,9 @@ class _AccountScreenState extends State<AccountScreen> {
                     maxLines: 1,
                   ),
                 ),
-                const SizedBox(height: 12.0,),
+                const SizedBox(
+                  height: 12.0,
+                ),
                 accountFunctionWidget(
                   context: context,
                   icon: Icons.history_outlined,
@@ -150,7 +156,9 @@ class _AccountScreenState extends State<AccountScreen> {
                     maxLines: 1,
                   ),
                 ),
-                const SizedBox(height: 12.0,),
+                const SizedBox(
+                  height: 12.0,
+                ),
                 accountFunctionWidget(
                   context: context,
                   icon: Icons.info_outline_rounded,

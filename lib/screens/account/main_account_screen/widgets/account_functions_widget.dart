@@ -36,7 +36,9 @@ Widget accountFunctionWidget({
             ),
           ),
         ),
-        const SizedBox(width: 12.0,),
+        const SizedBox(
+          width: 12.0,
+        ),
         Text(
           label,
           style: const TextStyle(

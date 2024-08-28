@@ -120,7 +120,7 @@ class Mock {
       createdAt: "2020-09-01T00:00:00.000Z",
     );
 
-    mock.users =[
+    mock.users = [
       User(
         userId: "1",
         firstName: "ziad",

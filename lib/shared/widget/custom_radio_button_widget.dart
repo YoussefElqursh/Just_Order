@@ -10,10 +10,8 @@ Widget customRadioButtonWidget({
   required String value,
   String? groupName,
   required Function(String?) onChanged,
-})
-{
-  return SizedBox
-    (
+}) {
+  return SizedBox(
     width: width,
     child: Column(
       mainAxisSize: MainAxisSize.min,
@@ -37,34 +35,37 @@ Widget customRadioButtonWidget({
             ),
             const Spacer(),
             SizedBox(
-              child: hasExtraText == true ? Text(
-                extraText!,
-                style: const TextStyle(
-                  color: Color(0xFFAFAFAF),
-                  fontSize: 10,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w400,
-                ),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-              ) : null,
+              child: hasExtraText == true
+                  ? Text(
+                      extraText!,
+                      style: const TextStyle(
+                        color: Color(0xFFAFAFAF),
+                        fontSize: 10,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w400,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    )
+                  : null,
             ),
             Radio(
-              value: value,
-              activeColor: const Color(0xFFE02C45),
-              groupValue: groupName,
-              onChanged: onChanged
-            ),
+                value: value,
+                activeColor: const Color(0xFFE02C45),
+                groupValue: groupName,
+                onChanged: onChanged),
           ],
         ),
         const SizedBox(height: 10.0),
         SizedBox(
           width: MediaQuery.sizeOf(context).width,
           height: 1,
-          child: hasDivider == true ?
-          const Divider(height: 1, color: Color(0x4CC8C8C8),)
-              :
-          null,
+          child: hasDivider == true
+              ? const Divider(
+                  height: 1,
+                  color: Color(0x4CC8C8C8),
+                )
+              : null,
         ),
       ],
     ),

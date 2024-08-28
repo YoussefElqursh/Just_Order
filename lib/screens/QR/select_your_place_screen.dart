@@ -175,7 +175,7 @@ class _SelectYourPlaceState extends State<SelectYourPlace> {
                           selectedFillColor: Colors.white,
                         ),
                         animationDuration: const Duration(milliseconds: 300),
-                        onCompleted: (value){
+                        onCompleted: (value) {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -188,7 +188,7 @@ class _SelectYourPlaceState extends State<SelectYourPlace> {
                             ),
                           );
                         },
-                        onSubmitted: (value){
+                        onSubmitted: (value) {
                           Navigator.push(
                             context,
                             MaterialPageRoute(

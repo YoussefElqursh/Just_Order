@@ -30,8 +30,7 @@ kind: it's required and have 4 values 0,1,2,3.
 3: SvgPicture => from network svg.
 path: this is path of picture.
 */
-Widget setPhoto(
-    {required kind, String? path, double? height, double? width}) {
+Widget setPhoto({required kind, String? path, double? height, double? width}) {
   if (kind == 0) {
     return Image.asset(path!, height: height, width: width);
   } else if (kind == 1) {

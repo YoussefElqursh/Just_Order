@@ -3,7 +3,6 @@ import 'package:just_order/screens/login/login_screen.dart';
 import 'package:just_order/shared/function/functions.dart';
 
 class SplashScreen extends StatelessWidget {
-
   const SplashScreen({super.key});
 
   static const String routeName = 'SplashScreenRoute';

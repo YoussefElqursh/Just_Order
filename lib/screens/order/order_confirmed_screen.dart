@@ -113,7 +113,7 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                       ),
-                      const SizedBox(height:32.0),
+                      const SizedBox(height: 32.0),
                       const Row(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -288,7 +288,8 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
             ),
             const Spacer(),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 20.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
               child: MaterialButton(
                 onPressed: () {
                   navigateTo(context, 'HomeScreenRoute');
@@ -300,8 +301,7 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                 ),
                 color: const Color(0xFFE02C45),
                 child: const Center(
-                  child: Text(
-                      'Track Order',
+                  child: Text('Track Order',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 14,
@@ -309,8 +309,7 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                         fontWeight: FontWeight.w600,
                       ),
                       overflow: TextOverflow.ellipsis,
-                      maxLines: 1
-                  ),
+                      maxLines: 1),
                 ),
               ),
             ),

@@ -16,7 +16,7 @@ class MainLayout extends StatefulWidget {
       settings: const RouteSettings(name: routeName),
       builder: (context) => MainLayout(
         code: '',
-        closeScreen: (){},
+        closeScreen: () {},
       ),
     );
   }
@@ -26,8 +26,7 @@ class MainLayout extends StatefulWidget {
 }
 
 class _MainLayoutState extends State<MainLayout> {
-
-  int currentPage = 0 ;
+  int currentPage = 0;
 
   final screens = [
     const HomeScreen(),
@@ -45,9 +44,9 @@ class _MainLayoutState extends State<MainLayout> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentPage,
         elevation: 0.0,
-        onTap: (value){
+        onTap: (value) {
           setState(() {
-            currentPage = value ;
+            currentPage = value;
           });
         },
         items: const [
@@ -75,7 +74,6 @@ class _MainLayoutState extends State<MainLayout> {
         selectedItemColor: const Color(0xFFE02C45),
         unselectedItemColor: const Color(0xFF898888),
         type: BottomNavigationBarType.fixed,
-
         backgroundColor: Colors.white,
         selectedLabelStyle: const TextStyle(
           color: Color(0xFFE02C45),
@@ -89,7 +87,6 @@ class _MainLayoutState extends State<MainLayout> {
           fontFamily: 'Inter',
           fontWeight: FontWeight.w600,
         ),
-
       ),
     );
   }

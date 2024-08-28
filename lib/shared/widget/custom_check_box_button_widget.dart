@@ -8,10 +8,8 @@ Widget customCheckBoxButtonWidget({
   required String label,
   required bool value,
   required Function(bool?) onChanged,
-})
-{
-  return SizedBox
-    (
+}) {
+  return SizedBox(
     width: MediaQuery.sizeOf(context).width,
     child: Column(
       mainAxisSize: MainAxisSize.min,
@@ -35,17 +33,19 @@ Widget customCheckBoxButtonWidget({
             ),
             const Spacer(),
             SizedBox(
-              child: hasExtraText == true ? Text(
-                extraText!,
-                style: const TextStyle(
-                  color: Color(0xFFAFAFAF),
-                  fontSize: 10,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w400,
-                ),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-              ) : null,
+              child: hasExtraText == true
+                  ? Text(
+                      extraText!,
+                      style: const TextStyle(
+                        color: Color(0xFFAFAFAF),
+                        fontSize: 10,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w400,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    )
+                  : null,
             ),
             Checkbox(
               value: value,
@@ -60,10 +60,12 @@ Widget customCheckBoxButtonWidget({
         SizedBox(
           width: MediaQuery.sizeOf(context).width,
           height: 1,
-          child: hasDivider == true ?
-          const Divider(height: 1, color: Color(0x4CC8C8C8),)
-              :
-          null,
+          child: hasDivider == true
+              ? const Divider(
+                  height: 1,
+                  color: Color(0x4CC8C8C8),
+                )
+              : null,
         ),
       ],
     ),

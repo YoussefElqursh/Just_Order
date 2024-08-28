@@ -47,16 +47,26 @@ class Order {
       userId: data['userId'],
       clubId: data['clubId'],
       restaurantId: data['restaurantId'],
-      cartItems: data['cartItems'].map<CartItem>((item) => CartItem.fromMap(item)).toList(),
+      cartItems: data['cartItems']
+          .map<CartItem>((item) => CartItem.fromMap(item))
+          .toList(),
       deliveryId: data['deliveryId'],
-      status: OrderStatus.values.firstWhere((e) => e.toString() == data['status']),
-      paymentType: PaymentType.values.firstWhere((e) => e.toString() == data['paymentType']),
+      status:
+          OrderStatus.values.firstWhere((e) => e.toString() == data['status']),
+      paymentType: PaymentType.values
+          .firstWhere((e) => e.toString() == data['paymentType']),
       invoiceId: data['invoiceId'],
       notes: data['notes'],
       orderDateTime: data['orderDateTime'].toDate(),
-      assignedDateTime: data['assignedDateTime'] != null ? data['assignedDateTime'].toDate() : null,
-      deliveredDateTime: data['deliveredDateTime'] != null ? data['deliveredDateTime'].toDate() : null,
-      finalisedDateTime: data['finalisedDateTime'] != null ? data['finalisedDateTime'].toDate() : null,
+      assignedDateTime: data['assignedDateTime'] != null
+          ? data['assignedDateTime'].toDate()
+          : null,
+      deliveredDateTime: data['deliveredDateTime'] != null
+          ? data['deliveredDateTime'].toDate()
+          : null,
+      finalisedDateTime: data['finalisedDateTime'] != null
+          ? data['finalisedDateTime'].toDate()
+          : null,
       createdAt: data['createdAt'],
       updatedAt: data['updatedAt'],
     );
@@ -82,7 +92,7 @@ class Order {
       'updatedAt': updatedAt,
     };
   }
-  
+
   String generateOrderId() {
     return FirebaseFirestore.instance.collection('orders').doc().id;
   }

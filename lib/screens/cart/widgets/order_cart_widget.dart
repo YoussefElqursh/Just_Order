@@ -5,8 +5,7 @@ Widget buildOrderCartWidget({
   required void Function()? onPressed1,
   required void Function()? onPressed2,
   required int counter,
-})
-{
+}) {
   return Row(
     mainAxisSize: MainAxisSize.min,
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,7 +32,7 @@ Widget buildOrderCartWidget({
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12.0),
         child: SizedBox(
-          width: MediaQuery.sizeOf(context).width-134,
+          width: MediaQuery.sizeOf(context).width - 134,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -84,7 +83,8 @@ Widget buildOrderCartWidget({
                     clipBehavior: Clip.antiAlias,
                     decoration: ShapeDecoration(
                       color: const Color(0x0CE02C45),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
                     ),
                     child: IconButton(
                       onPressed: onPressed1,
@@ -102,9 +102,8 @@ Widget buildOrderCartWidget({
                       ),
                     ),
                   ),
-                  const SizedBox(width:10.0),
-                  Text(
-                      '$counter',
+                  const SizedBox(width: 10.0),
+                  Text('$counter',
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 12,
@@ -112,16 +111,16 @@ Widget buildOrderCartWidget({
                         fontWeight: FontWeight.w500,
                       ),
                       overflow: TextOverflow.ellipsis,
-                      maxLines: 1
-                  ),
-                  const SizedBox(width:10.0),
+                      maxLines: 1),
+                  const SizedBox(width: 10.0),
                   Container(
                     width: 34,
                     height: 34,
                     clipBehavior: Clip.antiAlias,
                     decoration: ShapeDecoration(
                       color: const Color(0x0CE02C45),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
                     ),
                     child: IconButton(
                       onPressed: onPressed2,

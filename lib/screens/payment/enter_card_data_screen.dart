@@ -78,7 +78,7 @@ class _EnterCardDataScreenState extends State<EnterCardDataScreen> {
         physics: const BouncingScrollPhysics(),
         child: SizedBox(
           width: MediaQuery.sizeOf(context).width,
-          height: MediaQuery.sizeOf(context).height-100,
+          height: MediaQuery.sizeOf(context).height - 100,
           child: Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 20.0,
@@ -96,9 +96,21 @@ class _EnterCardDataScreenState extends State<EnterCardDataScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      setPhoto(kind: 1, path: 'assets/images/Meeza.svg', height: 20.0, width: 50.0),
-                      setPhoto(kind: 1, path: 'assets/images/Visa.svg', height: 20.0, width: 50.0),
-                      setPhoto(kind: 1, path: 'assets/images/Mastercard.svg', height: 20.0, width: 50.0),
+                      setPhoto(
+                          kind: 1,
+                          path: 'assets/images/Meeza.svg',
+                          height: 20.0,
+                          width: 50.0),
+                      setPhoto(
+                          kind: 1,
+                          path: 'assets/images/Visa.svg',
+                          height: 20.0,
+                          width: 50.0),
+                      setPhoto(
+                          kind: 1,
+                          path: 'assets/images/Mastercard.svg',
+                          height: 20.0,
+                          width: 50.0),
                     ],
                   ),
                 ),
@@ -144,16 +156,14 @@ class _EnterCardDataScreenState extends State<EnterCardDataScreen> {
                           borderRadius: BorderRadius.circular(6),
                           borderSide: const BorderSide(
                               color: Color(0x4CAFAFAF),
-                              strokeAlign:
-                              BorderSide.strokeAlignCenter,
+                              strokeAlign: BorderSide.strokeAlignCenter,
                               width: 1.5),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(6),
                           borderSide: const BorderSide(
                               color: Color(0x4CAFAFAF),
-                              strokeAlign:
-                              BorderSide.strokeAlignCenter,
+                              strokeAlign: BorderSide.strokeAlignCenter,
                               width: 1.5),
                         ),
                       ),
@@ -202,16 +212,14 @@ class _EnterCardDataScreenState extends State<EnterCardDataScreen> {
                           borderRadius: BorderRadius.circular(6),
                           borderSide: const BorderSide(
                               color: Color(0x4CAFAFAF),
-                              strokeAlign:
-                              BorderSide.strokeAlignCenter,
+                              strokeAlign: BorderSide.strokeAlignCenter,
                               width: 1.5),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(6),
                           borderSide: const BorderSide(
                               color: Color(0x4CAFAFAF),
-                              strokeAlign:
-                              BorderSide.strokeAlignCenter,
+                              strokeAlign: BorderSide.strokeAlignCenter,
                               width: 1.5),
                         ),
                       ),
@@ -220,7 +228,7 @@ class _EnterCardDataScreenState extends State<EnterCardDataScreen> {
                 ),
                 const SizedBox(height: 20.0),
                 SizedBox(
-                  width: MediaQuery.sizeOf(context).width-40,
+                  width: MediaQuery.sizeOf(context).width - 40,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
@@ -250,7 +258,11 @@ class _EnterCardDataScreenState extends State<EnterCardDataScreen> {
                             keyboardType: TextInputType.datetime,
                             cursorColor: Colors.black,
                             decoration: InputDecoration(
-                              suffixIcon: const Icon(Icons.calendar_month_outlined, color: Color(0xFFAFAFAF), size: 15,),
+                              suffixIcon: const Icon(
+                                Icons.calendar_month_outlined,
+                                color: Color(0xFFAFAFAF),
+                                size: 15,
+                              ),
                               constraints: const BoxConstraints(
                                 maxWidth: 150,
                                 maxHeight: 42,
@@ -266,16 +278,14 @@ class _EnterCardDataScreenState extends State<EnterCardDataScreen> {
                                 borderRadius: BorderRadius.circular(6),
                                 borderSide: const BorderSide(
                                     color: Color(0x4CAFAFAF),
-                                    strokeAlign:
-                                    BorderSide.strokeAlignCenter,
+                                    strokeAlign: BorderSide.strokeAlignCenter,
                                     width: 1.5),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(6),
                                 borderSide: const BorderSide(
                                     color: Color(0x4CAFAFAF),
-                                    strokeAlign:
-                                    BorderSide.strokeAlignCenter,
+                                    strokeAlign: BorderSide.strokeAlignCenter,
                                     width: 1.5),
                               ),
                             ),
@@ -313,7 +323,11 @@ class _EnterCardDataScreenState extends State<EnterCardDataScreen> {
                                 maxWidth: 150,
                                 maxHeight: 42,
                               ),
-                              suffixIcon: const Icon(Icons.info_outline_rounded, color: Color(0xFFAFAFAF), size: 16,),
+                              suffixIcon: const Icon(
+                                Icons.info_outline_rounded,
+                                color: Color(0xFFAFAFAF),
+                                size: 16,
+                              ),
                               hintText: '123',
                               hintStyle: const TextStyle(
                                 color: Color(0xFFCCCCCC),
@@ -325,16 +339,14 @@ class _EnterCardDataScreenState extends State<EnterCardDataScreen> {
                                 borderRadius: BorderRadius.circular(6),
                                 borderSide: const BorderSide(
                                     color: Color(0x4CAFAFAF),
-                                    strokeAlign:
-                                    BorderSide.strokeAlignCenter,
+                                    strokeAlign: BorderSide.strokeAlignCenter,
                                     width: 1.5),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(6),
                                 borderSide: const BorderSide(
                                     color: Color(0x4CAFAFAF),
-                                    strokeAlign:
-                                    BorderSide.strokeAlignCenter,
+                                    strokeAlign: BorderSide.strokeAlignCenter,
                                     width: 1.5),
                               ),
                             ),
@@ -352,9 +364,10 @@ class _EnterCardDataScreenState extends State<EnterCardDataScreen> {
                       value: isChecked,
                       activeColor: const Color(0xFFE02C45),
                       checkColor: Colors.white,
-                      side: const BorderSide(color: Color(0xFFAFAFAF), width: 1),
-                      onChanged: (value){
-                        setState((){
+                      side:
+                          const BorderSide(color: Color(0xFFAFAFAF), width: 1),
+                      onChanged: (value) {
+                        setState(() {
                           isChecked = !isChecked;
                         });
                       },
@@ -384,8 +397,7 @@ class _EnterCardDataScreenState extends State<EnterCardDataScreen> {
                   ),
                   color: const Color(0xFFE02C45),
                   child: const Center(
-                    child: Text(
-                        'Continue',
+                    child: Text('Continue',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 14,
@@ -393,8 +405,7 @@ class _EnterCardDataScreenState extends State<EnterCardDataScreen> {
                           fontWeight: FontWeight.w600,
                         ),
                         overflow: TextOverflow.ellipsis,
-                        maxLines: 1
-                    ),
+                        maxLines: 1),
                   ),
                 ),
               ],

@@ -53,8 +53,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 maxLines: 1,
               ),
               leading: Padding(
-                padding: const EdgeInsets.only(
-                    left: 20.0, top: 10.0, bottom: 10.0),
+                padding:
+                    const EdgeInsets.only(left: 20.0, top: 10.0, bottom: 10.0),
                 child: Container(
                   width: 34,
                   height: 34,

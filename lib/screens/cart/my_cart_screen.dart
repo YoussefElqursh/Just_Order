@@ -19,7 +19,7 @@ class MyCartScreen extends StatefulWidget {
 }
 
 class _MyCartScreenState extends State<MyCartScreen> {
-  int counter = 0 ;
+  int counter = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +44,8 @@ class _MyCartScreenState extends State<MyCartScreen> {
             clipBehavior: Clip.antiAlias,
             decoration: ShapeDecoration(
               color: const Color(0xFFF4F4F4),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8)),
             ),
             child: IconButton(
               onPressed: () {
@@ -95,7 +96,8 @@ class _MyCartScreenState extends State<MyCartScreen> {
                             height: 50,
                             decoration: ShapeDecoration(
                               image: const DecorationImage(
-                                image: NetworkImage("https://via.placeholder.com/50x50"),
+                                image: NetworkImage(
+                                    "https://via.placeholder.com/50x50"),
                                 fit: BoxFit.fill,
                               ),
                               shape: RoundedRectangleBorder(
@@ -109,7 +111,8 @@ class _MyCartScreenState extends State<MyCartScreen> {
                             ),
                           ),
                           const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 10.0),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 12.0, vertical: 10.0),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -144,7 +147,10 @@ class _MyCartScreenState extends State<MyCartScreen> {
                       ),
                     ),
                     const SizedBox(height: 12.0),
-                    const Divider( height: 1, color: Color(0x4CC8C8C8),),
+                    const Divider(
+                      height: 1,
+                      color: Color(0x4CC8C8C8),
+                    ),
                     const SizedBox(height: 25.0),
                     SizedBox(
                       width: MediaQuery.sizeOf(context).width,
@@ -190,7 +196,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                           ),
                           const Spacer(),
                           TextButton(
-                            onPressed: (){},
+                            onPressed: () {},
                             style: ButtonStyle(
                               shape: WidgetStatePropertyAll(
                                 RoundedRectangleBorder(
@@ -216,13 +222,13 @@ class _MyCartScreenState extends State<MyCartScreen> {
                       child: ListView.separated(
                         itemBuilder: (context, index) => buildOrderCartWidget(
                           context: context,
-                          onPressed1: (){
+                          onPressed1: () {
                             setState(() {
                               counter--;
                             });
                           },
                           counter: counter,
-                          onPressed2:(){
+                          onPressed2: () {
                             setState(() {
                               counter++;
                             });
@@ -230,7 +236,10 @@ class _MyCartScreenState extends State<MyCartScreen> {
                         ),
                         separatorBuilder: (context, index) => const Padding(
                           padding: EdgeInsets.symmetric(vertical: 16.0),
-                          child: Divider(height: 1, color: Color(0x4CC8C8C8),),
+                          child: Divider(
+                            height: 1,
+                            color: Color(0x4CC8C8C8),
+                          ),
                         ),
                         itemCount: 3,
                         scrollDirection: Axis.vertical,
@@ -243,7 +252,11 @@ class _MyCartScreenState extends State<MyCartScreen> {
               ),
               const Padding(
                 padding: EdgeInsets.symmetric(vertical: 25.0),
-                child: Divider( height: 8, color: Color(0xFFF4F4F4),thickness: 8,),
+                child: Divider(
+                  height: 8,
+                  color: Color(0xFFF4F4F4),
+                  thickness: 8,
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -359,7 +372,10 @@ class _MyCartScreenState extends State<MyCartScreen> {
                         ],
                       ),
                       SizedBox(height: 12),
-                      Divider(height: 1, color: Color(0x4CC8C8C8),),
+                      Divider(
+                        height: 1,
+                        color: Color(0x4CC8C8C8),
+                      ),
                       SizedBox(height: 12),
                       Row(
                         mainAxisSize: MainAxisSize.min,
@@ -415,8 +431,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                   ),
                   color: const Color(0xFFE02C45),
                   child: const Center(
-                    child: Text(
-                        'Checkout',
+                    child: Text('Checkout',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 14,
@@ -424,8 +439,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                           fontWeight: FontWeight.w600,
                         ),
                         overflow: TextOverflow.ellipsis,
-                        maxLines: 1
-                    ),
+                        maxLines: 1),
                   ),
                 ),
               ),

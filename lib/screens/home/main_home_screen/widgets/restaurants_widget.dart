@@ -3,10 +3,9 @@ import 'package:just_order/shared/function/functions.dart';
 
 Widget buildRestaurantsWidget({
   required BuildContext context,
-})
-{
+}) {
   return GestureDetector(
-    onTap: (){
+    onTap: () {
       navigateTo(context, 'RestaurantScreenRoute');
     },
     child: Row(
@@ -32,7 +31,7 @@ Widget buildRestaurantsWidget({
         Padding(
           padding: const EdgeInsets.all(12.0),
           child: SizedBox(
-            width: MediaQuery.sizeOf(context).width - 155 ,
+            width: MediaQuery.sizeOf(context).width - 155,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -57,16 +56,16 @@ Widget buildRestaurantsWidget({
                       ),
                       const Spacer(),
                       IconButton(
-                        onPressed: (){},
+                        onPressed: () {},
                         icon: const Icon(
                           Icons.favorite_border,
                           color: Colors.black,
-                          size: 15,),
+                          size: 15,
+                        ),
                       ),
                     ],
                   ),
                 ),
-
                 const Text(
                   'Sandwiches, Fast Food, Egyptian',
                   style: TextStyle(
@@ -122,7 +121,11 @@ Widget buildRestaurantsWidget({
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Icon(Icons.timer_outlined, color: Color(0xFFE02C45), size: 15,),
+                        Icon(
+                          Icons.timer_outlined,
+                          color: Color(0xFFE02C45),
+                          size: 15,
+                        ),
                         SizedBox(width: 6),
                         Text(
                           '21 mins',
@@ -155,7 +158,11 @@ Widget buildRestaurantsWidget({
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Icon(Icons.delivery_dining_outlined, color: Color(0xFFE02C45), size: 15,),
+                        Icon(
+                          Icons.delivery_dining_outlined,
+                          color: Color(0xFFE02C45),
+                          size: 15,
+                        ),
                         SizedBox(width: 6),
                         Text(
                           'Free',

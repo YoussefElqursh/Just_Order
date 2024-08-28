@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-Widget buildCategoriesWidget(){
-  return  Stack(
+Widget buildCategoriesWidget() {
+  return Stack(
     alignment: Alignment.topCenter,
     children: [
       Align(

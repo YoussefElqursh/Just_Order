@@ -36,126 +36,131 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Stack(
-                  alignment: Alignment.topCenter,
-                  children:[
-                    Stack(
-                      alignment: Alignment.bottomRight,
-                      clipBehavior: Clip.none,
-                      children: [
-                        Container(
-                          width: double.infinity,
-                          height: 250,
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              image: NetworkImage("https://via.placeholder.com/360x250"),
-                              fit: BoxFit.cover,
-                            ),
+                alignment: Alignment.topCenter,
+                children: [
+                  Stack(
+                    alignment: Alignment.bottomRight,
+                    clipBehavior: Clip.none,
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        height: 250,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage(
+                                "https://via.placeholder.com/360x250"),
+                            fit: BoxFit.cover,
                           ),
-                        ),
-                        Positioned(
-                          top: 250,
-                          right: 20,
-                          child: Container(
-                            width: 60,
-                            height: 30,
-                            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-                            clipBehavior: Clip.antiAlias,
-                            decoration: const ShapeDecoration(
-                              color: Color(0xFFE02C45),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(8),
-                                  bottomRight: Radius.circular(8),
-                                ),
-                              ),
-                            ),
-                            child: const Center(
-                              child: Text(
-                                '10% Off',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 10,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w600,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      width: MediaQuery.sizeOf(context).width,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 50.0, left: 20.0, right: 20.0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              width: 34,
-                              height: 34,
-                              clipBehavior: Clip.antiAlias,
-                              decoration: ShapeDecoration(
-                                color: const Color(0xFFF4F4F4),
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                              ),
-                              child: IconButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                icon: const Icon(
-                                  Icons.arrow_back,
-                                  color: Colors.black,
-                                  size: 18,
-                                ),
-                                style: ButtonStyle(
-                                  shape: WidgetStatePropertyAll(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const Spacer(),
-                            Container(
-                              width: 34,
-                              height: 34,
-                              clipBehavior: Clip.antiAlias,
-                              decoration: ShapeDecoration(
-                                color: const Color(0xFFF4F4F4),
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                              ),
-                              child: IconButton(
-                                onPressed: () {},
-                                icon: const Icon(
-                                  Icons.shopping_cart_outlined,
-                                  color: Colors.black,
-                                  size: 18,
-                                ),
-                                style: ButtonStyle(
-                                  shape: WidgetStatePropertyAll(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
                         ),
                       ),
+                      Positioned(
+                        top: 250,
+                        right: 20,
+                        child: Container(
+                          width: 60,
+                          height: 30,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 6, vertical: 4),
+                          clipBehavior: Clip.antiAlias,
+                          decoration: const ShapeDecoration(
+                            color: Color(0xFFE02C45),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(8),
+                                bottomRight: Radius.circular(8),
+                              ),
+                            ),
+                          ),
+                          child: const Center(
+                            child: Text(
+                              '10% Off',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 10,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w600,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    width: MediaQuery.sizeOf(context).width,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          top: 50.0, left: 20.0, right: 20.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            width: 34,
+                            height: 34,
+                            clipBehavior: Clip.antiAlias,
+                            decoration: ShapeDecoration(
+                              color: const Color(0xFFF4F4F4),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8)),
+                            ),
+                            child: IconButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              icon: const Icon(
+                                Icons.arrow_back,
+                                color: Colors.black,
+                                size: 18,
+                              ),
+                              style: ButtonStyle(
+                                shape: WidgetStatePropertyAll(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const Spacer(),
+                          Container(
+                            width: 34,
+                            height: 34,
+                            clipBehavior: Clip.antiAlias,
+                            decoration: ShapeDecoration(
+                              color: const Color(0xFFF4F4F4),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8)),
+                            ),
+                            child: IconButton(
+                              onPressed: () {},
+                              icon: const Icon(
+                                Icons.shopping_cart_outlined,
+                                color: Colors.black,
+                                size: 18,
+                              ),
+                              style: ButtonStyle(
+                                shape: WidgetStatePropertyAll(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
+              ),
               const SizedBox(height: 30.0),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: SizedBox(
-                  width:  MediaQuery.sizeOf(context).width,
+                  width: MediaQuery.sizeOf(context).width,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -283,11 +288,11 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                           label: 'Medium',
                           groupName: mealSize,
                           value: 'Medium',
-                          onChanged: (value){
-                        setState((){
-                          mealSize = value.toString();
-                        });
-                      }),
+                          onChanged: (value) {
+                            setState(() {
+                              mealSize = value.toString();
+                            });
+                          }),
                       const SizedBox(height: 10.0),
                       customRadioButtonWidget(
                           context: context,
@@ -298,8 +303,8 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                           label: 'Large',
                           groupName: mealSize,
                           value: 'Large',
-                          onChanged: (value){
-                            setState((){
+                          onChanged: (value) {
+                            setState(() {
                               mealSize = value.toString();
                             });
                           }),
@@ -313,29 +318,25 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                'Extras',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w600,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1
-                              ),
+                              Text('Extras',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 14,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1),
                               SizedBox(height: 6),
-                              Text(
-                                'Choose up to 1 option ',
-                                style: TextStyle(
-                                  color: Color(0xFFAFAFAF),
-                                  fontSize: 12,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1
-                              ),
+                              Text('Choose up to 1 option ',
+                                  style: TextStyle(
+                                    color: Color(0xFFAFAFAF),
+                                    fontSize: 12,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1),
                             ],
                           ),
                           const Spacer(),
@@ -372,8 +373,8 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                         extraText: '(+EGP 30.00)',
                         label: 'Extra medium cheese',
                         value: isChecked,
-                        onChanged: (value){
-                          setState((){
+                        onChanged: (value) {
+                          setState(() {
                             isChecked = !isChecked;
                           });
                         },
@@ -386,8 +387,8 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                         extraText: '(+EGP 40.00)',
                         label: 'Extra large cheese',
                         value: isChecked1,
-                        onChanged: (value){
-                          setState((){
+                        onChanged: (value) {
+                          setState(() {
                             isChecked1 = !isChecked1;
                           });
                         },
@@ -396,7 +397,10 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                   ),
                 ),
               ),
-              const Divider(height: 1, color: Color(0x4CC8C8C8),),
+              const Divider(
+                height: 1,
+                color: Color(0x4CC8C8C8),
+              ),
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: SizedBox(
@@ -410,17 +414,15 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Quantity Order',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 14,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w600,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1
-                            ),
+                          const Text('Quantity Order',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w600,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1),
                           const Spacer(),
                           Container(
                             width: 34,
@@ -428,11 +430,12 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                             clipBehavior: Clip.antiAlias,
                             decoration: ShapeDecoration(
                               color: const Color(0x0CE02C45),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8)),
                             ),
                             child: IconButton(
                               onPressed: () {
-                                setState((){
+                                setState(() {
                                   counter--;
                                 });
                               },
@@ -450,30 +453,29 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                               ),
                             ),
                           ),
-                          const SizedBox(width:10.0),
-                          Text(
-                            '$counter',
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 12,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w500,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1
-                          ),
-                          const SizedBox(width:10.0),
+                          const SizedBox(width: 10.0),
+                          Text('$counter',
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 12,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w500,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1),
+                          const SizedBox(width: 10.0),
                           Container(
                             width: 34,
                             height: 34,
                             clipBehavior: Clip.antiAlias,
                             decoration: ShapeDecoration(
                               color: const Color(0x0CE02C45),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8)),
                             ),
                             child: IconButton(
                               onPressed: () {
-                                setState((){
+                                setState(() {
                                   counter++;
                                 });
                               },
@@ -500,15 +502,15 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                         },
                         height: 42,
                         minWidth: MediaQuery.sizeOf(context).width,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(6)),
                         color: const Color(0xFFE02C45),
                         child: const Row(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text(
-                                'Add to Cart ',
+                            Text('Add to Cart ',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 14,
@@ -516,11 +518,9 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                   fontWeight: FontWeight.w600,
                                 ),
                                 overflow: TextOverflow.ellipsis,
-                                maxLines: 1
-                            ),
+                                maxLines: 1),
                             Spacer(),
-                            Text(
-                                'EGP 300.00',
+                            Text('EGP 300.00',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 14,
@@ -528,11 +528,9 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                   fontWeight: FontWeight.w600,
                                 ),
                                 overflow: TextOverflow.ellipsis,
-                                maxLines: 1
-                            ),
+                                maxLines: 1),
                             SizedBox(width: 2),
-                            Text(
-                                'EGP 320.00',
+                            Text('EGP 320.00',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 10,
@@ -542,8 +540,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                   decorationColor: Colors.white,
                                 ),
                                 overflow: TextOverflow.ellipsis,
-                                maxLines: 1
-                            ),
+                                maxLines: 1),
                           ],
                         ),
                       ),

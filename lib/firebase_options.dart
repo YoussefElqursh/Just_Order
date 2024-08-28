@@ -58,7 +58,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyAVk6rBqSvlf3gYnqCqLLGq3_pBTh37SYc',
-    appId: '1:1073837037972:android:68733d0ac7ff243e7dd781',
+    appId: '1:1073837037972:android:32cf45f6ba9342387dd781',
     messagingSenderId: '1073837037972',
     projectId: 'just-order-cbc6a',
     storageBucket: 'just-order-cbc6a.appspot.com',

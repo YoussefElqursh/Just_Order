@@ -31,107 +31,109 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Stack(
-                  alignment: Alignment.topCenter,
-                  children:[
-                    Stack(
-                      alignment: Alignment.bottomLeft,
-                      clipBehavior: Clip.none,
-                      children: [
-                        Container(
-                          width: double.infinity,
-                          height: 250,
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              image: NetworkImage("https://via.placeholder.com/360x250"),
-                              fit: BoxFit.cover,
-                            ),
+                Stack(alignment: Alignment.topCenter, children: [
+                  Stack(
+                    alignment: Alignment.bottomLeft,
+                    clipBehavior: Clip.none,
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        height: 250,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage(
+                                "https://via.placeholder.com/360x250"),
+                            fit: BoxFit.cover,
                           ),
-                        ),
-                        Positioned(
-                          top: 200,
-                          left: 20,
-                          child: Container(
-                            width: 100,
-                            height: 100,
-                            decoration: ShapeDecoration(
-                              image: const DecorationImage(
-                                image: NetworkImage("https://via.placeholder.com/100x100"),
-                                fit: BoxFit.fill,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(100),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      width: MediaQuery.sizeOf(context).width,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 50.0, left: 20.0, right: 20.0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              width: 34,
-                              height: 34,
-                              clipBehavior: Clip.antiAlias,
-                              decoration: ShapeDecoration(
-                                color: const Color(0xFFF4F4F4),
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                              ),
-                              child: IconButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                icon: const Icon(
-                                  Icons.arrow_back,
-                                  color: Colors.black,
-                                  size: 18,
-                                ),
-                                style: ButtonStyle(
-                                  shape: WidgetStatePropertyAll(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const Spacer(),
-                            Container(
-                              width: 34,
-                              height: 34,
-                              clipBehavior: Clip.antiAlias,
-                              decoration: ShapeDecoration(
-                                color: const Color(0xFFF4F4F4),
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                              ),
-                              child: IconButton(
-                                onPressed: () {},
-                                icon: const Icon(
-                                  Icons.favorite_border,
-                                  color: Colors.black,
-                                  size: 18,
-                                ),
-                                style: ButtonStyle(
-                                  shape: WidgetStatePropertyAll(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
                         ),
                       ),
+                      Positioned(
+                        top: 200,
+                        left: 20,
+                        child: Container(
+                          width: 100,
+                          height: 100,
+                          decoration: ShapeDecoration(
+                            image: const DecorationImage(
+                              image: NetworkImage(
+                                  "https://via.placeholder.com/100x100"),
+                              fit: BoxFit.fill,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(100),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    width: MediaQuery.sizeOf(context).width,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          top: 50.0, left: 20.0, right: 20.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            width: 34,
+                            height: 34,
+                            clipBehavior: Clip.antiAlias,
+                            decoration: ShapeDecoration(
+                              color: const Color(0xFFF4F4F4),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8)),
+                            ),
+                            child: IconButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              icon: const Icon(
+                                Icons.arrow_back,
+                                color: Colors.black,
+                                size: 18,
+                              ),
+                              style: ButtonStyle(
+                                shape: WidgetStatePropertyAll(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const Spacer(),
+                          Container(
+                            width: 34,
+                            height: 34,
+                            clipBehavior: Clip.antiAlias,
+                            decoration: ShapeDecoration(
+                              color: const Color(0xFFF4F4F4),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8)),
+                            ),
+                            child: IconButton(
+                              onPressed: () {},
+                              icon: const Icon(
+                                Icons.favorite_border,
+                                color: Colors.black,
+                                size: 18,
+                              ),
+                              style: ButtonStyle(
+                                shape: WidgetStatePropertyAll(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ]
-                ),
+                  ),
+                ]),
                 const SizedBox(height: 55),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -204,8 +206,9 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Icon(Icons.timer_outlined, color: Color(0xFFE02C45), size:15),
-                          SizedBox(width:6.0),
+                          Icon(Icons.timer_outlined,
+                              color: Color(0xFFE02C45), size: 15),
+                          SizedBox(width: 6.0),
                           Text(
                             '20 mins',
                             style: TextStyle(
@@ -221,8 +224,10 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                       ),
                       const SizedBox(width: 30.0),
                       Transform(
-                        transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(1.57),
-                        child:  Container(
+                        transform: Matrix4.identity()
+                          ..translate(0.0, 0.0)
+                          ..rotateZ(1.57),
+                        child: Container(
                           width: 15,
                           decoration: const ShapeDecoration(
                             shape: RoundedRectangleBorder(
@@ -238,8 +243,12 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                       const SizedBox(width: 20.0),
                       const Row(
                         children: [
-                          Icon(Icons.delivery_dining, color: Color(0xFFE02C45), size: 15,),
-                          SizedBox(width:6.0),
+                          Icon(
+                            Icons.delivery_dining,
+                            color: Color(0xFFE02C45),
+                            size: 15,
+                          ),
+                          SizedBox(width: 6.0),
                           Text(
                             'EGP 30.00',
                             style: TextStyle(
@@ -276,13 +285,20 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                             clipBehavior: Clip.antiAlias,
                             decoration: ShapeDecoration(
                               color: const Color(0xFFF4F4F4),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(6)),
                             ),
-                            child: const Icon(Icons.list, color: Color(0xFF898888), size: 15,),
+                            child: const Icon(
+                              Icons.list,
+                              color: Color(0xFF898888),
+                              size: 15,
+                            ),
                           ),
                           const SizedBox(width: 16),
                           Transform(
-                            transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(1.57),
+                            transform: Matrix4.identity()
+                              ..translate(0.0, 0.0)
+                              ..rotateZ(1.57),
                             child: Container(
                               width: 34,
                               height: 1,
@@ -299,7 +315,8 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                           ),
                           const TabBar(
                             physics: BouncingScrollPhysics(),
-                            overlayColor: WidgetStatePropertyAll(Colors.transparent),
+                            overlayColor:
+                                WidgetStatePropertyAll(Colors.transparent),
                             isScrollable: true,
                             dividerColor: Colors.transparent,
                             tabAlignment: TabAlignment.start,
@@ -349,7 +366,6 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                     ),
                   ),
                 ),
-
               ],
             ),
           ),

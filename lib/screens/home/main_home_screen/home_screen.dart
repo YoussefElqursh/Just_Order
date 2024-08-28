@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 decoration: ShapeDecoration(
                   color: const Color(0x0CE02C45),
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(6),
+                    borderRadius: BorderRadius.circular(6),
                   ),
                 ),
                 child: const Center(
@@ -105,8 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               child: IconButton(
-                onPressed: () {
-                },
+                onPressed: () {},
                 icon: const Icon(
                   Icons.notifications,
                   color: Colors.black,
@@ -138,7 +137,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 items: adsImageList
                     .map(
                       (e) => Center(
-                        child: Image.network(e, fit: BoxFit.cover, height: 200,),
+                        child: Image.network(
+                          e,
+                          fit: BoxFit.cover,
+                          height: 200,
+                        ),
                       ),
                     )
                     .toList(),
@@ -201,7 +204,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     TextButton(
                       onPressed: () {},
                       style: ButtonStyle(
-                        overlayColor: WidgetStateProperty.all(Colors.transparent),
+                        overlayColor:
+                            WidgetStateProperty.all(Colors.transparent),
                       ),
                       child: const Text(
                         'View All',
@@ -223,8 +227,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: double.infinity,
                 height: 201.0,
                 child: ListView.separated(
-                  itemBuilder: (context, index) => buildPopularTodayWidget(context: context),
-                  separatorBuilder: (context, index) => const SizedBox(width: 10.0),
+                  itemBuilder: (context, index) =>
+                      buildPopularTodayWidget(context: context),
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(width: 10.0),
                   itemCount: 5,
                   scrollDirection: Axis.horizontal,
                   physics: const BouncingScrollPhysics(),
@@ -254,7 +260,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 100.0,
                 child: ListView.separated(
                   itemBuilder: (context, index) => buildCategoriesWidget(),
-                  separatorBuilder: (context, index) => const SizedBox(width: 10.0),
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(width: 10.0),
                   itemCount: 5,
                   scrollDirection: Axis.horizontal,
                   physics: const BouncingScrollPhysics(),
@@ -268,7 +275,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 31.0,
                 child: ListView.separated(
                   itemBuilder: (context, index) => buildHomeFilterWidget(),
-                  separatorBuilder: (context, index) => const SizedBox(width: 10.0),
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(width: 10.0),
                   itemCount: 5,
                   scrollDirection: Axis.horizontal,
                   physics: const BouncingScrollPhysics(),
@@ -280,10 +288,14 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 width: double.infinity,
                 child: ListView.separated(
-                  itemBuilder: (context, index) => buildRestaurantsWidget(context: context),
+                  itemBuilder: (context, index) =>
+                      buildRestaurantsWidget(context: context),
                   separatorBuilder: (context, index) => const Padding(
                     padding: EdgeInsets.symmetric(vertical: 10.0),
-                    child: Divider(height: 1, color: Colors.grey,),
+                    child: Divider(
+                      height: 1,
+                      color: Colors.grey,
+                    ),
                   ),
                   itemCount: 5,
                   scrollDirection: Axis.vertical,

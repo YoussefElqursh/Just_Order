@@ -4,10 +4,9 @@ import 'package:just_order/shared/function/functions.dart';
 
 Widget buildMealWidget({
   required BuildContext context,
-})
-{
+}) {
   return GestureDetector(
-    onTap: (){
+    onTap: () {
       navigateTo(context, 'MealDetailsScreenRoute');
     },
     child: Row(
