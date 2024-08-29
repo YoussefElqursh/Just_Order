@@ -68,7 +68,7 @@ class Mock {
       userType: UserType.customer,
       emailVerified: true,
       phoneNumberVerified: true,
-      createdAt: "2023-09-01T00:00:00.000Z",
+      createdAt: DateTime.parse("2023-09-01T00:00:00.000Z"),
     );
     mock.user2 = User(
       userId: "2",
@@ -80,8 +80,8 @@ class Mock {
       userType: UserType.customer,
       emailVerified: true,
       phoneNumberVerified: true,
-      createdAt: "2022-09-01T00:00:00.000Z",
-      updatedAt: "2023-09-01T00:00:00.000Z",
+      createdAt: DateTime.parse("2023-09-01T00:00:00.000Z"),
+      updatedAt: DateTime.parse("2023-09-01T00:00:00.000Z"),
     );
     mock.user3 = User(
       userId: "3",
@@ -93,7 +93,7 @@ class Mock {
       userType: UserType.customer,
       emailVerified: true,
       phoneNumberVerified: true,
-      createdAt: "2020-09-01T00:00:00.000Z",
+      createdAt: DateTime.parse("2023-09-01T00:00:00.000Z"),
     );
     mock.user4 = User(
       userId: "4",
@@ -105,7 +105,7 @@ class Mock {
       userType: UserType.customer,
       emailVerified: true,
       phoneNumberVerified: true,
-      createdAt: "2020-09-01T00:00:00.000Z",
+      createdAt: DateTime.parse("2023-09-01T00:00:00.000Z"),
     );
     mock.user5 = User(
       userId: "5",
@@ -117,7 +117,7 @@ class Mock {
       userType: UserType.customer,
       emailVerified: true,
       phoneNumberVerified: true,
-      createdAt: "2020-09-01T00:00:00.000Z",
+      createdAt: DateTime.parse("2023-09-01T00:00:00.000Z"),
     );
 
     mock.users = [
@@ -131,7 +131,7 @@ class Mock {
         userType: UserType.customer,
         emailVerified: true,
         phoneNumberVerified: true,
-        createdAt: "2023-09-01T00:00:00.000Z",
+        createdAt: DateTime.parse("2023-09-01T00:00:00.000Z"),
       ),
       User(
         userId: "2",
@@ -143,8 +143,8 @@ class Mock {
         userType: UserType.customer,
         emailVerified: true,
         phoneNumberVerified: true,
-        createdAt: "2022-09-01T00:00:00.000Z",
-        updatedAt: "2023-09-01T00:00:00.000Z",
+        createdAt: DateTime.parse("2023-09-01T00:00:00.000Z"),
+        updatedAt: DateTime.parse("2023-09-01T00:00:00.000Z"),
       ),
       User(
         userId: "3",
@@ -156,7 +156,7 @@ class Mock {
         userType: UserType.customer,
         emailVerified: true,
         phoneNumberVerified: true,
-        createdAt: "2020-09-01T00:00:00.000Z",
+        createdAt: DateTime.parse("2023-09-01T00:00:00.000Z"),
       ),
       User(
         userId: "4",
@@ -168,7 +168,7 @@ class Mock {
         userType: UserType.customer,
         emailVerified: true,
         phoneNumberVerified: true,
-        createdAt: "2020-09-01T00:00:00.000Z",
+        createdAt: DateTime.parse("2023-09-01T00:00:00.000Z"),
       ),
       User(
         userId: "5",
@@ -180,7 +180,7 @@ class Mock {
         userType: UserType.customer,
         emailVerified: true,
         phoneNumberVerified: true,
-        createdAt: "2020-09-01T00:00:00.000Z",
+        createdAt: DateTime.parse("2023-09-01T00:00:00.000Z"),
       ),
     ];
 

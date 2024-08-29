@@ -15,3 +15,5 @@ class LoginFailure extends LoginState {
   final String message;
   LoginFailure(this.message);
 }
+
+class LoginShowPassword extends LoginState {}

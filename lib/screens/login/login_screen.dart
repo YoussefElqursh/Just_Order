@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_order/blocs/login_cubit/login_cubit.dart';
 import 'package:just_order/blocs/login_cubit/login_state.dart';
+import 'package:just_order/models/user_model.dart';
 import 'package:just_order/repository/auth_repository/login_repository.dart';
 import 'package:just_order/screens/QR/select_your_place_screen.dart';
 import 'package:just_order/shared/function/functions.dart';
@@ -27,6 +28,16 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  final _loginRepository = LoginRepository();
+
+  void _showSnackBar(String message, Color color) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: color,
+      ),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -305,6 +316,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       TextFormField(
                                         controller: _emailController,
                                         maxLines: 1,
+                                        cursorColor: Colors.black,
                                         keyboardType:
                                             TextInputType.emailAddress,
                                         style: const TextStyle(
@@ -372,8 +384,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                       const SizedBox(height: 8.0),
                                       TextFormField(
                                           controller: _passwordController,
-                                          obscureText: true,
+                                          obscureText: context.read<LoginCubit>().isPassword,
                                           maxLines: 1,
+                                          cursorColor: Colors.black,
                                           keyboardType:
                                               TextInputType.visiblePassword,
                                           style: const TextStyle(
@@ -412,10 +425,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                               borderRadius:
                                                   BorderRadius.circular(6),
                                             ),
-                                            suffixIcon: const Icon(
-                                                Icons.visibility_outlined,
-                                                color: Color(0xFFAFAFAF),
-                                                size: 18.0),
+                                            suffixIcon: IconButton(
+                                              onPressed: (){
+                                                context.read<LoginCubit>().changePasswordState();
+                                              },
+                                              icon: Icon(
+                                                  context.read<LoginCubit>().suffixIcon,
+                                                  color: const Color(0xFFAFAFAF),
+                                                  size: 18.0),
+                                            ),
                                           ),
                                           validator: (value) {
                                             if (value == null ||
@@ -454,13 +472,24 @@ class _LoginScreenState extends State<LoginScreen> {
                                       ),
                                       const SizedBox(height: 18.0),
                                       MaterialButton(
-                                        onPressed: () {
-                                          if (_formKey.currentState!
-                                              .validate()) {
-                                            context.read<LoginCubit>().login(
-                                                  _emailController.text,
-                                                  _passwordController.text,
+                                        onPressed: () async {
+                                          if (_formKey.currentState!.validate()) {
+                                            try {
+                                              User? user = await _loginRepository.login(
+                                                _emailController.text,
+                                                _passwordController.text,
+                                              );
+                                              if (user != null) {
+                                                _showSnackBar(
+                                                    'Login successful', Colors.green);
+                                                navigateToWithoutBack(
+                                                  // ignore: use_build_context_synchronously
+                                                  context, const SelectYourPlace(),
                                                 );
+                                              }
+                                            } catch (e) {
+                                              _showSnackBar(e.toString(), Colors.red);
+                                            }
                                           }
                                         },
                                         height: 42,
