@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:just_order/screens/home/main_home_screen/models/filter_model.dart';
 
-Widget buildHomeFilterWidget() {
+Widget buildHomeFilterWidget(FilterModel filter, int index) {
   return Container(
-    width: 100,
+    width: 125,
     height: 30,
     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
     clipBehavior: Clip.antiAlias,
@@ -17,20 +18,20 @@ Widget buildHomeFilterWidget() {
         borderRadius: BorderRadius.circular(100),
       ),
     ),
-    child: const Row(
+    child: Row(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Icon(
-          Icons.mobiledata_off,
-          color: Color(0xFF898888),
+          filter.prefix,
+          color: const Color(0xFF898888),
           size: 15,
         ),
-        SizedBox(width: 4),
+        const SizedBox(width: 4),
         Text(
-          'Sort by',
-          style: TextStyle(
+          filter.filterTitle,
+          style: const TextStyle(
             color: Color(0xFF898888),
             fontSize: 10,
             fontFamily: 'Inter',
@@ -39,13 +40,24 @@ Widget buildHomeFilterWidget() {
           overflow: TextOverflow.ellipsis,
           maxLines: 1,
         ),
-        SizedBox(width: 4),
+        const SizedBox(width: 4),
+        index == 0 ?
         Icon(
-          Icons.keyboard_arrow_down_outlined,
-          color: Color(0xFF898888),
+          filter.suffix,
+          color: const Color(0xFF898888),
           size: 15,
-        ),
+        )
+            :
+            const SizedBox(),
       ],
     ),
   );
 }
+
+
+List<FilterModel> filters = [
+  FilterModel(Icons.keyboard_arrow_down_outlined, prefix: Icons.mobiledata_off, filterTitle: 'Sort by'),
+  FilterModel(Icons.keyboard_arrow_down_outlined, prefix: Icons.star_border, filterTitle: 'Rating 0.4+'),
+  FilterModel(Icons.keyboard_arrow_down_outlined, prefix: Icons.delivery_dining_outlined, filterTitle: 'Free Delivery '),
+  FilterModel(Icons.keyboard_arrow_down_outlined, prefix: Icons.timer_outlined, filterTitle: 'Under 30 mins'),
+];

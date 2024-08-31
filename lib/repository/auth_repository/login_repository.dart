@@ -17,6 +17,7 @@ class LoginRepository {
         .collection('users')
         .where('email', isEqualTo: email)
         .where('password', isEqualTo: hashedPassword)
+        .where('userType', isEqualTo: 2) // it's a filter process of users, i use 2 because if i put 1 email : zaid not login
         .get();
 
     if (result.docs.isEmpty) {
