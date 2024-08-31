@@ -5,6 +5,7 @@ import 'package:just_order/screens/home/main_home_screen/widgets/filter_widget.d
 import 'package:just_order/screens/home/main_home_screen/widgets/popular_today_widget.dart';
 import 'package:just_order/screens/home/main_home_screen/widgets/restaurants_widget.dart';
 import 'package:just_order/shared/constant/lists/lists.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -22,9 +23,25 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-int _currentPage = 0;
+
 
 class _HomeScreenState extends State<HomeScreen> {
+  String tableCode = '';
+  int _currentPage = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadTableCode();
+  }
+
+  Future<void> _loadTableCode() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      tableCode = prefs.getString('code') ?? 'Unknown';
+    });
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,14 +72,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               const SizedBox(width: 10),
-              const SizedBox(
+              SizedBox(
                 width: 140,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Delivering to',
                       style: TextStyle(
                         color: Color(0xFF878787),
@@ -73,10 +90,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                     ),
-                    SizedBox(height: 3),
+                    const SizedBox(height: 3),
                     Text(
-                      'Table: 15489',
-                      style: TextStyle(
+                      'Table $tableCode',
+                      style: const TextStyle(
                         color: Colors.black,
                         fontSize: 10,
                         fontFamily: 'Inter',
