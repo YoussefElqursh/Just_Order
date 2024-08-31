@@ -487,6 +487,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   context, const SelectYourPlace(),
                                                 );
                                               }
+                                              else {
+                                                _showSnackBar(
+                                                    'Invalid email or password', Colors.red);
+                                              }
                                             } catch (e) {
                                               _showSnackBar(e.toString(), Colors.red);
                                             }

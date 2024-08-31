@@ -17,10 +17,13 @@ class LoginRepository {
         .collection('users')
         .where('email', isEqualTo: email)
         .where('password', isEqualTo: hashedPassword)
+        .where('emailVerified', isEqualTo: true)
+        .where('phoneNumberVerified', isEqualTo: true)
+        .where('userType', isEqualTo: 'customer')
         .get();
 
     if (result.docs.isEmpty) {
-      throw Exception('Invalid email or password');
+      return null;
     }
 
     final doc = result.docs.first;
@@ -28,16 +31,11 @@ class LoginRepository {
 
     await user?.saveUserToPreferences(user);
 
-    // Save login state
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('isLoggedIn', true);
-
     return user;
   }
 
   Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('isLoggedIn', false);
+    await prefs.clear();
   }
-// ... other methods for registration, logout, etc.
 }

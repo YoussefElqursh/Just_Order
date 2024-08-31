@@ -30,7 +30,6 @@ class User {
     this.updatedAt,
   });
 
-
   static Future<User>? fromMap(Object? data) {
     if (data == null) {
       return null;
@@ -44,7 +43,7 @@ class User {
       email: map['email'] as String,
       password: map['password'] as String,
       phoneNumber: map['phoneNumber'] as String,
-      userType: UserType.values[map['userType'] as int],
+      userType: UserType.values.firstWhere((e) => e.toString() == 'UserType.${map['userType']}'),
       emailVerified: map['emailVerified'] as bool,
       phoneNumberVerified: map['phoneNumberVerified'] as bool,
       createdAt: (map['createdAt'] as Timestamp).toDate(),
@@ -55,10 +54,8 @@ class User {
   }
 
   Future<void> saveUserToPreferences(User user) async {
-    print('user: $user');
     final prefs = await SharedPreferences.getInstance();
     prefs.setString('user', jsonEncode(user.toJson()));
-    print('user saved to Preferences');
   }
 
   Map<String, dynamic> toJson() {
@@ -69,7 +66,7 @@ class User {
       'email': email,
       'password': password,
       'phoneNumber': phoneNumber,
-      'userType': userType.index,
+      'userType': userType.toString().split('.').last,
       'emailVerified': emailVerified,
       'phoneNumberVerified': phoneNumberVerified,
       'createdAt': createdAt.toIso8601String(),
@@ -94,7 +91,7 @@ class User {
       email: json['email'],
       password: json['password'],
       phoneNumber: json['phoneNumber'],
-      userType: UserType.values[json['userType']],
+      userType: UserType.values.firstWhere((e) => e.toString() == 'UserType.${json['userType']}'),
       emailVerified: json['emailVerified'],
       phoneNumberVerified: json['phoneNumberVerified'],
       createdAt: json['createdAt'] is Timestamp
@@ -108,4 +105,3 @@ class User {
     );
   }
 }
-
