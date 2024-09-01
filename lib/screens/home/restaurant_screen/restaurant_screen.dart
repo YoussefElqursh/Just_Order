@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:just_order/screens/home/restaurant_screen/widgets/filter_widget.dart';
+import 'package:just_order/shared/function/functions.dart';
 
 class RestaurantScreen extends StatefulWidget {
   const RestaurantScreen({super.key});
@@ -369,6 +370,18 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
               ],
             ),
           ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: (){
+            navigateTo(context, 'MyCartScreenRoute');
+          },
+          backgroundColor: const Color(0xFFE02C45),
+          shape: const CircleBorder(
+            side: BorderSide(
+              color: Color(0xFFE02C45),
+            ),
+          ),
+          child: const Icon(Icons.shopping_bag_outlined, color: Colors.white, size: 18,),
         ),
       ),
     );

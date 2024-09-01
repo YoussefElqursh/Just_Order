@@ -124,32 +124,6 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                               ),
                             ),
                           ),
-                          const Spacer(),
-                          Container(
-                            width: 34,
-                            height: 34,
-                            clipBehavior: Clip.antiAlias,
-                            decoration: ShapeDecoration(
-                              color: const Color(0xFFF4F4F4),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8)),
-                            ),
-                            child: IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.shopping_cart_outlined,
-                                color: Colors.black,
-                                size: 18,
-                              ),
-                              style: ButtonStyle(
-                                shape: WidgetStatePropertyAll(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
                         ],
                       ),
                     ),
@@ -498,7 +472,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                       const SizedBox(height: 20.0),
                       MaterialButton(
                         onPressed: () {
-                          navigateTo(context, 'MyCartScreenRoute');
+                          Navigator.pop(context);
                         },
                         height: 42,
                         minWidth: MediaQuery.sizeOf(context).width,
@@ -552,6 +526,18 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          navigateTo(context, 'MyCartScreenRoute');
+        },
+        backgroundColor: const Color(0xFFE02C45),
+        shape: const CircleBorder(
+          side: BorderSide(
+            color: Color(0xFFE02C45),
+          ),
+        ),
+        child: const Icon(Icons.shopping_bag_outlined, color: Colors.white, size: 18,),
       ),
     );
   }
