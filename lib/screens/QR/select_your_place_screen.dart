@@ -58,7 +58,7 @@ class _SelectYourPlaceState extends State<SelectYourPlace> {
       ),
       body: Container(
         width: MediaQuery.sizeOf(context).width,
-        alignment: Alignment.center,
+        alignment: Alignment.topCenter,
         padding: const EdgeInsets.all(20),
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,

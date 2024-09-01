@@ -25,7 +25,6 @@ class _MainLayoutState extends State<MainLayout> {
   final screens = [
     const HomeScreen(),
     const HomeScreen(),
-    const MyCartScreen(),
     const AccountScreen(),
   ];
   @override
@@ -52,12 +51,7 @@ class _MainLayoutState extends State<MainLayout> {
           BottomNavigationBarItem(
             icon: Icon(Icons.search_outlined),
             activeIcon: Icon(Icons.search),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart_outlined),
-            activeIcon: Icon(Icons.shopping_cart),
-            label: 'Cart',
+            label: 'Orders',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person_outline),
