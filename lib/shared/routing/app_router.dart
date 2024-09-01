@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:just_order/layouts/main_layout.dart';
+import 'package:just_order/models/item_model.dart';
+import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/screens/splash/splash_screen.dart';
 import 'package:just_order/screens/account/my_profile_screen/profile_screen.dart';
 import 'package:just_order/screens/QR/select_your_place_screen.dart';
@@ -25,9 +27,17 @@ class AppRouter {
       case 'MainLayoutRoute':
         return MainLayout.route();
       case 'RestaurantScreenRoute':
-        return RestaurantScreen.route();
+        if (settings.arguments is Restaurant) {
+          final restaurant = settings.arguments as Restaurant;
+          return RestaurantScreen.route(restaurant);
+        }
+        return _errorRoute();
       case 'MealDetailsScreenRoute':
-        return MealDetailsScreen.route();
+        if (settings.arguments is Item) {
+          final args = settings.arguments as Item;
+          return MealDetailsScreen.route(args);
+        }
+        return _errorRoute();
       case 'MyCartScreenRoute':
         return MyCartScreen.route();
       case 'PayMethodScreenRoute':

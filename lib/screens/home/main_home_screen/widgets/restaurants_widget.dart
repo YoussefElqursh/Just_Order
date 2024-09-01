@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:just_order/shared/function/functions.dart';
+import 'package:just_order/models/restaurant_model.dart';
 
 Widget buildRestaurantsWidget({
   required BuildContext context,
+  required Restaurant restaurant,
 }) {
   return GestureDetector(
     onTap: () {
-      navigateTo(context, 'RestaurantScreenRoute');
+      Navigator.pushNamed(context, 'RestaurantScreenRoute', arguments: restaurant);
     },
     child: Row(
       children: [
@@ -14,8 +15,8 @@ Widget buildRestaurantsWidget({
           width: 90,
           height: 90,
           decoration: ShapeDecoration(
-            image: const DecorationImage(
-              image: NetworkImage("https://via.placeholder.com/90x90"),
+            image: DecorationImage(
+              image: NetworkImage(restaurant.imageUrl ?? 'https://via.placeholder.com/150'),
               fit: BoxFit.cover,
             ),
             shape: RoundedRectangleBorder(
@@ -43,9 +44,9 @@ Widget buildRestaurantsWidget({
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Text(
-                        'Havarti',
-                        style: TextStyle(
+                      Text(
+                        restaurant.name,
+                        style: const TextStyle(
                           color: Colors.black,
                           fontSize: 12,
                           fontFamily: 'Inter',
@@ -67,7 +68,7 @@ Widget buildRestaurantsWidget({
                   ),
                 ),
                 const Text(
-                  'Sandwiches, Fast Food, Egyptian',
+                  'Fast Food, Snacks, Beverages',
                   style: TextStyle(
                     color: Color(0xFFAFAFAF),
                     fontSize: 10,

@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:just_order/models/item_model.dart';
 import 'package:just_order/shared/function/functions.dart';
 import 'package:just_order/shared/widget/custom_check_box_button_widget.dart';
 import 'package:just_order/shared/widget/custom_radio_button_widget.dart';
 
 class MealDetailsScreen extends StatefulWidget {
-  const MealDetailsScreen({super.key});
+  final Item item;
+  const MealDetailsScreen({super.key, required this.item});
 
   static const String routeName = 'MealDetailsScreenRoute';
 
-  static Route route() {
+  static Route route(Item item) {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
-      builder: (context) => const MealDetailsScreen(),
+      builder: (context) => MealDetailsScreen(item: item),
     );
   }
 
@@ -26,6 +28,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
   String mealSize = '';
   @override
   Widget build(BuildContext context) {
+    final Item item = widget.item;
     return Scaffold(
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -45,10 +48,11 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                       Container(
                         width: double.infinity,
                         height: 250,
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           image: DecorationImage(
                             image: NetworkImage(
-                                "https://via.placeholder.com/360x250"),
+                              item.imageUrl,
+                            ),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -73,7 +77,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                           ),
                           child: const Center(
                             child: Text(
-                              '10% Off',
+                              '0% Off',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 10,
@@ -164,9 +168,9 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Chicken Ranch Pizza',
-                        style: TextStyle(
+                      Text(
+                        item.name,
+                        style: const TextStyle(
                           color: Colors.black,
                           fontSize: 16,
                           fontFamily: 'Inter',
@@ -176,9 +180,9 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                         maxLines: 1,
                       ),
                       const SizedBox(height: 16.0),
-                      const Text(
-                        'Juicy chicken, tangy ranch dressing, melted cheese, fresh vegetables, crispy pizza crust. ',
-                        style: TextStyle(
+                      Text(
+                        item.description,
+                        style: const TextStyle(
                           color: Color(0xFFAFAFAF),
                           fontSize: 14,
                           fontFamily: 'Inter',
@@ -188,12 +192,12 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                         maxLines: 2,
                       ),
                       const SizedBox(height: 26.0),
-                      const Row(
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
-                            'EGP 120.00',
-                            style: TextStyle(
+                            item.price.toString(),
+                            style: const TextStyle(
                               color: Colors.black,
                               fontSize: 14,
                               fontFamily: 'Inter',
@@ -202,9 +206,9 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                           ),
-                          Spacer(),
-                          Text(
-                            'EGP 130.00',
+                          const Spacer(),
+                          const Text(
+                            'EGP 0.00',
                             style: TextStyle(
                               color: Color(0xFFE02C45),
                               fontSize: 12,

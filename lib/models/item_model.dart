@@ -1,40 +1,60 @@
-import 'package:just_order/models/meal_details_model.dart';
-
-import 'enums/item_type.dart';
-
 class Item {
   String itemId;
-  String name;
-  ItemType type;
-  String description;
   double price;
-  List<String> extras;
+  String imageUrl;
   bool available;
-  MealDetails? mealDetails;
+  String name;
+  String description;
+  String type;
+  String category;
 
   Item({
     required this.itemId,
-    required this.name,
-    required this.type,
-    required this.description,
     required this.price,
-    required this.extras,
+    required this.imageUrl,
     required this.available,
-    this.mealDetails,
+    required this.name,
+    required this.description,
+    required this.type,
+    required this.category,
   });
 
-  static fromMap(item) {
+  static Item fromMap(Map<String, dynamic> item) {
     return Item(
       itemId: item['itemId'],
-      name: item['name'],
-      type: ItemType.values.firstWhere((e) => e.toString() == item['type']),
-      description: item['description'],
-      price: item['price'],
-      extras: item['extras'].cast<String>(),
+      price: (item['price'] as num).toDouble(),
+      imageUrl: item['imageUrl'],
       available: item['available'],
-      mealDetails: item['mealDetails'] != null
-          ? MealDetails.fromMap(item['mealDetails'])
-          : null,
+      name: item['name'],
+      description: item['description'],
+      type: item['type'],
+      category: item['category'],
     );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'itemId': itemId,
+      'price': price,
+      'imageUrl': imageUrl,
+      'available': available,
+      'name': name,
+      'description': description,
+      'type': type,
+      'category': category,
+    };
+  }
+
+  toJson() {
+    return {
+      'itemId': itemId,
+      'price': price,
+      'imageUrl': imageUrl,
+      'available': available,
+      'name': name,
+      'description': description,
+      'type': type,
+      'category': category,
+    };
   }
 }
