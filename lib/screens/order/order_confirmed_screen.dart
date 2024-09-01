@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:just_order/shared/function/functions.dart';
 import 'package:lottie/lottie.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -49,7 +48,7 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
               children: [
                 Container(
                   width: 280,
-                  height: 485,
+                  height: MediaQuery.sizeOf(context).height * 0.60,
                   padding: const EdgeInsets.all(20),
                   decoration: ShapeDecoration(
                     color: Colors.white,
@@ -98,7 +97,7 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                       const SizedBox(height: 12.0),
                       QrImageView(
                         data: formattedDate + formattedTime,
-                        size: 100,
+                        size: 120,
                         version: QrVersions.auto,
                       ),
                       const Text(
@@ -276,7 +275,7 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                   ),
                 ),
                 Positioned(
-                  bottom: 310,
+                  bottom: 330,
                   child: Lottie.asset(
                     height: 350,
                     width: 350,
@@ -285,33 +284,6 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                   ),
                 ),
               ],
-            ),
-            const Spacer(),
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-              child: MaterialButton(
-                onPressed: () {
-                  navigateTo(context, 'HomeScreenRoute');
-                },
-                height: 42,
-                minWidth: MediaQuery.sizeOf(context).width,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                color: const Color(0xFFE02C45),
-                child: const Center(
-                  child: Text('Track Order',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w600,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1),
-                ),
-              ),
             ),
           ],
         ),

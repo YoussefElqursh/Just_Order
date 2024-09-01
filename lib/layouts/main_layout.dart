@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:just_order/screens/account/main_account_screen/account_screen.dart';
 import 'package:just_order/screens/home/main_home_screen/home_screen.dart';
+import 'package:just_order/screens/order/orders/order_screen.dart';
 
 class MainLayout extends StatefulWidget {
   const MainLayout({super.key});
@@ -23,7 +24,7 @@ class _MainLayoutState extends State<MainLayout> {
 
   final screens = [
     const HomeScreen(),
-    const HomeScreen(),
+    const OrderScreen(),
     const AccountScreen(),
   ];
   @override

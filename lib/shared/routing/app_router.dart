@@ -2,6 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:just_order/layouts/main_layout.dart';
 import 'package:just_order/models/item_model.dart';
 import 'package:just_order/models/restaurant_model.dart';
+import 'package:just_order/screens/order/order_state/decline_order_screen.dart';
+import 'package:just_order/screens/order/order_state/delivered_order_screen.dart';
+import 'package:just_order/screens/order/order_state/on_way_order_screen.dart';
+import 'package:just_order/screens/order/order_state/order_details_screen.dart';
+import 'package:just_order/screens/order/order_state/pending_order_screen.dart';
+import 'package:just_order/screens/order/order_state/preparing_order_screen.dart';
+import 'package:just_order/screens/order/orders/order_screen.dart';
 import 'package:just_order/screens/splash/splash_screen.dart';
 import 'package:just_order/screens/account/my_profile_screen/profile_screen.dart';
 import 'package:just_order/screens/QR/select_your_place_screen.dart';
@@ -48,6 +55,20 @@ class AppRouter {
         return OrderSummaryScreen.route();
       case 'OrderConfirmedScreenRoute':
         return OrderConfirmedScreen.route();
+      case 'OrderScreenRoute':
+        return OrderScreen.route();
+      case 'PendingOrderScreenRoute':
+        return PendingOrderScreen.route();
+      case 'PreparingOrderScreenRoute':
+        return PreparingOrderScreen.route();
+      case 'OnWayOrderScreenRoute':
+        return OnWayOrderScreen.route();
+      case 'DeliveredOrderScreenRoute':
+        return DeliveredOrderScreen.route();
+      case 'DeclineOrderScreenRoute':
+        return DeclineOrderScreen.route();
+      case 'OrderDetailsScreenRoute':
+        return OrderDetailsScreen.route();
       case 'LoginScreenRoute':
         return LoginScreen.route();
       case 'ProfileScreenRoute':
