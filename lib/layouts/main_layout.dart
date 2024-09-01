@@ -4,20 +4,14 @@ import 'package:just_order/screens/home/main_home_screen/home_screen.dart';
 import 'package:just_order/screens/order/orders/order_screen.dart';
 
 class MainLayout extends StatefulWidget {
-  const MainLayout({super.key, required this.code, required this.closeScreen});
-
-  final String code;
-  final Function() closeScreen;
+  const MainLayout({super.key});
 
   static const String routeName = 'MainLayoutRoute';
 
   static Route route() {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
-      builder: (context) => MainLayout(
-        code: '',
-        closeScreen: () {},
-      ),
+      builder: (context) => const MainLayout(),
     );
   }
 

@@ -1,6 +1,12 @@
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:just_order/models/user_model.dart';
+import 'package:just_order/screens/QR/select_your_place_screen.dart';
 import 'package:just_order/screens/login/login_screen.dart';
 import 'package:just_order/shared/function/functions.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -16,8 +22,34 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(const Duration(seconds: 5), () {
-      navigateToWithoutBack(context, const LoginScreen());
+    Future.delayed(const Duration(seconds: 5), () async{
+      final prefs = await SharedPreferences.getInstance();
+      final userString = prefs.getString('user');
+      FirebaseFirestore firestore = FirebaseFirestore.instance;
+    
+      if (userString != null) {
+        final user = User.fromJson(jsonDecode(userString));
+        final QuerySnapshot result = await firestore
+        .collection('users')
+        .where('email', isEqualTo: user?.email)
+        .where('password', isEqualTo: user?.password)
+        .where('emailVerified', isEqualTo: true)
+        .where('phoneNumberVerified', isEqualTo: true)
+        .where('userType', isEqualTo: 'customer')
+        .get();
+        
+        if (result.docs.isNotEmpty) {
+          // ignore: use_build_context_synchronously
+          Navigator.of(context).pushReplacement(SelectYourPlace.route());
+        }
+        else {
+          // ignore: use_build_context_synchronously
+          Navigator.of(context).pushReplacement(LoginScreen.route());
+        }
+      } else {
+        // ignore: use_build_context_synchronously
+        Navigator.of(context).pushReplacement(LoginScreen.route());
+      }
     });
 
     return Scaffold(

@@ -1,10 +1,13 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:just_order/models/restaurant_model.dart';
+import 'package:just_order/repository/user_repository/user_repository.dart';
 import 'package:just_order/screens/home/main_home_screen/widgets/categories_widget.dart';
 import 'package:just_order/screens/home/main_home_screen/widgets/filter_widget.dart';
 import 'package:just_order/screens/home/main_home_screen/widgets/popular_today_widget.dart';
 import 'package:just_order/screens/home/main_home_screen/widgets/restaurants_widget.dart';
 import 'package:just_order/shared/constant/lists/lists.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -22,9 +25,35 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-int _currentPage = 0;
+
 
 class _HomeScreenState extends State<HomeScreen> {
+  String tableCode = '';
+  int _currentPage = 0;
+  List<Restaurant> restaurants = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadTableCode();
+  }
+
+  Future<void> _loadTableCode() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      tableCode = prefs.getString('code') ?? 'Unknown';
+    });
+    _loadRestaurants();
+  }
+
+  Future<void> _loadRestaurants() async {
+    final UserRepository userRepository = UserRepository();
+    final List<Restaurant> restaurants = await userRepository.getRestaurants(tableCode);
+    setState(() {
+      this.restaurants = restaurants;
+    });
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,14 +84,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               const SizedBox(width: 10),
-              const SizedBox(
+              SizedBox(
                 width: 130,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Delivering to',
                       style: TextStyle(
                         color: Color(0xFF878787),
@@ -73,10 +102,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                     ),
-                    SizedBox(height: 3),
+                    const SizedBox(height: 3),
                     Text(
-                      'Table: 15489',
-                      style: TextStyle(
+                      'Table $tableCode',
+                      style: const TextStyle(
                         color: Colors.black,
                         fontSize: 10,
                         fontFamily: 'Inter',
@@ -229,10 +258,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: MediaQuery.sizeOf(context).width,
                 height: 100.0,
                 child: ListView.separated(
-                  itemBuilder: (context, index) => buildCategoriesWidget(),
+                  itemBuilder: (context, index) => buildCategoriesWidget(restaurants[index]),
                   separatorBuilder: (context, index) =>
                   const SizedBox(width: 10.0),
-                  itemCount: 5,
+                  itemCount: restaurants.length,
                   scrollDirection: Axis.horizontal,
                   physics: const BouncingScrollPhysics(),
                   shrinkWrap: true,
@@ -319,7 +348,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: MediaQuery.sizeOf(context).width,
                 child: ListView.separated(
                   itemBuilder: (context, index) =>
-                      buildRestaurantsWidget(context: context),
+                      buildRestaurantsWidget(context: context, restaurant: restaurants[index]),
                   separatorBuilder: (context, index) => const Padding(
                     padding: EdgeInsets.symmetric(vertical: 10.0),
                     child: Divider(
@@ -327,7 +356,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       color: Colors.grey,
                     ),
                   ),
-                  itemCount: 5,
+                  itemCount: restaurants.length,
                   scrollDirection: Axis.vertical,
                   physics: const BouncingScrollPhysics(),
                   shrinkWrap: true,
