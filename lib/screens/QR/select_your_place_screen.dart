@@ -112,7 +112,7 @@ class _SelectYourPlaceState extends State<SelectYourPlace> {
                                 if (!isScanCompleted) {
                                   isScanCompleted = true;
                                   String code = barcode.rawValue ?? "---";
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                     // ignore: use_build_context_synchronously
                                     context,
                                     MaterialPageRoute(
@@ -220,7 +220,7 @@ class _SelectYourPlaceState extends State<SelectYourPlace> {
                                   ),
                                   animationDuration: const Duration(milliseconds: 300),
                                   onCompleted: (value) {
-                                    Navigator.push(
+                                    Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) {
@@ -231,7 +231,7 @@ class _SelectYourPlaceState extends State<SelectYourPlace> {
                                     );
                                   },
                                   onSubmitted: (value) {
-                                    Navigator.push(
+                                    Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) {
