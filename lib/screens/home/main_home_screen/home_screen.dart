@@ -273,7 +273,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: MediaQuery.sizeOf(context).width,
                 height: 31.0,
                 child: ListView.separated(
-                  itemBuilder: (context, index) => buildHomeFilterWidget(filters[index], index),
+                  itemBuilder: (context, index) => buildHomeFilterWidget(filters[index], index, onPressed: () {  }),
                   separatorBuilder: (context, index) =>
                   const SizedBox(width: 10.0),
                   itemCount: 4,

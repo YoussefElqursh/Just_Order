@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:just_order/screens/home/main_home_screen/models/filter_model.dart';
 
-Widget buildHomeFilterWidget(FilterModel filter, int index) {
+Widget buildHomeFilterWidget(FilterModel filter, int index,{required void Function()? onPressed}) {
   return Container(
-    width: 125,
+    width: 135,
     height: 30,
-    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
     clipBehavior: Clip.antiAlias,
     decoration: ShapeDecoration(
       color: Colors.white,
@@ -18,38 +17,50 @@ Widget buildHomeFilterWidget(FilterModel filter, int index) {
         borderRadius: BorderRadius.circular(100),
       ),
     ),
-    child: Row(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Icon(
-          filter.prefix,
-          color: const Color(0xFF898888),
-          size: 15,
+    child: MaterialButton(
+      height: 30,
+      minWidth: 135,
+      shape: RoundedRectangleBorder(
+        side: const BorderSide(
+          width: 1,
+          strokeAlign: BorderSide.strokeAlignCenter,
+          color: Color(0x7FAFAFAF),
         ),
-        const SizedBox(width: 4),
-        Text(
-          filter.filterTitle,
-          style: const TextStyle(
-            color: Color(0xFF898888),
-            fontSize: 10,
-            fontFamily: 'Inter',
-            fontWeight: FontWeight.w500,
+        borderRadius: BorderRadius.circular(100),
+      ),
+      onPressed: onPressed,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Icon(
+            filter.prefix,
+            color: const Color(0xFF898888),
+            size: 15,
           ),
-          overflow: TextOverflow.ellipsis,
-          maxLines: 1,
-        ),
-        const SizedBox(width: 4),
-        index == 0 ?
-        Icon(
-          filter.suffix,
-          color: const Color(0xFF898888),
-          size: 15,
-        )
-            :
-            const SizedBox(),
-      ],
+          const SizedBox(width: 4),
+          Text(
+            filter.filterTitle,
+            style: const TextStyle(
+              color: Color(0xFF898888),
+              fontSize: 10,
+              fontFamily: 'Inter',
+              fontWeight: FontWeight.w500,
+            ),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+          ),
+          const SizedBox(width: 4),
+          index == 0 ?
+          Icon(
+            filter.suffix,
+            color: const Color(0xFF898888),
+            size: 15,
+          )
+              :
+              const SizedBox(),
+        ],
+      ),
     ),
   );
 }
