@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:just_order/models/restaurant_model.dart';
 
-Widget buildCategoriesWidget() {
+Widget buildCategoriesWidget(Restaurant restaurant) {
   return Stack(
     alignment: Alignment.topCenter,
     children: [
@@ -24,9 +25,9 @@ Widget buildCategoriesWidget() {
                 width: 70,
                 alignment: Alignment.bottomCenter,
                 padding: const EdgeInsets.only(left: 5, bottom: 10, right: 5),
-                child: const Text(
-                  'Pizza',
-                  style: TextStyle(
+                child: Text(
+                  restaurant.name,
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 10,
                     fontFamily: 'Inter',
@@ -44,8 +45,8 @@ Widget buildCategoriesWidget() {
         width: 70,
         height: 70,
         decoration: ShapeDecoration(
-          image: const DecorationImage(
-            image: NetworkImage("https://via.placeholder.com/70x70"),
+          image: DecorationImage(
+            image: NetworkImage(restaurant.imageUrl ?? 'https://via.placeholder.com/150'),
             fit: BoxFit.cover,
           ),
           shape: RoundedRectangleBorder(

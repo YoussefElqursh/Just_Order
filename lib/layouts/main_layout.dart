@@ -1,23 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:just_order/screens/account/main_account_screen/account_screen.dart';
-import 'package:just_order/screens/cart/my_cart_screen.dart';
 import 'package:just_order/screens/home/main_home_screen/home_screen.dart';
+import 'package:just_order/screens/order/orders/order_screen.dart';
 
 class MainLayout extends StatefulWidget {
-  const MainLayout({super.key, required this.code, required this.closeScreen});
-
-  final String code;
-  final Function() closeScreen;
+  const MainLayout({super.key});
 
   static const String routeName = 'MainLayoutRoute';
 
   static Route route() {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
-      builder: (context) => MainLayout(
-        code: '',
-        closeScreen: () {},
-      ),
+      builder: (context) => const MainLayout(),
     );
   }
 
@@ -30,8 +24,7 @@ class _MainLayoutState extends State<MainLayout> {
 
   final screens = [
     const HomeScreen(),
-    const HomeScreen(),
-    const MyCartScreen(),
+    const OrderScreen(),
     const AccountScreen(),
   ];
   @override
@@ -58,12 +51,7 @@ class _MainLayoutState extends State<MainLayout> {
           BottomNavigationBarItem(
             icon: Icon(Icons.search_outlined),
             activeIcon: Icon(Icons.search),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart_outlined),
-            activeIcon: Icon(Icons.shopping_cart),
-            label: 'Cart',
+            label: 'Orders',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person_outline),

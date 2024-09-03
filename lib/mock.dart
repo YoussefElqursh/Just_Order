@@ -1,7 +1,6 @@
 import 'package:just_order/models/cart_item_model.dart';
 import 'package:just_order/models/club_model.dart';
 import 'package:just_order/models/coupon_model.dart';
-import 'package:just_order/models/enums/item_type.dart';
 import 'package:just_order/models/enums/order_status.dart';
 import 'package:just_order/models/enums/payment_type.dart';
 import 'package:just_order/models/enums/user_type.dart';
@@ -215,32 +214,32 @@ class Mock {
     mock.item = Item(
       itemId: "1",
       name: "Chicken Burger",
-      type: ItemType.meal,
+      type: 'meal',
       description: "A delicious chicken burger",
       price: 10.0,
-      extras: ["Cheese", "Tomato", "Lettuce"],
       available: true,
-      mealDetails: mock.mealDetails,
+      category: 'Burger',
+      imageUrl: 'https://via.placeholder.com/150',
     );
     mock.item2 = Item(
       itemId: "2",
       name: "Beef Burger",
-      type: ItemType.meal,
+      type: 'meal',
       description: "A delicious beef burger",
       price: 15.0,
-      extras: ["Cheese", "Tomato", "Lettuce"],
       available: true,
-      mealDetails: mock.mealDetails2,
+      category: 'Burger',
+      imageUrl: 'https://via.placeholder.com/150',
     );
     mock.item3 = Item(
       itemId: "3",
       name: "Veggie Burger",
-      type: ItemType.meal,
+      type: 'meal',
       description: "A delicious veggie burger",
       price: 20.0,
-      extras: ["Cheese", "Tomato", "Lettuce"],
       available: true,
-      mealDetails: mock.mealDetails3,
+      category: 'Burger',
+      imageUrl: 'https://via.placeholder.com/150',
     );
 
     mock.invoice = Invoice(
@@ -298,31 +297,25 @@ class Mock {
       restaurantId: "1",
       name: "elKarawan",
       managerId: "1",
-      items: [
-        mock.item,
-        mock.item2,
-        mock.item3,
-      ],
+      itemIds: ['1', '2', '3'],
+      imageUrl: 'https://via.placeholder.com/150',
+      clubId: '1',
     );
     mock.restaurant2 = Restaurant(
       restaurantId: "2",
       name: "elKedawy",
       managerId: "2",
-      items: [
-        mock.item,
-        mock.item2,
-        mock.item3,
-      ],
+      itemIds: ['1', '2', '3'],
+      imageUrl: 'https://via.placeholder.com/150',
+      clubId: '2',
     );
     mock.restaurant3 = Restaurant(
       restaurantId: "3",
       name: "amraaelsham",
       managerId: "3",
-      items: [
-        mock.item,
-        mock.item2,
-        mock.item3,
-      ],
+      itemIds: ['1', '2', '3'],
+      imageUrl: 'https://via.placeholder.com/150',
+      clubId: '3',
     );
 
     mock.cartItem = CartItem(

@@ -3,39 +3,34 @@ import 'package:just_order/models/item_model.dart';
 import 'package:just_order/models/restaurant_model.dart';
 
 class UserRepository {
-  final FirebaseFirestore _firestore;
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  UserRepository({FirebaseFirestore? firestore})
-      : _firestore = firestore ?? FirebaseFirestore.instance;
+  Future<List<Restaurant>> getRestaurants(String code) async {
 
-// home screen //
-  Future<List<String>> getAllAdvertisements(String code) async {
-    final snapshot = await _firestore.collection('advertisements').get();
-    List<String> advertisements = [];
-    for (var doc in snapshot.docs) {
-      advertisements.add(doc.data()['imageURL']);
-    }
-    return advertisements;
-  }
+    String clubId = int.parse(code.substring(0, 2)).toString();
 
-  Future<List<Item>> getPobularItems(String code) async {
-    // logic to get popular items ****************
-    List<Item> items = [];
-    // for (var doc in snapshot.docs) {
-    //   items.add(Item.fromMap(doc.data()));
-    // }
-    return items;
-  }
-
-  Future<List<Restaurant>> getAllAccessRestaurants(String code) async {
-    final snapshot = await _firestore
+    QuerySnapshot snapshot = await firestore
         .collection('restaurants')
-        .where('code', isEqualTo: code)
+        .where('clubId', isEqualTo: clubId)
         .get();
+
     List<Restaurant> restaurants = [];
-    for (var doc in snapshot.docs) {
-      restaurants.add(Restaurant.fromMap(doc.data()));
-    }
+
+    snapshot.docs.forEach((doc) {
+      restaurants.add(Restaurant.fromMap(doc.data() as Map<String, dynamic>));
+    });
+
     return restaurants;
+  }
+
+  Future<List<Item>> getItems(List<String> itemIds) async {
+    List<Item> items = [];
+
+    for (String itemId in itemIds) {
+      DocumentSnapshot snapshot = await firestore.collection('items').doc(itemId).get();
+      items.add(Item.fromMap(snapshot.data() as Map<String, dynamic>));
+    }
+
+    return items;
   }
 }

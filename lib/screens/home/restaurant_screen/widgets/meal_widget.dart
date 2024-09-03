@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:just_order/shared/function/functions.dart';
+import 'package:just_order/models/item_model.dart';
 
 Widget buildMealWidget({
   required BuildContext context,
+  required Item item,
 }) {
   return GestureDetector(
     onTap: () {
-      navigateTo(context, 'MealDetailsScreenRoute');
+      Navigator.pushNamed(context, 'MealDetailsScreenRoute', arguments: item);
     },
     child: Row(
       children: [
@@ -17,8 +18,8 @@ Widget buildMealWidget({
               width: 100,
               height: 100,
               decoration: ShapeDecoration(
-                image: const DecorationImage(
-                  image: NetworkImage("https://via.placeholder.com/100x100"),
+                image: DecorationImage(
+                  image: NetworkImage(item.imageUrl),
                   fit: BoxFit.cover,
                 ),
                 shape: RoundedRectangleBorder(
@@ -46,7 +47,7 @@ Widget buildMealWidget({
               ),
               child: const Center(
                 child: Text(
-                  '10% Off',
+                  '0% Off',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 6,
@@ -63,14 +64,14 @@ Widget buildMealWidget({
           padding: const EdgeInsets.all(10.0),
           child: SizedBox(
             width: MediaQuery.sizeOf(context).width - 170,
-            child: const Column(
+            child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Chicken Ranch Pizza',
-                  style: TextStyle(
+                  item.name,
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 12,
                     fontFamily: 'Inter',
@@ -80,10 +81,10 @@ Widget buildMealWidget({
                   softWrap: true,
                   maxLines: 1,
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Text(
-                  'Juicy chicken, tangy ranch dressing, melted cheese, fresh vegetables, crispy pizza crust.',
-                  style: TextStyle(
+                  item.description,
+                  style: const TextStyle(
                     color: Color(0xFFAFAFAF),
                     fontSize: 10,
                     fontFamily: 'Inter',
@@ -93,12 +94,12 @@ Widget buildMealWidget({
                   softWrap: true,
                   maxLines: 3,
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Row(
                   children: [
                     Text(
-                      'EGP 120.00',
-                      style: TextStyle(
+                      'EGP ${item.price}',
+                      style: const TextStyle(
                         color: Colors.black,
                         fontSize: 10,
                         fontFamily: 'Inter',
@@ -107,9 +108,9 @@ Widget buildMealWidget({
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                     ),
-                    Spacer(),
-                    Text(
-                      'EGP 130.00',
+                    const Spacer(),
+                    const Text(
+                      'EGP 0.00',
                       style: TextStyle(
                         color: Color(0xFFE02C45),
                         fontSize: 10,

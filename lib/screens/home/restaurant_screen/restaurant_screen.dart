@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/screens/home/restaurant_screen/widgets/filter_widget.dart';
+import 'package:just_order/shared/function/functions.dart';
 
 class RestaurantScreen extends StatefulWidget {
-  const RestaurantScreen({super.key});
+  final Restaurant restaurant;
+  const RestaurantScreen({super.key, required this.restaurant});
 
   static const String routeName = 'RestaurantScreenRoute';
 
-  static Route route() {
+  static Route route(Restaurant restaurant) {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
-      builder: (context) => const RestaurantScreen(),
+      builder: (context) =>RestaurantScreen(restaurant: restaurant),
     );
   }
 
@@ -20,6 +23,7 @@ class RestaurantScreen extends StatefulWidget {
 class _RestaurantScreenState extends State<RestaurantScreen> {
   @override
   Widget build(BuildContext context) {
+    Restaurant restaurant = widget.restaurant;
     return DefaultTabController(
       length: 7,
       child: Scaffold(
@@ -39,10 +43,10 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                       Container(
                         width: double.infinity,
                         height: 250,
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           image: DecorationImage(
                             image: NetworkImage(
-                                "https://via.placeholder.com/360x250"),
+                                restaurant.imageUrl ?? 'https://via.placeholder.com/150'),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -54,9 +58,9 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                           width: 100,
                           height: 100,
                           decoration: ShapeDecoration(
-                            image: const DecorationImage(
+                            image: DecorationImage(
                               image: NetworkImage(
-                                  "https://via.placeholder.com/100x100"),
+                                  restaurant.imageUrl ?? 'https://via.placeholder.com/150'),
                               fit: BoxFit.fill,
                             ),
                             shape: RoundedRectangleBorder(
@@ -142,9 +146,9 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      const Text(
-                        'Pizza King',
-                        style: TextStyle(
+                      Text(
+                        restaurant.name,
+                        style: const TextStyle(
                           color: Colors.black,
                           fontSize: 18,
                           fontFamily: 'Inter',
@@ -355,13 +359,13 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                     height: MediaQuery.of(context).size.height,
                     child: TabBarView(
                       children: [
-                        buildFilterWidget(),
-                        buildFilterWidget(),
-                        buildFilterWidget(),
-                        buildFilterWidget(),
-                        buildFilterWidget(),
-                        buildFilterWidget(),
-                        buildFilterWidget(),
+                        FilterWidget(itemIds : restaurant.itemIds),
+                        FilterWidget(itemIds : restaurant.itemIds),
+                        FilterWidget(itemIds : restaurant.itemIds),
+                        FilterWidget(itemIds : restaurant.itemIds),
+                        FilterWidget(itemIds : restaurant.itemIds),
+                        FilterWidget(itemIds : restaurant.itemIds),
+                        FilterWidget(itemIds : restaurant.itemIds),
                       ],
                     ),
                   ),
@@ -369,6 +373,18 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
               ],
             ),
           ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: (){
+            navigateTo(context, 'MyCartScreenRoute');
+          },
+          backgroundColor: const Color(0xFFE02C45),
+          shape: const CircleBorder(
+            side: BorderSide(
+              color: Color(0xFFE02C45),
+            ),
+          ),
+          child: const Icon(Icons.shopping_bag_outlined, color: Colors.white, size: 18,),
         ),
       ),
     );

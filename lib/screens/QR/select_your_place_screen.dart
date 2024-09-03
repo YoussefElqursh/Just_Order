@@ -3,6 +3,7 @@ import 'package:just_order/layouts/main_layout.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:qr_scanner_overlay/qr_scanner_overlay.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SelectYourPlace extends StatefulWidget {
   const SelectYourPlace({super.key});
@@ -22,8 +23,18 @@ class SelectYourPlace extends StatefulWidget {
 
 class _SelectYourPlaceState extends State<SelectYourPlace> {
   bool isScanCompleted = false;
-
   MobileScannerController cameraController = MobileScannerController();
+  late SharedPreferences prefs;
+
+  @override
+  void initState() {
+    super.initState();
+    _initSharedPreferences();
+  }
+
+  Future<void> _initSharedPreferences() async {
+    prefs = await SharedPreferences.getInstance();
+  }
 
   void closeScreen() {
     isScanCompleted = false;
@@ -47,7 +58,7 @@ class _SelectYourPlaceState extends State<SelectYourPlace> {
       ),
       body: Container(
         width: MediaQuery.sizeOf(context).width,
-        alignment: Alignment.center,
+        alignment: Alignment.topCenter,
         padding: const EdgeInsets.all(20),
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
@@ -97,18 +108,17 @@ class _SelectYourPlaceState extends State<SelectYourPlace> {
                             MobileScanner(
                               controller: cameraController,
                               allowDuplicates: true,
-                              onDetect: (barcode, args) {
+                              onDetect: (barcode, args) async {
                                 if (!isScanCompleted) {
                                   isScanCompleted = true;
                                   String code = barcode.rawValue ?? "---";
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
+                                    // ignore: use_build_context_synchronously
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) {
-                                        return MainLayout(
-                                          code: code,
-                                          closeScreen: closeScreen,
-                                        );
+                                        prefs.setString('code', code);
+                                        return const MainLayout();
                                       },
                                     ),
                                   );
@@ -210,27 +220,23 @@ class _SelectYourPlaceState extends State<SelectYourPlace> {
                                   ),
                                   animationDuration: const Duration(milliseconds: 300),
                                   onCompleted: (value) {
-                                    Navigator.push(
+                                    Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) {
-                                          return MainLayout(
-                                            code: value,
-                                            closeScreen: closeScreen,
-                                          );
+                                          prefs.setString('code', value);
+                                          return const MainLayout();
                                         },
                                       ),
                                     );
                                   },
                                   onSubmitted: (value) {
-                                    Navigator.push(
+                                    Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) {
-                                          return MainLayout(
-                                            code: value,
-                                            closeScreen: closeScreen,
-                                          );
+                                          prefs.setString('code', value);
+                                          return const MainLayout();
                                         },
                                       ),
                                     );
