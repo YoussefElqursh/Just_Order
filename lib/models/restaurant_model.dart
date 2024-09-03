@@ -9,6 +9,8 @@ class Restaurant {
   String? imageUrl;
   String? location;
   List<String> itemIds;
+  double? deliveryFee;
+  int orderTimeOut;
 
   Restaurant({
     required this.restaurantId,
@@ -18,6 +20,8 @@ class Restaurant {
     this.imageUrl,
     this.location,
     required this.itemIds,
+    this.deliveryFee,
+    required this.orderTimeOut,
   });
 
   static Restaurant fromMap(Map<String, dynamic> data) {
@@ -29,6 +33,8 @@ class Restaurant {
       imageUrl: data['imageUrl'],
       location: data['location'],
       itemIds: List<String>.from(data['itemIds']),
+      deliveryFee: (data['deliveryFee'] as num?)?.toDouble(),
+      orderTimeOut: (data['orderTimeOut'] as num).toInt(),
     );
   }
 
@@ -46,6 +52,8 @@ class Restaurant {
       'imageUrl': imageUrl,
       'location': location,
       'itemIds': itemIds,
+      'deliveryFee': deliveryFee,
+      'orderTimeOut': orderTimeOut,
     };
   }
 

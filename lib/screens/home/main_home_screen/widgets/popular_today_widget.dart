@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:just_order/shared/function/functions.dart';
+import 'package:just_order/models/restaurant_model.dart';
 
 Widget buildPopularTodayWidget({
   required BuildContext context,
+  required Restaurant restaurant,
 }) {
   return GestureDetector(
     onTap: () {
-      navigateTo(context, 'RestaurantScreenRoute');
+      Navigator.pushNamed(context, 'RestaurantScreenRoute', arguments: restaurant);
     },
     child: Column(
       children: [
@@ -16,12 +17,12 @@ Widget buildPopularTodayWidget({
             Container(
               width: 155,
               height: 120,
-              decoration: const ShapeDecoration(
+              decoration: ShapeDecoration(
                 image: DecorationImage(
-                  image: NetworkImage("https://via.placeholder.com/155x120"),
+                  image: NetworkImage(restaurant.imageUrl!),
                   fit: BoxFit.cover,
                 ),
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                   side: BorderSide(
                     width: 1.50,
                     strokeAlign: BorderSide.strokeAlignCenter,
@@ -70,9 +71,9 @@ Widget buildPopularTodayWidget({
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Havarti',
-                  style: TextStyle(
+                Text(
+                  restaurant.name,
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 12,
                     fontFamily: 'Inter',

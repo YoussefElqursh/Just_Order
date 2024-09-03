@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:just_order/models/restaurant_model.dart';
@@ -54,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  void _openBottomSheet(BuildContext context) {
+  void openBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
       builder: (_) {
@@ -103,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 36,
                 child: MaterialButton(
                   onPressed: () {
-                    _openBottomSheet(context);
+                    openBottomSheet(context);
                   },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -354,10 +356,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 201.0,
                 child: ListView.separated(
                   itemBuilder: (context, index) =>
-                      buildPopularTodayWidget(context: context),
+                      buildPopularTodayWidget(context: context, restaurant: restaurants[index]),
                   separatorBuilder: (context, index) =>
                       const SizedBox(width: 10.0),
-                  itemCount: 5,
+                  itemCount: min(restaurants.length, 5),
                   scrollDirection: Axis.horizontal,
                   physics: const BouncingScrollPhysics(),
                   shrinkWrap: true,

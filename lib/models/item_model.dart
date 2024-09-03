@@ -7,6 +7,8 @@ class Item {
   String description;
   String type;
   String category;
+  Map<String, double>? sizes;
+  Map<String, double>? extras;
 
   Item({
     required this.itemId,
@@ -17,6 +19,8 @@ class Item {
     required this.description,
     required this.type,
     required this.category,
+    this.sizes,
+    this.extras,
   });
 
   static Item fromMap(Map<String, dynamic> item) {
@@ -29,6 +33,14 @@ class Item {
       description: item['description'],
       type: item['type'],
       category: item['category'],
+      sizes: item['sizes'] != null
+          ? (item['sizes'] as Map<String, dynamic>).map(
+              (key, value) => MapEntry(key, (value as num).toDouble()))
+          : null,
+      extras: item['extras'] != null
+          ? (item['extras'] as Map<String, dynamic>).map(
+              (key, value) => MapEntry(key, (value as num).toDouble()))
+          : null,
     );
   }
 
@@ -42,6 +54,8 @@ class Item {
       'description': description,
       'type': type,
       'category': category,
+      'sizes': sizes,
+      'extras': extras,
     };
   }
 
@@ -55,6 +69,8 @@ class Item {
       'description': description,
       'type': type,
       'category': category,
+      'sizes': sizes,
+      'extras': extras,
     };
   }
 }

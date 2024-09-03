@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:just_order/models/user_model.dart';
 import 'package:just_order/screens/account/main_account_screen/widgets/account_functions_widget.dart';
 import 'package:just_order/shared/function/functions.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -10,6 +14,26 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
+  User? user;
+
+  @override
+  void initState() {
+    super.initState();
+    _UserFromPreferences();
+  }
+
+  // ignore: non_constant_identifier_names
+  Future<void> _UserFromPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    final userString = prefs.getString('user');
+    if (userString != null) {
+      final user = User.fromJson(jsonDecode(userString));
+      setState(() {
+        this.user = user;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,23 +51,23 @@ class _AccountScreenState extends State<AccountScreen> {
                 SizedBox(
                   height: MediaQuery.sizeOf(context).width * 0.15,
                 ),
-                Container(
-                  width: 80,
-                  height: 80,
-                  decoration: ShapeDecoration(
-                    image: const DecorationImage(
-                      image: NetworkImage("https://via.placeholder.com/80x80"),
-                      fit: BoxFit.fill,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(100),
+                CircleAvatar(
+                  radius: 40,
+                  backgroundColor: Colors.grey[200],
+                  child: Text(
+                    user != null ? user!.firstName[0] : '',
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 40,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
                 const SizedBox(height: 10.0),
-                const Text(
-                  'James David',
-                  style: TextStyle(
+                Text(
+                  '${user?.firstName} ${user?.lastName}',
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 14,
                     fontFamily: 'Inter',
@@ -53,9 +77,9 @@ class _AccountScreenState extends State<AccountScreen> {
                   maxLines: 1,
                 ),
                 const SizedBox(height: 5.0),
-                const Text(
-                  'james.david2314@gmail.com',
-                  style: TextStyle(
+                Text(
+                  user?.email ?? '',
+                  style: const TextStyle(
                     color: Color(0xFFAFAFAF),
                     fontSize: 10,
                     fontFamily: 'Inter',

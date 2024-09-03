@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:just_order/models/cart_item_model.dart';
 
 Widget buildOrderCartWidget({
   required BuildContext context,
   required void Function()? onPressed1,
   required void Function()? onPressed2,
   required int counter,
+  required CartItem cartItem,
 }) {
   return Row(
     mainAxisSize: MainAxisSize.min,
@@ -15,8 +17,8 @@ Widget buildOrderCartWidget({
         width: 70,
         height: 70,
         decoration: ShapeDecoration(
-          image: const DecorationImage(
-            image: NetworkImage("https://via.placeholder.com/70x70"),
+          image: DecorationImage(
+            image: NetworkImage(cartItem.item.imageUrl),
             fit: BoxFit.cover,
           ),
           shape: RoundedRectangleBorder(
@@ -37,9 +39,9 @@ Widget buildOrderCartWidget({
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const Text(
-                'Chicken Ranch Pizza',
-                style: TextStyle(
+              Text(
+                cartItem.item.name,
+                style: const TextStyle(
                   color: Colors.black,
                   fontSize: 12,
                   fontFamily: 'Inter',
@@ -49,9 +51,9 @@ Widget buildOrderCartWidget({
                 maxLines: 1,
               ),
               const SizedBox(height: 5.0),
-              const Text(
-                'Medium, Extra medium cheese.',
-                style: TextStyle(
+              Text(
+                cartItem.extras!.keys.join(', '),
+                style: const TextStyle(
                   color: Color(0xFFAFAFAF),
                   fontSize: 10,
                   fontFamily: 'Inter',
@@ -61,13 +63,24 @@ Widget buildOrderCartWidget({
                 maxLines: 1,
               ),
               const SizedBox(height: 5.0),
+              Text(
+                cartItem.size!.keys.join(', '),
+                style: const TextStyle(
+                  color: Color(0xFFAFAFAF),
+                  fontSize: 10,
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.w400,
+                ),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+              ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  const Text(
-                    'EGP 300.00',
-                    style: TextStyle(
+                  Text(
+                    'EGP ${cartItem.totalPrice}',
+                    style: const TextStyle(
                       color: Colors.black,
                       fontSize: 10,
                       fontFamily: 'Inter',

@@ -112,7 +112,7 @@ Widget buildRestaurantsWidget({
                   ],
                 ),
                 const SizedBox(height: 5),
-                const Row(
+                Row(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -122,15 +122,15 @@ Widget buildRestaurantsWidget({
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.timer_outlined,
                           color: Color(0xFFE02C45),
                           size: 15,
                         ),
-                        SizedBox(width: 6),
+                        const SizedBox(width: 6),
                         Text(
-                          '21 mins',
-                          style: TextStyle(
+                          restaurant.orderTimeOut.toString(),
+                          style: const TextStyle(
                             color: Colors.black,
                             fontSize: 10,
                             fontFamily: 'Inter',
@@ -141,8 +141,8 @@ Widget buildRestaurantsWidget({
                         ),
                       ],
                     ),
-                    SizedBox(width: 6),
-                    Text(
+                    const SizedBox(width: 6),
+                    const Text(
                       '•',
                       style: TextStyle(
                         color: Color(0xFFAFAFAF),
@@ -153,21 +153,21 @@ Widget buildRestaurantsWidget({
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                     ),
-                    SizedBox(width: 6),
+                    const SizedBox(width: 6),
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.delivery_dining_outlined,
                           color: Color(0xFFE02C45),
                           size: 15,
                         ),
-                        SizedBox(width: 6),
+                        const SizedBox(width: 6),
                         Text(
-                          'Free',
-                          style: TextStyle(
+                          (restaurant.deliveryFee != null) ? 'EGP ${restaurant.deliveryFee}' : 'Free',
+                          style: const TextStyle(
                             color: Colors.black,
                             fontSize: 10,
                             fontFamily: 'Inter',

@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:just_order/models/cart_item_model.dart';
 import 'package:just_order/models/item_model.dart';
+import 'package:just_order/models/restaurant_model.dart';
+import 'package:just_order/repository/cart_provider.dart';
 import 'package:just_order/shared/function/functions.dart';
 import 'package:just_order/shared/widget/custom_check_box_button_widget.dart';
 import 'package:just_order/shared/widget/custom_radio_button_widget.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MealDetailsScreen extends StatefulWidget {
   final Item item;
@@ -23,9 +28,63 @@ class MealDetailsScreen extends StatefulWidget {
 
 class _MealDetailsScreenState extends State<MealDetailsScreen> {
   int counter = 1;
-  bool isChecked = false;
-  bool isChecked1 = false;
-  String mealSize = '';
+  String? selectedSize;
+  Map<String, double> selectedExtras = {};
+  double totalPrice = 0.0;
+  double price = 0.0;
+
+  @override
+  void initState() {
+    super.initState();
+    price = widget.item.price;
+    if (widget.item.sizes != null && widget.item.sizes!.isNotEmpty) {
+      selectedSize = widget.item.sizes!.keys.first;
+      price = widget.item.sizes![selectedSize]!;
+      totalPrice = price;
+    } else {
+      totalPrice = widget.item.price;
+    }
+  }
+
+  void updateTotalPrice() {
+    double basePrice = selectedSize != null
+        ? widget.item.sizes![selectedSize]!
+        : widget.item.price;
+    double extrasPrice =
+        selectedExtras.values.fold(0.0, (sum, item) => sum + item);
+    totalPrice = (basePrice + extrasPrice) * counter;
+  }
+
+  updatePrice() {
+    if (selectedSize != null) {
+      price = widget.item.sizes![selectedSize]!;
+    } else {
+      price = widget.item.price;
+    }
+  }
+
+  void _addToCart() async {
+    final prefs = await SharedPreferences.getInstance();
+    final restaurantString = prefs.getString('restaurant');
+    Restaurant? resturant;
+    if (restaurantString != null) {
+      setState(() {
+        resturant = Restaurant.fromJson(restaurantString);
+      });
+    }
+    final cartProvider = Provider.of<CartProvider>(context, listen: false);
+    final cartItem = CartItem(
+      cartItemId: '${UniqueKey().toString()}_${resturant?.restaurantId}',
+      item: widget.item,
+      quantity: counter,
+      price: price,
+      extras: selectedExtras,
+      size: selectedSize != null ? {selectedSize!: price} : null,
+    );
+    cartProvider.addItem(cartItem);
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final Item item = widget.item;
@@ -170,7 +229,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
-                            item.price.toString(),
+                            'EGP ${price.toStringAsFixed(2)}',
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 14,
@@ -196,107 +255,19 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 26.0),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const Column(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Pizza Size',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w600,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                              ),
-                              SizedBox(height: 6),
-                              Text(
-                                'Choose 1 option ',
-                                style: TextStyle(
-                                  color: Color(0xFFAFAFAF),
-                                  fontSize: 12,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                              ),
-                            ],
-                          ),
-                          const Spacer(),
-                          Container(
-                            width: 63,
-                            height: 23,
-                            clipBehavior: Clip.antiAlias,
-                            decoration: ShapeDecoration(
-                              color: const Color(0x0CE02C45),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50),
-                              ),
-                            ),
-                            child: const Center(
-                              child: Text(
-                                'Required',
-                                style: TextStyle(
-                                  color: Color(0xFFE02C45),
-                                  fontSize: 10,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 16.0),
-                      customRadioButtonWidget(
-                          context: context,
-                          width: MediaQuery.sizeOf(context).width,
-                          hasDivider: true,
-                          label: 'Medium',
-                          groupName: mealSize,
-                          value: 'Medium',
-                          onChanged: (value) {
-                            setState(() {
-                              mealSize = value.toString();
-                            });
-                          }),
-                      const SizedBox(height: 10.0),
-                      customRadioButtonWidget(
-                          context: context,
-                          width: MediaQuery.sizeOf(context).width,
-                          hasDivider: false,
-                          hasExtraText: true,
-                          extraText: '(+EGP 60.00)',
-                          label: 'Large',
-                          groupName: mealSize,
-                          value: 'Large',
-                          onChanged: (value) {
-                            setState(() {
-                              mealSize = value.toString();
-                            });
-                          }),
-                      const SizedBox(height: 26.0),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const Column(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('Extras',
+                      if (item.sizes != null && item.sizes!.isNotEmpty) ...[
+                        const SizedBox(height: 26.0),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Pizza Size',
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 14,
@@ -304,9 +275,11 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                     fontWeight: FontWeight.w600,
                                   ),
                                   overflow: TextOverflow.ellipsis,
-                                  maxLines: 1),
-                              SizedBox(height: 6),
-                              Text('Choose up to 1 option ',
+                                  maxLines: 1,
+                                ),
+                                SizedBox(height: 6),
+                                Text(
+                                  'Choose 1 option ',
                                   style: TextStyle(
                                     color: Color(0xFFAFAFAF),
                                     fontSize: 12,
@@ -314,63 +287,143 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                     fontWeight: FontWeight.w400,
                                   ),
                                   overflow: TextOverflow.ellipsis,
-                                  maxLines: 1),
-                            ],
-                          ),
-                          const Spacer(),
-                          Container(
-                            width: 63,
-                            height: 23,
-                            clipBehavior: Clip.antiAlias,
-                            decoration: ShapeDecoration(
-                              color: const Color(0xFFF4F4F4),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50),
-                              ),
-                            ),
-                            child: const Center(
-                              child: Text(
-                                'Optional',
-                                style: TextStyle(
-                                  color: Color(0xFF898888),
-                                  fontSize: 10,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w500,
+                                  maxLines: 1,
                                 ),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
+                              ],
+                            ),
+                            const Spacer(),
+                            Container(
+                              width: 63,
+                              height: 23,
+                              clipBehavior: Clip.antiAlias,
+                              decoration: ShapeDecoration(
+                                color: const Color(0x0CE02C45),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                              ),
+                              child: const Center(
+                                child: Text(
+                                  'Required',
+                                  style: TextStyle(
+                                    color: Color(0xFFE02C45),
+                                    fontSize: 10,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
                               ),
                             ),
+                          ],
+                        ),
+                        const SizedBox(height: 16.0),
+                        for (var size in item.sizes!.keys) ...[
+                          customRadioButtonWidget(
+                            context: context,
+                            hasExtraText: true,
+                            extraText:
+                                '(+EGP ${item.sizes![size]!.toStringAsFixed(2)})',
+                            width: MediaQuery.sizeOf(context).width,
+                            hasDivider: true,
+                            label: size,
+                            value: size,
+                            groupName: selectedSize,
+                            onChanged: (value) {
+                              setState(() {
+                                selectedSize = value;
+                                updateTotalPrice();
+                                updatePrice();
+                              });
+                            },
                           ),
+                          const SizedBox(height: 10.0),
                         ],
-                      ),
-                      const SizedBox(height: 25.0),
-                      customCheckBoxButtonWidget(
-                        context: context,
-                        hasExtraText: true,
-                        extraText: '(+EGP 30.00)',
-                        label: 'Extra medium cheese',
-                        value: isChecked,
-                        onChanged: (value) {
-                          setState(() {
-                            isChecked = !isChecked;
-                          });
-                        },
-                      ),
-                      const SizedBox(height: 10.0),
-                      customCheckBoxButtonWidget(
-                        context: context,
-                        hasDivider: false,
-                        hasExtraText: true,
-                        extraText: '(+EGP 40.00)',
-                        label: 'Extra large cheese',
-                        value: isChecked1,
-                        onChanged: (value) {
-                          setState(() {
-                            isChecked1 = !isChecked1;
-                          });
-                        },
-                      ),
+                      ],
+                      if (item.extras != null && item.extras!.isNotEmpty) ...[
+                        const SizedBox(height: 26.0),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Extras',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1),
+                                SizedBox(height: 6),
+                                Text('Choose up to 1 option ',
+                                    style: TextStyle(
+                                      color: Color(0xFFAFAFAF),
+                                      fontSize: 12,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1),
+                              ],
+                            ),
+                            const Spacer(),
+                            Container(
+                              width: 63,
+                              height: 23,
+                              clipBehavior: Clip.antiAlias,
+                              decoration: ShapeDecoration(
+                                color: const Color(0xFFF4F4F4),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                              ),
+                              child: const Center(
+                                child: Text(
+                                  'Optional',
+                                  style: TextStyle(
+                                    color: Color(0xFF898888),
+                                    fontSize: 10,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 25.0),
+                        for (var extra in item.extras!.keys) ...[
+                          customCheckBoxButtonWidget(
+                            context: context,
+                            hasExtraText: true,
+                            extraText:
+                                '(+EGP ${item.extras![extra]!.toStringAsFixed(2)})',
+                            label: extra,
+                            value: selectedExtras.containsKey(extra),
+                            onChanged: (value) {
+                              setState(() {
+                                if (value != null && value) {
+                                  selectedExtras.putIfAbsent(
+                                      extra, () => item.extras![extra]!);
+                                } else {
+                                  selectedExtras.remove(extra);
+                                }
+                                updateTotalPrice();
+                              });
+                            },
+                          ),
+                          const SizedBox(height: 10.0),
+                        ],
+                      ],
                     ],
                   ),
                 ),
@@ -414,7 +467,8 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                             child: IconButton(
                               onPressed: () {
                                 setState(() {
-                                  counter--;
+                                  if (counter > 1) counter--;
+                                  updateTotalPrice();
                                 });
                               },
                               icon: const Icon(
@@ -455,6 +509,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                               onPressed: () {
                                 setState(() {
                                   counter++;
+                                  updateTotalPrice();
                                 });
                               },
                               icon: const Icon(
@@ -475,20 +530,18 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                       ),
                       const SizedBox(height: 20.0),
                       MaterialButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
+                        onPressed: _addToCart,
                         height: 42,
                         minWidth: MediaQuery.sizeOf(context).width,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(6)),
                         color: const Color(0xFFE02C45),
-                        child: const Row(
+                        child: Row(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text('Add to Cart ',
+                            const Text('Add to Cart ',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 14,
@@ -497,9 +550,9 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                 ),
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1),
-                            Spacer(),
-                            Text('EGP 300.00',
-                                style: TextStyle(
+                            const Spacer(),
+                            Text('EGP ${totalPrice.toStringAsFixed(2)}',
+                                style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 14,
                                   fontFamily: 'Inter',
@@ -507,8 +560,8 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                 ),
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1),
-                            SizedBox(width: 2),
-                            Text('EGP 320.00',
+                            const SizedBox(width: 2),
+                            const Text('EGP 0.00',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 10,
@@ -532,7 +585,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
+        onPressed: () {
           navigateTo(context, 'MyCartScreenRoute');
         },
         backgroundColor: const Color(0xFFE02C45),
@@ -541,7 +594,11 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
             color: Color(0xFFE02C45),
           ),
         ),
-        child: const Icon(Icons.shopping_bag_outlined, color: Colors.white, size: 18,),
+        child: const Icon(
+          Icons.shopping_bag_outlined,
+          color: Colors.white,
+          size: 18,
+        ),
       ),
     );
   }
