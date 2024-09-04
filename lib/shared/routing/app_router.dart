@@ -9,6 +9,7 @@ import 'package:just_order/screens/order/order_state/order_details_screen.dart';
 import 'package:just_order/screens/order/order_state/pending_order_screen.dart';
 import 'package:just_order/screens/order/order_state/preparing_order_screen.dart';
 import 'package:just_order/screens/order/orders/order_screen.dart';
+import 'package:just_order/screens/sign_up/sign_up_screen.dart';
 import 'package:just_order/screens/splash/splash_screen.dart';
 import 'package:just_order/screens/account/my_profile_screen/profile_screen.dart';
 import 'package:just_order/screens/QR/select_your_place_screen.dart';
@@ -71,6 +72,8 @@ class AppRouter {
         return OrderDetailsScreen.route();
       case 'LoginScreenRoute':
         return LoginScreen.route();
+      case 'SignUpScreenRoute':
+        return SignUpScreen.route();
       case 'ProfileScreenRoute':
         return ProfileScreen.route();
       default:
