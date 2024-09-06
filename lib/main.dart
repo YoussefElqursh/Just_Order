@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:just_order/blocs/login_cubit/login_cubit.dart';
+import 'package:just_order/blocs/sign_up_cubit/sign_up_cubit.dart';
 import 'package:just_order/repository/auth_repository/login_repository.dart';
 import 'package:just_order/repository/cart_provider.dart';
 import 'package:just_order/screens/splash/splash_screen.dart';
@@ -31,6 +32,9 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => LoginCubit(LoginRepository()),
+        ),
+        BlocProvider(
+          create: (context) => SignUpCubit(),
         ),
       ],
       child: ScreenUtilInit(
