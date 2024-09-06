@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:just_order/models/cart_item_model.dart';
+import 'package:just_order/models/invoice_model.dart';
 import 'package:just_order/models/item_model.dart';
 import 'package:just_order/models/restaurant_model.dart';
+import 'package:just_order/models/order_model.dart' as order_model;
 
 class UserRepository {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -32,5 +35,17 @@ class UserRepository {
     }
 
     return items;
+  }
+
+  Future<String> pushOrder(order_model.Order order, List<CartItem> cartItems, Invoice invoice) async {
+    await firestore.collection('orders').doc(order.orderId).set(order.toMap());
+    for (CartItem cartItem in cartItems) {
+      String cartItemId = firestore.collection('orders').doc(order.orderId).collection('cartItems').doc().id;
+      cartItem.cartItemId = cartItemId;
+      await firestore.collection('orders').doc(order.orderId).collection('cartItems').doc(cartItem.cartItemId).set(cartItem.toMap());
+    }
+    await firestore.collection('invoices').doc(order.orderId).set(invoice.toMap());
+
+    return 'Order placed successfully with order id: ${order.orderId} and invoice id: ${invoice.invoiceId} and cart items: ${cartItems.length}';
   }
 }

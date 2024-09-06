@@ -1,16 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:just_order/models/cart_item_model.dart';
+import 'package:just_order/models/invoice_model.dart';
+import 'package:just_order/models/order_model.dart';
+import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/screens/order/widgets/order_components_widget.dart';
-import 'package:just_order/shared/function/functions.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OrderSummaryScreen extends StatefulWidget {
-  const OrderSummaryScreen({super.key});
+  final Order order;
+  final List<CartItem> cartItems;
+  final Invoice invoice;
+  const OrderSummaryScreen(
+      {super.key,
+      required this.order,
+      required this.cartItems,
+      required this.invoice});
 
   static const String routeName = 'OrderSummaryScreenRoute';
 
-  static Route route() {
+  static Route route(
+      {required Order order,
+      required List<CartItem> cartItems,
+      required Invoice invoice}) {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
-      builder: (context) => const OrderSummaryScreen(),
+      builder: (context) => OrderSummaryScreen(
+        order: order,
+        cartItems: cartItems,
+        invoice: invoice,
+      ),
     );
   }
 
@@ -19,6 +37,24 @@ class OrderSummaryScreen extends StatefulWidget {
 }
 
 class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
+  Restaurant? restaurant;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadRestaurant();
+  }
+
+  Future<void> _loadRestaurant() async {
+    final prefs = await SharedPreferences.getInstance();
+    final restaurantString = prefs.getString('restaurant');
+    if (restaurantString != null) {
+      setState(() {
+        restaurant = Restaurant.fromJson(restaurantString);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,9 +133,11 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                                 width: 50,
                                 height: 50,
                                 decoration: ShapeDecoration(
-                                  image: const DecorationImage(
+                                  image: DecorationImage(
                                     image: NetworkImage(
-                                        "https://via.placeholder.com/50x50"),
+                                      restaurant?.imageUrl ??
+                                          'https://via.placeholder.com/150',
+                                    ),
                                     fit: BoxFit.fill,
                                   ),
                                   shape: RoundedRectangleBorder(
@@ -112,16 +150,16 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                                   ),
                                 ),
                               ),
-                              const Padding(
-                                padding: EdgeInsets.symmetric(
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 12.0, vertical: 10.0),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Pizza King',
-                                      style: TextStyle(
+                                      restaurant?.name ?? 'Restaurant Name',
+                                      style: const TextStyle(
                                         color: Colors.black,
                                         fontSize: 12,
                                         fontFamily: 'Inter',
@@ -130,8 +168,8 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 1,
                                     ),
-                                    SizedBox(height: 5.0),
-                                    Text(
+                                    const SizedBox(height: 5.0),
+                                    const Text(
                                       'Pizza, Pies, Crepes ',
                                       style: TextStyle(
                                         color: Color(0xFFAFAFAF),
@@ -156,10 +194,10 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                         const SizedBox(height: 25.0),
                         SizedBox(
                           width: MediaQuery.sizeOf(context).width,
-                          child: const Text.rich(
+                          child: Text.rich(
                             TextSpan(
                               children: [
-                                TextSpan(
+                                const TextSpan(
                                   text: 'Items ',
                                   style: TextStyle(
                                     color: Colors.black,
@@ -169,8 +207,8 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                                   ),
                                 ),
                                 TextSpan(
-                                  text: '(3 Items)',
-                                  style: TextStyle(
+                                  text: '(${widget.cartItems.length})',
+                                  style: const TextStyle(
                                     color: Colors.black,
                                     fontSize: 12,
                                     fontFamily: 'Inter',
@@ -188,10 +226,11 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                           width: MediaQuery.sizeOf(context).width,
                           child: ListView.separated(
                             itemBuilder: (context, index) =>
-                                buildOrderComponentsWidget(),
+                                buildOrderComponentsWidget(
+                                    widget.cartItems[index]),
                             separatorBuilder: (context, index) =>
                                 const SizedBox(height: 16.0),
-                            itemCount: 3,
+                            itemCount: widget.cartItems.length,
                             scrollDirection: Axis.vertical,
                             physics: const BouncingScrollPhysics(),
                             shrinkWrap: true,
@@ -211,12 +250,12 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: SizedBox(
                     width: MediaQuery.sizeOf(context).width,
-                    child: const Column(
+                    child: Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Payment Summary',
                           style: TextStyle(
                             color: Colors.black,
@@ -227,13 +266,13 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                         ),
-                        SizedBox(height: 16),
+                        const SizedBox(height: 16),
                         Row(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text(
+                            const Text(
                               'Subtotal',
                               style: TextStyle(
                                 color: Colors.black,
@@ -246,8 +285,8 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                             ),
                             Spacer(),
                             Text(
-                              'EGP 1150.00',
-                              style: TextStyle(
+                              'EGP ${widget.cartItems.fold(0.0, (previousValue, element) => previousValue + element.totalPrice)}',
+                              style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 12,
                                 fontFamily: 'Inter',
@@ -258,13 +297,13 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 12),
+                        const SizedBox(height: 12),
                         Row(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text(
+                            const Text(
                               'Delivery Fee',
                               style: TextStyle(
                                 color: Colors.black,
@@ -277,8 +316,8 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                             ),
                             Spacer(),
                             Text(
-                              'EGP 30.00',
-                              style: TextStyle(
+                              'EGP ${restaurant?.deliveryFee}',
+                              style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 12,
                                 fontFamily: 'Inter',
@@ -289,14 +328,14 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 12),
+                        const SizedBox(height: 12),
                         Row(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text(
-                              'Discount',
+                            const Text(
+                              'Service Fee',
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 12,
@@ -306,10 +345,10 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
                             ),
-                            Spacer(),
+                            const Spacer(),
                             Text(
-                              ' - EGP 15.00',
-                              style: TextStyle(
+                              'EGP ${widget.invoice.serviceFees}',
+                              style: const TextStyle(
                                 color: Color(0xFFE02C45),
                                 fontSize: 12,
                                 fontFamily: 'Inter',
@@ -320,13 +359,13 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 12),
+                        const SizedBox(height: 12),
                         Row(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text(
+                            const Text(
                               'Payment Method',
                               style: TextStyle(
                                 color: Colors.black,
@@ -336,11 +375,11 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                                 height: 0,
                               ),
                             ),
-                            Spacer(),
+                            const Spacer(),
                             Text(
-                              'Credit Card',
+                              widget.order.paymentType.name,
                               textAlign: TextAlign.right,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 12,
                                 fontFamily: 'Inter',
@@ -350,18 +389,18 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 12),
-                        Divider(
+                        const SizedBox(height: 12),
+                        const Divider(
                           height: 1,
                           color: Color(0x4CC8C8C8),
                         ),
-                        SizedBox(height: 12),
+                        const SizedBox(height: 12),
                         Row(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text(
+                            const Text(
                               'Total',
                               style: TextStyle(
                                 color: Colors.black,
@@ -372,10 +411,10 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
                             ),
-                            Spacer(),
+                            const Spacer(),
                             Text(
-                              'EGP 1165.00',
-                              style: TextStyle(
+                              'EGP ${widget.order.totalAmount}',
+                              style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 14,
                                 fontFamily: 'Inter',
@@ -395,7 +434,12 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                       horizontal: 20.0, vertical: 20.0),
                   child: MaterialButton(
                     onPressed: () {
-                      navigateTo(context, 'OrderConfirmedScreenRoute');
+                      Navigator.pushNamed(context, 'OrderConfirmedScreenRoute',
+                          arguments: {
+                            'order': widget.order,
+                            'cartItems': widget.cartItems,
+                            'invoice': widget.invoice,
+                          });
                     },
                     height: 42,
                     minWidth: MediaQuery.sizeOf(context).width,

@@ -1,10 +1,18 @@
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:just_order/models/enums/payment_type.dart';
+import 'package:just_order/models/enums/status.dart';
+import 'package:just_order/models/invoice_model.dart';
+import 'package:just_order/models/order_status.dart';
 import 'package:just_order/models/restaurant_model.dart';
+import 'package:just_order/models/user_model.dart';
 import 'package:just_order/repository/cart_provider.dart';
 import 'package:just_order/screens/cart/widgets/order_cart_widget.dart';
-import 'package:just_order/shared/function/functions.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:just_order/models/order_model.dart' as myOrder;
 
 class MyCartScreen extends StatefulWidget {
   const MyCartScreen({super.key});
@@ -24,19 +32,26 @@ class MyCartScreen extends StatefulWidget {
 
 class _MyCartScreenState extends State<MyCartScreen> {
   Restaurant? restaurant;
+  User? user;
 
   @override
   void initState() {
     super.initState();
-    _loadRestaurant();
+    _loadRestaurantAndUser();
   }
 
-  Future<void> _loadRestaurant() async {
+  Future<void> _loadRestaurantAndUser() async {
     final prefs = await SharedPreferences.getInstance();
     final restaurantString = prefs.getString('restaurant');
+    final userString = prefs.getString('user');
     if (restaurantString != null) {
       setState(() {
         restaurant = Restaurant.fromJson(restaurantString);
+      });
+    }
+    if (userString != null) {
+      setState(() {
+        user = User.fromJson(jsonDecode(userString));
       });
     }
   }
@@ -387,7 +402,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            'Discount',
+                            'Service Fees',
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 12,
@@ -399,7 +414,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                           ),
                           Spacer(),
                           Text(
-                            'EGP 0.00',
+                            'EGP 10.00',
                             style: TextStyle(
                               color: Color(0xFFE02C45),
                               fontSize: 12,
@@ -435,7 +450,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                           ),
                           const Spacer(),
                           Text(
-                            'EGP ${(filteredItems.fold(0.0, (sum, item) => sum + item.totalPrice) + (restaurant?.deliveryFee ?? 0.0)).toStringAsFixed(2)}',
+                            'EGP ${(filteredItems.fold(0.0, (sum, item) => sum + item.totalPrice) + 10.0 + (restaurant?.deliveryFee ?? 0.0)).toStringAsFixed(2)}',
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 14,
@@ -462,7 +477,35 @@ class _MyCartScreenState extends State<MyCartScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: MaterialButton(
                   onPressed: () {
-                    navigateTo(context, 'PayMethodScreenRoute');
+                    final invoice = Invoice(
+                      invoiceId: FirebaseFirestore.instance.collection('invoices').doc().id,
+                      orderId:'testOrderId',
+                      clubId: restaurant?.clubId ?? 'clubId',
+                      restaurantId: restaurant?.restaurantId ?? 'restaurantId',
+                      serviceFees: 10.0,
+                      totalFees: 10.0 + (restaurant?.deliveryFee ?? 0.0),
+                      createdAt: DateTime.now(),
+                    );
+                    final order = myOrder.Order(
+                      orderId: FirebaseFirestore.instance.collection('orders').doc().id,
+                      userId: user?.userId ?? 'userId',
+                      clubId: restaurant?.clubId ?? 'clubId',
+                      restaurantId: restaurant?.restaurantId ?? 'restaurantId',
+                      status: Status.pending,
+                      paymentType: PaymentType.cash,
+                      invoiceId: invoice.invoiceId,
+                      orderTimeOut: restaurant?.orderTimeOut ?? 0,
+                      createdAt: DateTime.now(),
+                      orderStatus: OrderStatus(reason: 'reason', status: Status.pending),
+                      totalAmount: filteredItems.fold(0.0, (sum, item) => sum + item.totalPrice) + invoice.totalFees,
+                    );
+                    invoice.orderId = order.orderId;
+
+                    Navigator.pushNamed(context, 'PayMethodScreenRoute', arguments: {
+                      'order': order,
+                      'cartItems': filteredItems,
+                      'invoice': invoice,
+                    });
                   },
                   height: 42,
                   minWidth: MediaQuery.sizeOf(context).width,

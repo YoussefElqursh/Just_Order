@@ -1,16 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:just_order/models/cart_item_model.dart';
+import 'package:just_order/models/enums/payment_type.dart';
+import 'package:just_order/models/invoice_model.dart';
+import 'package:just_order/models/order_model.dart';
 import 'package:just_order/shared/function/functions.dart';
 import 'package:just_order/shared/widget/custom_radio_button_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PayMethodScreen extends StatefulWidget {
-  const PayMethodScreen({super.key});
+  final Order order;
+  final List<CartItem> cartItems;
+  final Invoice invoice;
+  const PayMethodScreen(
+      {super.key,
+      required this.order,
+      required this.cartItems,
+      required this.invoice});
 
   static const String routeName = 'PayMethodScreenRoute';
 
-  static Route route() {
+  static Route route(
+      {required Order order,
+      required List<CartItem> cartItems,
+      required Invoice invoice}) {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
-      builder: (context) => const PayMethodScreen(),
+      builder: (context) =>
+          PayMethodScreen(order: order, cartItems: cartItems, invoice: invoice),
     );
   }
 
@@ -25,6 +41,21 @@ class _PayMethodScreenState extends State<PayMethodScreen> {
   bool clicked2 = false;
   bool clicked3 = false;
   bool clicked4 = false;
+  List<String> savedCards = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSavedCards();
+  }
+
+  Future<void> _loadSavedCards() async {
+    final prefs = await SharedPreferences.getInstance();
+    final cards = prefs.getStringList('savedCards') ?? [];
+    setState(() {
+      savedCards = cards;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -154,6 +185,7 @@ class _PayMethodScreenState extends State<PayMethodScreen> {
                                 paymentMethod = value!;
                                 clicked1 = true;
                                 clicked2 = false;
+                                widget.order.paymentType = PaymentType.cash;
                               });
                             },
                           ),
@@ -226,6 +258,7 @@ class _PayMethodScreenState extends State<PayMethodScreen> {
                                     paymentMethod = value!;
                                     clicked1 = false;
                                     clicked2 = true;
+                                    widget.order.paymentType = PaymentType.card;
                                   });
                                 },
                               ),
@@ -249,177 +282,92 @@ class _PayMethodScreenState extends State<PayMethodScreen> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
-                                        Container(
-                                          width:
-                                              MediaQuery.sizeOf(context).width,
-                                          height: 65,
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 12.0),
-                                          clipBehavior: Clip.antiAlias,
-                                          decoration: ShapeDecoration(
-                                            color: Colors.white,
-                                            shape: RoundedRectangleBorder(
-                                              side: BorderSide(
-                                                width: 1,
-                                                strokeAlign: BorderSide
-                                                    .strokeAlignCenter,
-                                                color: clicked3
-                                                    ? const Color(0xFFE02C45)
-                                                    : const Color(0x4CAFAFAF),
+                                        for (var card in savedCards)
+                                          Container(
+                                            width: MediaQuery.sizeOf(context)
+                                                .width,
+                                            height: 65,
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 12.0),
+                                            clipBehavior: Clip.antiAlias,
+                                            decoration: ShapeDecoration(
+                                              color: Colors.white,
+                                              shape: RoundedRectangleBorder(
+                                                side: BorderSide(
+                                                  width: 1,
+                                                  strokeAlign: BorderSide
+                                                      .strokeAlignCenter,
+                                                  color: clicked3
+                                                      ? const Color(0xFFE02C45)
+                                                      : const Color(0x4CAFAFAF),
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(6),
                                               ),
-                                              borderRadius:
-                                                  BorderRadius.circular(6),
+                                            ),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Container(
+                                                  width: 34,
+                                                  height: 34,
+                                                  clipBehavior: Clip.antiAlias,
+                                                  decoration: ShapeDecoration(
+                                                    color:
+                                                        const Color(0x19548229),
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                    ),
+                                                  ),
+                                                  child: Center(
+                                                    child: setPhoto(
+                                                      kind: 1,
+                                                      path:
+                                                          'assets/images/Visa.svg',
+                                                      width: 20.0,
+                                                      height: 20.0,
+                                                    ),
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 12.0),
+                                                Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    const SizedBox(height: 5),
+                                                    customRadioButtonWidget(
+                                                      context: context,
+                                                      width: MediaQuery.sizeOf(
+                                                                  context)
+                                                              .width -
+                                                          156,
+                                                      hasDivider: false,
+                                                      label: card,
+                                                      value: card,
+                                                      groupName: cardKind,
+                                                      onChanged: (value) {
+                                                        setState(() {
+                                                          cardKind = value!;
+                                                          clicked2 = true;
+                                                          clicked3 = true;
+                                                          clicked4 = false;
+                                                        });
+                                                      },
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
                                             ),
                                           ),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              Container(
-                                                width: 34,
-                                                height: 34,
-                                                clipBehavior: Clip.antiAlias,
-                                                decoration: ShapeDecoration(
-                                                  color:
-                                                      const Color(0x19548229),
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                  ),
-                                                ),
-                                                child: Center(
-                                                  child: setPhoto(
-                                                    kind: 1,
-                                                    path:
-                                                        'assets/images/Visa.svg',
-                                                    width: 20.0,
-                                                    height: 20.0,
-                                                  ),
-                                                ),
-                                              ),
-                                              const SizedBox(width: 12.0),
-                                              Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  const SizedBox(height: 5),
-                                                  customRadioButtonWidget(
-                                                    context: context,
-                                                    width: MediaQuery.sizeOf(
-                                                                context)
-                                                            .width -
-                                                        156,
-                                                    hasDivider: false,
-                                                    label:
-                                                        'xxxx xxxx xxxx 8954',
-                                                    value: 'visa',
-                                                    groupName: cardKind,
-                                                    onChanged: (value) {
-                                                      setState(() {
-                                                        cardKind = value!;
-                                                        clicked2 = true;
-                                                        clicked3 = true;
-                                                        clicked4 = false;
-                                                      });
-                                                    },
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        const SizedBox(height: 15),
-                                        Container(
-                                          width:
-                                              MediaQuery.sizeOf(context).width,
-                                          height: 65,
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 12.0),
-                                          clipBehavior: Clip.antiAlias,
-                                          decoration: ShapeDecoration(
-                                            color: Colors.white,
-                                            shape: RoundedRectangleBorder(
-                                              side: BorderSide(
-                                                width: 1,
-                                                strokeAlign: BorderSide
-                                                    .strokeAlignCenter,
-                                                color: clicked4
-                                                    ? const Color(0xFFE02C45)
-                                                    : const Color(0x4CAFAFAF),
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(6),
-                                            ),
-                                          ),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              Container(
-                                                width: 34,
-                                                height: 34,
-                                                clipBehavior: Clip.antiAlias,
-                                                decoration: ShapeDecoration(
-                                                  color:
-                                                      const Color(0x19548229),
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                  ),
-                                                ),
-                                                child: Center(
-                                                  child: setPhoto(
-                                                    kind: 1,
-                                                    path:
-                                                        'assets/images/Mastercard.svg',
-                                                    width: 20.0,
-                                                    height: 20.0,
-                                                  ),
-                                                ),
-                                              ),
-                                              const SizedBox(width: 12.0),
-                                              Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  const SizedBox(height: 5),
-                                                  customRadioButtonWidget(
-                                                    context: context,
-                                                    width: MediaQuery.sizeOf(
-                                                                context)
-                                                            .width -
-                                                        156,
-                                                    hasDivider: false,
-                                                    label:
-                                                        'xxxx xxxx xxxx 1457',
-                                                    value: 'mastercard',
-                                                    groupName: cardKind,
-                                                    onChanged: (value) {
-                                                      setState(() {
-                                                        cardKind = value!;
-                                                        clicked2 = true;
-                                                        clicked4 = true;
-                                                        clicked3 = false;
-                                                      });
-                                                    },
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
                                         const SizedBox(height: 15),
                                         Container(
                                           width:
@@ -503,7 +451,12 @@ class _PayMethodScreenState extends State<PayMethodScreen> {
                 const Spacer(),
                 MaterialButton(
                   onPressed: () {
-                    navigateTo(context, 'OrderSummaryScreenRoute');
+                    Navigator.pushNamed(context, 'OrderSummaryScreenRoute',
+                        arguments: {
+                          'order': widget.order,
+                          'cartItems': widget.cartItems,
+                          'invoice': widget.invoice
+                        });
                   },
                   height: 42,
                   minWidth: MediaQuery.sizeOf(context).width,

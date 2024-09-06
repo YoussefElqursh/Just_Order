@@ -1,7 +1,7 @@
-import 'package:just_order/models/cart_item_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import 'enums/order_status.dart';
+import 'package:just_order/models/delivery_status.dart';
+import 'package:just_order/models/enums/status.dart';
+import 'package:just_order/models/order_status.dart';
 import 'enums/payment_type.dart';
 
 class Order {
@@ -9,36 +9,40 @@ class Order {
   String userId;
   String clubId;
   String restaurantId;
-  List<CartItem> cartItems;
-  String deliveryId;
-  OrderStatus status;
+  Status status;
   PaymentType paymentType;
   String invoiceId;
-  String notes;
-  DateTime orderDateTime;
+  int orderTimeOut;
+  DateTime createdAt;
+  OrderStatus orderStatus;
+  double totalAmount;
+  String? deliveryId;
+  DeliveryStatus? deliveryStatus;
+  DateTime? updatedAt;
   DateTime? assignedDateTime;
   DateTime? deliveredDateTime;
   DateTime? finalisedDateTime;
-  String createdAt;
-  String? updatedAt;
+  String? notes;
 
   Order({
     required this.orderId,
     required this.userId,
     required this.clubId,
     required this.restaurantId,
-    required this.cartItems,
-    required this.deliveryId,
+    this.deliveryId,
     required this.status,
     required this.paymentType,
     required this.invoiceId,
-    required this.notes,
-    required this.orderDateTime,
+    this.notes,
+    required this.orderTimeOut,
     this.assignedDateTime,
     this.deliveredDateTime,
     this.finalisedDateTime,
     required this.createdAt,
     this.updatedAt,
+    required this.orderStatus,
+    this.deliveryStatus,
+    required this.totalAmount,
   });
 
   static Order fromMap(Map<String, dynamic> data) {
@@ -47,48 +51,55 @@ class Order {
       userId: data['userId'],
       clubId: data['clubId'],
       restaurantId: data['restaurantId'],
-      cartItems: data['cartItems'].map<CartItem>((item) => CartItem.fromMap(item)).toList(),
       deliveryId: data['deliveryId'],
-      status: OrderStatus.values.firstWhere((e) => e.toString() == data['status']),
-      paymentType: PaymentType.values.firstWhere((e) => e.toString() == data['paymentType']),
+      status: Status.values
+          .firstWhere((e) => e.toString() == 'Status.' + data['status']),
+      paymentType: PaymentType.values.firstWhere(
+          (e) => e.toString() == 'PaymentType.' + data['paymentType']),
       invoiceId: data['invoiceId'],
       notes: data['notes'],
-      orderDateTime: data['orderDateTime'].toDate(),
-      assignedDateTime: data['assignedDateTime']?.toDate(),
-      deliveredDateTime: data['deliveredDateTime']?.toDate(),
-      finalisedDateTime: data['finalisedDateTime']?.toDate(),
-      createdAt: data['createdAt'],
-      updatedAt: data['updatedAt'],
+      orderTimeOut: data['orderTimeOut'],
+      assignedDateTime: data['assignedDateTime'] != null
+          ? (data['assignedDateTime'] as Timestamp).toDate()
+          : null,
+      deliveredDateTime: data['deliveredDateTime'] != null
+          ? (data['deliveredDateTime'] as Timestamp).toDate()
+          : null,
+      finalisedDateTime: data['finalisedDateTime'] != null
+          ? (data['finalisedDateTime'] as Timestamp).toDate()
+          : null,
+      createdAt: (data['createdAt'] as Timestamp).toDate(),
+      updatedAt: data['updatedAt'] != null
+          ? (data['updatedAt'] as Timestamp).toDate()
+          : null,
+      orderStatus: OrderStatus.fromMap(data['orderStatus']),
+      deliveryStatus: data['deliveryStatus'] != null
+          ? DeliveryStatus.fromMap(data['deliveryStatus'])
+          : null,
+      totalAmount: data['totalAmount'].toDouble(),
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'orderId': generateOrderId(),
-      'userId': getUserId(),
+      'orderId': orderId,
+      'userId': userId,
       'clubId': clubId,
       'restaurantId': restaurantId,
-      'cartItems': cartItems.map((item) => item.toMap()).toList(),
       'deliveryId': deliveryId,
       'status': status.toString().split('.').last,
       'paymentType': paymentType.toString().split('.').last,
       'invoiceId': invoiceId,
       'notes': notes,
-      'orderDateTime': orderDateTime,
+      'orderTimeOut': orderTimeOut,
       'assignedDateTime': assignedDateTime,
       'deliveredDateTime': deliveredDateTime,
       'finalisedDateTime': finalisedDateTime,
       'createdAt': createdAt,
       'updatedAt': updatedAt,
+      'orderStatus': orderStatus.toMap(),
+      'deliveryStatus': deliveryStatus?.toMap(),
+      'totalAmount': totalAmount,
     };
-  }
-
-  String generateOrderId() {
-    return FirebaseFirestore.instance.collection('orders').doc().id;
-  }
-
-  String getUserId() {
-    // Get the current user ID
-    return '1234567890';
   }
 }

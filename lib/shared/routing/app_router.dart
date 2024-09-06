@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:just_order/layouts/main_layout.dart';
+import 'package:just_order/models/cart_item_model.dart';
+import 'package:just_order/models/invoice_model.dart';
 import 'package:just_order/models/item_model.dart';
+import 'package:just_order/models/order_model.dart';
 import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/screens/order/order_state/decline_order_screen.dart';
 import 'package:just_order/screens/order/order_state/delivered_order_screen.dart';
@@ -48,13 +51,46 @@ class AppRouter {
       case 'MyCartScreenRoute':
         return MyCartScreen.route();
       case 'PayMethodScreenRoute':
-        return PayMethodScreen.route();
+        if (settings.arguments is Map<String, dynamic>) {
+          final args = settings.arguments as Map<String, dynamic>;
+          final order = args['order'] as Order;
+          final cartItems = args['cartItems'] as List<CartItem>;
+          final invoice = args['invoice'] as Invoice;
+          return PayMethodScreen.route(
+            order: order,
+            cartItems: cartItems,
+            invoice: invoice,
+          );
+        }
+        return _errorRoute();
       case 'EnterCardDataScreenRoute':
         return EnterCardDataScreen.route();
       case 'OrderSummaryScreenRoute':
-        return OrderSummaryScreen.route();
+        if (settings.arguments is Map<String, dynamic>) {
+          final args = settings.arguments as Map<String, dynamic>;
+          final order = args['order'] as Order;
+          final cartItems = args['cartItems'] as List<CartItem>;
+          final invoice = args['invoice'] as Invoice;
+          return OrderSummaryScreen.route(
+            order: order,
+            cartItems: cartItems,
+            invoice: invoice,
+          );
+        }
+        return _errorRoute();
       case 'OrderConfirmedScreenRoute':
-        return OrderConfirmedScreen.route();
+        if (settings.arguments is Map<String, dynamic>) {
+          final args = settings.arguments as Map<String, dynamic>;
+          final order = args['order'] as Order;
+          final cartItems = args['cartItems'] as List<CartItem>;
+          final invoice = args['invoice'] as Invoice;
+          return OrderConfirmedScreen.route(
+            order: order,
+            cartItems: cartItems,
+            invoice: invoice,
+          );
+        }
+        return _errorRoute();
       case 'OrderScreenRoute':
         return OrderScreen.route();
       case 'PendingOrderScreenRoute':
@@ -67,8 +103,8 @@ class AppRouter {
         return DeliveredOrderScreen.route();
       case 'DeclineOrderScreenRoute':
         return DeclineOrderScreen.route();
-      case 'OrderDetailsScreenRoute':
-        return OrderDetailsScreen.route();
+      // case 'OrderDetailsScreenRoute':
+      //   return OrderDetailsScreen.route();
       case 'LoginScreenRoute':
         return LoginScreen.route();
       case 'ProfileScreenRoute':

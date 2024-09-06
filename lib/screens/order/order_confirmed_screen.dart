@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:just_order/models/cart_item_model.dart';
+import 'package:just_order/models/invoice_model.dart';
+import 'package:just_order/models/order_model.dart';
+import 'package:just_order/repository/user_repository/user_repository.dart';
 import 'package:lottie/lottie.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class OrderConfirmedScreen extends StatefulWidget {
-  const OrderConfirmedScreen({super.key});
+  final Order order;
+  final List<CartItem> cartItems;
+  final Invoice invoice;
+  const OrderConfirmedScreen({super.key, required this.order, required this.cartItems, required this.invoice});
 
   static const String routeName = 'OrderConfirmedScreenRoute';
 
-  static Route route() {
+  static Route route({required Order order, required List<CartItem> cartItems, required Invoice invoice}) {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
-      builder: (context) => const OrderConfirmedScreen(),
+      builder: (context) => OrderConfirmedScreen(order: order, cartItems: cartItems, invoice: invoice),
     );
   }
 
@@ -22,6 +29,7 @@ class OrderConfirmedScreen extends StatefulWidget {
 class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
   late String formattedDate;
   late String formattedTime;
+  UserRepository userRepository = UserRepository();
 
   @override
   void initState() {
@@ -29,6 +37,12 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
     DateTime now = DateTime.now();
     formattedDate = DateFormat('yyyy-MM-dd').format(now);
     formattedTime = DateFormat('HH:mm:ss').format(now);
+    _pushOrderToDatabase();
+  }
+
+  Future<void> _pushOrderToDatabase() async {
+    String message = await userRepository.pushOrder(widget.order, widget.cartItems, widget.invoice);
+    print(message);
   }
 
   @override
@@ -113,12 +127,12 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                         maxLines: 1,
                       ),
                       const SizedBox(height: 32.0),
-                      const Row(
+                      Row(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(
+                          const Text(
                             'Subtotal',
                             style: TextStyle(
                               color: Colors.black,
@@ -131,8 +145,8 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                           ),
                           Spacer(),
                           Text(
-                            'EGP 1150.00',
-                            style: TextStyle(
+                            'EGP ${widget.cartItems.fold(0.0, (previousValue, element) => previousValue + element.totalPrice)}',
+                            style: const TextStyle(
                               color: Colors.black,
                               fontSize: 12,
                               fontFamily: 'Inter',
@@ -144,12 +158,12 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                         ],
                       ),
                       const SizedBox(height: 12),
-                      const Row(
+                      Row(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(
+                          const Text(
                             'Delivery Fee',
                             style: TextStyle(
                               color: Colors.black,
@@ -160,10 +174,10 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                           ),
-                          Spacer(),
+                          const Spacer(),
                           Text(
-                            'EGP 30.00',
-                            style: TextStyle(
+                            'EGP ${widget.invoice.totalFees - widget.invoice.serviceFees}',
+                            style: const TextStyle(
                               color: Colors.black,
                               fontSize: 12,
                               fontFamily: 'Inter',
@@ -175,13 +189,13 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                         ],
                       ),
                       const SizedBox(height: 12),
-                      const Row(
+                      Row(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(
-                            'Discount',
+                          const Text(
+                            'Service Fee',
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 12,
@@ -191,10 +205,10 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                           ),
-                          Spacer(),
+                          const Spacer(),
                           Text(
-                            ' - EGP 15.00',
-                            style: TextStyle(
+                            'EGP ${widget.invoice.serviceFees}',
+                            style: const TextStyle(
                               color: Color(0xFFE02C45),
                               fontSize: 12,
                               fontFamily: 'Inter',
@@ -206,12 +220,12 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                         ],
                       ),
                       const SizedBox(height: 12),
-                      const Row(
+                      Row(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(
+                          const Text(
                             'Payment Method',
                             style: TextStyle(
                               color: Colors.black,
@@ -221,11 +235,11 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                               height: 0,
                             ),
                           ),
-                          Spacer(),
+                          const Spacer(),
                           Text(
-                            'Credit Card',
+                            widget.order.paymentType.name,
                             textAlign: TextAlign.right,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.black,
                               fontSize: 12,
                               fontFamily: 'Inter',
@@ -241,12 +255,12 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                         color: Color(0x4CC8C8C8),
                       ),
                       const SizedBox(height: 12),
-                      const Row(
+                      Row(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(
+                          const Text(
                             'Total',
                             style: TextStyle(
                               color: Colors.black,
@@ -259,8 +273,8 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                           ),
                           Spacer(),
                           Text(
-                            'EGP 1165.00',
-                            style: TextStyle(
+                            'EGP ${widget.order.totalAmount}',
+                            style: const TextStyle(
                               color: Colors.black,
                               fontSize: 14,
                               fontFamily: 'Inter',
