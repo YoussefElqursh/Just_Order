@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:just_order/models/order_model.dart';
 import '../../../shared/widget/common_order_state_widget.dart';
 
 class PendingOrderScreen extends StatefulWidget {
-  const PendingOrderScreen({super.key});
+  final List<Order> orders;
+  const PendingOrderScreen({super.key, required this.orders});
 
   static const String routeName = 'PendingOrderScreenRoute';
 
-  static Route route() {
+  static Route route({required List<Order> orders}) {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
-      builder: (context) => const PendingOrderScreen(),
+      builder: (context) => PendingOrderScreen(orders: orders),
     );
   }
 
@@ -67,9 +69,9 @@ class _PendingOrderScreenState extends State<PendingOrderScreen> {
           width: MediaQuery.sizeOf(context).width,
           padding: const EdgeInsets.all(20),
           child: ListView.separated(
-            itemBuilder: (context, index) => buildOrderStateWidget(context: context, width: 70,),
+            itemBuilder: (context, index) => buildOrderStateWidget(context: context, width: 70, order: widget.orders[index]),
             separatorBuilder: (context, index) => const SizedBox(height: 12.0),
-            itemCount: 5,
+            itemCount: widget.orders.length,
             scrollDirection: Axis.vertical,
             physics: const BouncingScrollPhysics(),
             shrinkWrap: true,

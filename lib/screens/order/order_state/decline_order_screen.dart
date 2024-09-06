@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:just_order/models/order_model.dart';
 import '../../../shared/widget/common_order_state_widget.dart';
 
 class DeclineOrderScreen extends StatefulWidget {
-  const DeclineOrderScreen({super.key});
+  final List<Order> orders;
+  const DeclineOrderScreen({super.key, required this.orders});
 
   static const String routeName = 'DeclineOrderScreenRoute';
 
-  static Route route() {
+  static Route route({required List<Order> orders}) {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
-      builder: (context) => const DeclineOrderScreen(),
+      builder: (context) => DeclineOrderScreen(orders: orders),
     );
   }
 
@@ -66,11 +68,11 @@ class _DeclineOrderScreenState extends State<DeclineOrderScreen> {
           width: MediaQuery.sizeOf(context).width,
           padding: const EdgeInsets.all(20),
           child: ListView.separated(
-            itemBuilder: (context, index) => buildOrderStateWidget(context: context, width: 70,),
+            itemBuilder: (context, index) => buildOrderStateWidget(context: context, width: 70, order: widget.orders[index]),
             separatorBuilder: (context, index) => const SizedBox(
               height: 12.0,
             ),
-            itemCount: 5,
+            itemCount: widget.orders.length,
             scrollDirection: Axis.vertical,
             physics: const BouncingScrollPhysics(),
             shrinkWrap: true,

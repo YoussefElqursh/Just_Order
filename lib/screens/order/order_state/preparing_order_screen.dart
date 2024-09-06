@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:just_order/models/order_model.dart';
 import '../../../shared/widget/common_order_state_widget.dart';
 
 class PreparingOrderScreen extends StatefulWidget {
-  const PreparingOrderScreen({super.key});
+  final List<Order> orders;
+  const PreparingOrderScreen({super.key, required this.orders});
 
   static const String routeName = 'PreparingOrderScreenRoute';
 
-  static Route route() {
+  static Route route({required List<Order> orders}) {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
-      builder: (context) => const PreparingOrderScreen(),
+      builder: (context) => PreparingOrderScreen(orders: orders),
     );
   }
 
@@ -68,11 +70,12 @@ class _PreparingOrderScreenState extends State<PreparingOrderScreen> {
           child: ListView.separated(
             itemBuilder: (context, index) => buildOrderStateWidget(
               context: context,
-              width: 70,),
+              width: 70,
+              order: widget.orders[index],),
             separatorBuilder: (context, index) => const SizedBox(
               height: 12.0,
             ),
-            itemCount: 5,
+            itemCount: widget.orders.length,
             scrollDirection: Axis.vertical,
             physics: const BouncingScrollPhysics(),
             shrinkWrap: true,

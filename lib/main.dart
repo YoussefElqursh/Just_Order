@@ -6,6 +6,7 @@ import 'package:just_order/blocs/login_cubit/login_cubit.dart';
 import 'package:just_order/blocs/sign_up_cubit/sign_up_cubit.dart';
 import 'package:just_order/repository/auth_repository/login_repository.dart';
 import 'package:just_order/repository/cart_provider.dart';
+import 'package:just_order/repository/order_provider.dart';
 import 'package:just_order/screens/splash/splash_screen.dart';
 import 'package:just_order/shared/bloc_observer/bloc_observer.dart';
 import 'package:just_order/shared/routing/app_router.dart';
@@ -16,8 +17,15 @@ Future<void> main() async {
   await Firebase.initializeApp();
   Bloc.observer = MyBlocObserver();
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => CartProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => CartProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => OrderProvider()
+        ),
+      ],
       child: const MyApp(),
     ),
   );

@@ -95,17 +95,43 @@ class AppRouter {
       case 'OrderScreenRoute':
         return OrderScreen.route();
       case 'PendingOrderScreenRoute':
-        return PendingOrderScreen.route();
+        if (settings.arguments is List<Order>) {
+          final orders = settings.arguments as List<Order>;
+          return PendingOrderScreen.route(orders: orders);
+        }
+        return _errorRoute();
       case 'PreparingOrderScreenRoute':
-        return PreparingOrderScreen.route();
+        if (settings.arguments is List<Order>) {
+          final orders = settings.arguments as List<Order>;
+          return PreparingOrderScreen.route(orders: orders);
+        }
+        return _errorRoute();
       case 'OnWayOrderScreenRoute':
-        return OnWayOrderScreen.route();
+        if (settings.arguments is List<Order>) {
+          final orders = settings.arguments as List<Order>;
+          return OnWayOrderScreen.route(orders: orders);
+        }
+        return _errorRoute();
       case 'DeliveredOrderScreenRoute':
-        return DeliveredOrderScreen.route();
+        if (settings.arguments is List<Order>) {
+          final orders = settings.arguments as List<Order>;
+          return DeliveredOrderScreen.route(orders: orders);
+        }
+        return _errorRoute();
       case 'DeclineOrderScreenRoute':
-        return DeclineOrderScreen.route();
-      // case 'OrderDetailsScreenRoute':
-      //   return OrderDetailsScreen.route();
+        if (settings.arguments is List<Order>) {
+          final orders = settings.arguments as List<Order>;
+          return DeclineOrderScreen.route(orders: orders);
+        }
+        return _errorRoute();
+      case 'OrderDetailsScreenRoute':
+        if (settings.arguments is List<dynamic>) {
+          final args = settings.arguments as List<dynamic>;
+          final order = args[0] as Order;
+          final restaurant = args[1] as Restaurant;
+          return OrderDetailsScreen.route(order: order, restaurant: restaurant);
+        }
+        return _errorRoute();
       case 'LoginScreenRoute':
         return LoginScreen.route();
       case 'SignUpScreenRoute':
