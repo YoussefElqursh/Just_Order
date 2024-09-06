@@ -44,7 +44,7 @@ class UserRepository {
       cartItem.cartItemId = cartItemId;
       await firestore.collection('orders').doc(order.orderId).collection('cartItems').doc(cartItem.cartItemId).set(cartItem.toMap());
     }
-    await firestore.collection('invoices').doc(order.orderId).set(invoice.toMap());
+    await firestore.collection('invoices').doc(order.invoiceId).set(invoice.toMap());
 
     return 'Order placed successfully with order id: ${order.orderId} and invoice id: ${invoice.invoiceId} and cart items: ${cartItems.length}';
   }

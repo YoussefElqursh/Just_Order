@@ -1,15 +1,18 @@
-import 'package:just_order/models/restaurant_model.dart';
-
 class Club {
   String clubId;
   String name;
   String location;
-  List<Restaurant> restaurants;
+  List<String>? restaurantIds;
 
   Club({
     required this.clubId,
     required this.name,
     required this.location,
-    required this.restaurants,
+    this.restaurantIds,
   });
+
+  static Future<Club> fromMap(Map<String, dynamic> map) {
+    return Future.value(Club(
+        clubId: map['clubId'], name: map['name'], location: map['location']));
+  }
 }
