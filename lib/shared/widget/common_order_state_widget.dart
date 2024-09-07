@@ -590,24 +590,6 @@ Widget buildOrderOnWayStateWidget(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          width: 5,
-          height: 96,
-          decoration: const ShapeDecoration(
-            color: Colors.red,
-            shape: RoundedRectangleBorder(
-              side: BorderSide(
-                width: 1,
-                strokeAlign: BorderSide.strokeAlignCenter,
-                color: Colors.red,
-              ),
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(8),
-                bottomLeft: Radius.circular(8),
-              ),
-            ),
-          ),
-        ),
         Padding(
           padding: const EdgeInsets.all(12.0),
           child: SizedBox(
@@ -765,24 +747,6 @@ Widget buildOrderDeliveredStateWidget(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          width: 5,
-          height: 96,
-          decoration: const ShapeDecoration(
-            color: Colors.red,
-            shape: RoundedRectangleBorder(
-              side: BorderSide(
-                width: 1,
-                strokeAlign: BorderSide.strokeAlignCenter,
-                color: Colors.red,
-              ),
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(8),
-                bottomLeft: Radius.circular(8),
-              ),
-            ),
-          ),
-        ),
         Padding(
           padding: const EdgeInsets.all(12.0),
           child: SizedBox(
@@ -940,24 +904,6 @@ Widget buildOrderDeclinedStateWidget(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          width: 5,
-          height: 96,
-          decoration: const ShapeDecoration(
-            color: Colors.red,
-            shape: RoundedRectangleBorder(
-              side: BorderSide(
-                width: 1,
-                strokeAlign: BorderSide.strokeAlignCenter,
-                color: Colors.red,
-              ),
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(8),
-                bottomLeft: Radius.circular(8),
-              ),
-            ),
-          ),
-        ),
         Padding(
           padding: const EdgeInsets.all(12.0),
           child: SizedBox(
@@ -1115,24 +1061,6 @@ Widget buildOrderAutoDeclinedStateWidget(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          width: 5,
-          height: 96,
-          decoration: const ShapeDecoration(
-            color: Colors.red,
-            shape: RoundedRectangleBorder(
-              side: BorderSide(
-                width: 1,
-                strokeAlign: BorderSide.strokeAlignCenter,
-                color: Colors.red,
-              ),
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(8),
-                bottomLeft: Radius.circular(8),
-              ),
-            ),
-          ),
-        ),
         Padding(
           padding: const EdgeInsets.all(12.0),
           child: SizedBox(

@@ -197,10 +197,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                   children: [
                                     MaterialButton(
                                       onPressed: () {
-                                        navigateToWithoutBack(
-                                          context,
-                                          const SelectYourPlace(),
-                                        );
+                                        context
+                                            .read<LoginCubit>()
+                                            .loginWithGoogle();
                                       },
                                       height: 42,
                                       minWidth:
@@ -444,15 +443,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             return 'Password must be at least 6 characters';
                                           }
                                           return null;
-                                        }
-                                        //   } else if (!RegExp(
-                                        //     r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$',
-                                        //   ).hasMatch(value)) {
-                                        //     return 'Password must contain at least one uppercase letter, one lowercase letter, one number and one special character';
-                                        //   }
-                                        //   return null;
-                                        // },
-                                        ),
+                                        }),
                                     const SizedBox(
                                       height: 8.0,
                                     ),
@@ -547,7 +538,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                         const SizedBox(width: 6),
                                         GestureDetector(
                                           onTap: () {
-                                            navigateTo(context, 'SignUpScreenRoute');
+                                            navigateTo(
+                                                context, 'SignUpScreenRoute');
                                           },
                                           child: const Text(
                                             'Sign Up',

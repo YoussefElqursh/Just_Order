@@ -1,6 +1,12 @@
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:just_order/models/user_model.dart';
 import 'package:just_order/repository/auth_repository/login_repository.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'login_state.dart';
 
@@ -25,10 +31,52 @@ class LoginCubit extends Cubit<LoginState> {
 
   IconData suffixIcon = Icons.visibility_outlined;
   bool isPassword = true;
-  void changePasswordState(){
-    isPassword = ! isPassword;
-    suffixIcon = isPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined ;
+  void changePasswordState() {
+    isPassword = !isPassword;
+    suffixIcon =
+        isPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;
     emit(LoginShowPassword());
   }
 
+  Future<void> loginWithGoogle() async {
+    emit(LoginLoading());
+    print('loginWithGoogle');
+    try {
+      print('try');
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      print('googleUser $googleUser');
+      if (googleUser == null) {
+        print('googleUser null');
+        emit(LoginFailure("Google sign-in failed"));
+        print('googleUser null 2');
+        return;
+      }
+
+      print('googleUser exists $googleUser');
+
+      final String email = googleUser.email;
+
+      print('email $email');
+
+      final QuerySnapshot result = await FirebaseFirestore.instance
+          .collection('users')
+          .where('email', isEqualTo: email)
+          .get();
+
+      final List<DocumentSnapshot> documents = result.docs;
+
+      if (documents.isNotEmpty) {
+        User? user =
+            await User.fromMap(documents.first.data() as Map<String, dynamic>);
+        final prefs = await SharedPreferences.getInstance();
+        prefs.setString('user', jsonEncode(user?.toJson()));
+        emit(LoginSuccess(user!));
+      } else {
+        emit(LoginFailure("User not found in Firestore"));
+      }
+    } catch (e) {
+      print('Error: ${e.toString()}');
+      emit(LoginFailure("An error occurred: ${e.toString()}"));
+    }
+  }
 }
