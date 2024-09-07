@@ -72,6 +72,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
         resturant = Restaurant.fromJson(restaurantString);
       });
     }
+    // ignore: use_build_context_synchronously
     final cartProvider = Provider.of<CartProvider>(context, listen: false);
     final cartItem = CartItem(
       cartItemId: '${UniqueKey().toString()}_${resturant?.restaurantId}',
@@ -82,6 +83,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
       size: selectedSize != null ? {selectedSize!: price} : null,
     );
     cartProvider.addItem(cartItem);
+    // ignore: use_build_context_synchronously
     Navigator.pop(context);
   }
 

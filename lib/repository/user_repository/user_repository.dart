@@ -19,9 +19,9 @@ class UserRepository {
 
     List<Restaurant> restaurants = [];
 
-    snapshot.docs.forEach((doc) {
+    for (var doc in snapshot.docs) {
       restaurants.add(Restaurant.fromMap(doc.data() as Map<String, dynamic>));
-    });
+    }
 
     return restaurants;
   }

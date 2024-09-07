@@ -2,9 +2,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:just_order/models/enums/status.dart';
-import 'package:just_order/repository/order_provider.dart';
+import 'package:just_order/models/order_model.dart';
+import 'package:just_order/models/restaurant_model.dart';
+import 'package:just_order/repository/order_repository/order_repository.dart';
 import 'package:just_order/shared/widget/common_order_state_widget.dart';
-import 'package:provider/provider.dart';
 
 class OrderScreen extends StatefulWidget {
   const OrderScreen({super.key});
@@ -23,58 +24,66 @@ class OrderScreen extends StatefulWidget {
 }
 
 class _OrderScreenState extends State<OrderScreen> {
+  final OrderRepository _orderRepository = OrderRepository();
+  List<Order> orders = [];
+  Map<String, Restaurant> restaurantMap = {};
+
   @override
   void initState() {
     super.initState();
-    Provider.of<OrderProvider>(context, listen: false).fetchOrders();
+    _getOrders();
+  }
+
+  void _getOrders() async {
+    final fetchedOrders = await _orderRepository.getOrders();
+    final restaurantIds = fetchedOrders.map((order) => order.restaurantId).toList();
+    final fetchedRestaurants = await _orderRepository.getRestaurants(restaurantIds);
+    setState(() {
+      orders = fetchedOrders;
+      restaurantMap = { for (var restaurant in fetchedRestaurants) restaurant.restaurantId : restaurant };
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final orderProvider = Provider.of<OrderProvider>(context);
-    final orders = orderProvider.orders;
-
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: const Text(
-          'Orders',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 14,
-            fontFamily: 'Inter',
-            fontWeight: FontWeight.w600,
+          centerTitle: true,
+          title: const Text(
+            'Orders',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 14,
+              fontFamily: 'Inter',
+              fontWeight: FontWeight.w600,
+            ),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
           ),
-          overflow: TextOverflow.ellipsis,
-          maxLines: 1,
-        ),
-        leading: const SizedBox(),
-        actions: [
-          Padding(
-            padding:
-                const EdgeInsets.only(right: 20.0, top: 10.0, bottom: 10.0),
-            child: Container(
-              width: 34,
-              height: 34,
-              clipBehavior: Clip.antiAlias,
-              decoration: ShapeDecoration(
-                color: const Color(0xFFF4F4F4),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
+          actions: [
+            Padding(
+              padding:
+                  const EdgeInsets.only(left: 20.0, top: 10.0, bottom: 10.0),
+              child: Container(
+                width: 34,
+                height: 34,
+                clipBehavior: Clip.antiAlias,
+                decoration: ShapeDecoration(
+                  color: const Color(0xFFF4F4F4),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)),
                 ),
-              ),
-              child: IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.notifications,
-                  color: Colors.black,
-                  size: 18,
+                child: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.notifications_none_outlined,
+                    color: Colors.black,
+                    size: 18,
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
-      ),
+          ]),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         scrollDirection: Axis.vertical,
@@ -108,7 +117,7 @@ class _OrderScreenState extends State<OrderScreen> {
                         GestureDetector(
                           onTap: () {
                             Navigator.of(context)
-                                .pushNamed('PendingOrderScreenRoute', arguments: orders.where((order) => order.status == Status.pending).toList());
+                                .pushNamed('PendingOrderScreenRoute', arguments: [orders.where((order) => order.status == Status.pending).toList(), restaurantMap]);
                           },
                           child: Text(
                             'View All (${orders.where((order) => order.status == Status.pending).length})',
@@ -131,10 +140,28 @@ class _OrderScreenState extends State<OrderScreen> {
                       width: MediaQuery.sizeOf(context).width,
                       child: ListView.separated(
                         itemBuilder: (context, index) =>
-                            buildOrderStateWidget(context: context, width: 70, order: orders[index]),
-                        separatorBuilder: (context, index) =>
-                            const SizedBox(height: 12.0),
-                        itemCount: min(5, orders.where((order) => order.status == Status.pending).length),
+                            buildOrderPendingStateWidget(
+                                context: context,
+                                width: 70,
+                                order: orders
+                                    .where((order) =>
+                                        order.status == Status.pending)
+                                    .toList()[index],
+                                restaurant: restaurantMap[orders
+                                    .where((order) =>
+                                        order.status == Status.pending)
+                                    .toList()[index]
+                                    .restaurantId]!
+                              ),
+                        separatorBuilder: (context, index) => const SizedBox(
+                          height: 12.0,
+                        ),
+                        itemCount: min(
+                            3,
+                            orders
+                                .where(
+                                    (order) => order.status == Status.pending)
+                                .length),
                         scrollDirection: Axis.vertical,
                         physics: const BouncingScrollPhysics(),
                         shrinkWrap: true,
@@ -172,7 +199,7 @@ class _OrderScreenState extends State<OrderScreen> {
                         GestureDetector(
                           onTap: () {
                             Navigator.of(context)
-                                .pushNamed('PreparingOrderScreenRoute', arguments: orders.where((order) => order.status == Status.preparing).toList());
+                                .pushNamed('PreparingOrderScreenRoute', arguments: [orders.where((order) => order.status == Status.preparing).toList(), restaurantMap]);
                           },
                           child: Text(
                             'View All (${orders.where((order) => order.status == Status.preparing).length})',
@@ -194,15 +221,29 @@ class _OrderScreenState extends State<OrderScreen> {
                     SizedBox(
                       width: MediaQuery.sizeOf(context).width,
                       child: ListView.separated(
-                        itemBuilder: (context, index) => buildOrderStateWidget(
-                          context: context,
-                          width: 70,
-                          order: orders[index],
-                        ),
+                        itemBuilder: (context, index) =>
+                            buildOrderPreparingStateWidget(
+                                context: context,
+                                width: 70,
+                                order: orders
+                                    .where((order) =>
+                                        order.status == Status.preparing)
+                                    .toList()[index],
+                                restaurant: restaurantMap[orders
+                                    .where((order) =>
+                                        order.status == Status.preparing)
+                                    .toList()[index]
+                                    .restaurantId]!
+                                    ),
                         separatorBuilder: (context, index) => const SizedBox(
                           height: 12.0,
                         ),
-                        itemCount: min(5, orders.where((order) => order.status == Status.preparing).length),
+                        itemCount: min(
+                            3,
+                            orders
+                                .where(
+                                    (order) => order.status == Status.preparing)
+                                .length),
                         scrollDirection: Axis.vertical,
                         physics: const BouncingScrollPhysics(),
                         shrinkWrap: true,
@@ -240,7 +281,7 @@ class _OrderScreenState extends State<OrderScreen> {
                         GestureDetector(
                           onTap: () {
                             Navigator.of(context)
-                                .pushNamed('OnWayOrderScreenRoute', arguments: orders.where((order) => order.status == Status.onTheWay).toList());
+                                .pushNamed('OnWayOrderScreenRoute', arguments: [orders.where((order) => order.status == Status.onTheWay).toList(), restaurantMap]);
                           },
                           child: Text(
                             'View All (${orders.where((order) => order.status == Status.onTheWay).length})',
@@ -262,15 +303,27 @@ class _OrderScreenState extends State<OrderScreen> {
                     SizedBox(
                       width: MediaQuery.sizeOf(context).width,
                       child: ListView.separated(
-                        itemBuilder: (context, index) => buildOrderStateWidget(
-                          context: context,
-                          width: 70,
-                          order: orders[index],
-                        ),
+                        itemBuilder: (context, index) =>
+                            buildOrderOnWayStateWidget(
+                                context: context,
+                                order: orders
+                                    .where((order) =>
+                                        order.status == Status.onTheWay)
+                                    .toList()[index],width: 70
+                                    ,restaurant: restaurantMap[orders
+                                    .where((order) =>
+                                        order.status == Status.onTheWay)
+                                    .toList()[index]
+                                    .restaurantId]!),
                         separatorBuilder: (context, index) => const SizedBox(
                           height: 12.0,
                         ),
-                        itemCount: min(5, orders.where((order) => order.status == Status.onTheWay).length),
+                        itemCount: min(
+                            3,
+                            orders
+                                .where(
+                                    (order) => order.status == Status.onTheWay)
+                                .length),
                         scrollDirection: Axis.vertical,
                         physics: const BouncingScrollPhysics(),
                         shrinkWrap: true,
@@ -308,7 +361,7 @@ class _OrderScreenState extends State<OrderScreen> {
                         GestureDetector(
                           onTap: () {
                             Navigator.of(context)
-                                .pushNamed('DeliveredOrderScreenRoute', arguments: orders.where((order) => order.status == Status.delivered).toList());
+                                .pushNamed('DeliveredOrderScreenRoute', arguments: [orders.where((order) => order.status == Status.delivered).toList(), restaurantMap]);
                           },
                           child: Text(
                             'View All (${orders.where((order) => order.status == Status.delivered).length})',
@@ -330,15 +383,27 @@ class _OrderScreenState extends State<OrderScreen> {
                     SizedBox(
                       width: MediaQuery.sizeOf(context).width,
                       child: ListView.separated(
-                        itemBuilder: (context, index) => buildOrderStateWidget(
-                          context: context,
-                          width: 70,
-                          order: orders[index],
-                        ),
+                        itemBuilder: (context, index) =>
+                            buildOrderDeliveredStateWidget(
+                                context: context,
+                                order: orders
+                                    .where((order) =>
+                                        order.status == Status.delivered)
+                                    .toList()[index],width: 70,
+                                    restaurant: restaurantMap[orders
+                                    .where((order) =>
+                                        order.status == Status.delivered)
+                                    .toList()[index]
+                                    .restaurantId]!),
                         separatorBuilder: (context, index) => const SizedBox(
                           height: 12.0,
                         ),
-                        itemCount: min(5, orders.where((order) => order.status == Status.delivered).length),
+                        itemCount: min(
+                            3,
+                            orders
+                                .where(
+                                    (order) => order.status == Status.delivered)
+                                .length),
                         scrollDirection: Axis.vertical,
                         physics: const BouncingScrollPhysics(),
                         shrinkWrap: true,
@@ -376,7 +441,7 @@ class _OrderScreenState extends State<OrderScreen> {
                         GestureDetector(
                           onTap: () {
                             Navigator.of(context)
-                                .pushNamed('DeclineOrderScreenRoute', arguments: orders.where((order) => order.status == Status.declined || order.status == Status.autoDeclined).toList());
+                                .pushNamed('DeclineOrderScreenRoute', arguments: [orders.where((order) => order.status == Status.declined || order.status == Status.autoDeclined).toList(), restaurantMap]);
                           },
                           child: Text(
                             'View All (${orders.where((order) => order.status == Status.declined || order.status == Status.autoDeclined).length})',
@@ -398,11 +463,31 @@ class _OrderScreenState extends State<OrderScreen> {
                     SizedBox(
                       width: MediaQuery.sizeOf(context).width,
                       child: ListView.separated(
-                        itemBuilder: (context, index) =>
-                            buildOrderStateWidget(context: context, width: 70, order: orders[index]),
-                        separatorBuilder: (context, index) =>
-                            const SizedBox(height: 12.0),
-                        itemCount: min(5, orders.where((order) => order.status == Status.declined || order.status == Status.autoDeclined).length),
+                        itemBuilder: (context, index) {
+                          final orderList = orders
+                              .where((order) =>
+                                  order.status == Status.declined ||
+                                  order.status == Status.autoDeclined)
+                              .toList();
+                          final order = orderList[index];
+                          return order.status == Status.autoDeclined
+                              ? buildOrderAutoDeclinedStateWidget(
+                                  context: context, order: order,width: 70,
+                                  restaurant: restaurantMap[order.restaurantId]!)
+                              : buildOrderDeclinedStateWidget(
+                                  context: context, order: order ,width: 70
+                                  ,restaurant: restaurantMap[order.restaurantId]!);
+                        },
+                        separatorBuilder: (context, index) => const SizedBox(
+                          height: 12.0,
+                        ),
+                        itemCount: min(
+                            3,
+                            orders
+                                .where((order) =>
+                                    order.status == Status.declined ||
+                                    order.status == Status.autoDeclined)
+                                .length),
                         scrollDirection: Axis.vertical,
                         physics: const BouncingScrollPhysics(),
                         shrinkWrap: true,

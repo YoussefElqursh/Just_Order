@@ -28,8 +28,8 @@ class CartItem {
       item: Item.fromMap(item['item']),
       quantity: item['quantity'],
       price: (item['price'] as num).toDouble(),
-      size: item['sizes'] != null
-          ? (item['sizes'] as Map<String, dynamic>).map(
+      size: item['size'] != null
+          ? (item['size'] as Map<String, dynamic>).map(
               (key, value) => MapEntry(key, (value as num).toDouble()))
           : null,
       extras: item['extras'] != null

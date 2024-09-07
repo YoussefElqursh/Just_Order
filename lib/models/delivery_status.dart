@@ -12,6 +12,7 @@ class DeliveryStatus {
   static fromMap(data) {
     return DeliveryStatus(
       status: Status.values
+          // ignore: prefer_interpolation_to_compose_strings
           .firstWhere((e) => e.toString() == 'Status.' + data['status']),
       updatedAt: data['updatedAt'],
     );

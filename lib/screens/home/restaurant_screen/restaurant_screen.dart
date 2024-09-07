@@ -48,13 +48,11 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
   Future<void> _addRestaurantToPrefs() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('restaurant', jsonEncode(widget.restaurant.toJson()));
-    print('Restaurant added to prefs');
   }
 
   Future<void> _removeRestaurantFromPrefs() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('restaurant');
-    print('Restaurant removed from prefs');
   }
 
   void _onWillPop(bool result, dynamic data) async {

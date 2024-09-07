@@ -12,7 +12,7 @@ import 'package:just_order/repository/cart_provider.dart';
 import 'package:just_order/screens/cart/widgets/order_cart_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:just_order/models/order_model.dart' as myOrder;
+import 'package:just_order/models/order_model.dart' as order_model;
 
 class MyCartScreen extends StatefulWidget {
   const MyCartScreen({super.key});
@@ -352,6 +352,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                           ),
                           const Spacer(),
                           Text(
+                            // ignore: avoid_types_as_parameter_names
                             'EGP ${filteredItems.fold(0.0, (sum, item) => sum + item.totalPrice).toStringAsFixed(2)}',
                             style: const TextStyle(
                               color: Colors.black,
@@ -450,6 +451,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                           ),
                           const Spacer(),
                           Text(
+                            // ignore: avoid_types_as_parameter_names
                             'EGP ${(filteredItems.fold(0.0, (sum, item) => sum + item.totalPrice) + 10.0 + (restaurant?.deliveryFee ?? 0.0)).toStringAsFixed(2)}',
                             style: const TextStyle(
                               color: Colors.black,
@@ -478,16 +480,22 @@ class _MyCartScreenState extends State<MyCartScreen> {
                 child: MaterialButton(
                   onPressed: () {
                     final invoice = Invoice(
-                      invoiceId: FirebaseFirestore.instance.collection('invoices').doc().id,
-                      orderId:'testOrderId',
+                      invoiceId: FirebaseFirestore.instance
+                          .collection('invoices')
+                          .doc()
+                          .id,
+                      orderId: 'testOrderId',
                       clubId: restaurant?.clubId ?? 'clubId',
                       restaurantId: restaurant?.restaurantId ?? 'restaurantId',
                       serviceFees: 10.0,
                       totalFees: 10.0 + (restaurant?.deliveryFee ?? 0.0),
                       createdAt: DateTime.now(),
                     );
-                    final order = myOrder.Order(
-                      orderId: FirebaseFirestore.instance.collection('orders').doc().id,
+                    final order = order_model.Order(
+                      orderId: FirebaseFirestore.instance
+                          .collection('orders')
+                          .doc()
+                          .id,
                       userId: user?.userId ?? 'userId',
                       clubId: restaurant?.clubId ?? 'clubId',
                       restaurantId: restaurant?.restaurantId ?? 'restaurantId',
@@ -496,16 +504,21 @@ class _MyCartScreenState extends State<MyCartScreen> {
                       invoiceId: invoice.invoiceId,
                       orderTimeOut: restaurant?.orderTimeOut ?? 0,
                       createdAt: DateTime.now(),
-                      orderStatus: OrderStatus(reason: 'reason', status: Status.pending),
-                      totalAmount: filteredItems.fold(0.0, (sum, item) => sum + item.totalPrice) + invoice.totalFees,
+                      orderStatus:
+                          OrderStatus(reason: 'reason', status: Status.pending),
+                      totalAmount: filteredItems.fold(
+                              // ignore: avoid_types_as_parameter_names
+                              0.0, (sum, item) => sum + item.totalPrice) +
+                          invoice.totalFees,
                     );
                     invoice.orderId = order.orderId;
 
-                    Navigator.pushNamed(context, 'PayMethodScreenRoute', arguments: {
-                      'order': order,
-                      'cartItems': filteredItems,
-                      'invoice': invoice,
-                    });
+                    Navigator.pushNamed(context, 'PayMethodScreenRoute',
+                        arguments: {
+                          'order': order,
+                          'cartItems': filteredItems,
+                          'invoice': invoice,
+                        });
                   },
                   height: 42,
                   minWidth: MediaQuery.sizeOf(context).width,

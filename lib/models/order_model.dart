@@ -53,8 +53,10 @@ class Order {
       restaurantId: data['restaurantId'],
       deliveryId: data['deliveryId'],
       status: Status.values
+          // ignore: prefer_interpolation_to_compose_strings
           .firstWhere((e) => e.toString() == 'Status.' + data['status']),
       paymentType: PaymentType.values.firstWhere(
+          // ignore: prefer_interpolation_to_compose_strings
           (e) => e.toString() == 'PaymentType.' + data['paymentType']),
       invoiceId: data['invoiceId'],
       notes: data['notes'],

@@ -95,33 +95,43 @@ class AppRouter {
       case 'OrderScreenRoute':
         return OrderScreen.route();
       case 'PendingOrderScreenRoute':
-        if (settings.arguments is List<Order>) {
-          final orders = settings.arguments as List<Order>;
-          return PendingOrderScreen.route(orders: orders);
-        }
-        return _errorRoute();
+      if (settings.arguments is List) {
+        final args = settings.arguments as List;
+        final orders = args[0] as List<Order>;
+        final restaurantMap = args[1] as Map<String, Restaurant>;
+        return PendingOrderScreen.route(orders: orders, restaurantMap: restaurantMap);
+      }
+      return _errorRoute();
       case 'PreparingOrderScreenRoute':
-        if (settings.arguments is List<Order>) {
-          final orders = settings.arguments as List<Order>;
-          return PreparingOrderScreen.route(orders: orders);
+        if (settings.arguments is List) {
+          final args = settings.arguments as List;
+          final orders = args[0] as List<Order>;
+          final restaurantMap = args[1] as Map<String, Restaurant>;
+          return PreparingOrderScreen.route(orders: orders, restaurantMap: restaurantMap);
         }
         return _errorRoute();
       case 'OnWayOrderScreenRoute':
-        if (settings.arguments is List<Order>) {
-          final orders = settings.arguments as List<Order>;
-          return OnWayOrderScreen.route(orders: orders);
+        if (settings.arguments is List) {
+          final args = settings.arguments as List;
+          final orders = args[0] as List<Order>;
+          final restaurantMap = args[1] as Map<String, Restaurant>;
+          return OnWayOrderScreen.route(orders: orders, restaurantMap: restaurantMap);
         }
         return _errorRoute();
       case 'DeliveredOrderScreenRoute':
-        if (settings.arguments is List<Order>) {
-          final orders = settings.arguments as List<Order>;
-          return DeliveredOrderScreen.route(orders: orders);
+        if (settings.arguments is List) {
+          final args = settings.arguments as List;
+          final orders = args[0] as List<Order>;
+          final restaurantMap = args[1] as Map<String, Restaurant>;
+          return DeliveredOrderScreen.route(orders: orders, restaurantMap: restaurantMap);
         }
         return _errorRoute();
       case 'DeclineOrderScreenRoute':
-        if (settings.arguments is List<Order>) {
-          final orders = settings.arguments as List<Order>;
-          return DeclineOrderScreen.route(orders: orders);
+        if (settings.arguments is List) {
+          final args = settings.arguments as List;
+          final orders = args[0] as List<Order>;
+          final restaurantMap = args[1] as Map<String, Restaurant>;
+          return DeclineOrderScreen.route(orders: orders, restaurantMap: restaurantMap);
         }
         return _errorRoute();
       case 'OrderDetailsScreenRoute':

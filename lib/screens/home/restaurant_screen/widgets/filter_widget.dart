@@ -5,9 +5,10 @@ import 'package:just_order/screens/home/restaurant_screen/widgets/meal_widget.da
 class FilterWidget extends StatefulWidget {
   final List<Item> items;
 
-  const FilterWidget({required this.items, Key? key}) : super(key: key);
+  const FilterWidget({required this.items, super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _FilterWidgetState createState() => _FilterWidgetState();
 }
 

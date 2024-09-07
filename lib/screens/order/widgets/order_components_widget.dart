@@ -12,7 +12,7 @@ Widget buildOrderComponentsWidget(CartItem cartItem) {
         decoration: ShapeDecoration(
           image: DecorationImage(
             image: NetworkImage(cartItem.item.imageUrl),
-            fit: BoxFit.cover, 
+            fit: BoxFit.cover,
           ),
           shape: RoundedRectangleBorder(
             side: const BorderSide(
@@ -25,7 +25,7 @@ Widget buildOrderComponentsWidget(CartItem cartItem) {
         ),
       ),
       Padding(
-        padding: EdgeInsets.symmetric(horizontal: 12.0),
+        padding: const EdgeInsets.symmetric(horizontal: 12.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,7 +41,33 @@ Widget buildOrderComponentsWidget(CartItem cartItem) {
               overflow: TextOverflow.ellipsis,
               maxLines: 1,
             ),
-            SizedBox(height: 6.0),
+            const SizedBox(height: 6.0),
+            if (cartItem.extras != null && cartItem.extras!.isNotEmpty)
+              ...cartItem.extras!.entries.map((entry) => Text(
+                    '${entry.key}: EGP ${entry.value}',
+                    style: const TextStyle(
+                      color: Colors.grey,
+                      fontSize: 10,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w600,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  )),
+            const SizedBox(height: 6.0),
+            if (cartItem.size != null && cartItem.size!.isNotEmpty)
+              ...cartItem.size!.entries.map((entry) => Text(
+                    '${entry.key}: EGP ${entry.value}',
+                    style: const TextStyle(
+                      color: Colors.grey,
+                      fontSize: 10,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w600,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  )),
+            const SizedBox(height: 6.0),
             Text(
               'EGP ${cartItem.totalPrice}',
               style: const TextStyle(
@@ -52,7 +78,7 @@ Widget buildOrderComponentsWidget(CartItem cartItem) {
               ),
               overflow: TextOverflow.ellipsis,
               maxLines: 1,
-            )
+            ),
           ],
         ),
       ),

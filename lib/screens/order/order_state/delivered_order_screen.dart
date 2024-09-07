@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:just_order/models/order_model.dart';
+import 'package:just_order/models/restaurant_model.dart';
 import '../../../shared/widget/common_order_state_widget.dart';
 
 class DeliveredOrderScreen extends StatefulWidget {
   final List<Order> orders;
-  const DeliveredOrderScreen({super.key, required this.orders});
+  final Map<String, Restaurant> restaurantMap;
+  const DeliveredOrderScreen({super.key, required this.orders, required this.restaurantMap});
 
   static const String routeName = 'DeliveredOrderScreenRoute';
 
-  static Route route({required List<Order> orders}) {
+  static Route route({required List<Order> orders, required Map<String, Restaurant> restaurantMap}) {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
-      builder: (context) => DeliveredOrderScreen(orders: orders),
+      builder: (context) => DeliveredOrderScreen(orders: orders, restaurantMap: restaurantMap),
     );
   }
 
@@ -70,7 +72,8 @@ class _DeliveredOrderScreenState extends State<DeliveredOrderScreen> {
             itemBuilder: (context, index) => buildOrderStateWidget(
               context: context,
               width: 70,
-              order: widget.orders[index],),
+              order: widget.orders[index],
+              restaurant: widget.restaurantMap[widget.orders[index].restaurantId]!,),
             separatorBuilder: (context, index) => const SizedBox(
               height: 12.0,
             ),

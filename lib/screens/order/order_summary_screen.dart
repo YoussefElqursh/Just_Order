@@ -283,7 +283,7 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
                             ),
-                            Spacer(),
+                            const Spacer(),
                             Text(
                               'EGP ${widget.cartItems.fold(0.0, (previousValue, element) => previousValue + element.totalPrice)}',
                               style: const TextStyle(
@@ -314,7 +314,7 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
                             ),
-                            Spacer(),
+                            const Spacer(),
                             Text(
                               'EGP ${restaurant?.deliveryFee}',
                               style: const TextStyle(

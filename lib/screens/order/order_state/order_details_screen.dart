@@ -327,7 +327,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 thickness: 8,
               ),
               Padding(
-                padding: EdgeInsets.only(left: 20.0, right:20.0, top:25.0),
+                padding: const EdgeInsets.only(left: 20.0, right:20.0, top:25.0),
                 child: Text.rich(
                   TextSpan(
                     children: [
@@ -402,7 +402,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -467,33 +467,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                         ),
                         const Spacer(),
                         Text(
-                          'EGP ${invoice?.totalFees ?? 0 - (invoice?.serviceFees ?? 0)}',
+                          'EGP ${(invoice?.totalFees ?? 0) - (invoice?.serviceFees ?? 0)}',
                           style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 12,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Discount',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 12,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                        Spacer(),
-                        Text(
-                          'EGP 0',
-                          style: TextStyle(
                             color: Colors.black,
                             fontSize: 12,
                             fontFamily: 'Inter',
@@ -546,7 +521,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                         ),
                         const Spacer(),
                         Text(
-                          'EGP ${invoice?.totalFees ?? 0}',
+                          'EGP ${widget.order.totalAmount}',
                           style: const TextStyle(
                             color: Colors.black,
                             fontSize: 12,

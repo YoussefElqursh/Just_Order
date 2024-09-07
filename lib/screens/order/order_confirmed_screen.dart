@@ -41,8 +41,7 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
   }
 
   Future<void> _pushOrderToDatabase() async {
-    String message = await userRepository.pushOrder(widget.order, widget.cartItems, widget.invoice);
-    print(message);
+    await userRepository.pushOrder(widget.order, widget.cartItems, widget.invoice);
   }
 
   @override
@@ -143,7 +142,7 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                           ),
-                          Spacer(),
+                          const Spacer(),
                           Text(
                             'EGP ${widget.cartItems.fold(0.0, (previousValue, element) => previousValue + element.totalPrice)}',
                             style: const TextStyle(
@@ -176,7 +175,7 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                           ),
                           const Spacer(),
                           Text(
-                            'EGP ${widget.invoice.totalFees - widget.invoice.serviceFees}',
+                            'EGP ${((widget.invoice.totalFees) - (widget.invoice.serviceFees))}',
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 12,
@@ -271,7 +270,7 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                           ),
-                          Spacer(),
+                          const Spacer(),
                           Text(
                             'EGP ${widget.order.totalAmount}',
                             style: const TextStyle(
