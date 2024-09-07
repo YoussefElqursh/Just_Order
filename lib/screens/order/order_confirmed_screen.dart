@@ -3,8 +3,10 @@ import 'package:intl/intl.dart';
 import 'package:just_order/models/cart_item_model.dart';
 import 'package:just_order/models/invoice_model.dart';
 import 'package:just_order/models/order_model.dart';
+import 'package:just_order/repository/order_provider.dart';
 import 'package:just_order/repository/user_repository/user_repository.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class OrderConfirmedScreen extends StatefulWidget {
@@ -42,6 +44,8 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
 
   Future<void> _pushOrderToDatabase() async {
     await userRepository.pushOrder(widget.order, widget.cartItems, widget.invoice);
+    // ignore: use_build_context_synchronously
+    Provider.of<OrderProvider>(context, listen: false).addOrder(widget.order);
   }
 
   @override

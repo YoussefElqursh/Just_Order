@@ -7,9 +7,10 @@ import 'package:just_order/models/order_model.dart' as order_model;
 class OrderRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<List<order_model.Order>> getOrders() {
+  Future<List<order_model.Order>> getOrders(String userId) {
     return _firestore
         .collection('orders')
+        .where('userId', isEqualTo: userId)
         .get()
         .then((snapshot) {
       return snapshot.docs.map((doc) {

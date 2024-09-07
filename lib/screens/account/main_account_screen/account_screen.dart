@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:just_order/models/user_model.dart';
+import 'package:just_order/repository/auth_repository/login_repository.dart';
 import 'package:just_order/screens/account/main_account_screen/widgets/account_functions_widget.dart';
 import 'package:just_order/shared/function/functions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,6 +16,7 @@ class AccountScreen extends StatefulWidget {
 
 class _AccountScreenState extends State<AccountScreen> {
   User? user;
+  LoginRepository loginRepository = LoginRepository();
 
   @override
   void initState() {
@@ -193,7 +195,10 @@ class _AccountScreenState extends State<AccountScreen> {
                   context: context,
                   icon: Icons.logout,
                   label: 'Logout',
-                  onPressed: () {},
+                  onPressed: () {
+                    loginRepository.logout();
+                    navigateTo(context, 'LoginScreenRoute');
+                  },
                 ),
               ],
             ),
