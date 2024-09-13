@@ -84,7 +84,7 @@ class _OrderScreenState extends State<OrderScreen> {
           actions: [
             Padding(
               padding:
-                  const EdgeInsets.only(left: 20.0, top: 10.0, bottom: 10.0),
+                  const EdgeInsets.only(right: 20.0, top: 10.0, bottom: 10.0),
               child: Container(
                 width: 34,
                 height: 34,
