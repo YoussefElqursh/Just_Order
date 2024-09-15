@@ -62,7 +62,7 @@ class _OrderScreenState extends State<OrderScreen> {
       };
     });
     // ignore: use_build_context_synchronously
-    Provider.of<OrderProvider>(context, listen: false).addOrders(fetchedOrders);
+    Provider.of<OrderProvider>(context, listen: false).listenToOrders(user?.userId ?? '');
   }
 
   @override
