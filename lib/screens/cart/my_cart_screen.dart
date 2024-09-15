@@ -499,6 +499,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                       userId: user?.userId ?? 'userId',
                       clubId: restaurant?.clubId ?? 'clubId',
                       restaurantId: restaurant?.restaurantId ?? 'restaurantId',
+                      orderCode: '15666',
                       status: Status.pending,
                       paymentType: PaymentType.cash,
                       invoiceId: invoice.invoiceId,

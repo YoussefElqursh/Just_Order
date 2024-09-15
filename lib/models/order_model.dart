@@ -9,6 +9,7 @@ class Order {
   String userId;
   String clubId;
   String restaurantId;
+  String orderCode;
   Status status;
   PaymentType paymentType;
   String invoiceId;
@@ -29,6 +30,7 @@ class Order {
     required this.userId,
     required this.clubId,
     required this.restaurantId,
+    required this.orderCode,
     this.deliveryId,
     required this.status,
     required this.paymentType,
@@ -51,6 +53,7 @@ class Order {
       userId: data['userId'],
       clubId: data['clubId'],
       restaurantId: data['restaurantId'],
+      orderCode: data['orderCode'],
       deliveryId: data['deliveryId'],
       status: Status.values
           // ignore: prefer_interpolation_to_compose_strings
@@ -88,6 +91,7 @@ class Order {
       'userId': userId,
       'clubId': clubId,
       'restaurantId': restaurantId,
+      'orderCode': orderCode,
       'deliveryId': deliveryId,
       'status': status.toString().split('.').last,
       'paymentType': paymentType.toString().split('.').last,

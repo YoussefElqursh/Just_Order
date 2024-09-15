@@ -299,17 +299,17 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       height: 10,
                     ),
                     QrImageView(
-                      data: '15646',
+                      data: widget.order.orderCode,
                       size: 200,
                       version: QrVersions.auto,
                     ),
                     const SizedBox(
                       height: 10,
                     ),
-                    const Text(
-                      '15646',
+                    Text(
+                      widget.order.orderCode,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.black,
                         fontSize: 18,
                         fontFamily: 'Inter',
