@@ -6,7 +6,6 @@ import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:just_order/models/enums/user_type.dart';
 import 'package:just_order/models/user_model.dart';
-import 'package:uuid/uuid.dart';
 
 part 'sign_up_state.dart';
 
@@ -30,11 +29,10 @@ class SignUpCubit extends Cubit<SignUpState> {
 
     emit(SignUpLoadingState());
     try {
-      const uuid = Uuid();
-      final uid = uuid.v4();
+      final userId = _firestore.collection('users').doc().id;
 
       final user = User(
-        userId: uid,
+        userId: userId,
         firstName: firstName,
         lastName: lastName,
         email: email,
@@ -46,7 +44,7 @@ class SignUpCubit extends Cubit<SignUpState> {
         createdAt: DateTime.now(),
       );
 
-      await _firestore.collection('users').doc(uid).set(user.toJson());
+      await _firestore.collection('users').doc(userId).set(user.toJson());
 
       emit(SignUpISuccessState());
     } catch (e) {

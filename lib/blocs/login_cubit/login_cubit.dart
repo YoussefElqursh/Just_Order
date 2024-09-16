@@ -40,31 +40,32 @@ class LoginCubit extends Cubit<LoginState> {
 
   Future<void> loginWithGoogle() async {
     emit(LoginLoading());
-    print('loginWithGoogle');
+    final GoogleSignIn googleSignIn = GoogleSignIn(
+      scopes: <String>[
+        'email',
+        'https://www.googleapis.com/auth/contacts.readonly',
+      ],
+    );
+
     try {
-      print('try');
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-      print('googleUser $googleUser');
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
       if (googleUser == null) {
-        print('googleUser null');
-        emit(LoginFailure("Google sign-in failed"));
-        print('googleUser null 2');
+        emit(LoginFailure("Google sign-in aborted"));
         return;
       }
 
-      print('googleUser exists $googleUser');
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      if (googleAuth.idToken == null) {
+        emit(LoginFailure("Google sign-in failed"));
+        return;
+      }
 
       final String email = googleUser.email;
-
-      print('email $email');
-
       final QuerySnapshot result = await FirebaseFirestore.instance
           .collection('users')
           .where('email', isEqualTo: email)
           .get();
-
       final List<DocumentSnapshot> documents = result.docs;
-
       if (documents.isNotEmpty) {
         User? user =
             await User.fromMap(documents.first.data() as Map<String, dynamic>);
@@ -75,7 +76,6 @@ class LoginCubit extends Cubit<LoginState> {
         emit(LoginFailure("User not found in Firestore"));
       }
     } catch (e) {
-      print('Error: ${e.toString()}');
       emit(LoginFailure("An error occurred: ${e.toString()}"));
     }
   }
