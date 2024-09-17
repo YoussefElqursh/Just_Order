@@ -479,47 +479,69 @@ class _MyCartScreenState extends State<MyCartScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: MaterialButton(
                   onPressed: () {
-                    final invoice = Invoice(
-                      invoiceId: FirebaseFirestore.instance
-                          .collection('invoices')
-                          .doc()
-                          .id,
-                      orderId: 'testOrderId',
-                      clubId: restaurant?.clubId ?? 'clubId',
-                      restaurantId: restaurant?.restaurantId ?? 'restaurantId',
-                      serviceFees: 10.0,
-                      totalFees: 10.0 + (restaurant?.deliveryFee ?? 0.0),
-                      createdAt: DateTime.now(),
-                    );
-                    final order = order_model.Order(
-                      orderId: FirebaseFirestore.instance
-                          .collection('orders')
-                          .doc()
-                          .id,
-                      userId: user?.userId ?? 'userId',
-                      clubId: restaurant?.clubId ?? 'clubId',
-                      restaurantId: restaurant?.restaurantId ?? 'restaurantId',
-                      orderCode: '15666',
-                      status: Status.pending,
-                      paymentType: PaymentType.cash,
-                      invoiceId: invoice.invoiceId,
-                      orderTimeOut: restaurant?.orderTimeOut ?? 0,
-                      createdAt: DateTime.now(),
-                      orderStatus:
-                          OrderStatus(reason: 'reason', status: Status.pending),
-                      totalAmount: filteredItems.fold(
-                              // ignore: avoid_types_as_parameter_names
-                              0.0, (sum, item) => sum + item.totalPrice) +
-                          invoice.totalFees,
-                    );
-                    invoice.orderId = order.orderId;
+                    if (filteredItems.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                            'Your cart is empty',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w500,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
+                          backgroundColor: Color(0xFFE02C45),
+                        ),
+                      );
+                    } else {
+                      final invoice = Invoice(
+                        invoiceId: FirebaseFirestore.instance
+                            .collection('invoices')
+                            .doc()
+                            .id,
+                        orderId: 'testOrderId',
+                        clubId: restaurant?.clubId ?? 'clubId',
+                        restaurantId:
+                            restaurant?.restaurantId ?? 'restaurantId',
+                        serviceFees: 10.0,
+                        totalFees: 10.0 + (restaurant?.deliveryFee ?? 0.0),
+                        createdAt: DateTime.now(),
+                      );
+                      final order = order_model.Order(
+                        orderId: FirebaseFirestore.instance
+                            .collection('orders')
+                            .doc()
+                            .id,
+                        userId: user?.userId ?? 'userId',
+                        clubId: restaurant?.clubId ?? 'clubId',
+                        restaurantId:
+                            restaurant?.restaurantId ?? 'restaurantId',
+                        orderCode: '15666',
+                        status: Status.pending,
+                        paymentType: PaymentType.cash,
+                        invoiceId: invoice.invoiceId,
+                        orderTimeOut: restaurant?.orderTimeOut ?? 0,
+                        createdAt: DateTime.now(),
+                        orderStatus: OrderStatus(
+                            reason: 'reason', status: Status.pending),
+                        totalAmount: filteredItems.fold(
+                                0.0,
+                                // ignore: avoid_types_as_parameter_names
+                                (sum, item) => sum + item.totalPrice) +
+                            invoice.totalFees,
+                      );
+                      invoice.orderId = order.orderId;
 
-                    Navigator.pushNamed(context, 'PayMethodScreenRoute',
-                        arguments: {
-                          'order': order,
-                          'cartItems': filteredItems,
-                          'invoice': invoice,
-                        });
+                      Navigator.pushNamed(context, 'PayMethodScreenRoute',
+                          arguments: {
+                            'order': order,
+                            'cartItems': filteredItems,
+                            'invoice': invoice,
+                          });
+                    }
                   },
                   height: 42,
                   minWidth: MediaQuery.sizeOf(context).width,
