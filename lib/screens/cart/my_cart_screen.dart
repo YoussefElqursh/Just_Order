@@ -478,7 +478,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: MaterialButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (filteredItems.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
@@ -519,7 +519,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                         clubId: restaurant?.clubId ?? 'clubId',
                         restaurantId:
                             restaurant?.restaurantId ?? 'restaurantId',
-                        orderCode: '15666',
+                        orderCode: 'temp',
                         status: Status.pending,
                         paymentType: PaymentType.cash,
                         invoiceId: invoice.invoiceId,
@@ -534,6 +534,8 @@ class _MyCartScreenState extends State<MyCartScreen> {
                             invoice.totalFees,
                       );
                       invoice.orderId = order.orderId;
+                      String orderCode = await order.generateUniqueOrderCode();
+                      order.orderCode = orderCode;
 
                       Navigator.pushNamed(context, 'PayMethodScreenRoute',
                           arguments: {

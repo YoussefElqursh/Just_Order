@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:just_order/models/delivery_status.dart';
 import 'package:just_order/models/enums/status.dart';
@@ -108,4 +110,33 @@ class Order {
       'totalAmount': totalAmount,
     };
   }
+
+  String generateOrderCode() {
+    Random random = Random();
+    int randomNumber = 10000 + random.nextInt(90000);
+    return randomNumber.toString();
+  }
+
+  Future<String> generateUniqueOrderCode() async {
+    String orderCode;
+    bool isUnique = false;
+    
+    do {
+      orderCode = generateOrderCode();
+      
+      QuerySnapshot result = await FirebaseFirestore.instance
+          .collection('orders')
+          .where('status', isEqualTo: 'pending')
+          .where('orderCode', isEqualTo: orderCode)
+          .limit(1)
+          .get();
+
+      if (result.docs.isEmpty) {
+        isUnique = true;
+      }
+    } while (!isUnique);
+
+    return orderCode;
+  }
+
 }
