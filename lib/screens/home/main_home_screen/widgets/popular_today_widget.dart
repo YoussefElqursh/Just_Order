@@ -7,7 +7,8 @@ Widget buildPopularTodayWidget({
 }) {
   return GestureDetector(
     onTap: () {
-      Navigator.pushNamed(context, 'RestaurantScreenRoute', arguments: restaurant);
+      Navigator.pushNamed(context, 'RestaurantScreenRoute',
+          arguments: restaurant);
     },
     child: Column(
       children: [

@@ -42,7 +42,7 @@ class OrderRepository {
         return CartItem.fromMap(doc.data());
       }).toList();
     });
-  } 
+  }
 
   Future<Invoice> getInvoice(String orderId) async {
     final snapshot = await _firestore

@@ -54,7 +54,8 @@ class LoginCubit extends Cubit<LoginState> {
         return;
       }
 
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
       if (googleAuth.idToken == null) {
         emit(LoginFailure("Google sign-in failed"));
         return;

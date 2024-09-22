@@ -95,19 +95,21 @@ class AppRouter {
       case 'OrderScreenRoute':
         return OrderScreen.route();
       case 'PendingOrderScreenRoute':
-      if (settings.arguments is List) {
-        final args = settings.arguments as List;
-        final orders = args[0] as List<Order>;
-        final restaurantMap = args[1] as Map<String, Restaurant>;
-        return PendingOrderScreen.route(orders: orders, restaurantMap: restaurantMap);
-      }
-      return _errorRoute();
+        if (settings.arguments is List) {
+          final args = settings.arguments as List;
+          final orders = args[0] as List<Order>;
+          final restaurantMap = args[1] as Map<String, Restaurant>;
+          return PendingOrderScreen.route(
+              orders: orders, restaurantMap: restaurantMap);
+        }
+        return _errorRoute();
       case 'PreparingOrderScreenRoute':
         if (settings.arguments is List) {
           final args = settings.arguments as List;
           final orders = args[0] as List<Order>;
           final restaurantMap = args[1] as Map<String, Restaurant>;
-          return PreparingOrderScreen.route(orders: orders, restaurantMap: restaurantMap);
+          return PreparingOrderScreen.route(
+              orders: orders, restaurantMap: restaurantMap);
         }
         return _errorRoute();
       case 'OnWayOrderScreenRoute':
@@ -115,7 +117,8 @@ class AppRouter {
           final args = settings.arguments as List;
           final orders = args[0] as List<Order>;
           final restaurantMap = args[1] as Map<String, Restaurant>;
-          return OnWayOrderScreen.route(orders: orders, restaurantMap: restaurantMap);
+          return OnWayOrderScreen.route(
+              orders: orders, restaurantMap: restaurantMap);
         }
         return _errorRoute();
       case 'DeliveredOrderScreenRoute':
@@ -123,7 +126,8 @@ class AppRouter {
           final args = settings.arguments as List;
           final orders = args[0] as List<Order>;
           final restaurantMap = args[1] as Map<String, Restaurant>;
-          return DeliveredOrderScreen.route(orders: orders, restaurantMap: restaurantMap);
+          return DeliveredOrderScreen.route(
+              orders: orders, restaurantMap: restaurantMap);
         }
         return _errorRoute();
       case 'DeclineOrderScreenRoute':
@@ -131,7 +135,8 @@ class AppRouter {
           final args = settings.arguments as List;
           final orders = args[0] as List<Order>;
           final restaurantMap = args[1] as Map<String, Restaurant>;
-          return DeclineOrderScreen.route(orders: orders, restaurantMap: restaurantMap);
+          return DeclineOrderScreen.route(
+              orders: orders, restaurantMap: restaurantMap);
         }
         return _errorRoute();
       case 'OrderDetailsScreenRoute':

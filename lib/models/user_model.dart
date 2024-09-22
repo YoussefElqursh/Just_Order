@@ -43,7 +43,8 @@ class User {
       email: map['email'] as String,
       password: map['password'] as String,
       phoneNumber: map['phoneNumber'] as String,
-      userType: UserType.values.firstWhere((e) => e.toString() == 'UserType.${map['userType']}'),
+      userType: UserType.values
+          .firstWhere((e) => e.toString() == 'UserType.${map['userType']}'),
       emailVerified: map['emailVerified'] as bool,
       phoneNumberVerified: map['phoneNumberVerified'] as bool,
       createdAt: (map['createdAt'] as Timestamp).toDate(),
@@ -74,15 +75,6 @@ class User {
     };
   }
 
-  Future<User?> getUserFromPreferences() async {
-    final prefs = await SharedPreferences.getInstance();
-    final user = prefs.getString('user');
-    if (user == null) {
-      return null;
-    }
-    return User.fromJson(jsonDecode(user));
-  }
-
   static User? fromJson(Map<String, dynamic> json) {
     return User(
       userId: json['userId'],
@@ -91,7 +83,8 @@ class User {
       email: json['email'],
       password: json['password'],
       phoneNumber: json['phoneNumber'],
-      userType: UserType.values.firstWhere((e) => e.toString() == 'UserType.${json['userType']}'),
+      userType: UserType.values
+          .firstWhere((e) => e.toString() == 'UserType.${json['userType']}'),
       emailVerified: json['emailVerified'],
       phoneNumberVerified: json['phoneNumberVerified'],
       createdAt: json['createdAt'] is Timestamp
@@ -99,8 +92,8 @@ class User {
           : DateTime.parse(json['createdAt']),
       updatedAt: json['updatedAt'] != null
           ? json['updatedAt'] is Timestamp
-          ? (json['updatedAt'] as Timestamp).toDate()
-          : DateTime.parse(json['updatedAt'])
+              ? (json['updatedAt'] as Timestamp).toDate()
+              : DateTime.parse(json['updatedAt'])
           : null,
     );
   }

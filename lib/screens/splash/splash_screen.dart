@@ -32,7 +32,8 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 5), () => _checkInternetConnection());
+    Future.delayed(
+        const Duration(seconds: 5), () => _checkInternetConnection());
   }
 
   Future<void> _checkInternetConnection() async {
@@ -44,9 +45,9 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
-  void _showNoInternetDialog() {  
+  void _showNoInternetDialog() {
     if (!_dialogShown) {
-        showDialog(
+      showDialog(
         context: context,
         builder: (context) => const AlertDialog(
           title: Text('No Internet Connection'),

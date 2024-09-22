@@ -10,19 +10,17 @@ import 'package:just_order/models/user_model.dart';
 part 'sign_up_state.dart';
 
 class SignUpCubit extends Cubit<SignUpState> {
-
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   SignUpCubit() : super(SignUpInitialState());
 
   Future<void> signUp({
-        required String email,
-        required String firstName,
-        required String lastName,
-        required String password,
-        required String phoneNumber,
-      }) async {
-
+    required String email,
+    required String firstName,
+    required String lastName,
+    required String password,
+    required String phoneNumber,
+  }) async {
     final bytes = utf8.encode(password);
     final digest = sha256.convert(bytes);
     final hashedPassword = digest.toString();
@@ -54,9 +52,10 @@ class SignUpCubit extends Cubit<SignUpState> {
 
   IconData suffixIcon = Icons.visibility_outlined;
   bool isPassword = true;
-  void changePasswordState(){
-    isPassword = ! isPassword;
-    suffixIcon = isPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined ;
+  void changePasswordState() {
+    isPassword = !isPassword;
+    suffixIcon =
+        isPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;
     emit(SignUpShowPassword());
   }
 }

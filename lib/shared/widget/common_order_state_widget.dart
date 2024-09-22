@@ -185,7 +185,6 @@ Widget buildOrderPendingStateWidget({
   required Order order,
   required Restaurant restaurant,
 }) {
-
   // Calculate the time difference in minutes
   final now = DateTime.now();
   final orderTime = order.createdAt;
@@ -379,7 +378,6 @@ Widget buildOrderPreparingStateWidget({
   required Order order,
   required Restaurant restaurant,
 }) {
-
   // Calculate the time difference in minutes
   final now = DateTime.now();
   final orderTime = order.createdAt;

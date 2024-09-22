@@ -7,7 +7,8 @@ Widget buildRestaurantsWidget({
 }) {
   return GestureDetector(
     onTap: () {
-      Navigator.pushNamed(context, 'RestaurantScreenRoute', arguments: restaurant);
+      Navigator.pushNamed(context, 'RestaurantScreenRoute',
+          arguments: restaurant);
     },
     child: Row(
       children: [
@@ -16,7 +17,8 @@ Widget buildRestaurantsWidget({
           height: 90,
           decoration: ShapeDecoration(
             image: DecorationImage(
-              image: NetworkImage(restaurant.imageUrl ?? 'https://via.placeholder.com/150'),
+              image: NetworkImage(
+                  restaurant.imageUrl ?? 'https://via.placeholder.com/150'),
               fit: BoxFit.cover,
             ),
             shape: RoundedRectangleBorder(
@@ -166,7 +168,9 @@ Widget buildRestaurantsWidget({
                         ),
                         const SizedBox(width: 6),
                         Text(
-                          (restaurant.deliveryFee != null) ? 'EGP ${restaurant.deliveryFee}' : 'Free',
+                          (restaurant.deliveryFee != null)
+                              ? 'EGP ${restaurant.deliveryFee}'
+                              : 'Free',
                           style: const TextStyle(
                             color: Colors.black,
                             fontSize: 10,

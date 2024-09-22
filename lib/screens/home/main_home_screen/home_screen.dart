@@ -9,7 +9,6 @@ import 'package:just_order/screens/home/main_home_screen/widgets/categories_widg
 import 'package:just_order/screens/home/main_home_screen/widgets/filter_widget.dart';
 import 'package:just_order/screens/home/main_home_screen/widgets/popular_today_widget.dart';
 import 'package:just_order/screens/home/main_home_screen/widgets/restaurants_widget.dart';
-import 'package:just_order/shared/constant/lists/lists.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -32,6 +31,13 @@ class _HomeScreenState extends State<HomeScreen> {
   String tableCode = '';
   int _currentPage = 0;
   List<Restaurant> restaurants = [];
+
+  final List<String> adsImageList = [
+    "assets/images/blackAdv.jpg",
+    "assets/images/basicAdv.jpg",
+    "assets/images/blackAdv.jpg",
+    "assets/images/basicAdv.jpg",
+  ];
 
   @override
   void initState() {
@@ -58,17 +64,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void openBottomSheet(BuildContext context) {
     showModalBottomSheet(
-      context: context,
-      builder: (_) {
-        return const PlaceDetailsSheet();
-      },
-      useSafeArea: true,
-      backgroundColor: Colors.white,
-      constraints: BoxConstraints(
-        maxHeight: 200,
-        maxWidth: MediaQuery.sizeOf(context).width,
-      )
-    );
+        context: context,
+        builder: (_) {
+          return const PlaceDetailsSheet();
+        },
+        useSafeArea: true,
+        backgroundColor: Colors.white,
+        constraints: BoxConstraints(
+          maxHeight: 200,
+          maxWidth: MediaQuery.sizeOf(context).width,
+        ));
   }
 
   @override
@@ -216,10 +221,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 items: adsImageList
                     .map(
                       (e) => Center(
-                        child: Image.network(
-                          e,
-                          fit: BoxFit.cover,
-                          height: 200,
+                        child: Container(
+                          width: MediaQuery.sizeOf(context).width,
+                          height: 150.0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            image: DecorationImage(
+                              image: AssetImage(e),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
                       ),
                     )
@@ -355,8 +366,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: MediaQuery.sizeOf(context).width,
                 height: 201.0,
                 child: ListView.separated(
-                  itemBuilder: (context, index) =>
-                      buildPopularTodayWidget(context: context, restaurant: restaurants[index]),
+                  itemBuilder: (context, index) => buildPopularTodayWidget(
+                      context: context, restaurant: restaurants[index]),
                   separatorBuilder: (context, index) =>
                       const SizedBox(width: 10.0),
                   itemCount: min(restaurants.length, 5),

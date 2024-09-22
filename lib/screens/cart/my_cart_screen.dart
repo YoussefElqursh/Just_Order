@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:just_order/models/enums/payment_type.dart';
 import 'package:just_order/models/enums/status.dart';
 import 'package:just_order/models/invoice_model.dart';
-import 'package:just_order/models/order_status.dart';
 import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/models/user_model.dart';
 import 'package:just_order/repository/cart_provider.dart';
@@ -525,8 +524,6 @@ class _MyCartScreenState extends State<MyCartScreen> {
                         invoiceId: invoice.invoiceId,
                         orderTimeOut: restaurant?.orderTimeOut ?? 0,
                         createdAt: DateTime.now(),
-                        orderStatus: OrderStatus(
-                            reason: 'reason', status: Status.pending),
                         totalAmount: filteredItems.fold(
                                 0.0,
                                 // ignore: avoid_types_as_parameter_names
@@ -537,6 +534,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                       String orderCode = await order.generateUniqueOrderCode();
                       order.orderCode = orderCode;
 
+                      // ignore: use_build_context_synchronously
                       Navigator.pushNamed(context, 'PayMethodScreenRoute',
                           arguments: {
                             'order': order,

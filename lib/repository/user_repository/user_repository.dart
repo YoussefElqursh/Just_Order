@@ -9,7 +9,6 @@ class UserRepository {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   Future<List<Restaurant>> getRestaurants(String code) async {
-
     String clubId = int.parse(code.substring(0, 2)).toString();
 
     QuerySnapshot snapshot = await firestore
@@ -30,21 +29,36 @@ class UserRepository {
     List<Item> items = [];
 
     for (String itemId in itemIds) {
-      DocumentSnapshot snapshot = await firestore.collection('items').doc(itemId).get();
+      DocumentSnapshot snapshot =
+          await firestore.collection('items').doc(itemId).get();
       items.add(Item.fromMap(snapshot.data() as Map<String, dynamic>));
     }
 
     return items;
   }
 
-  Future<String> pushOrder(order_model.Order order, List<CartItem> cartItems, Invoice invoice) async {
+  Future<String> pushOrder(order_model.Order order, List<CartItem> cartItems,
+      Invoice invoice) async {
     await firestore.collection('orders').doc(order.orderId).set(order.toMap());
     for (CartItem cartItem in cartItems) {
-      String cartItemId = firestore.collection('orders').doc(order.orderId).collection('cartItems').doc().id;
+      String cartItemId = firestore
+          .collection('orders')
+          .doc(order.orderId)
+          .collection('cartItems')
+          .doc()
+          .id;
       cartItem.cartItemId = cartItemId;
-      await firestore.collection('orders').doc(order.orderId).collection('cartItems').doc(cartItem.cartItemId).set(cartItem.toMap());
+      await firestore
+          .collection('orders')
+          .doc(order.orderId)
+          .collection('cartItems')
+          .doc(cartItem.cartItemId)
+          .set(cartItem.toMap());
     }
-    await firestore.collection('invoices').doc(order.invoiceId).set(invoice.toMap());
+    await firestore
+        .collection('invoices')
+        .doc(order.invoiceId)
+        .set(invoice.toMap());
 
     return 'Order placed successfully with order id: ${order.orderId} and invoice id: ${invoice.invoiceId} and cart items: ${cartItems.length}';
   }

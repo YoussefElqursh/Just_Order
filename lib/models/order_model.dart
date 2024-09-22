@@ -1,9 +1,7 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:just_order/models/delivery_status.dart';
 import 'package:just_order/models/enums/status.dart';
-import 'package:just_order/models/order_status.dart';
 import 'enums/payment_type.dart';
 
 class Order {
@@ -17,10 +15,8 @@ class Order {
   String invoiceId;
   int orderTimeOut;
   DateTime createdAt;
-  OrderStatus orderStatus;
   double totalAmount;
   String? deliveryId;
-  DeliveryStatus? deliveryStatus;
   DateTime? updatedAt;
   DateTime? assignedDateTime;
   DateTime? deliveredDateTime;
@@ -44,8 +40,6 @@ class Order {
     this.finalisedDateTime,
     required this.createdAt,
     this.updatedAt,
-    required this.orderStatus,
-    this.deliveryStatus,
     required this.totalAmount,
   });
 
@@ -79,10 +73,6 @@ class Order {
       updatedAt: data['updatedAt'] != null
           ? (data['updatedAt'] as Timestamp).toDate()
           : null,
-      orderStatus: OrderStatus.fromMap(data['orderStatus']),
-      deliveryStatus: data['deliveryStatus'] != null
-          ? DeliveryStatus.fromMap(data['deliveryStatus'])
-          : null,
       totalAmount: data['totalAmount'].toDouble(),
     );
   }
@@ -105,8 +95,6 @@ class Order {
       'finalisedDateTime': finalisedDateTime,
       'createdAt': createdAt,
       'updatedAt': updatedAt,
-      'orderStatus': orderStatus.toMap(),
-      'deliveryStatus': deliveryStatus?.toMap(),
       'totalAmount': totalAmount,
     };
   }
@@ -120,10 +108,10 @@ class Order {
   Future<String> generateUniqueOrderCode() async {
     String orderCode;
     bool isUnique = false;
-    
+
     do {
       orderCode = generateOrderCode();
-      
+
       QuerySnapshot result = await FirebaseFirestore.instance
           .collection('orders')
           .where('status', isEqualTo: 'pending')
@@ -138,5 +126,4 @@ class Order {
 
     return orderCode;
   }
-
 }

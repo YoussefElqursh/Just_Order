@@ -13,7 +13,9 @@ class OrderProvider with ChangeNotifier {
         .where('userId', isEqualTo: userId)
         .snapshots()
         .listen((snapshot) {
-      _orders = snapshot.docs.map((doc) => order_model.Order.fromMap(doc.data())).toList();
+      _orders = snapshot.docs
+          .map((doc) => order_model.Order.fromMap(doc.data()))
+          .toList();
       notifyListeners();
     });
   }

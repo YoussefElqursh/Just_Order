@@ -11,14 +11,16 @@ import '../widgets/order_components_widget.dart';
 class OrderDetailsScreen extends StatefulWidget {
   final Order order;
   final Restaurant restaurant;
-  const OrderDetailsScreen({super.key, required this.order, required this.restaurant});
+  const OrderDetailsScreen(
+      {super.key, required this.order, required this.restaurant});
 
   static const String routeName = 'OrderDetailsScreenRoute';
 
   static Route route({required Order order, required Restaurant restaurant}) {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
-      builder: (context) => OrderDetailsScreen(order: order, restaurant: restaurant),
+      builder: (context) =>
+          OrderDetailsScreen(order: order, restaurant: restaurant),
     );
   }
 
@@ -39,7 +41,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   }
 
   Future<void> getOrderItems() async {
-    final fetchCartItems = await orderRepository.getCartItem(widget.order.orderId);
+    final fetchCartItems =
+        await orderRepository.getCartItem(widget.order.orderId);
     setState(() {
       cartItems = fetchCartItems;
     });
@@ -110,7 +113,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       height: 50,
                       decoration: ShapeDecoration(
                         image: DecorationImage(
-                          image: NetworkImage(widget.restaurant.imageUrl?? 'https://via.placeholder.com/150'),
+                          image: NetworkImage(widget.restaurant.imageUrl ??
+                              'https://via.placeholder.com/150'),
                           fit: BoxFit.cover,
                         ),
                         shape: RoundedRectangleBorder(
@@ -137,7 +141,9 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        const SizedBox(height: 5,),
+                        const SizedBox(
+                          height: 5,
+                        ),
                         const Text(
                           'Pizza, Pies, Crepes ',
                           style: TextStyle(
@@ -214,7 +220,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           ),
                         ),
                         Text(
-                          DateFormat('dd MMM yyyy hh:mm a').format(widget.order.createdAt),
+                          DateFormat('dd MMM yyyy hh:mm a')
+                              .format(widget.order.createdAt),
                           style: const TextStyle(
                             color: Colors.black,
                             fontSize: 12,
@@ -275,9 +282,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 thickness: 8,
               ),
               Container(
-                width: MediaQuery
-                    .sizeOf(context)
-                    .width,
+                width: MediaQuery.sizeOf(context).width,
                 padding: const EdgeInsets.all(25),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -327,7 +332,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 thickness: 8,
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 20.0, right:20.0, top:25.0),
+                padding:
+                    const EdgeInsets.only(left: 20.0, right: 20.0, top: 25.0),
                 child: Text.rich(
                   TextSpan(
                     children: [
@@ -364,30 +370,25 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 ),
               ),
               SizedBox(
-                  width: MediaQuery
-                      .sizeOf(context)
-                      .width,
+                  width: MediaQuery.sizeOf(context).width,
                   child: ListView.separated(
                     itemBuilder: (context, index) =>
                         buildOrderComponentsWidget(cartItems[index]),
                     separatorBuilder: (context, index) =>
-                    const SizedBox(height: 16.0),
+                        const SizedBox(height: 16.0),
                     itemCount: cartItems.length,
                     scrollDirection: Axis.vertical,
                     physics: const BouncingScrollPhysics(),
                     shrinkWrap: true,
                     padding: const EdgeInsets.all(25),
-                  )
-              ),
+                  )),
               const Divider(
                 height: 8,
                 color: Color(0xFFF4F4F4),
                 thickness: 8,
               ),
               Container(
-                width: MediaQuery
-                    .sizeOf(context)
-                    .width,
+                width: MediaQuery.sizeOf(context).width,
                 padding: const EdgeInsets.all(25),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

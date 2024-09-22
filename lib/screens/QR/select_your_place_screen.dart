@@ -101,7 +101,8 @@ class _SelectYourPlaceState extends State<SelectYourPlace> {
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                       ),
-                      SizedBox(height: MediaQuery.sizeOf(context).height * 0.0325),
+                      SizedBox(
+                          height: MediaQuery.sizeOf(context).height * 0.0325),
                       Expanded(
                         child: Stack(
                           children: [
@@ -218,7 +219,8 @@ class _SelectYourPlaceState extends State<SelectYourPlace> {
                                     selectedColor: const Color(0xFFE02C45),
                                     selectedFillColor: Colors.white,
                                   ),
-                                  animationDuration: const Duration(milliseconds: 300),
+                                  animationDuration:
+                                      const Duration(milliseconds: 300),
                                   onCompleted: (value) {
                                     Navigator.pushReplacement(
                                       context,

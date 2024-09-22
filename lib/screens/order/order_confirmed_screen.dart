@@ -11,14 +11,22 @@ class OrderConfirmedScreen extends StatefulWidget {
   final Order order;
   final List<CartItem> cartItems;
   final Invoice invoice;
-  const OrderConfirmedScreen({super.key, required this.order, required this.cartItems, required this.invoice});
+  const OrderConfirmedScreen(
+      {super.key,
+      required this.order,
+      required this.cartItems,
+      required this.invoice});
 
   static const String routeName = 'OrderConfirmedScreenRoute';
 
-  static Route route({required Order order, required List<CartItem> cartItems, required Invoice invoice}) {
+  static Route route(
+      {required Order order,
+      required List<CartItem> cartItems,
+      required Invoice invoice}) {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
-      builder: (context) => OrderConfirmedScreen(order: order, cartItems: cartItems, invoice: invoice),
+      builder: (context) => OrderConfirmedScreen(
+          order: order, cartItems: cartItems, invoice: invoice),
     );
   }
 
@@ -38,7 +46,8 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
   }
 
   Future<void> _pushOrderToDatabase() async {
-    await userRepository.pushOrder(widget.order, widget.cartItems, widget.invoice);
+    await userRepository.pushOrder(
+        widget.order, widget.cartItems, widget.invoice);
   }
 
   Future<bool> _onWillPop() async {
