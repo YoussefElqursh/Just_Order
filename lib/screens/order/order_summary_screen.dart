@@ -1,8 +1,10 @@
+import 'package:dartz/dartz.dart' as fp;
 import 'package:flutter/material.dart';
 import 'package:just_order/models/cart_item_model.dart';
 import 'package:just_order/models/invoice_model.dart';
 import 'package:just_order/models/order_model.dart';
 import 'package:just_order/models/restaurant_model.dart';
+import 'package:just_order/repository/payment_repository/payment_repository.dart';
 import 'package:just_order/screens/order/widgets/order_components_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -38,6 +40,7 @@ class OrderSummaryScreen extends StatefulWidget {
 
 class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
   Restaurant? restaurant;
+  PaymentRepository _paymentRepository = PaymentRepository();
 
   @override
   void initState() {
@@ -433,13 +436,24 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                   padding: const EdgeInsets.symmetric(
                       horizontal: 20.0, vertical: 20.0),
                   child: MaterialButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, 'OrderConfirmedScreenRoute',
-                          arguments: {
-                            'order': widget.order,
-                            'cartItems': widget.cartItems,
-                            'invoice': widget.invoice,
-                          });
+                    onPressed: () async {
+                      // We keep track to to two digits after point
+                      int amount = (widget.order.totalAmount * 100 ).toInt();
+                      final fp.Either<String, String> res = await _paymentRepository.pay(amount: amount, itemsList: widget.cartItems);
+                      res.fold((left){
+                        // Show UI error here to try again
+                        print("Failed to initiate the payment ");
+                      },(right){
+                        String clientSecret = right;
+                        // ROUTE to gateway screen
+                        Navigator.pushNamed(context, "PaymentGatewayRoute", arguments: {
+                          "clientSecret": clientSecret,
+                          "order": widget.order,
+                          "cartItems": widget.cartItems,
+                          "invoice": widget.invoice
+                        });
+                      });
+
                     },
                     height: 42,
                     minWidth: MediaQuery.sizeOf(context).width,

@@ -74,7 +74,7 @@ class User {
     };
   }
 
-  Future<User?> getUserFromPreferences() async {
+  static Future<User?> getUserFromPreferences() async {
     final prefs = await SharedPreferences.getInstance();
     final user = prefs.getString('user');
     if (user == null) {

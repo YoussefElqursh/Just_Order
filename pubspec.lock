@@ -145,6 +145,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.8"
+  dartz:
+    dependency: "direct main"
+    description:
+      name: dartz
+      sha256: e6acf34ad2e31b1eb00948692468c30ab48ac8250e0f0df661e29f12dd252168
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.10.1"
+  dio:
+    dependency: "direct main"
+    description:
+      name: dio
+      sha256: "5598aa796bbf4699afd5c67c0f5f6e2ed542afc956884b9cd58c306966efc260"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.7.0"
+  dio_web_adapter:
+    dependency: transitive
+    description:
+      name: dio_web_adapter
+      sha256: "33259a9276d6cea88774a0000cfae0d861003497755969c92faa223108620dc8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   equatable:
     dependency: "direct main"
     description:
@@ -230,6 +254,78 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.4.1"
+  flutter_dotenv:
+    dependency: "direct main"
+    description:
+      name: flutter_dotenv
+      sha256: "9357883bdd153ab78cbf9ffa07656e336b8bbb2b5a3ca596b0b27e119f7c7d77"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.1.0"
+  flutter_inappwebview:
+    dependency: "direct main"
+    description:
+      name: flutter_inappwebview
+      sha256: f918b6d8ec1e988f72bdbd65b7317dbdf626ce8b7c00dd93c271e030ff66218f
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.1.1"
+  flutter_inappwebview_android:
+    dependency: transitive
+    description:
+      name: flutter_inappwebview_android
+      sha256: "94690a226193bb8ee0648c69a1cd8f1e3c6466cfb1b8dd813c1bb1a498343f3b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0+3"
+  flutter_inappwebview_internal_annotations:
+    dependency: transitive
+    description:
+      name: flutter_inappwebview_internal_annotations
+      sha256: "5f80fd30e208ddded7dbbcd0d569e7995f9f63d45ea3f548d8dd4c0b473fb4c8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.1"
+  flutter_inappwebview_ios:
+    dependency: transitive
+    description:
+      name: flutter_inappwebview_ios
+      sha256: e13f79a4527629c0cf66b991b34a993e9a5387b8a1806d37e0534d9e18f20835
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0+2"
+  flutter_inappwebview_macos:
+    dependency: transitive
+    description:
+      name: flutter_inappwebview_macos
+      sha256: "6b6d4ebfaaf0559ea65e53969f6011a6fad5eba8bd01346132cf9b6fce6c3780"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0+2"
+  flutter_inappwebview_platform_interface:
+    dependency: transitive
+    description:
+      name: flutter_inappwebview_platform_interface
+      sha256: "685b82b62c7704275e10781273bf87b4abfc086a3b83c7ef20ebc679ee551c43"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0+1"
+  flutter_inappwebview_web:
+    dependency: transitive
+    description:
+      name: flutter_inappwebview_web
+      sha256: e0f4418493ba55d7f905de530d2abb22281e4e98d867cda3aba90005cf9546d5
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0+1"
+  flutter_inappwebview_windows:
+    dependency: transitive
+    description:
+      name: flutter_inappwebview_windows
+      sha256: "1a9b2d5b6999b402dafbad801dc1adbce5bfb9e289ae5e572b26a46dfd505d8e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.0+1"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -785,10 +881,10 @@ packages:
     dependency: transitive
     description:
       name: vm_service
-      sha256: f652077d0bdf60abe4c1f6377448e8655008eef28f128bc023f7b5e8dfeb48fc
+      sha256: "5c5f338a667b4c644744b661f309fb8080bb94b18a7e91ef1dbd343bed00ed6d"
       url: "https://pub.dev"
     source: hosted
-    version: "14.2.4"
+    version: "14.2.5"
   web:
     dependency: transitive
     description:
@@ -814,5 +910,5 @@ packages:
     source: hosted
     version: "6.5.0"
 sdks:
-  dart: ">=3.4.1 <4.0.0"
-  flutter: ">=3.22.0"
+  dart: ">=3.5.0 <4.0.0"
+  flutter: ">=3.24.0"

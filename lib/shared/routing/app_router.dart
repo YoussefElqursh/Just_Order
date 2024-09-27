@@ -12,6 +12,7 @@ import 'package:just_order/screens/order/order_state/order_details_screen.dart';
 import 'package:just_order/screens/order/order_state/pending_order_screen.dart';
 import 'package:just_order/screens/order/order_state/preparing_order_screen.dart';
 import 'package:just_order/screens/order/orders/order_screen.dart';
+import 'package:just_order/screens/payment/payment_gateway_screen.dart';
 import 'package:just_order/screens/sign_up/sign_up_screen.dart';
 import 'package:just_order/screens/splash/splash_screen.dart';
 import 'package:just_order/screens/account/my_profile_screen/profile_screen.dart';
@@ -77,6 +78,20 @@ class AppRouter {
             cartItems: cartItems,
             invoice: invoice,
           );
+        }
+        return _errorRoute();
+      case 'PaymentGatewayRoute':
+        if (settings.arguments is Map<String, dynamic>) {
+          final args = settings.arguments as Map<String, dynamic>;
+          final String secretClient = args["clientSecret"];
+          final Order order = args["order"];
+          final List<CartItem> cartItems=args["cartItems"];
+          final Invoice invoice= args["invoice"];
+          return PaymentGatewayScreen.route(
+          secretClient: secretClient,
+          order: order,
+          cartItems: cartItems,
+          invoice: invoice);
         }
         return _errorRoute();
       case 'OrderConfirmedScreenRoute':

@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:just_order/blocs/login_cubit/login_cubit.dart';
 import 'package:just_order/blocs/sign_up_cubit/sign_up_cubit.dart';
@@ -16,6 +17,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   Bloc.observer = MyBlocObserver();
+  await dotenv.load(fileName: "assets/.env");
   runApp(
     MultiProvider(
       providers: [
