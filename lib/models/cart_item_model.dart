@@ -18,7 +18,8 @@ class CartItem {
   });
 
   num get totalPrice {
-    double extrasTotal = extras?.values.fold(0.0, (sum, extra) => sum! + extra) ?? 0.0;
+    double extrasTotal =
+        extras?.values.fold(0.0, (sum, extra) => sum! + extra) ?? 0.0;
     return (price + extrasTotal) * quantity;
   }
 
@@ -29,12 +30,12 @@ class CartItem {
       quantity: item['quantity'],
       price: (item['price'] as num).toDouble(),
       size: item['size'] != null
-          ? (item['size'] as Map<String, dynamic>).map(
-              (key, value) => MapEntry(key, (value as num).toDouble()))
+          ? (item['size'] as Map<String, dynamic>)
+              .map((key, value) => MapEntry(key, (value as num).toDouble()))
           : null,
       extras: item['extras'] != null
-          ? (item['extras'] as Map<String, dynamic>).map(
-              (key, value) => MapEntry(key, (value as num).toDouble()))
+          ? (item['extras'] as Map<String, dynamic>)
+              .map((key, value) => MapEntry(key, (value as num).toDouble()))
           : null,
     );
   }

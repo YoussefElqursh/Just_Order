@@ -6,35 +6,31 @@ import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:just_order/models/enums/user_type.dart';
 import 'package:just_order/models/user_model.dart';
-import 'package:uuid/uuid.dart';
 
 part 'sign_up_state.dart';
 
 class SignUpCubit extends Cubit<SignUpState> {
-
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   SignUpCubit() : super(SignUpInitialState());
 
   Future<void> signUp({
-        required String email,
-        required String firstName,
-        required String lastName,
-        required String password,
-        required String phoneNumber,
-      }) async {
-
+    required String email,
+    required String firstName,
+    required String lastName,
+    required String password,
+    required String phoneNumber,
+  }) async {
     final bytes = utf8.encode(password);
     final digest = sha256.convert(bytes);
     final hashedPassword = digest.toString();
 
     emit(SignUpLoadingState());
     try {
-      const uuid = Uuid();
-      final uid = uuid.v4();
+      final userId = _firestore.collection('users').doc().id;
 
       final user = User(
-        userId: uid,
+        userId: userId,
         firstName: firstName,
         lastName: lastName,
         email: email,
@@ -46,7 +42,7 @@ class SignUpCubit extends Cubit<SignUpState> {
         createdAt: DateTime.now(),
       );
 
-      await _firestore.collection('users').doc(uid).set(user.toJson());
+      await _firestore.collection('users').doc(userId).set(user.toJson());
 
       emit(SignUpISuccessState());
     } catch (e) {
@@ -56,9 +52,10 @@ class SignUpCubit extends Cubit<SignUpState> {
 
   IconData suffixIcon = Icons.visibility_outlined;
   bool isPassword = true;
-  void changePasswordState(){
-    isPassword = ! isPassword;
-    suffixIcon = isPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined ;
+  void changePasswordState() {
+    isPassword = !isPassword;
+    suffixIcon =
+        isPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;
     emit(SignUpShowPassword());
   }
 }

@@ -120,7 +120,8 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                                   top: 50.0, left: 20.0, right: 20.0),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
                                     width: 34,
@@ -129,7 +130,8 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                                     decoration: ShapeDecoration(
                                       color: const Color(0xFFF4F4F4),
                                       shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(8)),
+                                          borderRadius:
+                                              BorderRadius.circular(8)),
                                     ),
                                     child: IconButton(
                                       onPressed: () {
@@ -158,7 +160,8 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                                     decoration: ShapeDecoration(
                                       color: const Color(0xFFF4F4F4),
                                       shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(8)),
+                                          borderRadius:
+                                              BorderRadius.circular(8)),
                                     ),
                                     child: IconButton(
                                       onPressed: () {},
@@ -300,7 +303,9 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                                   ),
                                   const SizedBox(width: 6.0),
                                   Text(
-                                    (restaurant.deliveryFee != null) ? 'EGP ${restaurant.deliveryFee}' : 'Free',
+                                    (restaurant.deliveryFee != null)
+                                        ? 'EGP ${restaurant.deliveryFee}'
+                                        : 'Free',
                                     style: const TextStyle(
                                       color: Colors.black,
                                       fontSize: 12,
@@ -367,8 +372,8 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                                   ),
                                   const TabBar(
                                     physics: BouncingScrollPhysics(),
-                                    overlayColor:
-                                        WidgetStatePropertyAll(Colors.transparent),
+                                    overlayColor: WidgetStatePropertyAll(
+                                        Colors.transparent),
                                     isScrollable: true,
                                     dividerColor: Colors.transparent,
                                     tabAlignment: TabAlignment.start,

@@ -197,7 +197,8 @@ class _AccountScreenState extends State<AccountScreen> {
                   label: 'Logout',
                   onPressed: () {
                     loginRepository.logout();
-                    navigateTo(context, 'LoginScreenRoute');
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, 'LoginScreenRoute', (route) => false);
                   },
                 ),
               ],

@@ -46,7 +46,8 @@ Widget buildCategoriesWidget(Restaurant restaurant) {
         height: 70,
         decoration: ShapeDecoration(
           image: DecorationImage(
-            image: NetworkImage(restaurant.imageUrl ?? 'https://via.placeholder.com/150'),
+            image: NetworkImage(
+                restaurant.imageUrl ?? 'https://via.placeholder.com/150'),
             fit: BoxFit.cover,
           ),
           shape: RoundedRectangleBorder(

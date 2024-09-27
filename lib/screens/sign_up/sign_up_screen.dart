@@ -30,7 +30,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -531,8 +530,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     MaterialButton(
                                       onPressed: () async {
                                         context.read<SignUpCubit>().signUp(
-                                              email:
-                                                  _emailController.text,
+                                              email: _emailController.text,
                                               firstName:
                                                   _firstNameController.text,
                                               lastName:
@@ -590,7 +588,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         const SizedBox(width: 6),
                                         GestureDetector(
                                           onTap: () {
-                                            navigateTo(context, 'LoginScreenRoute');
+                                            navigateTo(
+                                                context, 'LoginScreenRoute');
                                           },
                                           child: const Text(
                                             'Log in',

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Restaurant {
   String restaurantId;
@@ -38,11 +37,6 @@ class Restaurant {
     );
   }
 
-  static Future<void> saveRestaurantToPreferences(Restaurant restaurant) async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString('restaurant', jsonEncode(restaurant.toJson()));
-  }
-
   Map<String, dynamic> toJson() {
     return {
       'restaurantId': restaurantId,
@@ -55,15 +49,6 @@ class Restaurant {
       'deliveryFee': deliveryFee,
       'orderTimeOut': orderTimeOut,
     };
-  }
-
-  Future<Restaurant> getRestaurantFromPreferences() async {
-    final prefs = await SharedPreferences.getInstance();
-    final restaurantString = prefs.getString('restaurant');
-    if (restaurantString != null) {
-      return Restaurant.fromMap(jsonDecode(restaurantString));
-    }
-    return this;
   }
 
   static Restaurant? fromJson(String restaurantString) {

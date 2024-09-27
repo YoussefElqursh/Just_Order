@@ -62,7 +62,8 @@ class _OrderScreenState extends State<OrderScreen> {
       };
     });
     // ignore: use_build_context_synchronously
-    Provider.of<OrderProvider>(context, listen: false).addOrders(fetchedOrders);
+    Provider.of<OrderProvider>(context, listen: false)
+        .listenToOrders(user?.userId ?? '');
   }
 
   @override
@@ -179,10 +180,11 @@ class _OrderScreenState extends State<OrderScreen> {
                                             order.status == Status.pending)
                                         .toList()[index],
                                     restaurant: restaurantMap[orders
-                                        .where((order) =>
-                                            order.status == Status.pending)
-                                        .toList()[index]
-                                        .restaurantId] ?? Restaurant.empty()),
+                                            .where((order) =>
+                                                order.status == Status.pending)
+                                            .toList()[index]
+                                            .restaurantId] ??
+                                        Restaurant.empty()),
                             separatorBuilder: (context, index) =>
                                 const SizedBox(
                               height: 12.0,
@@ -268,10 +270,12 @@ class _OrderScreenState extends State<OrderScreen> {
                                             order.status == Status.preparing)
                                         .toList()[index],
                                     restaurant: restaurantMap[orders
-                                        .where((order) =>
-                                            order.status == Status.preparing)
-                                        .toList()[index]
-                                        .restaurantId] ?? Restaurant.empty()),
+                                            .where((order) =>
+                                                order.status ==
+                                                Status.preparing)
+                                            .toList()[index]
+                                            .restaurantId] ??
+                                        Restaurant.empty()),
                             separatorBuilder: (context, index) =>
                                 const SizedBox(
                               height: 12.0,
@@ -357,10 +361,11 @@ class _OrderScreenState extends State<OrderScreen> {
                                         .toList()[index],
                                     width: 70,
                                     restaurant: restaurantMap[orders
-                                        .where((order) =>
-                                            order.status == Status.onTheWay)
-                                        .toList()[index]
-                                        .restaurantId] ?? Restaurant.empty()),
+                                            .where((order) =>
+                                                order.status == Status.onTheWay)
+                                            .toList()[index]
+                                            .restaurantId] ??
+                                        Restaurant.empty()),
                             separatorBuilder: (context, index) =>
                                 const SizedBox(
                               height: 12.0,
@@ -446,10 +451,12 @@ class _OrderScreenState extends State<OrderScreen> {
                                         .toList()[index],
                                     width: 70,
                                     restaurant: restaurantMap[orders
-                                        .where((order) =>
-                                            order.status == Status.delivered)
-                                        .toList()[index]
-                                        .restaurantId] ?? Restaurant.empty()),
+                                            .where((order) =>
+                                                order.status ==
+                                                Status.delivered)
+                                            .toList()[index]
+                                            .restaurantId] ??
+                                        Restaurant.empty()),
                             separatorBuilder: (context, index) =>
                                 const SizedBox(
                               height: 12.0,
@@ -541,13 +548,15 @@ class _OrderScreenState extends State<OrderScreen> {
                                       order: order,
                                       width: 70,
                                       restaurant:
-                                          restaurantMap[order.restaurantId] ?? Restaurant.empty())
+                                          restaurantMap[order.restaurantId] ??
+                                              Restaurant.empty())
                                   : buildOrderDeclinedStateWidget(
                                       context: context,
                                       order: order,
                                       width: 70,
                                       restaurant:
-                                          restaurantMap[order.restaurantId] ?? Restaurant.empty());
+                                          restaurantMap[order.restaurantId] ??
+                                              Restaurant.empty());
                             },
                             separatorBuilder: (context, index) =>
                                 const SizedBox(

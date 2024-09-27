@@ -34,32 +34,17 @@ class Item {
       type: item['type'],
       category: item['category'],
       sizes: item['sizes'] != null
-          ? (item['sizes'] as Map<String, dynamic>).map(
-              (key, value) => MapEntry(key, (value as num).toDouble()))
+          ? (item['sizes'] as Map<String, dynamic>)
+              .map((key, value) => MapEntry(key, (value as num).toDouble()))
           : null,
       extras: item['extras'] != null
-          ? (item['extras'] as Map<String, dynamic>).map(
-              (key, value) => MapEntry(key, (value as num).toDouble()))
+          ? (item['extras'] as Map<String, dynamic>)
+              .map((key, value) => MapEntry(key, (value as num).toDouble()))
           : null,
     );
   }
 
   Map<String, dynamic> toMap() {
-    return {
-      'itemId': itemId,
-      'price': price,
-      'imageUrl': imageUrl,
-      'available': available,
-      'name': name,
-      'description': description,
-      'type': type,
-      'category': category,
-      'sizes': sizes,
-      'extras': extras,
-    };
-  }
-
-  toJson() {
     return {
       'itemId': itemId,
       'price': price,

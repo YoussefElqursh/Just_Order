@@ -21,5 +21,6 @@ class CartProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  double get totalPrice => _items.fold(0.0, (sum, item) => sum + item.totalPrice);
+  double get totalPrice =>
+      _items.fold(0.0, (sum, item) => sum + item.totalPrice);
 }

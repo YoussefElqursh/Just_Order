@@ -6,14 +6,18 @@ import '../../../shared/widget/common_order_state_widget.dart';
 class PreparingOrderScreen extends StatefulWidget {
   final List<Order> orders;
   final Map<String, Restaurant> restaurantMap;
-  const PreparingOrderScreen({super.key, required this.orders, required this.restaurantMap});
+  const PreparingOrderScreen(
+      {super.key, required this.orders, required this.restaurantMap});
 
   static const String routeName = 'PreparingOrderScreenRoute';
 
-  static Route route({required List<Order> orders, required Map<String, Restaurant> restaurantMap}) {
+  static Route route(
+      {required List<Order> orders,
+      required Map<String, Restaurant> restaurantMap}) {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
-      builder: (context) => PreparingOrderScreen(orders: orders, restaurantMap: restaurantMap),
+      builder: (context) =>
+          PreparingOrderScreen(orders: orders, restaurantMap: restaurantMap),
     );
   }
 
@@ -22,7 +26,6 @@ class PreparingOrderScreen extends StatefulWidget {
 }
 
 class _PreparingOrderScreenState extends State<PreparingOrderScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,7 +77,9 @@ class _PreparingOrderScreenState extends State<PreparingOrderScreen> {
               context: context,
               width: 70,
               order: widget.orders[index],
-              restaurant: widget.restaurantMap[widget.orders[index].restaurantId]!,),
+              restaurant:
+                  widget.restaurantMap[widget.orders[index].restaurantId]!,
+            ),
             separatorBuilder: (context, index) => const SizedBox(
               height: 12.0,
             ),

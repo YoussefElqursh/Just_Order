@@ -6,14 +6,18 @@ import '../../../shared/widget/common_order_state_widget.dart';
 class PendingOrderScreen extends StatefulWidget {
   final List<Order> orders;
   final Map<String, Restaurant> restaurantMap;
-  const PendingOrderScreen({super.key, required this.orders, required this.restaurantMap});
+  const PendingOrderScreen(
+      {super.key, required this.orders, required this.restaurantMap});
 
   static const String routeName = 'PendingOrderScreenRoute';
 
-  static Route route({required List<Order> orders, required Map<String, Restaurant> restaurantMap}) {
+  static Route route(
+      {required List<Order> orders,
+      required Map<String, Restaurant> restaurantMap}) {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
-      builder: (context) => PendingOrderScreen(orders: orders, restaurantMap: restaurantMap),
+      builder: (context) =>
+          PendingOrderScreen(orders: orders, restaurantMap: restaurantMap),
     );
   }
 
@@ -22,10 +26,8 @@ class PendingOrderScreen extends StatefulWidget {
 }
 
 class _PendingOrderScreenState extends State<PendingOrderScreen> {
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -71,7 +73,12 @@ class _PendingOrderScreenState extends State<PendingOrderScreen> {
           width: MediaQuery.sizeOf(context).width,
           padding: const EdgeInsets.all(20),
           child: ListView.separated(
-            itemBuilder: (context, index) => buildOrderStateWidget(context: context, width: 70, order: widget.orders[index], restaurant: widget.restaurantMap[widget.orders[index].restaurantId]!),
+            itemBuilder: (context, index) => buildOrderStateWidget(
+                context: context,
+                width: 70,
+                order: widget.orders[index],
+                restaurant:
+                    widget.restaurantMap[widget.orders[index].restaurantId]!),
             separatorBuilder: (context, index) => const SizedBox(height: 12.0),
             itemCount: widget.orders.length,
             scrollDirection: Axis.vertical,

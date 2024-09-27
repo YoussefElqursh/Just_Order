@@ -1,7 +1,7 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:just_order/models/delivery_status.dart';
 import 'package:just_order/models/enums/status.dart';
-import 'package:just_order/models/order_status.dart';
 import 'enums/payment_type.dart';
 
 class Order {
@@ -9,15 +9,14 @@ class Order {
   String userId;
   String clubId;
   String restaurantId;
+  String orderCode;
   Status status;
   PaymentType paymentType;
   String invoiceId;
   int orderTimeOut;
   DateTime createdAt;
-  OrderStatus orderStatus;
   double totalAmount;
   String? deliveryId;
-  DeliveryStatus? deliveryStatus;
   DateTime? updatedAt;
   DateTime? assignedDateTime;
   DateTime? deliveredDateTime;
@@ -29,6 +28,7 @@ class Order {
     required this.userId,
     required this.clubId,
     required this.restaurantId,
+    required this.orderCode,
     this.deliveryId,
     required this.status,
     required this.paymentType,
@@ -40,8 +40,6 @@ class Order {
     this.finalisedDateTime,
     required this.createdAt,
     this.updatedAt,
-    required this.orderStatus,
-    this.deliveryStatus,
     required this.totalAmount,
   });
 
@@ -51,6 +49,7 @@ class Order {
       userId: data['userId'],
       clubId: data['clubId'],
       restaurantId: data['restaurantId'],
+      orderCode: data['orderCode'],
       deliveryId: data['deliveryId'],
       status: Status.values
           // ignore: prefer_interpolation_to_compose_strings
@@ -74,10 +73,6 @@ class Order {
       updatedAt: data['updatedAt'] != null
           ? (data['updatedAt'] as Timestamp).toDate()
           : null,
-      orderStatus: OrderStatus.fromMap(data['orderStatus']),
-      deliveryStatus: data['deliveryStatus'] != null
-          ? DeliveryStatus.fromMap(data['deliveryStatus'])
-          : null,
       totalAmount: data['totalAmount'].toDouble(),
     );
   }
@@ -88,6 +83,7 @@ class Order {
       'userId': userId,
       'clubId': clubId,
       'restaurantId': restaurantId,
+      'orderCode': orderCode,
       'deliveryId': deliveryId,
       'status': status.toString().split('.').last,
       'paymentType': paymentType.toString().split('.').last,
@@ -99,9 +95,35 @@ class Order {
       'finalisedDateTime': finalisedDateTime,
       'createdAt': createdAt,
       'updatedAt': updatedAt,
-      'orderStatus': orderStatus.toMap(),
-      'deliveryStatus': deliveryStatus?.toMap(),
       'totalAmount': totalAmount,
     };
+  }
+
+  String generateOrderCode() {
+    Random random = Random();
+    int randomNumber = 10000 + random.nextInt(90000);
+    return randomNumber.toString();
+  }
+
+  Future<String> generateUniqueOrderCode() async {
+    String orderCode;
+    bool isUnique = false;
+
+    do {
+      orderCode = generateOrderCode();
+
+      QuerySnapshot result = await FirebaseFirestore.instance
+          .collection('orders')
+          .where('status', isEqualTo: 'pending')
+          .where('orderCode', isEqualTo: orderCode)
+          .limit(1)
+          .get();
+
+      if (result.docs.isEmpty) {
+        isUnique = true;
+      }
+    } while (!isUnique);
+
+    return orderCode;
   }
 }
