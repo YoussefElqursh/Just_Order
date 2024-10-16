@@ -6,7 +6,6 @@ import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/repository/user_repository/user_repository.dart';
 import 'package:just_order/screens/home/main_home_screen/place_details_sheet.dart';
 import 'package:just_order/screens/home/main_home_screen/widgets/categories_widget.dart';
-import 'package:just_order/screens/home/main_home_screen/widgets/filter_widget.dart';
 import 'package:just_order/screens/home/main_home_screen/widgets/popular_today_widget.dart';
 import 'package:just_order/screens/home/main_home_screen/widgets/restaurants_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';

@@ -107,7 +107,7 @@ class _PreparingOrderScreenState extends State<PreparingOrderScreen> {
                     ],
                   ),
                 ),
-              );;
+              );
             } else {
               return ListView.separated(
                 itemBuilder: (context, index) => buildOrderStateWidget(
