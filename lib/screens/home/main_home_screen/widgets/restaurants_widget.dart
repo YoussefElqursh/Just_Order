@@ -57,15 +57,15 @@ Widget buildRestaurantsWidget({
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                       ),
-                      const Spacer(),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.favorite_border,
-                          color: Colors.black,
-                          size: 15,
-                        ),
-                      ),
+                      // const Spacer(),
+                      // IconButton(
+                      //   onPressed: () {},
+                      //   icon: const Icon(
+                      //     Icons.favorite_border,
+                      //     color: Colors.black,
+                      //     size: 15,
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),

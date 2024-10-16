@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:just_order/models/order_model.dart';
 import 'package:just_order/models/restaurant_model.dart';
+import 'package:just_order/shared/function/functions.dart';
 import '../../../shared/widget/common_order_state_widget.dart';
 
 class PendingOrderScreen extends StatefulWidget {
@@ -72,19 +73,57 @@ class _PendingOrderScreenState extends State<PendingOrderScreen> {
         child: Container(
           width: MediaQuery.sizeOf(context).width,
           padding: const EdgeInsets.all(20),
-          child: ListView.separated(
-            itemBuilder: (context, index) => buildOrderStateWidget(
-                context: context,
-                width: 70,
-                order: widget.orders[index],
-                restaurant:
+          child: Builder(builder: (context) {
+            if(widget.orders.isEmpty) {
+              return Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment:
+                    MainAxisAlignment.center,
+                    crossAxisAlignment:
+                    CrossAxisAlignment.center,
+                    children: [
+                      setPhoto(
+                        kind: 0,
+                        path: 'assets/images/order.png',
+                        height: 30,
+                        width: 30,
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                        'No Pending Orders',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 12,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w600,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }else {
+              return ListView.separated(
+                itemBuilder: (context, index) => buildOrderStateWidget(
+                    context: context,
+                    width: 70,
+                    order: widget.orders[index],
+                    restaurant:
                     widget.restaurantMap[widget.orders[index].restaurantId]!),
-            separatorBuilder: (context, index) => const SizedBox(height: 12.0),
-            itemCount: widget.orders.length,
-            scrollDirection: Axis.vertical,
-            physics: const BouncingScrollPhysics(),
-            shrinkWrap: true,
-          ),
+                separatorBuilder: (context, index) => const SizedBox(height: 12.0),
+                itemCount: widget.orders.length,
+                scrollDirection: Axis.vertical,
+                physics: const BouncingScrollPhysics(),
+                shrinkWrap: true,
+              );
+            }
+          },),
         ),
       ),
     );

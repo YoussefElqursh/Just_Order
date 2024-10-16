@@ -7,6 +7,7 @@ import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/models/user_model.dart';
 import 'package:just_order/repository/order_provider.dart';
 import 'package:just_order/repository/order_repository/order_repository.dart';
+import 'package:just_order/shared/function/functions.dart';
 import 'package:just_order/shared/widget/common_order_state_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -70,42 +71,43 @@ class _OrderScreenState extends State<OrderScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          centerTitle: true,
-          title: const Text(
-            'Orders',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 14,
-              fontFamily: 'Inter',
-              fontWeight: FontWeight.w600,
-            ),
-            overflow: TextOverflow.ellipsis,
-            maxLines: 1,
+        centerTitle: true,
+        title: const Text(
+          'Orders',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 14,
+            fontFamily: 'Inter',
+            fontWeight: FontWeight.w600,
           ),
-          actions: [
-            Padding(
-              padding:
-                  const EdgeInsets.only(right: 20.0, top: 10.0, bottom: 10.0),
-              child: Container(
-                width: 34,
-                height: 34,
-                clipBehavior: Clip.antiAlias,
-                decoration: ShapeDecoration(
-                  color: const Color(0xFFF4F4F4),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8)),
-                ),
-                child: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.notifications_none_outlined,
-                    color: Colors.black,
-                    size: 18,
-                  ),
-                ),
-              ),
-            ),
-          ]),
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
+        ),
+        // actions: [
+        //   Padding(
+        //     padding:
+        //         const EdgeInsets.only(right: 20.0, top: 10.0, bottom: 10.0),
+        //     child: Container(
+        //       width: 34,
+        //       height: 34,
+        //       clipBehavior: Clip.antiAlias,
+        //       decoration: ShapeDecoration(
+        //         color: const Color(0xFFF4F4F4),
+        //         shape: RoundedRectangleBorder(
+        //             borderRadius: BorderRadius.circular(8)),
+        //       ),
+        //       child: IconButton(
+        //         onPressed: () {},
+        //         icon: const Icon(
+        //           Icons.notifications_none_outlined,
+        //           color: Colors.black,
+        //           size: 18,
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        // ],
+      ),
       body: Consumer<OrderProvider>(
         builder: (context, orderProvider, child) {
           final orders = orderProvider.orders;
@@ -170,34 +172,79 @@ class _OrderScreenState extends State<OrderScreen> {
                         ),
                         SizedBox(
                           width: MediaQuery.sizeOf(context).width,
-                          child: ListView.separated(
-                            itemBuilder: (context, index) =>
-                                buildOrderPendingStateWidget(
-                                    context: context,
-                                    width: 70,
-                                    order: orders
-                                        .where((order) =>
-                                            order.status == Status.pending)
-                                        .toList()[index],
-                                    restaurant: restaurantMap[orders
-                                            .where((order) =>
-                                                order.status == Status.pending)
-                                            .toList()[index]
-                                            .restaurantId] ??
-                                        Restaurant.empty()),
-                            separatorBuilder: (context, index) =>
-                                const SizedBox(
-                              height: 12.0,
-                            ),
-                            itemCount: min(
-                                3,
-                                orders
-                                    .where((order) =>
-                                        order.status == Status.pending)
-                                    .length),
-                            scrollDirection: Axis.vertical,
-                            physics: const BouncingScrollPhysics(),
-                            shrinkWrap: true,
+                          child: Builder(
+                            builder: (context) {
+                              if (orders
+                                  .where(
+                                      (order) => order.status == Status.pending)
+                                  .isEmpty) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(20.0),
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        setPhoto(
+                                          kind: 0,
+                                          path: 'assets/images/order.png',
+                                          height: 30,
+                                          width: 30,
+                                        ),
+                                        const SizedBox(
+                                          height: 15,
+                                        ),
+                                        Text(
+                                          'No Pending Orders',
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 12,
+                                            fontFamily: 'Inter',
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                return ListView.separated(
+                                  itemBuilder: (context, index) =>
+                                      buildOrderPendingStateWidget(
+                                          context: context,
+                                          width: 70,
+                                          order: orders
+                                              .where((order) =>
+                                                  order.status ==
+                                                  Status.pending)
+                                              .toList()[index],
+                                          restaurant: restaurantMap[orders
+                                                  .where((order) =>
+                                                      order.status ==
+                                                      Status.pending)
+                                                  .toList()[index]
+                                                  .restaurantId] ??
+                                              Restaurant.empty()),
+                                  separatorBuilder: (context, index) =>
+                                      const SizedBox(
+                                    height: 12.0,
+                                  ),
+                                  itemCount: min(
+                                      3,
+                                      orders
+                                          .where((order) =>
+                                              order.status == Status.pending)
+                                          .length),
+                                  scrollDirection: Axis.vertical,
+                                  physics: const BouncingScrollPhysics(),
+                                  shrinkWrap: true,
+                                );
+                              }
+                            },
                           ),
                         ),
                       ],
@@ -260,35 +307,79 @@ class _OrderScreenState extends State<OrderScreen> {
                         ),
                         SizedBox(
                           width: MediaQuery.sizeOf(context).width,
-                          child: ListView.separated(
-                            itemBuilder: (context, index) =>
-                                buildOrderPreparingStateWidget(
-                                    context: context,
-                                    width: 70,
-                                    order: orders
-                                        .where((order) =>
-                                            order.status == Status.preparing)
-                                        .toList()[index],
-                                    restaurant: restaurantMap[orders
-                                            .where((order) =>
-                                                order.status ==
-                                                Status.preparing)
-                                            .toList()[index]
-                                            .restaurantId] ??
-                                        Restaurant.empty()),
-                            separatorBuilder: (context, index) =>
-                                const SizedBox(
-                              height: 12.0,
-                            ),
-                            itemCount: min(
-                                3,
-                                orders
-                                    .where((order) =>
-                                        order.status == Status.preparing)
-                                    .length),
-                            scrollDirection: Axis.vertical,
-                            physics: const BouncingScrollPhysics(),
-                            shrinkWrap: true,
+                          child: Builder(
+                            builder: (context) {
+                              if (orders
+                                  .where((order) =>
+                                      order.status == Status.preparing)
+                                  .isEmpty) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(20.0),
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        setPhoto(
+                                          kind: 0,
+                                          path: 'assets/images/order.png',
+                                          height: 30,
+                                          width: 30,
+                                        ),
+                                        const SizedBox(
+                                          height: 15,
+                                        ),
+                                        Text(
+                                          'No Preparing Orders',
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 12,
+                                            fontFamily: 'Inter',
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                return ListView.separated(
+                                  itemBuilder: (context, index) =>
+                                      buildOrderPreparingStateWidget(
+                                          context: context,
+                                          width: 70,
+                                          order: orders
+                                              .where((order) =>
+                                                  order.status ==
+                                                  Status.preparing)
+                                              .toList()[index],
+                                          restaurant: restaurantMap[orders
+                                                  .where((order) =>
+                                                      order.status ==
+                                                      Status.preparing)
+                                                  .toList()[index]
+                                                  .restaurantId] ??
+                                              Restaurant.empty()),
+                                  separatorBuilder: (context, index) =>
+                                      const SizedBox(
+                                    height: 12.0,
+                                  ),
+                                  itemCount: min(
+                                      3,
+                                      orders
+                                          .where((order) =>
+                                              order.status == Status.preparing)
+                                          .length),
+                                  scrollDirection: Axis.vertical,
+                                  physics: const BouncingScrollPhysics(),
+                                  shrinkWrap: true,
+                                );
+                              }
+                            },
                           ),
                         ),
                       ],
@@ -351,34 +442,79 @@ class _OrderScreenState extends State<OrderScreen> {
                         ),
                         SizedBox(
                           width: MediaQuery.sizeOf(context).width,
-                          child: ListView.separated(
-                            itemBuilder: (context, index) =>
-                                buildOrderOnWayStateWidget(
-                                    context: context,
-                                    order: orders
-                                        .where((order) =>
-                                            order.status == Status.onTheWay)
-                                        .toList()[index],
-                                    width: 70,
-                                    restaurant: restaurantMap[orders
-                                            .where((order) =>
-                                                order.status == Status.onTheWay)
-                                            .toList()[index]
-                                            .restaurantId] ??
-                                        Restaurant.empty()),
-                            separatorBuilder: (context, index) =>
-                                const SizedBox(
-                              height: 12.0,
-                            ),
-                            itemCount: min(
-                                3,
-                                orders
-                                    .where((order) =>
-                                        order.status == Status.onTheWay)
-                                    .length),
-                            scrollDirection: Axis.vertical,
-                            physics: const BouncingScrollPhysics(),
-                            shrinkWrap: true,
+                          child: Builder(
+                            builder: (context) {
+                              if (orders
+                                  .where((order) =>
+                                      order.status == Status.onTheWay)
+                                  .isEmpty) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(20.0),
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        setPhoto(
+                                          kind: 0,
+                                          path: 'assets/images/order.png',
+                                          height: 30,
+                                          width: 30,
+                                        ),
+                                        const SizedBox(
+                                          height: 15,
+                                        ),
+                                        Text(
+                                          'No On Way Orders',
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 12,
+                                            fontFamily: 'Inter',
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                return ListView.separated(
+                                  itemBuilder: (context, index) =>
+                                      buildOrderOnWayStateWidget(
+                                          context: context,
+                                          order: orders
+                                              .where((order) =>
+                                                  order.status ==
+                                                  Status.onTheWay)
+                                              .toList()[index],
+                                          width: 70,
+                                          restaurant: restaurantMap[orders
+                                                  .where((order) =>
+                                                      order.status ==
+                                                      Status.onTheWay)
+                                                  .toList()[index]
+                                                  .restaurantId] ??
+                                              Restaurant.empty()),
+                                  separatorBuilder: (context, index) =>
+                                      const SizedBox(
+                                    height: 12.0,
+                                  ),
+                                  itemCount: min(
+                                      3,
+                                      orders
+                                          .where((order) =>
+                                              order.status == Status.onTheWay)
+                                          .length),
+                                  scrollDirection: Axis.vertical,
+                                  physics: const BouncingScrollPhysics(),
+                                  shrinkWrap: true,
+                                );
+                              }
+                            },
                           ),
                         ),
                       ],
@@ -441,35 +577,79 @@ class _OrderScreenState extends State<OrderScreen> {
                         ),
                         SizedBox(
                           width: MediaQuery.sizeOf(context).width,
-                          child: ListView.separated(
-                            itemBuilder: (context, index) =>
-                                buildOrderDeliveredStateWidget(
-                                    context: context,
-                                    order: orders
-                                        .where((order) =>
-                                            order.status == Status.delivered)
-                                        .toList()[index],
-                                    width: 70,
-                                    restaurant: restaurantMap[orders
-                                            .where((order) =>
-                                                order.status ==
-                                                Status.delivered)
-                                            .toList()[index]
-                                            .restaurantId] ??
-                                        Restaurant.empty()),
-                            separatorBuilder: (context, index) =>
-                                const SizedBox(
-                              height: 12.0,
-                            ),
-                            itemCount: min(
-                                3,
-                                orders
-                                    .where((order) =>
-                                        order.status == Status.delivered)
-                                    .length),
-                            scrollDirection: Axis.vertical,
-                            physics: const BouncingScrollPhysics(),
-                            shrinkWrap: true,
+                          child: Builder(
+                            builder: (context) {
+                              if (orders
+                                  .where((order) =>
+                                      order.status == Status.delivered)
+                                  .isEmpty) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(20.0),
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        setPhoto(
+                                          kind: 0,
+                                          path: 'assets/images/order.png',
+                                          height: 30,
+                                          width: 30,
+                                        ),
+                                        const SizedBox(
+                                          height: 15,
+                                        ),
+                                        Text(
+                                          'No Delivered Orders',
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 12,
+                                            fontFamily: 'Inter',
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                return ListView.separated(
+                                  itemBuilder: (context, index) =>
+                                      buildOrderDeliveredStateWidget(
+                                          context: context,
+                                          order: orders
+                                              .where((order) =>
+                                                  order.status ==
+                                                  Status.delivered)
+                                              .toList()[index],
+                                          width: 70,
+                                          restaurant: restaurantMap[orders
+                                                  .where((order) =>
+                                                      order.status ==
+                                                      Status.delivered)
+                                                  .toList()[index]
+                                                  .restaurantId] ??
+                                              Restaurant.empty()),
+                                  separatorBuilder: (context, index) =>
+                                      const SizedBox(
+                                    height: 12.0,
+                                  ),
+                                  itemCount: min(
+                                      3,
+                                      orders
+                                          .where((order) =>
+                                              order.status == Status.delivered)
+                                          .length),
+                                  scrollDirection: Axis.vertical,
+                                  physics: const BouncingScrollPhysics(),
+                                  shrinkWrap: true,
+                                );
+                              }
+                            },
                           ),
                         ),
                       ],
@@ -534,44 +714,89 @@ class _OrderScreenState extends State<OrderScreen> {
                         ),
                         SizedBox(
                           width: MediaQuery.sizeOf(context).width,
-                          child: ListView.separated(
-                            itemBuilder: (context, index) {
-                              final orderList = orders
+                          child: Builder(
+                            builder: (context) {
+                              if (orders
                                   .where((order) =>
                                       order.status == Status.declined ||
                                       order.status == Status.autoDeclined)
-                                  .toList();
-                              final order = orderList[index];
-                              return order.status == Status.autoDeclined
-                                  ? buildOrderAutoDeclinedStateWidget(
-                                      context: context,
-                                      order: order,
-                                      width: 70,
-                                      restaurant:
-                                          restaurantMap[order.restaurantId] ??
-                                              Restaurant.empty())
-                                  : buildOrderDeclinedStateWidget(
-                                      context: context,
-                                      order: order,
-                                      width: 70,
-                                      restaurant:
-                                          restaurantMap[order.restaurantId] ??
-                                              Restaurant.empty());
+                                  .isEmpty) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(20.0),
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        setPhoto(
+                                          kind: 0,
+                                          path: 'assets/images/order.png',
+                                          height: 30,
+                                          width: 30,
+                                        ),
+                                        const SizedBox(
+                                          height: 15,
+                                        ),
+                                        Text(
+                                          'No Declined Orders',
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 12,
+                                            fontFamily: 'Inter',
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                return ListView.separated(
+                                  itemBuilder: (context, index) {
+                                    final orderList = orders
+                                        .where((order) =>
+                                            order.status == Status.declined ||
+                                            order.status == Status.autoDeclined)
+                                        .toList();
+                                    final order = orderList[index];
+                                    return order.status == Status.autoDeclined
+                                        ? buildOrderAutoDeclinedStateWidget(
+                                            context: context,
+                                            order: order,
+                                            width: 70,
+                                            restaurant: restaurantMap[
+                                                    order.restaurantId] ??
+                                                Restaurant.empty())
+                                        : buildOrderDeclinedStateWidget(
+                                            context: context,
+                                            order: order,
+                                            width: 70,
+                                            restaurant: restaurantMap[
+                                                    order.restaurantId] ??
+                                                Restaurant.empty());
+                                  },
+                                  separatorBuilder: (context, index) =>
+                                      const SizedBox(
+                                    height: 12.0,
+                                  ),
+                                  itemCount: min(
+                                      3,
+                                      orders
+                                          .where((order) =>
+                                              order.status == Status.declined ||
+                                              order.status ==
+                                                  Status.autoDeclined)
+                                          .length),
+                                  scrollDirection: Axis.vertical,
+                                  physics: const BouncingScrollPhysics(),
+                                  shrinkWrap: true,
+                                );
+                              }
                             },
-                            separatorBuilder: (context, index) =>
-                                const SizedBox(
-                              height: 12.0,
-                            ),
-                            itemCount: min(
-                                3,
-                                orders
-                                    .where((order) =>
-                                        order.status == Status.declined ||
-                                        order.status == Status.autoDeclined)
-                                    .length),
-                            scrollDirection: Axis.vertical,
-                            physics: const BouncingScrollPhysics(),
-                            shrinkWrap: true,
                           ),
                         ),
                       ],

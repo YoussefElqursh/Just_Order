@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:just_order/models/user_model.dart';
 import 'package:just_order/repository/auth_repository/login_repository.dart';
+import 'package:just_order/screens/account/app_settings/app_settings_screen.dart';
+import 'package:just_order/screens/account/history_screen/history_screen.dart';
 import 'package:just_order/screens/account/main_account_screen/widgets/account_functions_widget.dart';
 import 'package:just_order/shared/function/functions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -117,18 +119,6 @@ class _AccountScreenState extends State<AccountScreen> {
                     navigateTo(context, 'ProfileScreenRoute');
                   },
                 ),
-                accountFunctionWidget(
-                  context: context,
-                  icon: Icons.notifications_none_outlined,
-                  label: 'Notifications',
-                  onPressed: () {},
-                ),
-                accountFunctionWidget(
-                  context: context,
-                  icon: Icons.favorite_border_outlined,
-                  label: 'Favorites',
-                  onPressed: () {},
-                ),
                 //Account Management Section
                 const SizedBox(height: 25.0),
                 const Align(
@@ -152,19 +142,17 @@ class _AccountScreenState extends State<AccountScreen> {
                   context: context,
                   icon: Icons.history_outlined,
                   label: 'Order History',
-                  onPressed: () {},
-                ),
-                accountFunctionWidget(
-                  context: context,
-                  icon: Icons.credit_card,
-                  label: 'Cards',
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => HistoryScreen(),),);
+                  },
                 ),
                 accountFunctionWidget(
                   context: context,
                   icon: Icons.settings_sharp,
                   label: 'Settings',
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => AppSettingsScreen(),),);
+                  },
                 ),
                 //General Section
                 const SizedBox(height: 25.0),
@@ -189,6 +177,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   context: context,
                   icon: Icons.info_outline_rounded,
                   label: 'About App',
+                  isText: true,
                   onPressed: () {},
                 ),
                 accountFunctionWidget(

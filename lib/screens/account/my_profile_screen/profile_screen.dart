@@ -88,37 +88,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
         leadingWidth: 55.0,
-        actions: [
-          Padding(
-            padding:
-                const EdgeInsets.only(right: 20.0, top: 10.0, bottom: 10.0),
-            child: Container(
-              width: 34,
-              height: 34,
-              clipBehavior: Clip.antiAlias,
-              decoration: ShapeDecoration(
-                color: const Color(0xFFF4F4F4),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
-              ),
-              child: IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.settings_sharp,
-                  color: Colors.black,
-                  size: 18,
-                ),
-                style: ButtonStyle(
-                  shape: WidgetStatePropertyAll(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
+        // actions: [
+        //   Padding(
+        //     padding:
+        //         const EdgeInsets.only(right: 20.0, top: 10.0, bottom: 10.0),
+        //     child: Container(
+        //       width: 34,
+        //       height: 34,
+        //       clipBehavior: Clip.antiAlias,
+        //       decoration: ShapeDecoration(
+        //         color: const Color(0xFFF4F4F4),
+        //         shape: RoundedRectangleBorder(
+        //             borderRadius: BorderRadius.circular(8)),
+        //       ),
+        //       child: IconButton(
+        //         onPressed: () {},
+        //         icon: const Icon(
+        //           Icons.settings_sharp,
+        //           color: Colors.black,
+        //           size: 18,
+        //         ),
+        //         style: ButtonStyle(
+        //           shape: WidgetStatePropertyAll(
+        //             RoundedRectangleBorder(
+        //               borderRadius: BorderRadius.circular(8),
+        //             ),
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        // ],
       ),
       body: SingleChildScrollView(
         child: SizedBox(

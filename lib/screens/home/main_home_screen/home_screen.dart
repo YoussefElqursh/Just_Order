@@ -146,66 +146,66 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 6.0, top: 10.0),
-            child: Container(
-              width: 36,
-              height: 36,
-              clipBehavior: Clip.antiAlias,
-              decoration: ShapeDecoration(
-                color: const Color(0xFFF4F4F4),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              child: IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.search_outlined,
-                  color: Colors.black,
-                  size: 18,
-                ),
-                style: ButtonStyle(
-                  shape: WidgetStatePropertyAll(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 20.0, top: 10.0),
-            child: Container(
-              width: 36,
-              height: 36,
-              clipBehavior: Clip.antiAlias,
-              decoration: ShapeDecoration(
-                color: const Color(0xFFF4F4F4),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              child: IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.notifications,
-                  color: Colors.black,
-                  size: 18,
-                ),
-                style: ButtonStyle(
-                  shape: WidgetStatePropertyAll(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
+        // actions: [
+        //   Padding(
+        //     padding: const EdgeInsets.only(right: 6.0, top: 10.0),
+        //     child: Container(
+        //       width: 36,
+        //       height: 36,
+        //       clipBehavior: Clip.antiAlias,
+        //       decoration: ShapeDecoration(
+        //         color: const Color(0xFFF4F4F4),
+        //         shape: RoundedRectangleBorder(
+        //           borderRadius: BorderRadius.circular(8),
+        //         ),
+        //       ),
+        //       child: IconButton(
+        //         onPressed: () {},
+        //         icon: const Icon(
+        //           Icons.search_outlined,
+        //           color: Colors.black,
+        //           size: 18,
+        //         ),
+        //         style: ButtonStyle(
+        //           shape: WidgetStatePropertyAll(
+        //             RoundedRectangleBorder(
+        //               borderRadius: BorderRadius.circular(8),
+        //             ),
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        //   Padding(
+        //     padding: const EdgeInsets.only(right: 20.0, top: 10.0),
+        //     child: Container(
+        //       width: 36,
+        //       height: 36,
+        //       clipBehavior: Clip.antiAlias,
+        //       decoration: ShapeDecoration(
+        //         color: const Color(0xFFF4F4F4),
+        //         shape: RoundedRectangleBorder(
+        //           borderRadius: BorderRadius.circular(8),
+        //         ),
+        //       ),
+        //       child: IconButton(
+        //         onPressed: () {},
+        //         icon: const Icon(
+        //           Icons.notifications,
+        //           color: Colors.black,
+        //           size: 18,
+        //         ),
+        //         style: ButtonStyle(
+        //           shape: WidgetStatePropertyAll(
+        //             RoundedRectangleBorder(
+        //               borderRadius: BorderRadius.circular(8),
+        //             ),
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        // ],
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -301,23 +301,23 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 ),
               ),
-              const SizedBox(height: 12.0),
-              SizedBox(
-                width: MediaQuery.sizeOf(context).width,
-                height: 31.0,
-                child: ListView.separated(
-                  itemBuilder: (context, index) => buildHomeFilterWidget(
-                      filters[index], index,
-                      onPressed: () {}),
-                  separatorBuilder: (context, index) =>
-                      const SizedBox(width: 10.0),
-                  itemCount: 4,
-                  scrollDirection: Axis.horizontal,
-                  physics: const BouncingScrollPhysics(),
-                  shrinkWrap: true,
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                ),
-              ),
+              // const SizedBox(height: 12.0),
+              // SizedBox(
+              //   width: MediaQuery.sizeOf(context).width,
+              //   height: 31.0,
+              //   child: ListView.separated(
+              //     itemBuilder: (context, index) => buildHomeFilterWidget(
+              //         filters[index], index,
+              //         onPressed: () {}),
+              //     separatorBuilder: (context, index) =>
+              //         const SizedBox(width: 10.0),
+              //     itemCount: 4,
+              //     scrollDirection: Axis.horizontal,
+              //     physics: const BouncingScrollPhysics(),
+              //     shrinkWrap: true,
+              //     padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              //   ),
+              // ),
               const SizedBox(height: 25.0),
               // Popular Today
               Container(
@@ -339,25 +339,25 @@ class _HomeScreenState extends State<HomeScreen> {
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                     ),
-                    const Spacer(),
-                    TextButton(
-                      onPressed: () {},
-                      style: ButtonStyle(
-                        overlayColor:
-                            WidgetStateProperty.all(Colors.transparent),
-                      ),
-                      child: const Text(
-                        'View All',
-                        style: TextStyle(
-                          color: Color(0xFFE02C45),
-                          fontSize: 10,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w500,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                      ),
-                    ),
+                    // const Spacer(),
+                    // TextButton(
+                    //   onPressed: () {},
+                    //   style: ButtonStyle(
+                    //     overlayColor:
+                    //         WidgetStateProperty.all(Colors.transparent),
+                    //   ),
+                    //   child: const Text(
+                    //     'View All',
+                    //     style: TextStyle(
+                    //       color: Color(0xFFE02C45),
+                    //       fontSize: 10,
+                    //       fontFamily: 'Inter',
+                    //       fontWeight: FontWeight.w500,
+                    //     ),
+                    //     overflow: TextOverflow.ellipsis,
+                    //     maxLines: 1,
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
