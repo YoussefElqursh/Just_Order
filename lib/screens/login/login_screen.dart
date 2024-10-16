@@ -178,7 +178,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             child: Container(
                               width: MediaQuery.sizeOf(context).width,
-                              height: 463,
+                              height: 500,
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 20,
                                 vertical: 30,
@@ -310,59 +310,79 @@ class _LoginScreenState extends State<LoginScreen> {
                                       ),
                                     ),
                                     const SizedBox(height: 8.0),
-                                    TextFormField(
-                                      controller: _emailController,
-                                      maxLines: 1,
-                                      cursorColor: Colors.black,
-                                      keyboardType: TextInputType.emailAddress,
-                                      style: const TextStyle(
-                                        color: Color(0xFF000000),
-                                        fontSize: 12,
-                                        fontFamily: 'Inter',
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                      decoration: InputDecoration(
-                                        constraints: BoxConstraints(
-                                          maxWidth:
-                                              MediaQuery.sizeOf(context).width,
-                                          maxHeight: 42,
-                                        ),
-                                        hintText: 'yourname@example.com',
-                                        hintStyle: const TextStyle(
-                                          color: Color(0xFFCCCCCC),
+                                    SizedBox(
+                                      height: 70,
+                                      child: TextFormField(
+                                        controller: _emailController,
+                                        maxLines: 1,
+                                        cursorColor: Colors.black,
+                                        keyboardType: TextInputType.emailAddress,
+                                        style: const TextStyle(
+                                          color: Color(0xFF000000),
                                           fontSize: 12,
                                           fontFamily: 'Inter',
                                           fontWeight: FontWeight.w500,
                                         ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            width: 1,
-                                            color: Color(0xFFE02C45),
+                                        decoration: InputDecoration(
+
+                                          constraints: BoxConstraints(
+                                            maxWidth: MediaQuery.sizeOf(context).width,
+                                            maxHeight: 42,
+                                            minHeight: 42,
+                                            minWidth: MediaQuery.sizeOf(context).width,
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(6),
-                                        ),
-                                        border: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            width: 1,
-                                            color: Color(0x4CAFAFAF),
+                                          hintText: 'yourname@example.com',
+                                          hintStyle: const TextStyle(
+                                            color: Color(0xFFCCCCCC),
+                                            fontSize: 12,
+                                            fontFamily: 'Inter',
+                                            fontWeight: FontWeight.w500,
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(6),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color(0xFFE02C45),
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(6),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color(0xFFE02C45),
+                                            ),
+                                            borderRadius:
+                                            BorderRadius.circular(6),
+                                          ),
+                                          errorBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color(0xFFE02C45),
+                                            ),
+                                            borderRadius:
+                                            BorderRadius.circular(6),
+                                          ),
+                                          border: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color(0x4CAFAFAF),
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(6),
+                                          ),
                                         ),
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'Please enter your email';
+                                          } else if (!RegExp(
+                                            r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+                                          ).hasMatch(value)) {
+                                            return 'Please enter a valid email';
+                                          }
+                                          return null;
+                                        },
                                       ),
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Please enter your email';
-                                        } else if (!RegExp(
-                                          r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
-                                        ).hasMatch(value)) {
-                                          return 'Please enter a valid email';
-                                        }
-                                        return null;
-                                      },
                                     ),
-                                    const SizedBox(height: 25.0),
                                     const Align(
                                       alignment: Alignment.centerLeft,
                                       child: Text(
@@ -378,72 +398,91 @@ class _LoginScreenState extends State<LoginScreen> {
                                       ),
                                     ),
                                     const SizedBox(height: 8.0),
-                                    TextFormField(
-                                        controller: _passwordController,
-                                        obscureText: context
-                                            .read<LoginCubit>()
-                                            .isPassword,
-                                        maxLines: 1,
-                                        cursorColor: Colors.black,
-                                        keyboardType:
-                                            TextInputType.visiblePassword,
-                                        style: const TextStyle(
-                                          color: Color(0xFF000000),
-                                          fontSize: 12,
-                                          fontFamily: 'Inter',
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                        decoration: InputDecoration(
-                                          constraints: BoxConstraints(
-                                            maxWidth: MediaQuery.sizeOf(context)
-                                                .width,
-                                            maxHeight: 42,
-                                          ),
-                                          hintText: '*************',
-                                          hintStyle: const TextStyle(
-                                            color: Color(0xFFCCCCCC),
+                                    SizedBox(
+                                      height: 70.0,
+                                      child: TextFormField(
+                                          controller: _passwordController,
+                                          obscureText: context
+                                              .read<LoginCubit>()
+                                              .isPassword,
+                                          maxLines: 1,
+                                          cursorColor: Colors.black,
+                                          keyboardType:
+                                              TextInputType.visiblePassword,
+                                          style: const TextStyle(
+                                            color: Color(0xFF000000),
                                             fontSize: 12,
                                             fontFamily: 'Inter',
                                             fontWeight: FontWeight.w500,
                                           ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color(0xFFE02C45),
+                                          decoration: InputDecoration(
+                                            constraints: BoxConstraints(
+                                              maxWidth: MediaQuery.sizeOf(context)
+                                                  .width,
+                                              maxHeight: 42,
                                             ),
-                                            borderRadius:
-                                                BorderRadius.circular(6),
-                                          ),
-                                          border: OutlineInputBorder(
-                                            borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color(0x4CAFAFAF),
+                                            hintText: '*************',
+                                            hintStyle: const TextStyle(
+                                              color: Color(0xFFCCCCCC),
+                                              fontSize: 12,
+                                              fontFamily: 'Inter',
+                                              fontWeight: FontWeight.w500,
                                             ),
-                                            borderRadius:
-                                                BorderRadius.circular(6),
-                                          ),
-                                          suffixIcon: IconButton(
-                                            onPressed: () {
-                                              context
-                                                  .read<LoginCubit>()
-                                                  .changePasswordState();
-                                            },
-                                            icon: Icon(
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: const BorderSide(
+                                                width: 1,
+                                                color: Color(0xFFE02C45),
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(6),
+                                            ),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: const BorderSide(
+                                                width: 1,
+                                                color: Color(0xFFE02C45),
+                                              ),
+                                              borderRadius:
+                                              BorderRadius.circular(6),
+                                            ),
+                                            errorBorder: OutlineInputBorder(
+                                              borderSide: const BorderSide(
+                                                width: 1,
+                                                color: Color(0xFFE02C45),
+                                              ),
+                                              borderRadius:
+                                              BorderRadius.circular(6),
+                                            ),
+                                            border: OutlineInputBorder(
+                                              borderSide: const BorderSide(
+                                                width: 1,
+                                                color: Color(0x4CAFAFAF),
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(6),
+                                            ),
+                                            suffixIcon: IconButton(
+                                              onPressed: () {
                                                 context
                                                     .read<LoginCubit>()
-                                                    .suffixIcon,
-                                                color: const Color(0xFFAFAFAF),
-                                                size: 18.0),
+                                                    .changePasswordState();
+                                              },
+                                              icon: Icon(
+                                                  context
+                                                      .read<LoginCubit>()
+                                                      .suffixIcon,
+                                                  color: const Color(0xFFAFAFAF),
+                                                  size: 18.0),
+                                            ),
                                           ),
-                                        ),
-                                        validator: (value) {
-                                          if (value == null || value.isEmpty) {
-                                            return 'Please enter your password';
-                                          } else if (value.length < 6) {
-                                            return 'Password must be at least 6 characters';
-                                          }
-                                          return null;
-                                        }),
+                                          validator: (value) {
+                                            if (value == null || value.isEmpty) {
+                                              return 'Please enter your password';
+                                            } else if (value.length < 6) {
+                                              return 'Password must be at least 6 characters';
+                                            }
+                                            return null;
+                                          }),
+                                    ),
                                     const SizedBox(
                                       height: 8.0,
                                     ),
