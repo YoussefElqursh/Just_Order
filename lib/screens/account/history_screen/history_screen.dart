@@ -68,7 +68,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
         appBar: AppBar(
           centerTitle: true,
           title: const Text(
-            'Settings',
+            'History',
             style: TextStyle(
               color: Colors.black,
               fontSize: 14,
