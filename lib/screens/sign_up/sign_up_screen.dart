@@ -150,7 +150,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           SizedBox(
-                            height: MediaQuery.sizeOf(context).width * 0.55,
+                            height: MediaQuery.sizeOf(context).width * 0.45,
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(
@@ -158,7 +158,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                             child: Container(
                               width: MediaQuery.sizeOf(context).width,
-                              height: 610,
+                              height: 750,
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 20,
                                 vertical: 30,
@@ -190,53 +190,56 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       ),
                                     ),
                                     const SizedBox(height: 8.0),
-                                    TextFormField(
-                                      controller: _firstNameController,
-                                      maxLines: 1,
-                                      cursorColor: Colors.black,
-                                      keyboardType: TextInputType.name,
-                                      style: const TextStyle(
-                                        color: Color(0xFF000000),
-                                        fontSize: 12,
-                                        fontFamily: 'Inter',
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                      decoration: InputDecoration(
-                                        constraints: BoxConstraints(
-                                          maxWidth:
-                                              MediaQuery.sizeOf(context).width,
-                                          maxHeight: 42,
-                                        ),
-                                        hintText: 'John',
-                                        hintStyle: const TextStyle(
-                                          color: Color(0xFFCCCCCC),
+                                    SizedBox(
+                                      height: 70.0,
+                                      child: TextFormField(
+                                        controller: _firstNameController,
+                                        maxLines: 1,
+                                        cursorColor: Colors.black,
+                                        keyboardType: TextInputType.name,
+                                        style: const TextStyle(
+                                          color: Color(0xFF000000),
                                           fontSize: 12,
                                           fontFamily: 'Inter',
                                           fontWeight: FontWeight.w500,
                                         ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            width: 1,
-                                            color: Color(0xFFE02C45),
+                                        decoration: InputDecoration(
+                                          constraints: BoxConstraints(
+                                            maxWidth:
+                                                MediaQuery.sizeOf(context).width,
+                                            maxHeight: 42,
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(6),
-                                        ),
-                                        border: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            width: 1,
-                                            color: Color(0x4CAFAFAF),
+                                          hintText: 'John',
+                                          hintStyle: const TextStyle(
+                                            color: Color(0xFFCCCCCC),
+                                            fontSize: 12,
+                                            fontFamily: 'Inter',
+                                            fontWeight: FontWeight.w500,
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(6),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color(0xFFE02C45),
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(6),
+                                          ),
+                                          border: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color(0x4CAFAFAF),
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(6),
+                                          ),
                                         ),
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty || value.length < 3) {
+                                            return 'Please enter valid first name';
+                                          }
+                                          return null;
+                                        },
                                       ),
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Please enter first name';
-                                        }
-                                        return null;
-                                      },
                                     ),
                                     const SizedBox(height: 25.0),
                                     const Align(
@@ -254,53 +257,56 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       ),
                                     ),
                                     const SizedBox(height: 8.0),
-                                    TextFormField(
-                                      controller: _lastNameController,
-                                      maxLines: 1,
-                                      cursorColor: Colors.black,
-                                      keyboardType: TextInputType.name,
-                                      style: const TextStyle(
-                                        color: Color(0xFF000000),
-                                        fontSize: 12,
-                                        fontFamily: 'Inter',
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                      decoration: InputDecoration(
-                                        constraints: BoxConstraints(
-                                          maxWidth:
-                                              MediaQuery.sizeOf(context).width,
-                                          maxHeight: 42,
-                                        ),
-                                        hintText: 'Doe',
-                                        hintStyle: const TextStyle(
-                                          color: Color(0xFFCCCCCC),
+                                    SizedBox(
+                                      height: 70.0,
+                                      child: TextFormField(
+                                        controller: _lastNameController,
+                                        maxLines: 1,
+                                        cursorColor: Colors.black,
+                                        keyboardType: TextInputType.name,
+                                        style: const TextStyle(
+                                          color: Color(0xFF000000),
                                           fontSize: 12,
                                           fontFamily: 'Inter',
                                           fontWeight: FontWeight.w500,
                                         ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            width: 1,
-                                            color: Color(0xFFE02C45),
+                                        decoration: InputDecoration(
+                                          constraints: BoxConstraints(
+                                            maxWidth:
+                                                MediaQuery.sizeOf(context).width,
+                                            maxHeight: 42,
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(6),
-                                        ),
-                                        border: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            width: 1,
-                                            color: Color(0x4CAFAFAF),
+                                          hintText: 'Doe',
+                                          hintStyle: const TextStyle(
+                                            color: Color(0xFFCCCCCC),
+                                            fontSize: 12,
+                                            fontFamily: 'Inter',
+                                            fontWeight: FontWeight.w500,
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(6),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color(0xFFE02C45),
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(6),
+                                          ),
+                                          border: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color(0x4CAFAFAF),
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(6),
+                                          ),
                                         ),
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty || value.length < 3) {
+                                            return 'Please enter valid last name';
+                                          }
+                                          return null;
+                                        },
                                       ),
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Please enter last name';
-                                        }
-                                        return null;
-                                      },
                                     ),
                                     const SizedBox(height: 25.0),
                                     const Align(
@@ -318,57 +324,60 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       ),
                                     ),
                                     const SizedBox(height: 8.0),
-                                    TextFormField(
-                                      controller: _emailController,
-                                      maxLines: 1,
-                                      cursorColor: Colors.black,
-                                      keyboardType: TextInputType.emailAddress,
-                                      style: const TextStyle(
-                                        color: Color(0xFF000000),
-                                        fontSize: 12,
-                                        fontFamily: 'Inter',
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                      decoration: InputDecoration(
-                                        constraints: BoxConstraints(
-                                          maxWidth:
-                                              MediaQuery.sizeOf(context).width,
-                                          maxHeight: 42,
-                                        ),
-                                        hintText: 'yourname@example.com',
-                                        hintStyle: const TextStyle(
-                                          color: Color(0xFFCCCCCC),
+                                    SizedBox(
+                                      height: 70.0,
+                                      child: TextFormField(
+                                        controller: _emailController,
+                                        maxLines: 1,
+                                        cursorColor: Colors.black,
+                                        keyboardType: TextInputType.emailAddress,
+                                        style: const TextStyle(
+                                          color: Color(0xFF000000),
                                           fontSize: 12,
                                           fontFamily: 'Inter',
                                           fontWeight: FontWeight.w500,
                                         ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            width: 1,
-                                            color: Color(0xFFE02C45),
+                                        decoration: InputDecoration(
+                                          constraints: BoxConstraints(
+                                            maxWidth:
+                                                MediaQuery.sizeOf(context).width,
+                                            maxHeight: 42,
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(6),
-                                        ),
-                                        border: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            width: 1,
-                                            color: Color(0x4CAFAFAF),
+                                          hintText: 'yourname@example.com',
+                                          hintStyle: const TextStyle(
+                                            color: Color(0xFFCCCCCC),
+                                            fontSize: 12,
+                                            fontFamily: 'Inter',
+                                            fontWeight: FontWeight.w500,
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(6),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color(0xFFE02C45),
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(6),
+                                          ),
+                                          border: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color(0x4CAFAFAF),
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(6),
+                                          ),
                                         ),
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'Please enter your email';
+                                          } else if (!RegExp(
+                                            r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+                                          ).hasMatch(value)) {
+                                            return 'Please enter a valid email';
+                                          }
+                                          return null;
+                                        },
                                       ),
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Please enter your email';
-                                        } else if (!RegExp(
-                                          r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
-                                        ).hasMatch(value)) {
-                                          return 'Please enter a valid email';
-                                        }
-                                        return null;
-                                      },
                                     ),
                                     const SizedBox(height: 25.0),
                                     const Align(
@@ -386,57 +395,60 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       ),
                                     ),
                                     const SizedBox(height: 8.0),
-                                    TextFormField(
-                                      controller: _phoneNumberController,
-                                      maxLines: 1,
-                                      cursorColor: Colors.black,
-                                      keyboardType: TextInputType.phone,
-                                      style: const TextStyle(
-                                        color: Color(0xFF000000),
-                                        fontSize: 12,
-                                        fontFamily: 'Inter',
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                      decoration: InputDecoration(
-                                        constraints: BoxConstraints(
-                                          maxWidth:
-                                              MediaQuery.sizeOf(context).width,
-                                          maxHeight: 42,
-                                        ),
-                                        hintText: '+20 123-456-7890',
-                                        hintStyle: const TextStyle(
-                                          color: Color(0xFFCCCCCC),
+                                    SizedBox(
+                                      height: 70.0,
+                                      child: TextFormField(
+                                        controller: _phoneNumberController,
+                                        maxLines: 1,
+                                        cursorColor: Colors.black,
+                                        keyboardType: TextInputType.phone,
+                                        style: const TextStyle(
+                                          color: Color(0xFF000000),
                                           fontSize: 12,
                                           fontFamily: 'Inter',
                                           fontWeight: FontWeight.w500,
                                         ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            width: 1,
-                                            color: Color(0xFFE02C45),
+                                        decoration: InputDecoration(
+                                          constraints: BoxConstraints(
+                                            maxWidth:
+                                                MediaQuery.sizeOf(context).width,
+                                            maxHeight: 42,
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(6),
-                                        ),
-                                        border: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            width: 1,
-                                            color: Color(0x4CAFAFAF),
+                                          hintText: '+20 123-456-7890',
+                                          hintStyle: const TextStyle(
+                                            color: Color(0xFFCCCCCC),
+                                            fontSize: 12,
+                                            fontFamily: 'Inter',
+                                            fontWeight: FontWeight.w500,
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(6),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color(0xFFE02C45),
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(6),
+                                          ),
+                                          border: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color(0x4CAFAFAF),
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(6),
+                                          ),
                                         ),
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty || value.startsWith('01') == false) {
+                                            return 'Please enter a valid phone number';
+                                          }
+                                          if (!RegExp(r'^\d{11}$')
+                                              .hasMatch(value)) {
+                                            return 'Please enter a valid 11-digit phone number';
+                                          }
+                                          return null;
+                                        },
                                       ),
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Please enter a phone number';
-                                        }
-                                        if (!RegExp(r'^\d{10}$')
-                                            .hasMatch(value)) {
-                                          return 'Please enter a valid 10-digit phone number';
-                                        }
-                                        return null;
-                                      },
                                     ),
                                     const SizedBox(height: 25.0),
                                     const Align(
@@ -454,74 +466,77 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       ),
                                     ),
                                     const SizedBox(height: 8.0),
-                                    TextFormField(
-                                      controller: _passwordController,
-                                      obscureText: context
-                                          .read<SignUpCubit>()
-                                          .isPassword,
-                                      maxLines: 1,
-                                      cursorColor: Colors.black,
-                                      keyboardType:
-                                          TextInputType.visiblePassword,
-                                      style: const TextStyle(
-                                        color: Color(0xFF000000),
-                                        fontSize: 12,
-                                        fontFamily: 'Inter',
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                      decoration: InputDecoration(
-                                        constraints: BoxConstraints(
-                                          maxWidth:
-                                              MediaQuery.sizeOf(context).width,
-                                          maxHeight: 42,
-                                        ),
-                                        hintText: '*************',
-                                        hintStyle: const TextStyle(
-                                          color: Color(0xFFCCCCCC),
+                                    SizedBox(
+                                      height: 70.0,
+                                      child: TextFormField(
+                                        controller: _passwordController,
+                                        obscureText: context
+                                            .read<SignUpCubit>()
+                                            .isPassword,
+                                        maxLines: 1,
+                                        cursorColor: Colors.black,
+                                        keyboardType:
+                                            TextInputType.visiblePassword,
+                                        style: const TextStyle(
+                                          color: Color(0xFF000000),
                                           fontSize: 12,
                                           fontFamily: 'Inter',
                                           fontWeight: FontWeight.w500,
                                         ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            width: 1,
-                                            color: Color(0xFFE02C45),
+                                        decoration: InputDecoration(
+                                          constraints: BoxConstraints(
+                                            maxWidth:
+                                                MediaQuery.sizeOf(context).width,
+                                            maxHeight: 42,
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(6),
-                                        ),
-                                        border: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            width: 1,
-                                            color: Color(0x4CAFAFAF),
+                                          hintText: '*************',
+                                          hintStyle: const TextStyle(
+                                            color: Color(0xFFCCCCCC),
+                                            fontSize: 12,
+                                            fontFamily: 'Inter',
+                                            fontWeight: FontWeight.w500,
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(6),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color(0xFFE02C45),
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(6),
+                                          ),
+                                          border: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color(0x4CAFAFAF),
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(6),
+                                          ),
+                                          suffixIcon: IconButton(
+                                            onPressed: () {
+                                              context.read<SignUpCubit>().changePasswordState();
+                                            },
+                                            icon: Icon(
+                                                context
+                                                    .read<SignUpCubit>()
+                                                    .suffixIcon,
+                                                color: const Color(0xFFAFAFAF),
+                                                size: 18.0),
+                                          ),
                                         ),
-                                        suffixIcon: IconButton(
-                                          onPressed: () {
-                                            // context.read<LoginCubit>().changePasswordState();
-                                          },
-                                          icon: Icon(
-                                              context
-                                                  .read<SignUpCubit>()
-                                                  .suffixIcon,
-                                              color: const Color(0xFFAFAFAF),
-                                              size: 18.0),
-                                        ),
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'Please enter your password';
+                                          } else if (value.length < 6) {
+                                            return 'Password must be at least 6 characters';
+                                          } else if (!RegExp(
+                                            r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$&*~]).{8,}$',
+                                          ).hasMatch(value)) {
+                                            return 'Password must contain at least one uppercase letter, one lowercase letter, one number and one special character';
+                                          }
+                                          return null;
+                                        },
                                       ),
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Please enter your password';
-                                        } else if (value.length < 6) {
-                                          return 'Password must be at least 6 characters';
-                                        } else if (!RegExp(
-                                          r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$',
-                                        ).hasMatch(value)) {
-                                          return 'Password must contain at least one uppercase letter, one lowercase letter, one number and one special character';
-                                        }
-                                        return null;
-                                      },
                                     ),
                                     const SizedBox(
                                       height: 8.0,
@@ -529,17 +544,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     const SizedBox(height: 18.0),
                                     MaterialButton(
                                       onPressed: () async {
-                                        context.read<SignUpCubit>().signUp(
-                                              email: _emailController.text,
-                                              firstName:
-                                                  _firstNameController.text,
-                                              lastName:
-                                                  _lastNameController.text,
-                                              phoneNumber:
-                                                  _phoneNumberController.text,
-                                              password:
-                                                  _passwordController.text,
-                                            );
+                                        if(_formKey.currentState!.validate()){
+                                          context.read<SignUpCubit>().signUp(
+                                            email: _emailController.text,
+                                            firstName:
+                                            _firstNameController.text,
+                                            lastName:
+                                            _lastNameController.text,
+                                            phoneNumber:
+                                            _phoneNumberController.text,
+                                            password:
+                                            _passwordController.text,
+                                          );
+                                        }
                                       },
                                       height: 42,
                                       minWidth:
