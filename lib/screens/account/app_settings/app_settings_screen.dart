@@ -65,11 +65,6 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
                 training: const SizedBox(),
               ),
               const SettingsAppItems(
-                icon: Icons.lock_open,
-                title: 'Change Password',
-                training: SizedBox(),
-              ),
-              const SettingsAppItems(
                 icon: Icons.dark_mode_outlined,
                 title: 'Dark Mode',
                 training: SwitchBtnWidget(),
