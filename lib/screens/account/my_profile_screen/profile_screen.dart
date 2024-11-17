@@ -169,26 +169,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                 ),
-                MaterialButton(
-                  onPressed: () {},
-                  minWidth: 73,
-                  height: 20,
-                  color: const Color(0xFFE02C45),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: const Text(
-                    'Edit Profile',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w600,
-                    ),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                  ),
-                ),
+                // MaterialButton(
+                //   onPressed: () {},
+                //   minWidth: 73,
+                //   height: 20,
+                //   color: const Color(0xFFE02C45),
+                //   shape: RoundedRectangleBorder(
+                //     borderRadius: BorderRadius.circular(50),
+                //   ),
+                //   child: const Text(
+                //     'Edit Profile',
+                //     style: TextStyle(
+                //       color: Colors.white,
+                //       fontSize: 10,
+                //       fontFamily: 'Inter',
+                //       fontWeight: FontWeight.w600,
+                //     ),
+                //     overflow: TextOverflow.ellipsis,
+                //     maxLines: 1,
+                //   ),
+                // ),
                 const SizedBox(
                   height: 50,
                 ),
