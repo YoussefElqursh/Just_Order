@@ -1,8 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:just_order/models/cart_item_model.dart';
-import '../../models/item_model.dart';
 import '../../models/payments_model/payment_request_model.dart';
 import '../../models/user_model.dart';
 import '../../network/dio_helper.dart';

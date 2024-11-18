@@ -26,15 +26,12 @@ import 'package:just_order/screens/payment/pay_method_screen.dart';
 import 'package:just_order/screens/order/order_summary_screen.dart';
 import 'package:just_order/screens/order/order_confirmed_screen.dart';
 import 'package:just_order/screens/login/login_screen.dart';
-import 'package:just_order/shared/function/permission_handler.dart';
 
 class AppRouter {
   static Route onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case 'SplashScreenRoute':
         return SplashScreen.route();
-      case 'PermissionCheckScreenRoute':
-        return PermissionCheckScreen.route();
       case 'SelectYourPlaceRoute':
         return SelectYourPlace.route();
       case 'HomeScreenRoute':
