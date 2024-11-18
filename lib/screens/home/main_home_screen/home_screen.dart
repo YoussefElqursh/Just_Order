@@ -65,12 +65,12 @@ class _HomeScreenState extends State<HomeScreen> {
     showModalBottomSheet(
         context: context,
         builder: (_) {
-          return const PlaceDetailsSheet();
+          return PlaceDetailsSheet(tableCode: tableCode,);
         },
         useSafeArea: true,
         backgroundColor: Colors.white,
         constraints: BoxConstraints(
-          maxHeight: 200,
+          maxHeight: 400,
           maxWidth: MediaQuery.sizeOf(context).width,
         ));
   }
