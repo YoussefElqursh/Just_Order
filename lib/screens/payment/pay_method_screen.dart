@@ -11,6 +11,7 @@ class PayMethodScreen extends StatefulWidget {
   final Order order;
   final List<CartItem> cartItems;
   final Invoice invoice;
+
   const PayMethodScreen(
       {super.key,
       required this.order,
@@ -19,14 +20,18 @@ class PayMethodScreen extends StatefulWidget {
 
   static const String routeName = 'PayMethodScreenRoute';
 
-  static Route route(
-      {required Order order,
-      required List<CartItem> cartItems,
-      required Invoice invoice}) {
+  static Route route({
+    required Order order,
+    required List<CartItem> cartItems,
+    required Invoice invoice,
+  }) {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
-      builder: (context) =>
-          PayMethodScreen(order: order, cartItems: cartItems, invoice: invoice),
+      builder: (context) => PayMethodScreen(
+        order: order,
+        cartItems: cartItems,
+        invoice: invoice,
+      ),
     );
   }
 
@@ -451,29 +456,36 @@ class _PayMethodScreenState extends State<PayMethodScreen> {
                 const Spacer(),
                 MaterialButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, 'OrderSummaryScreenRoute',
+                    if (clicked1 || (clicked2 && clicked3) || (clicked2 &&clicked4) == true){
+                      Navigator.pushNamed(
+                        context,
+                        'OrderSummaryScreenRoute',
                         arguments: {
                           'order': widget.order,
                           'cartItems': widget.cartItems,
                           'invoice': widget.invoice
-                        });
+                        },
+                      );
+                    }
                   },
                   height: 42,
                   minWidth: MediaQuery.sizeOf(context).width,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(6),
                   ),
-                  color: const Color(0xFFE02C45),
+                  color: (clicked1 || (clicked2 && clicked3) || (clicked2 &&clicked4) == true) ? const Color(0xFFE02C45) : Colors.grey,
                   child: const Center(
-                    child: Text('Continue',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w600,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1),
+                    child: Text(
+                      'Continue',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w600,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
                   ),
                 ),
               ],

@@ -77,19 +77,23 @@ class _PaymentGatewayScreen extends State<PaymentGatewayScreen> {
             throw ("Can't establish a payment gateway screen due to lack of api/secret key");
           }
           controller.loadUrl(
-              urlRequest: URLRequest(
-                  url: WebUri(
-                      'https://accept.paymob.com/unifiedcheckout/?publicKey=$publicKey&clientSecret=$secretClient')));
+            urlRequest: URLRequest(
+              url: WebUri(
+                  'https://accept.paymob.com/unifiedcheckout/?publicKey=$publicKey&clientSecret=$secretClient'),
+            ),
+          );
         },
         onLoadStop: (controller, url) {
           if (url != null && url.queryParameters.containsKey("success")) {
-            bool success = url.queryParameters["success"]?.toLowerCase() == "true";
+            bool success =
+                url.queryParameters["success"]?.toLowerCase() == "true";
             if (success) {
               print("Success ");
-              Navigator.pushNamedAndRemoveUntil(context, 'OrderConfirmedScreenRoute', (route) => false);
+              Navigator.pushNamedAndRemoveUntil(
+                  context, 'OrderConfirmedScreenRoute', (route) => false);
               Navigator.pushNamed(context, 'OrderConfirmedScreenRoute',
                   arguments: {
-                    'order':order,
+                    'order': order,
                     'cartItems': cartItems,
                     'invoice': invoice,
                   });
