@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
@@ -24,9 +25,16 @@ class SignUpCubit extends Cubit<SignUpState> {
     final bytes = utf8.encode(password);
     final digest = sha256.convert(bytes);
     final hashedPassword = digest.toString();
+    Timer? _timeoutTimer;
 
     emit(SignUpLoadingState());
     try {
+      _timeoutTimer = Timer(
+        Duration(seconds: 2),
+        () => emit(
+          SignUpFailureState('No Internet Connections'),
+        ),
+      );
       final userId = _firestore.collection('users').doc().id;
 
       final user = User(
@@ -43,7 +51,6 @@ class SignUpCubit extends Cubit<SignUpState> {
       );
 
       await _firestore.collection('users').doc(userId).set(user.toJson());
-
       emit(SignUpISuccessState());
     } catch (e) {
       emit(SignUpFailureState(e.toString()));
@@ -52,6 +59,7 @@ class SignUpCubit extends Cubit<SignUpState> {
 
   IconData suffixIcon = Icons.visibility_outlined;
   bool isPassword = true;
+
   void changePasswordState() {
     isPassword = !isPassword;
     suffixIcon =

@@ -529,11 +529,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             return 'Please enter your password';
                                           } else if (value.length < 6) {
                                             return 'Password must be at least 6 characters';
-                                          } else if (!RegExp(
-                                            r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$&*~]).{8,}$',
-                                          ).hasMatch(value)) {
-                                            return 'Password must contain at least one uppercase letter, one lowercase letter, one number and one special character';
-                                          }
+                                          } 
                                           return null;
                                         },
                                       ),
