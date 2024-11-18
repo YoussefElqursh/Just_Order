@@ -22,8 +22,8 @@ class _FilterWidgetState extends State<FilterWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const Text(
-            'Trending',
+          Text(
+            widget.items.first.name,
             style: TextStyle(
               color: Colors.black,
               fontSize: 14,

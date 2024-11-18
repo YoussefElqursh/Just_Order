@@ -32,31 +32,31 @@ Widget buildMealWidget({
                 ),
               ),
             ),
-            Container(
-              width: 35,
-              height: 15,
-              clipBehavior: Clip.antiAlias,
-              decoration: const ShapeDecoration(
-                color: Color(0xFFE02C45),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(10),
-                    bottomLeft: Radius.circular(10),
-                  ),
-                ),
-              ),
-              child: const Center(
-                child: Text(
-                  '0% Off',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 6,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ),
+            // Container(
+            //   width: 35,
+            //   height: 15,
+            //   clipBehavior: Clip.antiAlias,
+            //   decoration: const ShapeDecoration(
+            //     color: Color(0xFFE02C45),
+            //     shape: RoundedRectangleBorder(
+            //       borderRadius: BorderRadius.only(
+            //         topRight: Radius.circular(10),
+            //         bottomLeft: Radius.circular(10),
+            //       ),
+            //     ),
+            //   ),
+            //   child: const Center(
+            //     child: Text(
+            //       '0% Off',
+            //       style: TextStyle(
+            //         color: Colors.white,
+            //         fontSize: 6,
+            //         fontFamily: 'Inter',
+            //         fontWeight: FontWeight.w600,
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
         const SizedBox(width: 10.0),

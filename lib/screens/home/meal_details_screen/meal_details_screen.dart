@@ -118,39 +118,39 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                           ),
                         ),
                       ),
-                      Positioned(
-                        top: 250,
-                        right: 20,
-                        child: Container(
-                          width: 60,
-                          height: 30,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 6, vertical: 4),
-                          clipBehavior: Clip.antiAlias,
-                          decoration: const ShapeDecoration(
-                            color: Color(0xFFE02C45),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(8),
-                                bottomRight: Radius.circular(8),
-                              ),
-                            ),
-                          ),
-                          child: const Center(
-                            child: Text(
-                              '0% Off',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 10,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w600,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                            ),
-                          ),
-                        ),
-                      ),
+                      // Positioned(
+                      //   top: 250,
+                      //   right: 20,
+                      //   child: Container(
+                      //     width: 60,
+                      //     height: 30,
+                      //     padding: const EdgeInsets.symmetric(
+                      //         horizontal: 6, vertical: 4),
+                      //     clipBehavior: Clip.antiAlias,
+                      //     decoration: const ShapeDecoration(
+                      //       color: Color(0xFFE02C45),
+                      //       shape: RoundedRectangleBorder(
+                      //         borderRadius: BorderRadius.only(
+                      //           bottomLeft: Radius.circular(8),
+                      //           bottomRight: Radius.circular(8),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     child: const Center(
+                      //       child: Text(
+                      //         '0% Off',
+                      //         style: TextStyle(
+                      //           color: Colors.white,
+                      //           fontSize: 10,
+                      //           fontFamily: 'Inter',
+                      //           fontWeight: FontWeight.w600,
+                      //         ),
+                      //         overflow: TextOverflow.ellipsis,
+                      //         maxLines: 1,
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                   SizedBox(
