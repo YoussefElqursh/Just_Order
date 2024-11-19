@@ -5,6 +5,7 @@ import 'package:just_order/models/invoice_model.dart';
 import 'package:just_order/models/order_model.dart';
 import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/repository/payment_repository/payment_repository.dart';
+import 'package:just_order/screens/order/order_confirmed_screen.dart';
 import 'package:just_order/screens/order/widgets/order_components_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,6 +13,7 @@ class OrderSummaryScreen extends StatefulWidget {
   final Order order;
   final List<CartItem> cartItems;
   final Invoice invoice;
+
   const OrderSummaryScreen(
       {super.key,
       required this.order,
@@ -437,23 +439,38 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                       horizontal: 20.0, vertical: 20.0),
                   child: MaterialButton(
                     onPressed: () async {
-                      // We keep track to to two digits after point
-                      int amount = (widget.order.totalAmount * 100 ).toInt();
-                      final fp.Either<String, String> res = await _paymentRepository.pay(amount: amount, itemsList: widget.cartItems);
-                      res.fold((left){
-                        // Show UI error here to try again
-                        print("Failed to initiate the payment ");
-                      },(right){
-                        String clientSecret = right;
-                        // ROUTE to gateway screen
-                        Navigator.pushNamed(context, "PaymentGatewayRoute", arguments: {
-                          "clientSecret": clientSecret,
-                          "order": widget.order,
-                          "cartItems": widget.cartItems,
-                          "invoice": widget.invoice
+                      if (widget.order.paymentType.name == 'cash') {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => OrderConfirmedScreen(
+                              order: widget.order,
+                              cartItems: widget.cartItems,
+                              invoice: widget.invoice,
+                            ),
+                          ),
+                        );
+                      } else {
+                        // We keep track to to two digits after point
+                        int amount = (widget.order.totalAmount * 100).toInt();
+                        final fp.Either<String, String> res =
+                            await _paymentRepository.pay(
+                                amount: amount, itemsList: widget.cartItems);
+                        res.fold((left) {
+                          // Show UI error here to try again
+                          print("Failed to initiate the payment ");
+                        }, (right) {
+                          String clientSecret = right;
+                          // ROUTE to gateway screen
+                          Navigator.pushNamed(context, "PaymentGatewayRoute",
+                              arguments: {
+                                "clientSecret": clientSecret,
+                                "order": widget.order,
+                                "cartItems": widget.cartItems,
+                                "invoice": widget.invoice
+                              });
                         });
-                      });
-
+                      }
                     },
                     height: 42,
                     minWidth: MediaQuery.sizeOf(context).width,
