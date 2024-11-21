@@ -47,7 +47,7 @@ class SignUpCubit extends Cubit<SignUpState> {
         userType: UserType.customer,
         emailVerified: true,
         phoneNumberVerified: true,
-        createdAt: DateTime.now(),
+        createdAt: Timestamp.now().toDate(),
       );
 
       await _firestore.collection('users').doc(userId).set(user.toJson());

@@ -43,7 +43,7 @@ class LoginCubit extends Cubit<LoginState> {
     final GoogleSignIn googleSignIn = GoogleSignIn(
       scopes: <String>[
         'email',
-        'https://www.googleapis.com/auth/contacts.readonly',
+        'profile',
       ],
     );
 
@@ -56,10 +56,11 @@ class LoginCubit extends Cubit<LoginState> {
 
       final GoogleSignInAuthentication googleAuth =
           await googleUser.authentication;
-      if (googleAuth.idToken == null) {
+      if (googleAuth.idToken == null && googleAuth.accessToken == null) {
         emit(LoginFailure("Google sign-in failed"));
         return;
       }
+
 
       final String email = googleUser.email;
       final QuerySnapshot result = await FirebaseFirestore.instance
@@ -74,7 +75,7 @@ class LoginCubit extends Cubit<LoginState> {
         prefs.setString('user', jsonEncode(user?.toJson()));
         emit(LoginSuccess(user!));
       } else {
-        emit(LoginFailure("User not found in Firestore"));
+        emit(LoginFailure("You don't have an account yet, please sign up"));
       }
     } catch (e) {
       emit(LoginFailure("An error occurred: ${e.toString()}"));
