@@ -22,21 +22,48 @@ class SignUpCubit extends Cubit<SignUpState> {
     required String password,
     required String phoneNumber,
   }) async {
-    final bytes = utf8.encode(password);
-    final digest = sha256.convert(bytes);
-    final hashedPassword = digest.toString();
-    Timer? _timeoutTimer;
-
     emit(SignUpLoadingState());
-    try {
-      _timeoutTimer = Timer(
-        Duration(seconds: 2),
-        () => emit(
-          SignUpFailureState('No Internet Connections'),
-        ),
-      );
-      final userId = _firestore.collection('users').doc().id;
 
+    // Input Validation
+    if (!InputValidator.isValidEmail(email)) {
+      emit(SignUpFailureState('Invalid email format'));
+      return;
+    }
+
+    if (!InputValidator.isValidPassword(password)) {
+      emit(SignUpFailureState('Password must be at least 8 characters long'));
+      return;
+    }
+
+    if (!InputValidator.isValidPhoneNumber(phoneNumber)) {
+      emit(SignUpFailureState('Invalid phone number'));
+      return;
+    }
+
+    // Network Connectivity Check
+    if (!await isConnected()) {
+      emit(SignUpFailureState('No Internet Connection'));
+      return;
+    }
+
+    try {
+      // Check if the user already exists
+      final existingUsers = await _firestore
+          .collection('users')
+          .where('email', isEqualTo: email)
+          .get();
+
+      if (existingUsers.docs.isNotEmpty) {
+        emit(SignUpFailureState('User with this email already exists.'));
+        return;
+      }
+
+      // Proceed with user creation
+      final bytes = utf8.encode(password);
+      final digest = sha256.convert(bytes);
+      final hashedPassword = digest.toString();
+
+      final userId = _firestore.collection('users').doc().id;
       final user = User(
         userId: userId,
         firstName: firstName,
@@ -53,7 +80,7 @@ class SignUpCubit extends Cubit<SignUpState> {
       await _firestore.collection('users').doc(userId).set(user.toJson());
       emit(SignUpISuccessState());
     } catch (e) {
-      emit(SignUpFailureState(e.toString()));
+      emit(SignUpFailureState('An error occurred: ${e.toString()}'));
     }
   }
 
