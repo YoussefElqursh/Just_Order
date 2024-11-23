@@ -7,6 +7,8 @@ import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:just_order/models/enums/user_type.dart';
 import 'package:just_order/models/user_model.dart';
+import 'package:just_order/shared/function/connectivity_plus.dart';
+import 'package:just_order/shared/function/validations.dart';
 
 part 'sign_up_state.dart';
 
