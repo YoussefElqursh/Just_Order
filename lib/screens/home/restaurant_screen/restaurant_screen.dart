@@ -3,9 +3,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:just_order/models/item_model.dart';
 import 'package:just_order/models/restaurant_model.dart';
+import 'package:just_order/repository/cart_provider.dart';
 import 'package:just_order/repository/user_repository/user_repository.dart';
 import 'package:just_order/screens/home/restaurant_screen/widgets/filter_widget.dart';
 import 'package:just_order/shared/function/functions.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RestaurantScreen extends StatefulWidget {
@@ -62,6 +64,13 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
   @override
   Widget build(BuildContext context) {
     Restaurant restaurant = widget.restaurant;
+    final cartProvider = Provider.of<CartProvider>(context);
+    final filteredItems = restaurant != null
+        ? cartProvider.items
+        .where((item) =>
+        item.cartItemId.endsWith('_${restaurant.restaurantId}'))
+        .toList()
+        : cartProvider.items;
     return PopScope(
       onPopInvokedWithResult: _onWillPop as void Function(bool, dynamic)?,
       child: DefaultTabController(
@@ -427,20 +436,28 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                     ),
                   ),
                 ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              navigateTo(context, 'MyCartScreenRoute');
-            },
-            backgroundColor: const Color(0xFFE02C45),
-            shape: const CircleBorder(
-              side: BorderSide(
-                color: Color(0xFFE02C45),
+          floatingActionButton: Badge(
+            label: Text('${filteredItems.length}'),
+            alignment: AlignmentDirectional.topStart,
+            backgroundColor: Colors.white,
+            textColor: const Color(0xFFE02C45),
+            isLabelVisible: true,
+            smallSize: 12,
+            child: FloatingActionButton(
+              onPressed: () {
+                navigateTo(context, 'MyCartScreenRoute');
+              },
+              backgroundColor: const Color(0xFFE02C45),
+              shape: const CircleBorder(
+                side: BorderSide(
+                  color: Color(0xFFE02C45),
+                ),
               ),
-            ),
-            child: const Icon(
-              Icons.shopping_bag_outlined,
-              color: Colors.white,
-              size: 18,
+              child: const Icon(
+                Icons.shopping_bag_outlined,
+                color: Colors.white,
+                size: 18,
+              ),
             ),
           ),
         ),

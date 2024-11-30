@@ -157,7 +157,9 @@ class _SelectYourPlaceState extends State<SelectYourPlace> with WidgetsBindingOb
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) {
+                                        final currentTime = DateTime.now().millisecondsSinceEpoch;
                                         prefs.setString('code', code);
+                                        prefs.setInt('timestamp', currentTime);
                                         return const MainLayout();
                                       },
                                     ),
@@ -301,6 +303,8 @@ class _SelectYourPlaceState extends State<SelectYourPlace> with WidgetsBindingOb
                 //                       MaterialPageRoute(
                 //                         builder: (context) {
                 //                           prefs.setString('code', value);
+                //                           final currentTime = DateTime.now().millisecondsSinceEpoch;
+                //                           prefs.setInt('timestamp', currentTime);
                 //                           return const MainLayout();
                 //                         },
                 //                       ),
@@ -312,6 +316,8 @@ class _SelectYourPlaceState extends State<SelectYourPlace> with WidgetsBindingOb
                 //                       MaterialPageRoute(
                 //                         builder: (context) {
                 //                           prefs.setString('code', value);
+                //                           final currentTime = DateTime.now().millisecondsSinceEpoch;
+                //                           prefs.setInt('timestamp', currentTime);
                 //                           return const MainLayout();
                 //                         },
                 //                       ),

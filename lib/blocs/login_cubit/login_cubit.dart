@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:just_order/models/enums/user_type.dart';
 import 'package:just_order/models/user_model.dart';
 import 'package:just_order/repository/auth_repository/login_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -62,7 +63,8 @@ class LoginCubit extends Cubit<LoginState> {
       }
 
 
-      final String email = googleUser.email;
+      // Retrieve user details from Google account
+      final String email = googleUser.email; // Email address
       final QuerySnapshot result = await FirebaseFirestore.instance
           .collection('users')
           .where('email', isEqualTo: email)
@@ -75,7 +77,27 @@ class LoginCubit extends Cubit<LoginState> {
         prefs.setString('user', jsonEncode(user?.toJson()));
         emit(LoginSuccess(user!));
       } else {
-        emit(LoginFailure("You don't have an account yet, please sign up"));
+        // User not found, sign up the user (create a new Firestore document)
+
+        final String googleId = googleUser.id; // Unique ID from Google
+        final String name = googleUser.displayName ?? "No Name Provided"; // Name
+
+        final user = User(
+          userId: googleId,
+          firstName: name,
+          lastName: '',
+          email: email,
+          password: 'GOOGLE',
+          phoneNumber: '--',
+          userType: UserType.customer,
+          emailVerified: true,
+          phoneNumberVerified: true,
+          createdAt: Timestamp.now(),
+        );
+
+        await FirebaseFirestore.instance.collection('users').add(user.toJson());
+        await user.saveUserToPreferences(user);
+        emit(LoginSuccess(user));
       }
     } catch (e) {
       emit(LoginFailure("An error occurred: ${e.toString()}"));

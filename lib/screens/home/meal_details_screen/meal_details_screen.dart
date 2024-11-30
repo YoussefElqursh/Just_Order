@@ -27,6 +27,7 @@ class MealDetailsScreen extends StatefulWidget {
 }
 
 class _MealDetailsScreenState extends State<MealDetailsScreen> {
+  Restaurant? restaurant;
   int counter = 1;
   String? selectedSize;
   Map<String, double> selectedExtras = {};
@@ -90,6 +91,13 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     final Item item = widget.item;
+    final cartProvider = Provider.of<CartProvider>(context);
+    final filteredItems = restaurant != null
+        ? cartProvider.items
+        .where((item) =>
+        item.cartItemId.endsWith('_${restaurant!.restaurantId}'))
+        .toList()
+        : cartProvider.items;
     return Scaffold(
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -586,20 +594,28 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          navigateTo(context, 'MyCartScreenRoute');
-        },
-        backgroundColor: const Color(0xFFE02C45),
-        shape: const CircleBorder(
-          side: BorderSide(
-            color: Color(0xFFE02C45),
+      floatingActionButton: Badge(
+        label: Text('${filteredItems.length}'),
+        alignment: AlignmentDirectional.topStart,
+        backgroundColor: Colors.white,
+        textColor: const Color(0xFFE02C45),
+        isLabelVisible: true,
+        smallSize: 12,
+        child: FloatingActionButton(
+          onPressed: () {
+            navigateTo(context, 'MyCartScreenRoute');
+          },
+          backgroundColor: const Color(0xFFE02C45),
+          shape: const CircleBorder(
+            side: BorderSide(
+              color: Color(0xFFE02C45),
+            ),
           ),
-        ),
-        child: const Icon(
-          Icons.shopping_bag_outlined,
-          color: Colors.white,
-          size: 18,
+          child: const Icon(
+            Icons.shopping_bag_outlined,
+            color: Colors.white,
+            size: 18,
+          ),
         ),
       ),
     );

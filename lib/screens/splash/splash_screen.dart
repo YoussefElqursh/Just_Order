@@ -1,10 +1,11 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:just_order/models/user_model.dart';
 import 'package:just_order/screens/QR/select_your_place_screen.dart';
+import 'package:just_order/screens/home/main_home_screen/home_screen.dart';
 import 'package:just_order/screens/login/login_screen.dart';
 import 'package:just_order/shared/function/functions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -64,6 +65,8 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _navigateBasedOnUser() async {
     final prefs = await SharedPreferences.getInstance();
     final userString = prefs.getString('user');
+    final tableCode = prefs.getString('code');
+    final timestamp = prefs.getInt('timestamp');
     FirebaseFirestore firestore = FirebaseFirestore.instance;
 
     if (userString != null) {
@@ -79,7 +82,11 @@ class _SplashScreenState extends State<SplashScreen> {
 
       if (result.docs.isNotEmpty) {
         // ignore: use_build_context_synchronously
-        Navigator.of(context).pushReplacement(SelectYourPlace.route());
+        if (tableCode!.isNotEmpty && timestamp != null) {
+          Navigator.of(context).pushReplacement(HomeScreen.route());
+        } else {
+          Navigator.of(context).pushReplacement(SelectYourPlace.route());
+        }
       } else {
         // ignore: use_build_context_synchronously
         Navigator.of(context).pushReplacement(LoginScreen.route());

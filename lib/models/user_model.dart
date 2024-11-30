@@ -13,7 +13,7 @@ class User {
   UserType userType;
   bool emailVerified;
   bool phoneNumberVerified;
-  DateTime createdAt;
+  Timestamp createdAt;
   DateTime? updatedAt;
 
   User({
@@ -47,7 +47,7 @@ class User {
           .firstWhere((e) => e.toString() == 'UserType.${map['userType']}'),
       emailVerified: map['emailVerified'] as bool,
       phoneNumberVerified: map['phoneNumberVerified'] as bool,
-      createdAt: (map['createdAt'] as Timestamp).toDate(),
+      createdAt: map['createdAt'] as Timestamp,
       updatedAt: map['updatedAt'] == null
           ? null
           : (map['updatedAt'] as Timestamp).toDate(),
@@ -70,7 +70,7 @@ class User {
       'userType': userType.toString().split('.').last,
       'emailVerified': emailVerified,
       'phoneNumberVerified': phoneNumberVerified,
-      'createdAt': createdAt.toIso8601String(),
+      'createdAt': createdAt.toDate().toIso8601String(),
       'updatedAt': updatedAt?.toIso8601String(),
     };
   }
@@ -96,9 +96,7 @@ class User {
           .firstWhere((e) => e.toString() == 'UserType.${json['userType']}'),
       emailVerified: json['emailVerified'],
       phoneNumberVerified: json['phoneNumberVerified'],
-      createdAt: json['createdAt'] is Timestamp
-          ? (json['createdAt'] as Timestamp).toDate()
-          : DateTime.parse(json['createdAt']),
+      createdAt: Timestamp.fromDate(DateTime.parse(json['createdAt'])),
       updatedAt: json['updatedAt'] != null
           ? json['updatedAt'] is Timestamp
               ? (json['updatedAt'] as Timestamp).toDate()
