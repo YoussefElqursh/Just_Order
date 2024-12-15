@@ -55,6 +55,7 @@ class MyApp extends StatelessWidget {
                 color: Colors.white,
                 foregroundColor: Colors.white,
                 surfaceTintColor: Colors.white,
+                elevation: 0.5
               ),
               scaffoldBackgroundColor: Colors.white,
               colorScheme: ColorScheme.fromSeed(
