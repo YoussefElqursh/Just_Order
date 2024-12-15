@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:just_order/layouts/main_layout.dart';
 import 'package:just_order/models/user_model.dart';
 import 'package:just_order/screens/QR/select_your_place_screen.dart';
-import 'package:just_order/screens/home/main_home_screen/home_screen.dart';
 import 'package:just_order/screens/login/login_screen.dart';
 import 'package:just_order/shared/function/functions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -83,7 +83,7 @@ class _SplashScreenState extends State<SplashScreen> {
       if (result.docs.isNotEmpty) {
         // ignore: use_build_context_synchronously
         if (tableCode!.isNotEmpty && timestamp != null) {
-          Navigator.of(context).pushReplacement(HomeScreen.route());
+          Navigator.of(context).pushReplacement(MainLayout.route());
         } else {
           Navigator.of(context).pushReplacement(SelectYourPlace.route());
         }
