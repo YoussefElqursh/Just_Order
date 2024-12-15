@@ -12,7 +12,7 @@ platform :android do
     android_artifact_type: "APK",
     android_artifact_path: "../build/app/outputs/flutter-apk/app-release.apk",
     upload_timeout: 1600,
-    release_notes: "Link fastlane and distribute app on firebase_app_distribution"
+    release_notes: "release 1.0.1 for testing"
   )
   end
 end
