@@ -92,7 +92,7 @@ class LoginCubit extends Cubit<LoginState> {
           userType: UserType.customer,
           emailVerified: true,
           phoneNumberVerified: true,
-          createdAt: Timestamp.now(),
+          createdAt: Timestamp.now().toDate(),
         );
 
         await FirebaseFirestore.instance.collection('users').add(user.toJson());
