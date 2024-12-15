@@ -52,7 +52,7 @@ Widget accountFunctionWidget({
           maxLines: 1,
         ),
         const Spacer(),
-        isText ? const Text('1.0.0') : const Icon(
+        isText ? const Text('1.0.2') : const Icon(
           Icons.arrow_forward_ios,
           color: Colors.black,
           size: 18,
