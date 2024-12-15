@@ -72,6 +72,7 @@ class _OrderScreenState extends State<OrderScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
+        shadowColor: Colors.grey,
         title: const Text(
           'Orders',
           style: TextStyle(

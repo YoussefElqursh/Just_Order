@@ -44,8 +44,6 @@ class _PayMethodScreenState extends State<PayMethodScreen> {
   String? cardKind;
   bool clicked1 = false;
   bool clicked2 = false;
-  bool clicked3 = false;
-  bool clicked4 = false;
   List<String> savedCards = [];
 
   @override
@@ -271,192 +269,192 @@ class _PayMethodScreenState extends State<PayMethodScreen> {
                           ),
                         ],
                       ),
-                      SizedBox(
-                        width: MediaQuery.sizeOf(context).width,
-                        child: clicked2
-                            ? Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10.0, vertical: 20.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        for (var card in savedCards)
-                                          Container(
-                                            width: MediaQuery.sizeOf(context)
-                                                .width,
-                                            height: 65,
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 12.0),
-                                            clipBehavior: Clip.antiAlias,
-                                            decoration: ShapeDecoration(
-                                              color: Colors.white,
-                                              shape: RoundedRectangleBorder(
-                                                side: BorderSide(
-                                                  width: 1,
-                                                  strokeAlign: BorderSide
-                                                      .strokeAlignCenter,
-                                                  color: clicked3
-                                                      ? const Color(0xFFE02C45)
-                                                      : const Color(0x4CAFAFAF),
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(6),
-                                              ),
-                                            ),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                Container(
-                                                  width: 34,
-                                                  height: 34,
-                                                  clipBehavior: Clip.antiAlias,
-                                                  decoration: ShapeDecoration(
-                                                    color:
-                                                        const Color(0x19548229),
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                    ),
-                                                  ),
-                                                  child: Center(
-                                                    child: setPhoto(
-                                                      kind: 1,
-                                                      path:
-                                                          'assets/images/Visa.svg',
-                                                      width: 20.0,
-                                                      height: 20.0,
-                                                    ),
-                                                  ),
-                                                ),
-                                                const SizedBox(width: 12.0),
-                                                Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    const SizedBox(height: 5),
-                                                    customRadioButtonWidget(
-                                                      context: context,
-                                                      width: MediaQuery.sizeOf(
-                                                                  context)
-                                                              .width -
-                                                          156,
-                                                      hasDivider: false,
-                                                      label: card,
-                                                      value: card,
-                                                      groupName: cardKind,
-                                                      onChanged: (value) {
-                                                        setState(() {
-                                                          cardKind = value!;
-                                                          clicked2 = true;
-                                                          clicked3 = true;
-                                                          clicked4 = false;
-                                                        });
-                                                      },
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        const SizedBox(height: 15),
-                                        Container(
-                                          width:
-                                              MediaQuery.sizeOf(context).width,
-                                          height: 65,
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 12.0),
-                                          clipBehavior: Clip.antiAlias,
-                                          decoration: ShapeDecoration(
-                                            color: Colors.white,
-                                            shape: RoundedRectangleBorder(
-                                              side: const BorderSide(
-                                                width: 1,
-                                                strokeAlign: BorderSide
-                                                    .strokeAlignCenter,
-                                                color: Color(0x4CAFAFAF),
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(6),
-                                            ),
-                                          ),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              Container(
-                                                width: 34,
-                                                height: 34,
-                                                clipBehavior: Clip.antiAlias,
-                                                decoration:
-                                                    const ShapeDecoration(
-                                                  color: Color(0xFFE02C45),
-                                                  shape: CircleBorder(),
-                                                ),
-                                                child: IconButton(
-                                                  onPressed: () {
-                                                    navigateTo(context,
-                                                        'EnterCardDataScreenRoute');
-                                                  },
-                                                  icon: const Icon(
-                                                    Icons.add,
-                                                    color: Colors.white,
-                                                    size: 18,
-                                                  ),
-                                                  style: const ButtonStyle(
-                                                    shape:
-                                                        WidgetStatePropertyAll(
-                                                      CircleBorder(),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              const SizedBox(width: 28.0),
-                                              const Text(
-                                                'Add Card',
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 10,
-                                                  fontFamily: 'Inter',
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 1,
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              )
-                            : null,
-                      ),
+                      // SizedBox(
+                      //   width: MediaQuery.sizeOf(context).width,
+                      //   child: clicked2
+                      //       ? Padding(
+                      //           padding: const EdgeInsets.symmetric(
+                      //               horizontal: 10.0, vertical: 20.0),
+                      //           child: Column(
+                      //             mainAxisAlignment: MainAxisAlignment.start,
+                      //             crossAxisAlignment: CrossAxisAlignment.center,
+                      //             children: [
+                      //               Column(
+                      //                 mainAxisAlignment:
+                      //                     MainAxisAlignment.center,
+                      //                 crossAxisAlignment:
+                      //                     CrossAxisAlignment.center,
+                      //                 children: [
+                      //                   for (var card in savedCards)
+                      //                     Container(
+                      //                       width: MediaQuery.sizeOf(context)
+                      //                           .width,
+                      //                       height: 65,
+                      //                       padding: const EdgeInsets.symmetric(
+                      //                           horizontal: 12.0),
+                      //                       clipBehavior: Clip.antiAlias,
+                      //                       decoration: ShapeDecoration(
+                      //                         color: Colors.white,
+                      //                         shape: RoundedRectangleBorder(
+                      //                           side: BorderSide(
+                      //                             width: 1,
+                      //                             strokeAlign: BorderSide
+                      //                                 .strokeAlignCenter,
+                      //                             color: clicked3
+                      //                                 ? const Color(0xFFE02C45)
+                      //                                 : const Color(0x4CAFAFAF),
+                      //                           ),
+                      //                           borderRadius:
+                      //                               BorderRadius.circular(6),
+                      //                         ),
+                      //                       ),
+                      //                       child: Row(
+                      //                         mainAxisSize: MainAxisSize.min,
+                      //                         mainAxisAlignment:
+                      //                             MainAxisAlignment.center,
+                      //                         crossAxisAlignment:
+                      //                             CrossAxisAlignment.center,
+                      //                         children: [
+                      //                           Container(
+                      //                             width: 34,
+                      //                             height: 34,
+                      //                             clipBehavior: Clip.antiAlias,
+                      //                             decoration: ShapeDecoration(
+                      //                               color:
+                      //                                   const Color(0x19548229),
+                      //                               shape:
+                      //                                   RoundedRectangleBorder(
+                      //                                 borderRadius:
+                      //                                     BorderRadius.circular(
+                      //                                         8),
+                      //                               ),
+                      //                             ),
+                      //                             child: Center(
+                      //                               child: setPhoto(
+                      //                                 kind: 1,
+                      //                                 path:
+                      //                                     'assets/images/Visa.svg',
+                      //                                 width: 20.0,
+                      //                                 height: 20.0,
+                      //                               ),
+                      //                             ),
+                      //                           ),
+                      //                           const SizedBox(width: 12.0),
+                      //                           Column(
+                      //                             mainAxisAlignment:
+                      //                                 MainAxisAlignment.center,
+                      //                             crossAxisAlignment:
+                      //                                 CrossAxisAlignment.center,
+                      //                             children: [
+                      //                               const SizedBox(height: 5),
+                      //                               customRadioButtonWidget(
+                      //                                 context: context,
+                      //                                 width: MediaQuery.sizeOf(
+                      //                                             context)
+                      //                                         .width -
+                      //                                     156,
+                      //                                 hasDivider: false,
+                      //                                 label: card,
+                      //                                 value: card,
+                      //                                 groupName: cardKind,
+                      //                                 onChanged: (value) {
+                      //                                   setState(() {
+                      //                                     cardKind = value!;
+                      //                                     clicked2 = true;
+                      //                                     clicked3 = true;
+                      //                                     clicked4 = false;
+                      //                                   });
+                      //                                 },
+                      //                               ),
+                      //                             ],
+                      //                           ),
+                      //                         ],
+                      //                       ),
+                      //                     ),
+                      //                   const SizedBox(height: 15),
+                      //                   Container(
+                      //                     width:
+                      //                         MediaQuery.sizeOf(context).width,
+                      //                     height: 65,
+                      //                     padding: const EdgeInsets.symmetric(
+                      //                         horizontal: 12.0),
+                      //                     clipBehavior: Clip.antiAlias,
+                      //                     decoration: ShapeDecoration(
+                      //                       color: Colors.white,
+                      //                       shape: RoundedRectangleBorder(
+                      //                         side: const BorderSide(
+                      //                           width: 1,
+                      //                           strokeAlign: BorderSide
+                      //                               .strokeAlignCenter,
+                      //                           color: Color(0x4CAFAFAF),
+                      //                         ),
+                      //                         borderRadius:
+                      //                             BorderRadius.circular(6),
+                      //                       ),
+                      //                     ),
+                      //                     child: Row(
+                      //                       mainAxisSize: MainAxisSize.min,
+                      //                       mainAxisAlignment:
+                      //                           MainAxisAlignment.start,
+                      //                       crossAxisAlignment:
+                      //                           CrossAxisAlignment.center,
+                      //                       children: [
+                      //                         Container(
+                      //                           width: 34,
+                      //                           height: 34,
+                      //                           clipBehavior: Clip.antiAlias,
+                      //                           decoration:
+                      //                               const ShapeDecoration(
+                      //                             color: Color(0xFFE02C45),
+                      //                             shape: CircleBorder(),
+                      //                           ),
+                      //                           child: IconButton(
+                      //                             onPressed: () {
+                      //                               navigateTo(context,
+                      //                                   'EnterCardDataScreenRoute');
+                      //                             },
+                      //                             icon: const Icon(
+                      //                               Icons.add,
+                      //                               color: Colors.white,
+                      //                               size: 18,
+                      //                             ),
+                      //                             style: const ButtonStyle(
+                      //                               shape:
+                      //                                   WidgetStatePropertyAll(
+                      //                                 CircleBorder(),
+                      //                               ),
+                      //                             ),
+                      //                           ),
+                      //                         ),
+                      //                         const SizedBox(width: 28.0),
+                      //                         const Text(
+                      //                           'Add Card',
+                      //                           style: TextStyle(
+                      //                             color: Colors.black,
+                      //                             fontSize: 10,
+                      //                             fontFamily: 'Inter',
+                      //                             fontWeight: FontWeight.w500,
+                      //                           ),
+                      //                           overflow: TextOverflow.ellipsis,
+                      //                           maxLines: 1,
+                      //                         )
+                      //                       ],
+                      //                     ),
+                      //                   ),
+                      //                 ],
+                      //               ),
+                      //             ],
+                      //           ),
+                      //         )
+                      //       : null,
+                      // ),
                     ],
                   ),
                 ),
                 const Spacer(),
                 MaterialButton(
                   onPressed: () {
-                    if (clicked1 || (clicked2 && clicked3) || (clicked2 &&clicked4) == true){
+                    if (clicked1 || clicked2  == true){
                       Navigator.pushNamed(
                         context,
                         'OrderSummaryScreenRoute',
@@ -473,7 +471,7 @@ class _PayMethodScreenState extends State<PayMethodScreen> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(6),
                   ),
-                  color: (clicked1 || (clicked2 && clicked3) || (clicked2 &&clicked4) == true) ? const Color(0xFFE02C45) : Colors.grey,
+                  color: (clicked1 || clicked2  == true) ? const Color(0xFFE02C45) : Colors.grey,
                   child: const Center(
                     child: Text(
                       'Continue',
