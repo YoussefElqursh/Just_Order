@@ -159,9 +159,9 @@ class _SelectYourPlaceState extends State<SelectYourPlace> with WidgetsBindingOb
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) {
-                                          final currentTime = DateTime.now().second;
+                                          final currentDate = DateTime.now().day;
                                           prefs.setString('code', code);
-                                          prefs.setInt('timestamp', currentTime);
+                                          prefs.setInt('timestamp', currentDate);
                                           return const MainLayout();
                                         },
                                       ),
