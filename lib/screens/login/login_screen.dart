@@ -508,7 +508,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           try {
                                             User? user =
                                                 await _loginRepository.login(
-                                              _emailController.text,
+                                              _emailController.text.toLowerCase(),
                                               _passwordController.text,
                                             );
                                             if (user != null) {

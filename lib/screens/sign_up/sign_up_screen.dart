@@ -542,7 +542,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       onPressed: () async {
                                         if(_formKey.currentState!.validate()){
                                           context.read<SignUpCubit>().signUp(
-                                            email: _emailController.text,
+                                            email: _emailController.text.toLowerCase(),
                                             firstName:
                                             _firstNameController.text,
                                             lastName:
