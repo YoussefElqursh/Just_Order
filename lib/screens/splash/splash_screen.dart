@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:just_order/layouts/main_layout.dart';
 import 'package:just_order/models/user_model.dart';
 import 'package:just_order/screens/QR/select_your_place_screen.dart';
@@ -29,12 +31,21 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   bool _dialogShown = false;
+  String _appVersion = '';
 
   @override
   void initState() {
     super.initState();
+    _loadAppVersion();
     Future.delayed(
         const Duration(seconds: 5), () => _checkInternetConnection());
+  }
+
+  Future<void> _loadAppVersion() async {
+    final packageInfo = await PackageInfo.fromPlatform();
+    setState(() {
+      _appVersion = 'Version ${packageInfo.version}';
+    });
   }
 
   Future<void> _checkInternetConnection() async {
@@ -67,6 +78,7 @@ class _SplashScreenState extends State<SplashScreen> {
     final userString = prefs.getString('user');
     final tableCode = prefs.getString('code');
     final timestamp = prefs.getInt('timestamp');
+    final validTime = DateTime.now().add(Duration(seconds: 86400)).second;
     FirebaseFirestore firestore = FirebaseFirestore.instance;
 
     if (userString != null) {
@@ -82,7 +94,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
       if (result.docs.isNotEmpty) {
         // ignore: use_build_context_synchronously
-        if (tableCode!.isNotEmpty && timestamp != null) {
+        if (tableCode!.isNotEmpty && timestamp != null && timestamp < validTime) {
           Navigator.of(context).pushReplacement(MainLayout.route());
         } else {
           Navigator.of(context).pushReplacement(SelectYourPlace.route());
@@ -131,6 +143,8 @@ class _SplashScreenState extends State<SplashScreen> {
             const CircularProgressIndicator(
               color: Color(0xFFe02c45),
             ),
+            SizedBox(height: MediaQuery.sizeOf(context).height * 0.04),
+            Text(_appVersion, style: TextStyle(fontSize: 12.0.sp),)
           ],
         ),
       ),
