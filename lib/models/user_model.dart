@@ -47,10 +47,8 @@ class User {
           .firstWhere((e) => e.toString() == 'UserType.${map['userType']}'),
       emailVerified: map['emailVerified'] as bool,
       phoneNumberVerified: map['phoneNumberVerified'] as bool,
-      createdAt: (map['createdAt'] as Timestamp).toDate(),
-      updatedAt: map['updatedAt'] == null
-          ? null
-          : (map['updatedAt'] as Timestamp).toDate(),
+      createdAt: map['createdAt'] != null ? _parseDate(map['createdAt']): DateTime.now(),
+      updatedAt: map['updatedAt'] != null ? _parseDate(map['updatedAt']): DateTime.now(),
     ));
   }
 
@@ -106,4 +104,16 @@ class User {
           : null,
     );
   }
+  
+  static DateTime _parseDate(Object timeStamp){
+    if(timeStamp.runtimeType == DateTime) return timeStamp as DateTime;
+    else if(timeStamp.runtimeType == String){
+      return DateTime.parse(timeStamp as String);
+    }else{
+      // We can throw Exception here but for now we will add current timestamp
+      return Timestamp.now().toDate();
+    }
+  }
+  
+  
 }

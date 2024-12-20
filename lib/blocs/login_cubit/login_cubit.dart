@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -87,7 +88,7 @@ class LoginCubit extends Cubit<LoginState> {
           firstName: name,
           lastName: '',
           email: email,
-          password: 'GOOGLE',
+          password: digestPassword(googleAuth.accessToken.toString()),
           phoneNumber: '--',
           userType: UserType.customer,
           emailVerified: true,
@@ -102,5 +103,12 @@ class LoginCubit extends Cubit<LoginState> {
     } catch (e) {
       emit(LoginFailure("An error occurred: ${e.toString()}"));
     }
+  }
+
+  String digestPassword(String password){
+    final bytes = utf8.encode(password);
+    final digest = sha256.convert(bytes);
+    final hashedPassword = digest.toString();
+    return hashedPassword;
   }
 }

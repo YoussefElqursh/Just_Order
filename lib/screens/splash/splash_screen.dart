@@ -49,7 +49,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _checkInternetConnection() async {
-    bool isConnected = await InternetConnectionChecker().hasConnection;
+    bool isConnected = await InternetConnectionChecker.instance.hasConnection;
     if (isConnected) {
       _navigateBasedOnUser();
     } else {
@@ -94,7 +94,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
       if (result.docs.isNotEmpty) {
         // ignore: use_build_context_synchronously
-        if (tableCode!.isNotEmpty && timestamp != null && timestamp < validTime) {
+        if (tableCode != null && tableCode.isNotEmpty && timestamp != null && timestamp < validTime) {
           Navigator.of(context).pushReplacement(MainLayout.route());
         } else {
           Navigator.of(context).pushReplacement(SelectYourPlace.route());
