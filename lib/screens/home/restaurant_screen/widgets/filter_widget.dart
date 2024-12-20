@@ -4,8 +4,9 @@ import 'package:just_order/screens/home/restaurant_screen/widgets/meal_widget.da
 
 class FilterWidget extends StatefulWidget {
   final List<Item> items;
+  final String filters;
 
-  const FilterWidget({required this.items, super.key});
+  const FilterWidget({required this.items, super.key, required this.filters});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -16,6 +17,7 @@ class _FilterWidgetState extends State<FilterWidget> {
   @override
   Widget build(BuildContext context) {
     final List<Item> items = widget.items;
+    final String filters = widget.filters;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Column(
@@ -23,7 +25,7 @@ class _FilterWidgetState extends State<FilterWidget> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(
-            widget.items.first.name,
+            filters,
             style: TextStyle(
               color: Colors.black,
               fontSize: 14,

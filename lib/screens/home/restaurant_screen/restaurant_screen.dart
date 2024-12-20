@@ -32,6 +32,16 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
   final UserRepository userRepository = UserRepository();
   bool isLoading = true;
 
+  List<String> filter = [
+    'Trending',
+    'Discounts',
+    'Up to 40% off',
+    'Pizza',
+    'Crepes',
+    'Pies',
+    'Beverages',
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -330,104 +340,105 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                           ),
                         ),
                         const SizedBox(height: 25.0),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: SizedBox(
-                            height: 34.0,
-                            width: MediaQuery.sizeOf(context).width,
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              clipBehavior: Clip.none,
-                              physics: const BouncingScrollPhysics(),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    width: 34,
-                                    height: 34,
-                                    clipBehavior: Clip.antiAlias,
-                                    decoration: ShapeDecoration(
-                                      color: const Color(0xFFF4F4F4),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(6)),
-                                    ),
-                                    child: const Icon(
-                                      Icons.list,
-                                      color: Color(0xFF898888),
-                                      size: 15,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 16),
-                                  Transform(
-                                    transform: Matrix4.identity()
-                                      ..translate(0.0, 0.0)
-                                      ..rotateZ(1.57),
-                                    child: Container(
-                                      width: 34,
-                                      height: 1,
-                                      decoration: const ShapeDecoration(
-                                        shape: RoundedRectangleBorder(
-                                          side: BorderSide(
-                                            width: 1,
-                                            strokeAlign:
-                                                BorderSide.strokeAlignCenter,
-                                            color: Color(0x7FAFAFAF),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  const TabBar(
-                                    physics: BouncingScrollPhysics(),
-                                    overlayColor: WidgetStatePropertyAll(
-                                        Colors.transparent),
-                                    isScrollable: true,
-                                    dividerColor: Colors.transparent,
-                                    tabAlignment: TabAlignment.start,
-                                    unselectedLabelColor: Color(0xFF898888),
-                                    unselectedLabelStyle: TextStyle(
-                                      color: Color(0xFF898888),
-                                      fontSize: 12,
-                                      fontFamily: 'Inter',
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                    labelColor: Color(0xFFE02C45),
-                                    labelStyle: TextStyle(
-                                      color: Color(0xFFE02C45),
-                                      fontSize: 12,
-                                      fontFamily: 'Inter',
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                    indicatorColor: Color(0xFFE02C45),
-                                    tabs: [
-                                      Tab(text: "Trending"),
-                                      Tab(text: "Discounts"),
-                                      Tab(text: "Up to 40% off"),
-                                      Tab(text: "Pizza"),
-                                      Tab(text: "Crepes"),
-                                      Tab(text: "Pies"),
-                                      Tab(text: "Beverages"),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(left: 20),
+                        //   child: SizedBox(
+                        //     height: 34.0,
+                        //     width: MediaQuery.sizeOf(context).width,
+                        //     child: SingleChildScrollView(
+                        //       scrollDirection: Axis.horizontal,
+                        //       clipBehavior: Clip.none,
+                        //       physics: const BouncingScrollPhysics(),
+                        //       child: Row(
+                        //         crossAxisAlignment: CrossAxisAlignment.start,
+                        //         mainAxisAlignment: MainAxisAlignment.start,
+                        //         children: [
+                        //           Container(
+                        //             width: 34,
+                        //             height: 34,
+                        //             clipBehavior: Clip.antiAlias,
+                        //             decoration: ShapeDecoration(
+                        //               color: const Color(0xFFF4F4F4),
+                        //               shape: RoundedRectangleBorder(
+                        //                   borderRadius:
+                        //                       BorderRadius.circular(6)),
+                        //             ),
+                        //             child: const Icon(
+                        //               Icons.list,
+                        //               color: Color(0xFF898888),
+                        //               size: 15,
+                        //             ),
+                        //           ),
+                        //           const SizedBox(width: 16),
+                        //           Transform(
+                        //             transform: Matrix4.identity()
+                        //               ..translate(0.0, 0.0)
+                        //               ..rotateZ(1.57),
+                        //             child: Container(
+                        //               width: 34,
+                        //               height: 1,
+                        //               decoration: const ShapeDecoration(
+                        //                 shape: RoundedRectangleBorder(
+                        //                   side: BorderSide(
+                        //                     width: 1,
+                        //                     strokeAlign:
+                        //                         BorderSide.strokeAlignCenter,
+                        //                     color: Color(0x7FAFAFAF),
+                        //                   ),
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //           ),
+                        //
+                        //         ],
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
+                        TabBar(
+                          physics: const BouncingScrollPhysics(),
+                          overlayColor: const WidgetStatePropertyAll(
+                              Colors.transparent),
+                          isScrollable: true,
+                          dividerColor: Colors.transparent,
+                          tabAlignment: TabAlignment.start,
+                          unselectedLabelColor: const Color(0xFF898888),
+                          unselectedLabelStyle: const TextStyle(
+                            color: Color(0xFF898888),
+                            fontSize: 12,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w400,
                           ),
+                          labelColor: const Color(0xFFE02C45),
+                          labelStyle: const TextStyle(
+                            color: Color(0xFFE02C45),
+                            fontSize: 12,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w600,
+                          ),
+                          indicatorColor: const Color(0xFFE02C45),
+                          tabs: [
+                            Tab(text: filter[0]),
+                            Tab(text: filter[1]),
+                            Tab(text: filter[2]),
+                            Tab(text: filter[3]),
+                            Tab(text: filter[4]),
+                            Tab(text: filter[5]),
+                            Tab(text: filter[6]),
+                          ],
                         ),
                         SafeArea(
                           child: SizedBox(
                             height: MediaQuery.of(context).size.height,
                             child: TabBarView(
                               children: [
-                                FilterWidget(items: items),
-                                FilterWidget(items: items),
-                                FilterWidget(items: items),
-                                FilterWidget(items: items),
-                                FilterWidget(items: items),
-                                FilterWidget(items: items),
-                                FilterWidget(items: items),
+                                FilterWidget(items: items, filters: filter[0],),
+                                FilterWidget(items: items, filters: filter[1],),
+                                FilterWidget(items: items, filters: filter[2],),
+                                FilterWidget(items: items, filters: filter[3],),
+                                FilterWidget(items: items, filters: filter[4],),
+                                FilterWidget(items: items, filters: filter[5],),
+                                FilterWidget(items: items, filters: filter[6],),
                               ],
                             ),
                           ),
