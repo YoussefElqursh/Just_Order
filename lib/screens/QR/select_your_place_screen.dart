@@ -80,259 +80,262 @@ class _SelectYourPlaceState extends State<SelectYourPlace> with WidgetsBindingOb
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        centerTitle: true,
-        title: const Text(
-          'Scan Order',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 14,
-            fontFamily: 'Inter',
-            fontWeight: FontWeight.w600,
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          centerTitle: true,
+          title: const Text(
+            'Scan Order',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 14,
+              fontFamily: 'Inter',
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ),
-      ),
-      body: Container(
-        width: MediaQuery.sizeOf(context).width,
-        alignment: Alignment.topCenter,
-        padding: const EdgeInsets.all(20),
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          physics: const BouncingScrollPhysics(),
-          child: SizedBox(
-           //height: MediaQuery.sizeOf(context).height * 0.57,
-            width: MediaQuery.sizeOf(context).width,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                  width: MediaQuery.sizeOf(context).width,
-                  height: MediaQuery.sizeOf(context).height * 0.85,
-                  padding: const EdgeInsets.all(20),
-                  clipBehavior: Clip.antiAlias,
-                  decoration: ShapeDecoration(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      side: const BorderSide(
-                        width: 1,
-                        strokeAlign: BorderSide.strokeAlignCenter,
-                        color: Color(0x4CAFAFAF),
+        body: Container(
+          width: MediaQuery.sizeOf(context).width,
+          alignment: Alignment.topCenter,
+          padding: const EdgeInsets.all(20),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            physics: const BouncingScrollPhysics(),
+            child: SizedBox(
+             //height: MediaQuery.sizeOf(context).height * 0.57,
+              width: MediaQuery.sizeOf(context).width,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    width: MediaQuery.sizeOf(context).width,
+                    height: MediaQuery.sizeOf(context).height * 0.85,
+                    padding: const EdgeInsets.all(20),
+                    clipBehavior: Clip.antiAlias,
+                    decoration: ShapeDecoration(
+                      color: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        side: const BorderSide(
+                          width: 1,
+                          strokeAlign: BorderSide.strokeAlignCenter,
+                          color: Color(0x4CAFAFAF),
+                        ),
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      borderRadius: BorderRadius.circular(10),
                     ),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Scan QR Code of the table',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w600,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Scan QR Code of the table',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w600,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
                         ),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                      ),
-                      SizedBox(
-                          height: _hasPermission ? null : MediaQuery.sizeOf(context).height * 0.0325),
-                      _hasPermission
-                          ? Expanded(
-                        child: Stack(
-                          children: [
-                            MobileScanner(
-                              controller: cameraController,
-                              allowDuplicates: true,
-                              onDetect: (barcode, args) async {
-                                if (!isScanCompleted) {
-                                  isScanCompleted = true;
-                                  String code = barcode.rawValue ?? "---";
-                                  Navigator.pushReplacement(
-                                    // ignore: use_build_context_synchronously
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) {
-                                        final currentTime = DateTime.now().millisecondsSinceEpoch;
-                                        prefs.setString('code', code);
-                                        prefs.setInt('timestamp', currentTime);
-                                        return const MainLayout();
-                                      },
-                                    ),
-                                  );
-                                }
-                              },
-                            ),
-                            QRScannerOverlay(
-                              overlayColor: Colors.white,
-                              borderColor: Colors.black,
-                              borderRadius: 10,
-                              borderStrokeWidth: 3,
-                              scanAreaWidth: 190,
-                              scanAreaHeight: 190,
-                            ),
-                          ],
-                        ),
-                      )
-                          : Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(height: MediaQuery.sizeOf(context).height * 0.3),
-                            Text(
-                              "Camera permission is required to scan QR codes. You can't continue without this permission",
-                              textAlign: TextAlign.center,
-                            ),
-                            SizedBox(height: 25),
-                            MaterialButton(
-                              onPressed: _openAppSettings,
-                              height: 42,
-                              minWidth:
-                              MediaQuery.sizeOf(context).width,
-                              clipBehavior: Clip.antiAlias,
-                              color: const Color(0xFFE02C45),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(6),
+                        SizedBox(
+                            height: _hasPermission ? null : MediaQuery.sizeOf(context).height * 0.0325),
+                        _hasPermission
+                            ? Expanded(
+                          child: Stack(
+                            children: [
+                              MobileScanner(
+                                controller: cameraController,
+                                allowDuplicates: true,
+                                onDetect: (barcode, args) async {
+                                  if (!isScanCompleted) {
+                                    isScanCompleted = true;
+                                    String code = barcode.rawValue ?? "---";
+                                    Navigator.pushReplacement(
+                                      // ignore: use_build_context_synchronously
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) {
+                                          final currentTime = DateTime.now().second;
+                                          prefs.setString('code', code);
+                                          prefs.setInt('timestamp', currentTime);
+                                          return const MainLayout();
+                                        },
+                                      ),
+                                    );
+                                  }
+                                },
                               ),
-                              child: const Center(
-                                child: Text(
-                                  'Open Settings',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 14,
-                                    fontFamily: 'Inter',
-                                    fontWeight: FontWeight.w600,
+                              QRScannerOverlay(
+                                overlayColor: Colors.white,
+                                borderColor: Colors.black,
+                                borderRadius: 10,
+                                borderStrokeWidth: 3,
+                                scanAreaWidth: 190,
+                                scanAreaHeight: 190,
+                              ),
+                            ],
+                          ),
+                        )
+                            : Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(height: MediaQuery.sizeOf(context).height * 0.3),
+                              Text(
+                                "Camera permission is required to scan QR codes. You can't continue without this permission",
+                                textAlign: TextAlign.center,
+                              ),
+                              SizedBox(height: 25),
+                              MaterialButton(
+                                onPressed: _openAppSettings,
+                                height: 42,
+                                minWidth:
+                                MediaQuery.sizeOf(context).width,
+                                clipBehavior: Clip.antiAlias,
+                                color: const Color(0xFFE02C45),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                                child: const Center(
+                                  child: Text(
+                                    'Open Settings',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                // Expanded(
-                //   child: Container(
-                //     color: Colors.white,
-                //     width: MediaQuery.sizeOf(context).width,
-                //     child: Column(
-                //       crossAxisAlignment: CrossAxisAlignment.center,
-                //       mainAxisAlignment: MainAxisAlignment.start,
-                //       children: [
-                //         const SizedBox(height: 20),
-                //         const Text(
-                //           'OR',
-                //           textAlign: TextAlign.center,
-                //           style: TextStyle(
-                //             color: Color(0xFFAFAFAF),
-                //             fontSize: 12,
-                //             fontFamily: 'Inter',
-                //             fontWeight: FontWeight.w500,
-                //             height: 0.12,
-                //             letterSpacing: -0.12,
-                //           ),
-                //           overflow: TextOverflow.ellipsis,
-                //           maxLines: 1,
-                //         ),
-                //         const SizedBox(height: 20),
-                //         Container(
-                //           width: MediaQuery.sizeOf(context).width,
-                //           height: 141,
-                //           padding: const EdgeInsets.all(20),
-                //           clipBehavior: Clip.antiAlias,
-                //           decoration: ShapeDecoration(
-                //             color: Colors.white,
-                //             shape: RoundedRectangleBorder(
-                //               side: const BorderSide(
-                //                 width: 1,
-                //                 strokeAlign: BorderSide.strokeAlignCenter,
-                //                 color: Color(0x4CAFAFAF),
-                //               ),
-                //               borderRadius: BorderRadius.circular(10),
-                //             ),
-                //           ),
-                //           child: Column(
-                //             crossAxisAlignment: CrossAxisAlignment.start,
-                //             mainAxisAlignment: MainAxisAlignment.start,
-                //             children: [
-                //               const Text(
-                //                 'Enter Code of the table',
-                //                 style: TextStyle(
-                //                   color: Colors.black,
-                //                   fontSize: 14,
-                //                   fontFamily: 'Inter',
-                //                   fontWeight: FontWeight.w600,
-                //                 ),
-                //                 overflow: TextOverflow.ellipsis,
-                //                 maxLines: 1,
-                //               ),
-                //               const SizedBox(height: 20),
-                //               SizedBox(
-                //                 width: MediaQuery.sizeOf(context).width,
-                //                 child: PinCodeTextField(
-                //                   appContext: context,
-                //                   length: 5,
-                //                   autoFocus: false,
-                //                   cursorColor: Colors.black,
-                //                   keyboardType: TextInputType.number,
-                //                   obscureText: false,
-                //                   animationType: AnimationType.scale,
-                //                   pinTheme: PinTheme(
-                //                     shape: PinCodeFieldShape.box,
-                //                     borderRadius: BorderRadius.circular(6),
-                //                     fieldHeight: 42,
-                //                     fieldWidth: 42,
-                //                     borderWidth: 0.2,
-                //                     activeColor: const Color(0xFFE02C45),
-                //                     inactiveColor: const Color(0x7FAFAFAF),
-                //                     inactiveFillColor: Colors.white,
-                //                     activeFillColor: Colors.white,
-                //                     selectedColor: const Color(0xFFE02C45),
-                //                     selectedFillColor: Colors.white,
-                //                   ),
-                //                   animationDuration:
-                //                       const Duration(milliseconds: 300),
-                //                   onCompleted: (value) {
-                //                     Navigator.pushReplacement(
-                //                       context,
-                //                       MaterialPageRoute(
-                //                         builder: (context) {
-                //                           prefs.setString('code', value);
-                //                           final currentTime = DateTime.now().millisecondsSinceEpoch;
-                //                           prefs.setInt('timestamp', currentTime);
-                //                           return const MainLayout();
-                //                         },
-                //                       ),
-                //                     );
-                //                   },
-                //                   onSubmitted: (value) {
-                //                     Navigator.pushReplacement(
-                //                       context,
-                //                       MaterialPageRoute(
-                //                         builder: (context) {
-                //                           prefs.setString('code', value);
-                //                           final currentTime = DateTime.now().millisecondsSinceEpoch;
-                //                           prefs.setInt('timestamp', currentTime);
-                //                           return const MainLayout();
-                //                         },
-                //                       ),
-                //                     );
-                //                   },
-                //                 ),
-                //               ),
-                //             ],
-                //           ),
-                //         ),
-                //       ],
-                //     ),
-                //   ),
-                // ),
-              ],
+                  // Expanded(
+                  //   child: Container(
+                  //     color: Colors.white,
+                  //     width: MediaQuery.sizeOf(context).width,
+                  //     child: Column(
+                  //       crossAxisAlignment: CrossAxisAlignment.center,
+                  //       mainAxisAlignment: MainAxisAlignment.start,
+                  //       children: [
+                  //         const SizedBox(height: 20),
+                  //         const Text(
+                  //           'OR',
+                  //           textAlign: TextAlign.center,
+                  //           style: TextStyle(
+                  //             color: Color(0xFFAFAFAF),
+                  //             fontSize: 12,
+                  //             fontFamily: 'Inter',
+                  //             fontWeight: FontWeight.w500,
+                  //             height: 0.12,
+                  //             letterSpacing: -0.12,
+                  //           ),
+                  //           overflow: TextOverflow.ellipsis,
+                  //           maxLines: 1,
+                  //         ),
+                  //         const SizedBox(height: 20),
+                  //         Container(
+                  //           width: MediaQuery.sizeOf(context).width,
+                  //           height: 141,
+                  //           padding: const EdgeInsets.all(20),
+                  //           clipBehavior: Clip.antiAlias,
+                  //           decoration: ShapeDecoration(
+                  //             color: Colors.white,
+                  //             shape: RoundedRectangleBorder(
+                  //               side: const BorderSide(
+                  //                 width: 1,
+                  //                 strokeAlign: BorderSide.strokeAlignCenter,
+                  //                 color: Color(0x4CAFAFAF),
+                  //               ),
+                  //               borderRadius: BorderRadius.circular(10),
+                  //             ),
+                  //           ),
+                  //           child: Column(
+                  //             crossAxisAlignment: CrossAxisAlignment.start,
+                  //             mainAxisAlignment: MainAxisAlignment.start,
+                  //             children: [
+                  //               const Text(
+                  //                 'Enter Code of the table',
+                  //                 style: TextStyle(
+                  //                   color: Colors.black,
+                  //                   fontSize: 14,
+                  //                   fontFamily: 'Inter',
+                  //                   fontWeight: FontWeight.w600,
+                  //                 ),
+                  //                 overflow: TextOverflow.ellipsis,
+                  //                 maxLines: 1,
+                  //               ),
+                  //               const SizedBox(height: 20),
+                  //               SizedBox(
+                  //                 width: MediaQuery.sizeOf(context).width,
+                  //                 child: PinCodeTextField(
+                  //                   appContext: context,
+                  //                   length: 5,
+                  //                   autoFocus: false,
+                  //                   cursorColor: Colors.black,
+                  //                   keyboardType: TextInputType.number,
+                  //                   obscureText: false,
+                  //                   animationType: AnimationType.scale,
+                  //                   pinTheme: PinTheme(
+                  //                     shape: PinCodeFieldShape.box,
+                  //                     borderRadius: BorderRadius.circular(6),
+                  //                     fieldHeight: 42,
+                  //                     fieldWidth: 42,
+                  //                     borderWidth: 0.2,
+                  //                     activeColor: const Color(0xFFE02C45),
+                  //                     inactiveColor: const Color(0x7FAFAFAF),
+                  //                     inactiveFillColor: Colors.white,
+                  //                     activeFillColor: Colors.white,
+                  //                     selectedColor: const Color(0xFFE02C45),
+                  //                     selectedFillColor: Colors.white,
+                  //                   ),
+                  //                   animationDuration:
+                  //                       const Duration(milliseconds: 300),
+                  //                   onCompleted: (value) {
+                  //                     Navigator.pushReplacement(
+                  //                       context,
+                  //                       MaterialPageRoute(
+                  //                         builder: (context) {
+                  //                           prefs.setString('code', value);
+                  //                           final currentTime = DateTime.now().millisecondsSinceEpoch;
+                  //                           prefs.setInt('timestamp', currentTime);
+                  //                           return const MainLayout();
+                  //                         },
+                  //                       ),
+                  //                     );
+                  //                   },
+                  //                   onSubmitted: (value) {
+                  //                     Navigator.pushReplacement(
+                  //                       context,
+                  //                       MaterialPageRoute(
+                  //                         builder: (context) {
+                  //                           prefs.setString('code', value);
+                  //                           final currentTime = DateTime.now().millisecondsSinceEpoch;
+                  //                           prefs.setInt('timestamp', currentTime);
+                  //                           return const MainLayout();
+                  //                         },
+                  //                       ),
+                  //                     );
+                  //                   },
+                  //                 ),
+                  //               ),
+                  //             ],
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
+                ],
+              ),
             ),
           ),
         ),
