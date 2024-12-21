@@ -10,6 +10,7 @@ class Order {
   String clubId;
   String restaurantId;
   String orderCode;
+  String orderCodeForRestaurant;
   Status status;
   PaymentType paymentType;
   String invoiceId;
@@ -29,6 +30,7 @@ class Order {
     required this.clubId,
     required this.restaurantId,
     required this.orderCode,
+    required this.orderCodeForRestaurant,
     this.deliveryId,
     required this.status,
     required this.paymentType,
@@ -50,6 +52,7 @@ class Order {
       clubId: data['clubId'],
       restaurantId: data['restaurantId'],
       orderCode: data['orderCode'],
+      orderCodeForRestaurant: data['orderCodeForRestaurant']?? '',
       deliveryId: data['deliveryId'],
       status: Status.values
           // ignore: prefer_interpolation_to_compose_strings
@@ -84,6 +87,7 @@ class Order {
       'clubId': clubId,
       'restaurantId': restaurantId,
       'orderCode': orderCode,
+      'orderCodeForRestaurant': orderCodeForRestaurant,
       'deliveryId': deliveryId,
       'status': status.toString().split('.').last,
       'paymentType': paymentType.toString().split('.').last,
@@ -100,6 +104,11 @@ class Order {
   }
 
   String generateOrderCode() {
+    Random random = Random();
+    int randomNumber = 10000 + random.nextInt(90000);
+    return randomNumber.toString();
+  }
+  String generateOrderCodeForRestaurant() {
     Random random = Random();
     int randomNumber = 10000 + random.nextInt(90000);
     return randomNumber.toString();
@@ -125,5 +134,26 @@ class Order {
     } while (!isUnique);
 
     return orderCode;
+  }
+  Future<String> generateUniqueOrderCodeForRestaurant() async {
+    String orderCodeForRestaurant;
+    bool isUnique = false;
+
+    do {
+      orderCodeForRestaurant = generateOrderCodeForRestaurant();
+
+      QuerySnapshot result = await FirebaseFirestore.instance
+          .collection('orders')
+          .where('status', isEqualTo: 'pending')
+          .where('orderCodeForRestaurant', isEqualTo: orderCodeForRestaurant)
+          .limit(1)
+          .get();
+
+      if (result.docs.isEmpty) {
+        isUnique = true;
+      }
+    } while (!isUnique);
+
+    return orderCodeForRestaurant;
   }
 }

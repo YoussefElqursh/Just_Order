@@ -562,22 +562,29 @@ class _MyCartScreenState extends State<MyCartScreen> {
                         orderTimeOut: restaurant?.orderTimeOut ?? 0,
                         createdAt: DateTime.now(),
                         totalAmount: filteredItems.fold(
-                                0.0,
-                                // ignore: avoid_types_as_parameter_names
-                                (sum, item) => sum + item.totalPrice) +
-                            invoice.totalFees,
+                              0.0,
+                              // ignore: avoid_types_as_parameter_names
+                              (sum, item) => sum + item.totalPrice,
+                            ) + invoice.totalFees,
+                        orderCodeForRestaurant: 'temp',
                       );
                       invoice.orderId = order.orderId;
                       String orderCode = await order.generateUniqueOrderCode();
+                      String orderCodeForRestaurant =
+                          await order.generateOrderCodeForRestaurant();
                       order.orderCode = orderCode;
+                      order.orderCodeForRestaurant = orderCodeForRestaurant;
 
                       // ignore: use_build_context_synchronously
-                      Navigator.pushNamed(context, 'PayMethodScreenRoute',
-                          arguments: {
-                            'order': order,
-                            'cartItems': filteredItems,
-                            'invoice': invoice,
-                          });
+                      Navigator.pushNamed(
+                        context,
+                        'PayMethodScreenRoute',
+                        arguments: {
+                          'order': order,
+                          'cartItems': filteredItems,
+                          'invoice': invoice,
+                        },
+                      );
                     }
                   },
                   height: 42,
