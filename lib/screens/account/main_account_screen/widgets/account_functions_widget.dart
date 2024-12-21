@@ -5,6 +5,7 @@ Widget accountFunctionWidget({
   required IconData icon,
   required String label,
   bool isText = false,
+  String? text,
   required void Function()? onPressed,
 }) {
   return MaterialButton(
@@ -52,7 +53,7 @@ Widget accountFunctionWidget({
           maxLines: 1,
         ),
         const Spacer(),
-        isText ? const Text('1.0.2') : const Icon(
+        isText ? Text(text!) : const Icon(
           Icons.arrow_forward_ios,
           color: Colors.black,
           size: 18,

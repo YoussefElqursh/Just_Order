@@ -7,6 +7,7 @@ import 'package:just_order/screens/account/app_settings/app_settings_screen.dart
 import 'package:just_order/screens/account/history_screen/history_screen.dart';
 import 'package:just_order/screens/account/main_account_screen/widgets/account_functions_widget.dart';
 import 'package:just_order/shared/function/functions.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AccountScreen extends StatefulWidget {
@@ -19,11 +20,18 @@ class AccountScreen extends StatefulWidget {
 class _AccountScreenState extends State<AccountScreen> {
   User? user;
   LoginRepository loginRepository = LoginRepository();
-
+  String _appVersion = '';
   @override
   void initState() {
     super.initState();
+    _loadAppVersion();
     _UserFromPreferences();
+  }
+  Future<void> _loadAppVersion() async {
+    final packageInfo = await PackageInfo.fromPlatform();
+    setState(() {
+      _appVersion = 'Version ${packageInfo.version}';
+    });
   }
 
   // ignore: non_constant_identifier_names
@@ -178,6 +186,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   icon: Icons.info_outline_rounded,
                   label: 'About App',
                   isText: true,
+                   text: _appVersion,
                   onPressed: () {},
                 ),
                 accountFunctionWidget(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:just_order/screens/account/app_settings/widget/settings_app_items/settings_app_items.dart';
 import 'package:just_order/screens/account/app_settings/widget/switch_btn_widget/switch_btn_widget.dart';
 import 'package:just_order/shared/function/functions.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class AppSettingsScreen extends StatefulWidget {
   const AppSettingsScreen({super.key});
@@ -11,6 +12,18 @@ class AppSettingsScreen extends StatefulWidget {
 }
 
 class _AppSettingsScreenState extends State<AppSettingsScreen> {
+  String _appVersion = '';
+  @override
+  void initState() {
+    super.initState();
+    _loadAppVersion();
+  }
+  Future<void> _loadAppVersion() async {
+    final packageInfo = await PackageInfo.fromPlatform();
+    setState(() {
+      _appVersion = 'Version ${packageInfo.version}';
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,8 +88,8 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
                 training: Text('English'),
               ),
               const Spacer(),
-              const Text(
-                'Version 1.0',
+              Text(
+                _appVersion,
                 style: TextStyle(
                   color: Color(0xFF3A4750),
                   fontSize: 10,
