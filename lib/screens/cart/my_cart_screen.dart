@@ -1,16 +1,17 @@
 import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:just_order/models/enums/payment_type.dart';
 import 'package:just_order/models/enums/status.dart';
 import 'package:just_order/models/invoice_model.dart';
+import 'package:just_order/models/order_model.dart' as order_model;
 import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/models/user_model.dart';
 import 'package:just_order/repository/cart_provider.dart';
 import 'package:just_order/screens/cart/widgets/order_cart_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:just_order/models/order_model.dart' as order_model;
 
 class MyCartScreen extends StatefulWidget {
   const MyCartScreen({super.key});
@@ -31,6 +32,8 @@ class MyCartScreen extends StatefulWidget {
 class _MyCartScreenState extends State<MyCartScreen> {
   Restaurant? restaurant;
   User? user;
+
+  bool isVisible = true;
 
   @override
   void initState() {
@@ -194,6 +197,41 @@ class _MyCartScreenState extends State<MyCartScreen> {
                     const Divider(
                       height: 1,
                       color: Color(0x4CC8C8C8),
+                    ),
+                    const SizedBox(height: 12.0),
+                    Visibility(
+                      visible: isVisible,
+                      child: ListTile(
+                        contentPadding: EdgeInsets.symmetric(horizontal: 5),
+                        shape: ContinuousRectangleBorder(
+                            borderRadius: BorderRadius.circular(16)),
+                        selected: true,
+                        selectedTileColor: Color(0xFFE02C45).withOpacity(0.07),
+                        leading: Icon(
+                          Icons.info_outline,
+                          color: Color(0xFFE02C45),
+                          size: 24.0,
+                        ),
+                        title: Text('Any items found in another cart is saved'),
+                        titleTextStyle: TextStyle(
+                          color: Color(0xFFE02C45),
+                        ),
+                        trailing: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              isVisible = !isVisible;
+                            });
+                          },
+                          style: ButtonStyle(
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          ),
+                          icon: Icon(
+                            Icons.close,
+                            color: Colors.black,
+                            size: 24.0,
+                          ),
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 25.0),
                     SizedBox(
@@ -477,8 +515,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: MaterialButton(
                   onPressed: () async {
-                    if (filteredItems.isEmpty)
-                    {
+                    if (filteredItems.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text(
@@ -495,9 +532,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                           backgroundColor: Color(0xFFE02C45),
                         ),
                       );
-                    }
-                    else 
-                    {
+                    } else {
                       final invoice = Invoice(
                         invoiceId: FirebaseFirestore.instance
                             .collection('invoices')
