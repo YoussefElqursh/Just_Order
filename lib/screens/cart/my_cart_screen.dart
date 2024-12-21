@@ -477,7 +477,8 @@ class _MyCartScreenState extends State<MyCartScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: MaterialButton(
                   onPressed: () async {
-                    if (filteredItems.isEmpty) {
+                    if (filteredItems.isEmpty)
+                    {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text(
@@ -494,7 +495,9 @@ class _MyCartScreenState extends State<MyCartScreen> {
                           backgroundColor: Color(0xFFE02C45),
                         ),
                       );
-                    } else {
+                    }
+                    else 
+                    {
                       final invoice = Invoice(
                         invoiceId: FirebaseFirestore.instance
                             .collection('invoices')
