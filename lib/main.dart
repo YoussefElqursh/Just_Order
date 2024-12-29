@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,18 +14,26 @@ import 'package:just_order/shared/bloc_observer/bloc_observer.dart';
 import 'package:just_order/shared/routing/app_router.dart';
 import 'package:provider/provider.dart';
 
+import 'blocs/localization/language_cubit.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp();
   Bloc.observer = MyBlocObserver();
   await dotenv.load(fileName: "assets/.env");
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => CartProvider()),
-        ChangeNotifierProvider(create: (_) => OrderProvider()),
-      ],
-      child: const MyApp(),
+    EasyLocalization(
+      supportedLocales: const [Locale('en'), Locale('ar')],
+      path: 'assets/translations',
+      fallbackLocale: const Locale('en'),
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => CartProvider()),
+          ChangeNotifierProvider(create: (_) => OrderProvider()),
+        ],
+        child: const MyApp(),
+      ),
     ),
   );
 }
@@ -36,6 +45,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (context) => LanguageCubit()),
         BlocProvider(
           create: (context) => LoginCubit(LoginRepository()),
         ),
@@ -48,23 +58,29 @@ class MyApp extends StatelessWidget {
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (BuildContext context, child) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              appBarTheme: const AppBarTheme(
-                color: Colors.white,
-                foregroundColor: Colors.white,
-                surfaceTintColor: Colors.white,
-                elevation: 0.5
-              ),
-              scaffoldBackgroundColor: Colors.white,
-              colorScheme: ColorScheme.fromSeed(
-                seedColor: const Color(0xFFE02C45),
-              ),
-              useMaterial3: true,
-            ),
-            onGenerateRoute: AppRouter.onGenerateRoute,
-            initialRoute: SplashScreen.routeName,
+          return BlocBuilder<LanguageCubit, Locale>(
+            builder: (context, locale) {
+              return MaterialApp(
+                debugShowCheckedModeBanner: false,
+                locale: locale,
+                supportedLocales: context.supportedLocales,
+                localizationsDelegates: context.localizationDelegates,
+                theme: ThemeData(
+                  appBarTheme: const AppBarTheme(
+                      color: Colors.white,
+                      foregroundColor: Colors.white,
+                      surfaceTintColor: Colors.white,
+                      elevation: 0.5),
+                  scaffoldBackgroundColor: Colors.white,
+                  colorScheme: ColorScheme.fromSeed(
+                    seedColor: const Color(0xFFE02C45),
+                  ),
+                  useMaterial3: true,
+                ),
+                onGenerateRoute: AppRouter.onGenerateRoute,
+                initialRoute: SplashScreen.routeName,
+              );
+            },
           );
         },
       ),

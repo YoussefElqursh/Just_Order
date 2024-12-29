@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:just_order/blocs/localization/language_cubit.dart';
 import 'package:just_order/screens/account/app_settings/widget/settings_app_items/settings_app_items.dart';
 import 'package:just_order/screens/account/app_settings/widget/switch_btn_widget/switch_btn_widget.dart';
 import 'package:just_order/shared/function/functions.dart';
@@ -82,10 +84,18 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
                 title: 'Dark Mode',
                 training: SwitchBtnWidget(),
               ),
-              const SettingsAppItems(
+              SettingsAppItems(
                 icon: Icons.language_outlined,
                 title: 'Language',
                 training: Text('English'),
+                onTap: (){
+                  final cubit = context.read<LanguageCubit>();
+                  if (cubit.state.languageCode == 'en') {
+                    cubit.switchToArabic();
+                  } else {
+                    cubit.switchToEnglish();
+                  }
+                },
               ),
               const Spacer(),
               Text(
