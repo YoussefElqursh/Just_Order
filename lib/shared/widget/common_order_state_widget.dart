@@ -3,6 +3,8 @@ import 'package:intl/intl.dart';
 import 'package:just_order/models/order_model.dart';
 import 'package:just_order/models/restaurant_model.dart';
 
+import 'common_button.dart';
+
 Widget buildOrderStateWidget({
   required BuildContext context,
   required double width,
@@ -184,6 +186,7 @@ Widget buildOrderPendingStateWidget({
   required double width,
   required Order order,
   required Restaurant restaurant,
+  required Function()? onPressed,
 }) {
   // Calculate the time difference in minutes
   final now = DateTime.now();
@@ -362,6 +365,12 @@ Widget buildOrderPendingStateWidget({
                       ),
                     ),
                   ],
+                ),
+                buildMaterialButton(
+                  context: context,
+                  onPressed: onPressed,
+                  title: 'Finalized',
+                  height: 36,
                 ),
               ],
             ),
@@ -1184,6 +1193,7 @@ Widget buildOrderAutoDeclinedStateWidget(
                     ),
                   ],
                 ),
+                const SizedBox(height: 12),
               ],
             ),
           ),

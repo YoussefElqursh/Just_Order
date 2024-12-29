@@ -65,4 +65,10 @@ class OrderRepository {
       throw Exception('Failed to fetch invoice');
     }
   }
+  Future<void> updateOrderStatus(String orderId, String status) async {
+    await _firestore
+        .collection('orders')
+        .doc(orderId)
+        .update({'status': status});
+  }
 }

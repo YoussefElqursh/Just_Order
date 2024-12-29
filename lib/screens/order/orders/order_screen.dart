@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:just_order/models/enums/status.dart';
+import 'package:just_order/models/order_model.dart';
 import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/models/user_model.dart';
 import 'package:just_order/repository/order_provider.dart';
@@ -229,7 +230,19 @@ class _OrderScreenState extends State<OrderScreen> {
                                                       Status.pending)
                                                   .toList()[index]
                                                   .restaurantId] ??
-                                              Restaurant.empty()),
+                                              Restaurant.empty(),
+                                          onPressed: () {
+                                            setState(() {
+                                              Order order = orders
+                                                  .where((order) =>
+                                                      order.status ==
+                                                      Status.pending)
+                                                  .toList()[index];
+                                              orderProvider.updateOrderStatus(
+                                                  order.orderId,
+                                                  Status.cancelled);
+                                            });
+                                          }),
                                   separatorBuilder: (context, index) =>
                                       const SizedBox(
                                     height: 12.0,
