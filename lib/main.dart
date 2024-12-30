@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:just_order/blocs/localization/language_cubit.dart';
 import 'package:just_order/blocs/login_cubit/login_cubit.dart';
 import 'package:just_order/blocs/sign_up_cubit/sign_up_cubit.dart';
 import 'package:just_order/repository/auth_repository/login_repository.dart';
@@ -14,8 +15,7 @@ import 'package:just_order/shared/bloc_observer/bloc_observer.dart';
 import 'package:just_order/shared/routing/app_router.dart';
 import 'package:provider/provider.dart';
 
-import 'blocs/localization/language_cubit.dart';
-
+import 'blocs/fingerprint/fingerprint_cubit.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
@@ -45,13 +45,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (context) => FingerprintCubit()),
         BlocProvider(create: (context) => LanguageCubit()),
-        BlocProvider(
-          create: (context) => LoginCubit(LoginRepository()),
-        ),
-        BlocProvider(
-          create: (context) => SignUpCubit(),
-        ),
+        BlocProvider(create: (context) => LoginCubit(LoginRepository())),
+        BlocProvider(create: (context) => SignUpCubit()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(360, 690),
@@ -62,9 +59,9 @@ class MyApp extends StatelessWidget {
             builder: (context, locale) {
               return MaterialApp(
                 debugShowCheckedModeBanner: false,
-                locale: locale,
-                supportedLocales: context.supportedLocales,
-                localizationsDelegates: context.localizationDelegates,
+                // locale: locale,
+                // supportedLocales: context.supportedLocales,
+                // localizationsDelegates: context.localizationDelegates,
                 theme: ThemeData(
                   appBarTheme: const AppBarTheme(
                       color: Colors.white,

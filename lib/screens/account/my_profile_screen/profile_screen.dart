@@ -1,7 +1,14 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:just_order/blocs/fingerprint/fingerprint_cubit.dart';
+import 'package:just_order/blocs/fingerprint/fingerprint_state.dart';
 import 'package:just_order/models/user_model.dart';
+import 'package:just_order/screens/account/main_account_screen/account_screen.dart';
+import 'package:just_order/shared/function/connectivity_plus.dart';
+import 'package:just_order/shared/function/validations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -22,23 +29,44 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   User? user;
+  bool isEditing = false;
+  late TextEditingController usernameController;
+  late TextEditingController emailController;
+  late TextEditingController phoneController;
+
+  late GlobalKey<FormState> formKey;
+
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
   void initState() {
     super.initState();
-    _UserFromPreferences();
+    usernameController = TextEditingController();
+    emailController = TextEditingController();
+    phoneController = TextEditingController();
+    formKey = GlobalKey();
+    loadUserFromPreferences();
   }
 
-  // ignore: non_constant_identifier_names
-  Future<void> _UserFromPreferences() async {
+  Future<void> loadUserFromPreferences() async {
     final prefs = await SharedPreferences.getInstance();
     final userString = prefs.getString('user');
     if (userString != null) {
-      final user = User.fromJson(jsonDecode(userString));
+      final loadedUser = User.fromJson(jsonDecode(userString));
       setState(() {
-        this.user = user;
+        user = loadedUser!;
+        usernameController.text =
+            "${loadedUser.firstName} ${loadedUser.lastName}";
+        emailController.text = loadedUser.email;
+        phoneController.text = loadedUser.phoneNumber;
       });
     }
+  }
+
+  void toggleEditing() {
+    setState(() {
+      isEditing = !isEditing;
+    });
   }
 
   @override
@@ -70,7 +98,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             child: IconButton(
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AccountScreen(),
+                  ),
+                );
               },
               icon: const Icon(
                 Icons.arrow_back,
@@ -88,255 +121,287 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
         leadingWidth: 55.0,
-        // actions: [
-        //   Padding(
-        //     padding:
-        //         const EdgeInsets.only(right: 20.0, top: 10.0, bottom: 10.0),
-        //     child: Container(
-        //       width: 34,
-        //       height: 34,
-        //       clipBehavior: Clip.antiAlias,
-        //       decoration: ShapeDecoration(
-        //         color: const Color(0xFFF4F4F4),
-        //         shape: RoundedRectangleBorder(
-        //             borderRadius: BorderRadius.circular(8)),
-        //       ),
-        //       child: IconButton(
-        //         onPressed: () {},
-        //         icon: const Icon(
-        //           Icons.settings_sharp,
-        //           color: Colors.black,
-        //           size: 18,
-        //         ),
-        //         style: ButtonStyle(
-        //           shape: WidgetStatePropertyAll(
-        //             RoundedRectangleBorder(
-        //               borderRadius: BorderRadius.circular(8),
-        //             ),
-        //           ),
-        //         ),
-        //       ),
-        //     ),
-        //   ),
-        // ],
       ),
       body: SingleChildScrollView(
-        child: SizedBox(
-          width: MediaQuery.sizeOf(context).width,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: MediaQuery.sizeOf(context).width * 0.15,
-                ),
-                CircleAvatar(
-                  radius: 40,
-                  backgroundColor: Colors.grey[200],
-                  child: Text(
-                    user != null ? user!.firstName[0] : '',
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 40,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10.0),
-                Text(
-                  '${user?.firstName} ${user?.lastName}',
+        padding: const EdgeInsets.all(20.0),
+        child: Form(
+          key: formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(height: 20.0),
+              CircleAvatar(
+                radius: 40,
+                backgroundColor: Colors.grey[200],
+                child: Text(
+                  user != null
+                      ? '${user!.firstName[0].toUpperCase()}${user!.lastName[0].toUpperCase()}'
+                      : '',
                   style: const TextStyle(
                     color: Colors.black,
-                    fontSize: 14,
-                    fontFamily: 'Inter',
+                    fontSize: 40,
                     fontWeight: FontWeight.w600,
                   ),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
                 ),
-                const SizedBox(height: 5.0),
-                Text(
-                  user?.email ?? '',
-                  style: const TextStyle(
-                    color: Color(0xFFAFAFAF),
-                    fontSize: 10,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w400,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
+              ),
+              const SizedBox(height: 10.0),
+              Text(
+                '${user?.firstName} ${user?.lastName}'.toUpperCase(),
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
                 ),
-                // MaterialButton(
-                //   onPressed: () {},
-                //   minWidth: 73,
-                //   height: 20,
-                //   color: const Color(0xFFE02C45),
-                //   shape: RoundedRectangleBorder(
-                //     borderRadius: BorderRadius.circular(50),
-                //   ),
-                //   child: const Text(
-                //     'Edit Profile',
-                //     style: TextStyle(
-                //       color: Colors.white,
-                //       fontSize: 10,
-                //       fontFamily: 'Inter',
-                //       fontWeight: FontWeight.w600,
-                //     ),
-                //     overflow: TextOverflow.ellipsis,
-                //     maxLines: 1,
-                //   ),
-                // ),
-                const SizedBox(
-                  height: 50,
+              ),
+              const SizedBox(height: 5.0),
+              Text(
+                user?.email ?? '',
+                style: const TextStyle(
+                  color: Color(0xFFAFAFAF),
+                  fontSize: 10,
                 ),
-                const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Username',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 10,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w500,
-                    ),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                  ),
-                ),
-                const SizedBox(height: 8.0),
-                TextFormField(
-                  readOnly: true,
-                  maxLines: 1,
-                  keyboardType: TextInputType.emailAddress,
-                  style: const TextStyle(
-                    color: Color(0xFF000000),
-                    fontSize: 12,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w500,
-                  ),
-                  decoration: InputDecoration(
-                    constraints: BoxConstraints(
-                      maxWidth: MediaQuery.sizeOf(context).width,
-                      maxHeight: 42,
-                    ),
-                    hintText: '${user?.firstName}${user?.lastName}',
-                    hintStyle: const TextStyle(
-                      color: Color(0xFFCCCCCC),
-                      fontSize: 12,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w500,
-                    ),
-                    border: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        width: 1,
-                        color: Color(0xFFAFAFAF),
+              ),
+              const SizedBox(height: 20.0),
+              BlocConsumer<FingerprintCubit, FingerprintState>(
+                listener: (context, state) {
+                  if (state is FingerprintSuccess) {
+                    if (!hasProfileChanged()) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('No changes to save.')),
+                      );
+                      toggleEditing();
+                    } else {
+                      if (formKey.currentState!.validate()) {
+                        updateUserData(
+                          email: emailController.text,
+                          firstName: usernameController.text.split(' ')[0],
+                          lastName: usernameController.text.split(' ')[1],
+                          phoneNumber: phoneController.text,
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                              content: Text('Profile updated successfully.')),
+                        );
+                        toggleEditing();
+                      }
+                    }
+                  } else if (state is FingerprintFailure) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Authentication failed.')),
+                    );
+                  }
+                },
+                builder: (context, state) {
+                  return ElevatedButton(
+                    onPressed: () {
+                      if (isEditing) {
+                        context.read<FingerprintCubit>().checkFingerprint();
+                      } else {
+                        toggleEditing();
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                        elevation: 0.0,
+                        fixedSize: Size.fromHeight(30),
+                        backgroundColor: const Color(0xFFE02C45),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap),
+                    child: Text(
+                      isEditing ? 'Save Profile' : 'Edit Profile',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 10,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w600,
                       ),
-                      borderRadius: BorderRadius.circular(6),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
                     ),
-                  ),
-                ),
-                const SizedBox(height: 20.0),
-                const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Email',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 10,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w500,
-                    ),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                  ),
-                ),
-                const SizedBox(height: 8.0),
-                TextFormField(
-                  readOnly: true,
-                  maxLines: 1,
-                  keyboardType: TextInputType.emailAddress,
-                  style: const TextStyle(
-                    color: Color(0xFF000000),
-                    fontSize: 12,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w500,
-                  ),
-                  decoration: InputDecoration(
-                    constraints: BoxConstraints(
-                      maxWidth: MediaQuery.sizeOf(context).width,
-                      maxHeight: 42,
-                    ),
-                    hintText: user?.email ?? '',
-                    hintStyle: const TextStyle(
-                      color: Color(0xFFCCCCCC),
-                      fontSize: 12,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w500,
-                    ),
-                    border: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        width: 1,
-                        color: Color(0xFFAFAFAF),
-                      ),
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20.0),
-                const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Phone Number',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 10,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w500,
-                    ),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                  ),
-                ),
-                const SizedBox(height: 8.0),
-                TextFormField(
-                  readOnly: true,
-                  maxLines: 1,
-                  keyboardType: TextInputType.emailAddress,
-                  style: const TextStyle(
-                    color: Color(0xFF000000),
-                    fontSize: 12,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w500,
-                  ),
-                  decoration: InputDecoration(
-                    constraints: BoxConstraints(
-                      maxWidth: MediaQuery.sizeOf(context).width,
-                      maxHeight: 42,
-                    ),
-                    hintText: user?.phoneNumber ?? '',
-                    hintStyle: const TextStyle(
-                      color: Color(0xFFCCCCCC),
-                      fontSize: 12,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w500,
-                    ),
-                    border: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        width: 1,
-                        color: Color(0xFFAFAFAF),
-                      ),
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+                  );
+                },
+              ),
+              const SizedBox(height: 20.0),
+              buildInputField(
+                label: 'Username',
+                controller: usernameController,
+                isEnabled: isEditing,
+                hintText: '${user?.firstName} ${user?.lastName}',
+                validator: (value) {
+                  if (value == null || value.isEmpty || value.length < 3) {
+                    return 'Please enter valid name';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 20.0),
+              buildInputField(
+                label: 'Email',
+                controller: emailController,
+                isEnabled: false,
+                hintText: user?.email,
+                keyboardType: TextInputType.emailAddress,
+              ),
+              const SizedBox(height: 20.0),
+              buildInputField(
+                label: 'Phone Number',
+                controller: phoneController,
+                isEnabled: isEditing,
+                hintText: user?.phoneNumber,
+                keyboardType: TextInputType.phone,
+                validator: (value) {
+                  if (value == null ||
+                      value.isEmpty ||
+                      value.startsWith('01') == false) {
+                    return 'Please enter a valid phone number';
+                  }
+                  if (!RegExp(r'^\d{11}$').hasMatch(value)) {
+                    return 'Please enter a valid 11-digit phone number';
+                  }
+                  return null;
+                },
+              ),
+            ],
           ),
         ),
       ),
     );
+  }
+
+  Widget buildInputField({
+    required String label,
+    required TextEditingController controller,
+    String? Function(String?)? validator,
+    bool isEnabled = false,
+    String? hintText,
+    TextInputType keyboardType = TextInputType.text,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 10,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        const SizedBox(height: 8.0),
+        TextFormField(
+          controller: controller,
+          enabled: isEnabled,
+          keyboardType: keyboardType,
+          validator: validator,
+          style: TextStyle(
+            color: isEnabled ? Colors.black : const Color(0xFFCCCCCC),
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+          ),
+          decoration: InputDecoration(
+            hintText: hintText,
+            hintStyle: const TextStyle(
+              color: Color(0xFFCCCCCC),
+              fontSize: 12,
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(6),
+              borderSide: const BorderSide(color: Color(0xFFAFAFAF)),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(6),
+              borderSide: const BorderSide(color: Color(0xFFE02C45)),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  bool hasProfileChanged() {
+    final names = usernameController.text.split(' ');
+    return names[0] != user?.firstName ||
+        names[1] != user?.lastName ||
+        phoneController.text != user?.phoneNumber;
+  }
+
+  @override
+  void dispose() {
+    usernameController.dispose();
+    emailController.dispose();
+    phoneController.dispose();
+    super.dispose();
+  }
+
+  Future<void> updateUserData({
+    required String email,
+    required String firstName,
+    required String lastName,
+    required String phoneNumber,
+  }) async {
+    // Input Validation
+    if (!InputValidator.isValidName(firstName)) {
+      debugPrint('Invalid First Name');
+      return;
+    }
+    if (!InputValidator.isValidName(lastName)) {
+      debugPrint('Invalid Last Name');
+      return;
+    }
+
+    if (!InputValidator.isValidPhoneNumber(phoneNumber)) {
+      debugPrint('Invalid phone number');
+      return;
+    }
+
+    // Network Connectivity Check
+    if (!await isConnected()) {
+      debugPrint('No Internet Connection');
+      return;
+    }
+
+    try {
+      // Check if the user already exists
+      final existingUser = await _firestore
+          .collection('users')
+          .where('email', isEqualTo: email)
+          .get();
+
+      if (existingUser.docs.isEmpty) {
+        debugPrint('User with this email not exists.');
+        return;
+      }
+
+      // Proceed with user select the user to update
+      final userId = existingUser.docs.first.id;
+
+      await _firestore.collection('users').doc(userId).update({
+        'firstName': firstName,
+        'lastName': lastName,
+        'phoneNumber': phoneNumber,
+        'updatedAt': Timestamp.now().toDate(),
+      });
+
+      final QuerySnapshot result = await _firestore
+          .collection('users')
+          .where('email', isEqualTo: email)
+          .get();
+
+      if (result.docs.isEmpty) {
+        return null;
+      }
+
+      final doc = result.docs.first;
+      final user = User.fromJson(doc.data() as Map<String, dynamic>);
+
+      await user?.saveUserToPreferences(user);
+
+      loadUserFromPreferences();
+
+      debugPrint('User updated successfully.');
+    } catch (e) {
+      debugPrint('User update failed.');
+    }
   }
 }

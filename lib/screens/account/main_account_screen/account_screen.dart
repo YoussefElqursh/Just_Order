@@ -21,12 +21,14 @@ class _AccountScreenState extends State<AccountScreen> {
   User? user;
   LoginRepository loginRepository = LoginRepository();
   String _appVersion = '';
+
   @override
   void initState() {
     super.initState();
     _loadAppVersion();
     _UserFromPreferences();
   }
+
   Future<void> _loadAppVersion() async {
     final packageInfo = await PackageInfo.fromPlatform();
     setState(() {
@@ -67,7 +69,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   radius: 40,
                   backgroundColor: Colors.grey[200],
                   child: Text(
-                    user != null ? user!.firstName[0] : '',
+                    user != null ? user!.firstName[0].toUpperCase() : '',
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 40,
@@ -151,7 +153,12 @@ class _AccountScreenState extends State<AccountScreen> {
                   icon: Icons.history_outlined,
                   label: 'Order History',
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => HistoryScreen(),),);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HistoryScreen(),
+                      ),
+                    );
                   },
                 ),
                 accountFunctionWidget(
@@ -159,7 +166,12 @@ class _AccountScreenState extends State<AccountScreen> {
                   icon: Icons.settings_sharp,
                   label: 'Settings',
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => AppSettingsScreen(),),);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AppSettingsScreen(),
+                      ),
+                    );
                   },
                 ),
                 //General Section
@@ -186,7 +198,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   icon: Icons.info_outline_rounded,
                   label: 'About App',
                   isText: true,
-                   text: _appVersion,
+                  text: _appVersion,
                   onPressed: () {},
                 ),
                 accountFunctionWidget(

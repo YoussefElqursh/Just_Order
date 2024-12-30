@@ -1193,7 +1193,6 @@ Widget buildOrderAutoDeclinedStateWidget(
                     ),
                   ],
                 ),
-                const SizedBox(height: 12),
               ],
             ),
           ),
