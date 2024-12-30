@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_order/blocs/localization/language_cubit.dart';
 import 'package:just_order/screens/account/app_settings/widget/settings_app_items/settings_app_items.dart';
 import 'package:just_order/screens/account/app_settings/widget/switch_btn_widget/switch_btn_widget.dart';
+import 'package:just_order/screens/account/main_account_screen/account_screen.dart';
 import 'package:just_order/shared/function/functions.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -56,7 +57,7 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
             ),
             child: IconButton(
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => AccountScreen(),));
               },
               icon: const Icon(
                 Icons.arrow_back,
@@ -73,6 +74,12 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
           height: MediaQuery.sizeOf(context).height,
           child:  Column(
             children: [
+              SettingsAppItems(
+                onTap: (){navigateTo(context, 'ChangePasswordScreenRoute');},
+                icon: Icons.lock_outline_sharp,
+                title: 'Change Password',
+                training: const SizedBox(),
+              ),
               SettingsAppItems(
                 onTap: (){navigateTo(context, 'SelectYourPlaceRoute');},
                 icon: Icons.location_on_outlined,
