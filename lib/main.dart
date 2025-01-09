@@ -4,9 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:just_order/blocs/fingerprint/fingerprint_cubit.dart';
 import 'package:just_order/blocs/localization/language_cubit.dart';
 import 'package:just_order/blocs/login_cubit/login_cubit.dart';
 import 'package:just_order/blocs/sign_up_cubit/sign_up_cubit.dart';
+import 'package:just_order/blocs/theming/theming_cubit.dart';
+import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/repository/auth_repository/login_repository.dart';
 import 'package:just_order/repository/cart_provider.dart';
 import 'package:just_order/repository/order_provider.dart';
@@ -15,24 +18,27 @@ import 'package:just_order/shared/bloc_observer/bloc_observer.dart';
 import 'package:just_order/shared/routing/app_router.dart';
 import 'package:provider/provider.dart';
 
-import 'blocs/fingerprint/fingerprint_cubit.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp();
   Bloc.observer = MyBlocObserver();
   await dotenv.load(fileName: "assets/.env");
+
   runApp(
     EasyLocalization(
       supportedLocales: const [Locale('en'), Locale('ar')],
       path: 'assets/translations',
       fallbackLocale: const Locale('en'),
-      child: MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (_) => CartProvider()),
-          ChangeNotifierProvider(create: (_) => OrderProvider()),
-        ],
-        child: const MyApp(),
+      child: BlocProvider(
+        create: (context) => ThemeCubit(),
+        child: MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (_) => CartProvider()),
+            ChangeNotifierProvider(create: (_) => OrderProvider()),
+          ],
+          child: const MyApp(),
+        ),
       ),
     ),
   );
@@ -57,25 +63,81 @@ class MyApp extends StatelessWidget {
         builder: (BuildContext context, child) {
           return BlocBuilder<LanguageCubit, Locale>(
             builder: (context, locale) {
-              return MaterialApp(
-                debugShowCheckedModeBanner: false,
-                // locale: locale,
-                // supportedLocales: context.supportedLocales,
-                // localizationsDelegates: context.localizationDelegates,
-                theme: ThemeData(
-                  appBarTheme: const AppBarTheme(
-                      color: Colors.white,
-                      foregroundColor: Colors.white,
-                      surfaceTintColor: Colors.white,
-                      elevation: 0.5),
-                  scaffoldBackgroundColor: Colors.white,
-                  colorScheme: ColorScheme.fromSeed(
-                    seedColor: const Color(0xFFE02C45),
-                  ),
-                  useMaterial3: true,
-                ),
-                onGenerateRoute: AppRouter.onGenerateRoute,
-                initialRoute: SplashScreen.routeName,
+              return BlocBuilder<ThemeCubit, ThemeState>(
+                builder: (context, state) {
+                  return MaterialApp(
+                    debugShowCheckedModeBanner: false,
+                    // locale: locale,
+                    // supportedLocales: context.supportedLocales,
+                    // localizationsDelegates: context.localizationDelegates,
+                    title: 'Just Order',
+                    themeMode: state.themeMode,
+                    darkTheme: ThemeData(
+                      useMaterial3: true,
+                      brightness: Brightness.dark,
+                      scaffoldBackgroundColor: Colors.black,
+                      primaryColor: const Color(0xFFE02C45),
+                      indicatorColor: const Color(0xFFE02C45),
+                      appBarTheme: const AppBarTheme(
+                        color: Colors.black,
+                        foregroundColor: Colors.black,
+                        surfaceTintColor: Colors.black,
+                        elevation: 0.5,
+                      ),
+                      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+                        selectedItemColor: const Color(0xFFE02C45),
+                        unselectedItemColor: const Color(0xFF898888),
+                        type: BottomNavigationBarType.fixed,
+                        backgroundColor: Colors.black,
+                        selectedLabelStyle: const TextStyle(
+                          color: Color(0xFFE02C45),
+                          fontSize: 12,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w600,
+                        ),
+                        unselectedLabelStyle: const TextStyle(
+                          color: Color(0xFF898888),
+                          fontSize: 12,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    theme: ThemeData(
+                      useMaterial3: true,
+                      brightness: Brightness.light,
+                      scaffoldBackgroundColor: Colors.white,
+                      primaryColor: const Color(0xFFE02C45),
+                      indicatorColor: const Color(0xFFE02C45),
+                      appBarTheme: const AppBarTheme(
+                        color: Colors.white,
+                        foregroundColor: Colors.white,
+                        surfaceTintColor: Colors.white,
+                        elevation: 0.5,
+                      ),
+                      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+                        selectedItemColor: const Color(0xFFE02C45),
+                        unselectedItemColor: const Color(0xFF898888),
+                        type: BottomNavigationBarType.fixed,
+                        backgroundColor: Colors.white,
+                        selectedLabelStyle: const TextStyle(
+                          color: Color(0xFFE02C45),
+                          fontSize: 12,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w600,
+                        ),
+                        unselectedLabelStyle: const TextStyle(
+                          color: Color(0xFF898888),
+                          fontSize: 12,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    onGenerateRoute: AppRouter.onGenerateRoute,
+                    initialRoute: SplashScreen.routeName,
+                  );
+                },
               );
             },
           );

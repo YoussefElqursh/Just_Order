@@ -1,17 +1,20 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:just_order/screens/account/main_account_screen/account_screen.dart';
 import 'package:just_order/screens/home/main_home_screen/home_screen.dart';
 import 'package:just_order/screens/order/orders/order_screen.dart';
 
 class MainLayout extends StatefulWidget {
-  const MainLayout({super.key});
+  int? pageNumber;
+  MainLayout({super.key, this.pageNumber});
 
   static const String routeName = 'MainLayoutRoute';
 
   static Route route() {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
-      builder: (context) => const MainLayout(),
+      builder: (context) => MainLayout(),
     );
   }
 
@@ -29,53 +32,70 @@ class _MainLayoutState extends State<MainLayout> {
   ];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: IndexedStack(
-        index: currentPage,
-        children: screens,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentPage,
-        elevation: 0.0,
-        onTap: (value) {
-          setState(() {
-            currentPage = value;
-          });
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            activeIcon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list_alt_outlined),
-            activeIcon: Icon(Icons.list_alt),
-            label: 'Orders',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
-            activeIcon: Icon(Icons.person),
-            label: 'Account',
-          ),
-        ],
-        selectedItemColor: const Color(0xFFE02C45),
-        unselectedItemColor: const Color(0xFF898888),
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.white,
-        selectedLabelStyle: const TextStyle(
-          color: Color(0xFFE02C45),
-          fontSize: 12,
-          fontFamily: 'Inter',
-          fontWeight: FontWeight.w600,
+    return WillPopScope(
+        onWillPop: () async {
+      // Show a confirmation dialog or directly close the app
+      final shouldExit = await showExitConfirmationDialog(context);
+      if (shouldExit) {
+        // Exit the app
+        exit(0);
+      }
+      return false; // Prevent default pop behavior
+    },
+      child: Scaffold(
+        body: IndexedStack(
+          index: widget.pageNumber ?? currentPage,
+          children: screens,
         ),
-        unselectedLabelStyle: const TextStyle(
-          color: Color(0xFF898888),
-          fontSize: 12,
-          fontFamily: 'Inter',
-          fontWeight: FontWeight.w600,
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: widget.pageNumber ?? currentPage,
+          elevation: 0.0,
+          onTap: (value) {
+            setState(() {
+              currentPage = value;
+              widget.pageNumber = value;
+            });
+          },
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home_outlined),
+              activeIcon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.list_alt_outlined),
+              activeIcon: Icon(Icons.list_alt),
+              label: 'Orders',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person_outline),
+              activeIcon: Icon(Icons.person),
+              label: 'Account',
+            ),
+          ],
         ),
       ),
     );
+  }
+
+  Future<bool> showExitConfirmationDialog(BuildContext context) async {
+    return await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Exit App'),
+        content: Text('Are you sure you want to exit the app?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: Text('Exit'),
+          ),
+        ],
+      ),
+    ) ??
+        false;
   }
 }

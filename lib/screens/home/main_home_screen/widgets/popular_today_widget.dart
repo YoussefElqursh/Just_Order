@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/restaurant_model.dart';
 
 Widget buildPopularTodayWidget({
   required BuildContext context,
   required Restaurant restaurant,
+  required ThemeState state,
 }) {
   return GestureDetector(
     onTap: () {
@@ -74,8 +76,8 @@ Widget buildPopularTodayWidget({
               children: [
                 Text(
                   restaurant.name,
-                  style: const TextStyle(
-                    color: Colors.black,
+                  style: TextStyle(
+                    color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                     fontSize: 12,
                     fontFamily: 'Inter',
                     fontWeight: FontWeight.w600,
@@ -84,10 +86,10 @@ Widget buildPopularTodayWidget({
                   maxLines: 1,
                 ),
                 const SizedBox(height: 5),
-                const Text(
+                Text(
                   'Sandwiches, Fast Food',
                   style: TextStyle(
-                    color: Color(0xFFAFAFAF),
+                    color: state.themeMode == ThemeMode.light ? Color(0xFFAFAFAF) : Colors.white,
                     fontSize: 10,
                     fontFamily: 'Inter',
                     fontWeight: FontWeight.w400,
@@ -103,13 +105,13 @@ Widget buildPopularTodayWidget({
                   children: [
                     Icon(Icons.star, color: Colors.yellow.shade700, size: 12),
                     const SizedBox(width: 6),
-                    const Text.rich(
+                    Text.rich(
                       TextSpan(
                         children: [
                           TextSpan(
                             text: '4.3',
                             style: TextStyle(
-                              color: Colors.black,
+                              color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                               fontSize: 10,
                               fontFamily: 'Inter',
                               fontWeight: FontWeight.w500,

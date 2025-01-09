@@ -1,6 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:just_order/blocs/theming/theming_cubit.dart';
+import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/user_model.dart';
 import 'package:just_order/repository/auth_repository/login_repository.dart';
 import 'package:just_order/screens/account/app_settings/app_settings_screen.dart';
@@ -50,172 +53,176 @@ class _AccountScreenState extends State<AccountScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        physics: const BouncingScrollPhysics(),
-        child: SizedBox(
-          width: MediaQuery.sizeOf(context).width,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: MediaQuery.sizeOf(context).width * 0.15,
-                ),
-                CircleAvatar(
-                  radius: 40,
-                  backgroundColor: Colors.grey[200],
-                  child: Text(
-                    user != null ? user!.firstName[0].toUpperCase() : '',
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 40,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w600,
+    return BlocBuilder<ThemeCubit, ThemeState>(
+      builder: (context, state) {
+        return Scaffold(
+          body: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            physics: const BouncingScrollPhysics(),
+            child: SizedBox(
+              width: MediaQuery.sizeOf(context).width,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.sizeOf(context).width * 0.15,
                     ),
-                  ),
-                ),
-                const SizedBox(height: 10.0),
-                Text(
-                  '${user?.firstName} ${user?.lastName}',
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 14,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w600,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                ),
-                const SizedBox(height: 5.0),
-                Text(
-                  user?.email ?? '',
-                  style: const TextStyle(
-                    color: Color(0xFFAFAFAF),
-                    fontSize: 10,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w400,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                ),
-                //Personal Information Section
-                const SizedBox(height: 35.0),
-                const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Personal Information',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 14,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w600,
-                    ),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                  ),
-                ),
-                const SizedBox(
-                  height: 12.0,
-                ),
-                accountFunctionWidget(
-                  context: context,
-                  icon: Icons.person,
-                  label: 'My Profile',
-                  onPressed: () {
-                    navigateTo(context, 'ProfileScreenRoute');
-                  },
-                ),
-                //Account Management Section
-                const SizedBox(height: 25.0),
-                const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Account Management',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 14,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w600,
-                    ),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                  ),
-                ),
-                const SizedBox(
-                  height: 12.0,
-                ),
-                accountFunctionWidget(
-                  context: context,
-                  icon: Icons.history_outlined,
-                  label: 'Order History',
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => HistoryScreen(),
+                    CircleAvatar(
+                      radius: 40,
+                      backgroundColor: Colors.grey[200],
+                      child: Text(
+                        user != null ? user!.firstName[0].toUpperCase() : '',
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 40,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                    );
-                  },
-                ),
-                accountFunctionWidget(
-                  context: context,
-                  icon: Icons.settings_sharp,
-                  label: 'Settings',
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => AppSettingsScreen(),
-                      ),
-                    );
-                  },
-                ),
-                //General Section
-                const SizedBox(height: 25.0),
-                const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'General',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 14,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w600,
                     ),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                  ),
+                    const SizedBox(height: 10.0),
+                    Text(
+                      '${user?.firstName} ${user?.lastName}',
+                      style: TextStyle(
+                        color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                        fontSize: 14,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w600,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                    const SizedBox(height: 5.0),
+                    Text(
+                      user?.email ?? '',
+                      style: const TextStyle(
+                        color: Color(0xFFAFAFAF),
+                        fontSize: 10,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w400,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                    //Personal Information Section
+                    const SizedBox(height: 35.0),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Personal Information',
+                        style: TextStyle(
+                          color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                          fontSize: 14,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w600,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 12.0,
+                    ),
+                    accountFunctionWidget(
+                      context: context,
+                      icon: Icons.person,
+                      label: 'My Profile',
+                      onPressed: () {
+                        navigateTo(context, 'ProfileScreenRoute');
+                      }, state: state,
+                    ),
+                    //Account Management Section
+                    const SizedBox(height: 25.0),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Account Management',
+                        style: TextStyle(
+                          color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                          fontSize: 14,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w600,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 12.0,
+                    ),
+                    accountFunctionWidget(
+                      context: context,
+                      icon: Icons.history_outlined,
+                      label: 'Order History',
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => HistoryScreen(),
+                          ),
+                        );
+                      }, state: state,
+                    ),
+                    accountFunctionWidget(
+                      context: context,
+                      icon: Icons.settings_sharp,
+                      label: 'Settings',
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AppSettingsScreen(),
+                          ),
+                        );
+                      }, state: state,
+                    ),
+                    //General Section
+                    const SizedBox(height: 25.0),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'General',
+                        style: TextStyle(
+                          color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                          fontSize: 14,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w600,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 12.0,
+                    ),
+                    accountFunctionWidget(
+                      context: context,
+                      icon: Icons.info_outline_rounded,
+                      label: 'About App',
+                      isText: true,
+                      text: _appVersion,
+                      onPressed: () {}, state: state,
+                    ),
+                    accountFunctionWidget(
+                      context: context,
+                      icon: Icons.logout,
+                      label: 'Logout',
+                      onPressed: () {
+                        loginRepository.logout();
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, 'LoginScreenRoute', (route) => false);
+                      }, state: state,
+                    ),
+                  ],
                 ),
-                const SizedBox(
-                  height: 12.0,
-                ),
-                accountFunctionWidget(
-                  context: context,
-                  icon: Icons.info_outline_rounded,
-                  label: 'About App',
-                  isText: true,
-                  text: _appVersion,
-                  onPressed: () {},
-                ),
-                accountFunctionWidget(
-                  context: context,
-                  icon: Icons.logout,
-                  label: 'Logout',
-                  onPressed: () {
-                    loginRepository.logout();
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, 'LoginScreenRoute', (route) => false);
-                  },
-                ),
-              ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

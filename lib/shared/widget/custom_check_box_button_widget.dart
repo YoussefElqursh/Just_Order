@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:just_order/blocs/theming/theming_state.dart';
 
 Widget customCheckBoxButtonWidget({
   required BuildContext context,
@@ -8,6 +9,7 @@ Widget customCheckBoxButtonWidget({
   required String label,
   required bool value,
   required Function(bool?) onChanged,
+  required ThemeState state,
 }) {
   return SizedBox(
     width: MediaQuery.sizeOf(context).width,
@@ -22,8 +24,8 @@ Widget customCheckBoxButtonWidget({
           children: [
             Text(
               label,
-              style: const TextStyle(
-                color: Colors.black,
+              style: TextStyle(
+                color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                 fontSize: 12,
                 fontFamily: 'Inter',
                 fontWeight: FontWeight.w400,
@@ -50,7 +52,7 @@ Widget customCheckBoxButtonWidget({
             Checkbox(
               value: value,
               activeColor: const Color(0xFFE02C45),
-              checkColor: Colors.white,
+              checkColor: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
               side: const BorderSide(color: Color(0xFF898888), width: 1.5),
               onChanged: onChanged,
             ),

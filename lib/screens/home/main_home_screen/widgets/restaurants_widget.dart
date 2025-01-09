@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/restaurant_model.dart';
 
 Widget buildRestaurantsWidget({
   required BuildContext context,
   required Restaurant restaurant,
+  required ThemeState state,
 }) {
   return GestureDetector(
     onTap: () {
@@ -48,8 +50,8 @@ Widget buildRestaurantsWidget({
                     children: [
                       Text(
                         restaurant.name,
-                        style: const TextStyle(
-                          color: Colors.black,
+                        style: TextStyle(
+                          color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                           fontSize: 12,
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w600,
@@ -85,13 +87,13 @@ Widget buildRestaurantsWidget({
                   children: [
                     Icon(Icons.star, color: Colors.yellow.shade700, size: 15),
                     const SizedBox(width: 6),
-                    const Text.rich(
+                    Text.rich(
                       TextSpan(
                         children: [
                           TextSpan(
                             text: '4.8',
                             style: TextStyle(
-                              color: Colors.black,
+                              color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                               fontSize: 10,
                               fontFamily: 'Inter',
                               fontWeight: FontWeight.w400,
@@ -132,8 +134,8 @@ Widget buildRestaurantsWidget({
                         const SizedBox(width: 6),
                         Text(
                           restaurant.orderTimeOut.toString(),
-                          style: const TextStyle(
-                            color: Colors.black,
+                          style: TextStyle(
+                            color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                             fontSize: 10,
                             fontFamily: 'Inter',
                             fontWeight: FontWeight.w400,
@@ -171,8 +173,8 @@ Widget buildRestaurantsWidget({
                           (restaurant.deliveryFee != null)
                               ? 'EGP ${restaurant.deliveryFee}'
                               : 'Free',
-                          style: const TextStyle(
-                            color: Colors.black,
+                          style: TextStyle(
+                            color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                             fontSize: 10,
                             fontFamily: 'Inter',
                             fontWeight: FontWeight.w400,

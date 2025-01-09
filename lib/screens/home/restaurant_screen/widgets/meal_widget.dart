@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/item_model.dart';
 
 Widget buildMealWidget({
   required BuildContext context,
   required Item item,
+  required ThemeState state,
 }) {
   return GestureDetector(
     onTap: () {
@@ -71,8 +73,8 @@ Widget buildMealWidget({
               children: [
                 Text(
                   item.name,
-                  style: const TextStyle(
-                    color: Colors.black,
+                  style: TextStyle(
+                    color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                     fontSize: 12,
                     fontFamily: 'Inter',
                     fontWeight: FontWeight.w600,
@@ -99,8 +101,8 @@ Widget buildMealWidget({
                   children: [
                     Text(
                       'EGP ${item.price}',
-                      style: const TextStyle(
-                        color: Colors.black,
+                      style: TextStyle(
+                        color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                         fontSize: 10,
                         fontFamily: 'Inter',
                         fontWeight: FontWeight.w600,

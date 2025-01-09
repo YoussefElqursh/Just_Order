@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_order/blocs/localization/language_cubit.dart';
+import 'package:just_order/blocs/theming/theming_cubit.dart';
+import 'package:just_order/blocs/theming/theming_state.dart';
+import 'package:just_order/layouts/main_layout.dart';
 import 'package:just_order/screens/account/app_settings/widget/settings_app_items/settings_app_items.dart';
 import 'package:just_order/screens/account/app_settings/widget/switch_btn_widget/switch_btn_widget.dart';
-import 'package:just_order/screens/account/main_account_screen/account_screen.dart';
 import 'package:just_order/shared/function/functions.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -16,11 +18,13 @@ class AppSettingsScreen extends StatefulWidget {
 
 class _AppSettingsScreenState extends State<AppSettingsScreen> {
   String _appVersion = '';
+
   @override
   void initState() {
     super.initState();
     _loadAppVersion();
   }
+
   Future<void> _loadAppVersion() async {
     final packageInfo = await PackageInfo.fromPlatform();
     setState(() {
@@ -30,94 +34,115 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text(
-          'Settings',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 14,
-            fontFamily: 'Inter',
-            fontWeight: FontWeight.w600,
-          ),
-          overflow: TextOverflow.ellipsis,
-          maxLines: 1,
-        ),
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 20.0, top: 10.0, bottom: 10.0),
-          child: Container(
-            width: 34,
-            height: 34,
-            clipBehavior: Clip.antiAlias,
-            decoration: ShapeDecoration(
-              color: const Color(0xFFF4F4F4),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8)),
+    return BlocBuilder<ThemeCubit, ThemeState>(
+      builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(
+            centerTitle: true,
+            title: Text(
+              'Settings',
+              style: TextStyle(
+                color: state.themeMode == ThemeMode.light
+                    ? Colors.black
+                    : Colors.white,
+                fontSize: 14,
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w600,
+              ),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
             ),
-            child: IconButton(
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => AccountScreen(),));
-              },
-              icon: const Icon(
-                Icons.arrow_back,
-                color: Colors.black,
-                size: 18,
-              ),
-            ),
-          ),
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: SizedBox(
-          height: MediaQuery.sizeOf(context).height,
-          child:  Column(
-            children: [
-              SettingsAppItems(
-                onTap: (){navigateTo(context, 'ChangePasswordScreenRoute');},
-                icon: Icons.lock_outline_sharp,
-                title: 'Change Password',
-                training: const SizedBox(),
-              ),
-              SettingsAppItems(
-                onTap: (){navigateTo(context, 'SelectYourPlaceRoute');},
-                icon: Icons.location_on_outlined,
-                title: 'Change Location',
-                training: const SizedBox(),
-              ),
-              const SettingsAppItems(
-                icon: Icons.dark_mode_outlined,
-                title: 'Dark Mode',
-                training: SwitchBtnWidget(),
-              ),
-              SettingsAppItems(
-                icon: Icons.language_outlined,
-                title: 'Language',
-                training: Text('English'),
-                onTap: (){
-                  final cubit = context.read<LanguageCubit>();
-                  if (cubit.state.languageCode == 'en') {
-                    cubit.switchToArabic();
-                  } else {
-                    cubit.switchToEnglish();
-                  }
-                },
-              ),
-              const Spacer(),
-              Text(
-                _appVersion,
-                style: TextStyle(
-                  color: Color(0xFF3A4750),
-                  fontSize: 10,
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.w500,
+            leading: Padding(
+              padding:
+                  const EdgeInsets.only(left: 20.0, top: 10.0, bottom: 10.0),
+              child: Container(
+                width: 34,
+                height: 34,
+                clipBehavior: Clip.antiAlias,
+                decoration: ShapeDecoration(
+                  color: const Color(0xFFF4F4F4),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)),
+                ),
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MainLayout(
+                          pageNumber: 2,
+                        ),
+                      ),
+                    );
+                  },
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: Colors.black,
+                    size: 18,
+                  ),
                 ),
               ),
-            ],
+            ),
           ),
-        ),
-      ),
+          body: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20.0),
+            child: SizedBox(
+              height: MediaQuery.sizeOf(context).height,
+              child: Column(
+                children: [
+                  SettingsAppItems(
+                      onTap: () {
+                        navigateTo(context, 'ChangePasswordScreenRoute');
+                      },
+                      icon: Icons.lock_outline_sharp,
+                      title: 'Change Password',
+                      training: const SizedBox(),
+                      state: state),
+                  SettingsAppItems(
+                    onTap: () {
+                      navigateTo(context, 'SelectYourPlaceRoute');
+                    },
+                    icon: Icons.location_on_outlined,
+                    title: 'Change Location',
+                    training: const SizedBox(),
+                    state: state,
+                  ),
+                  SettingsAppItems(
+                    icon: Icons.dark_mode_outlined,
+                    title: 'Theme Mode',
+                    training: SwitchBtnWidget(),
+                    state: state,
+                  ),
+                  SettingsAppItems(
+                    icon: Icons.language_outlined,
+                    title: 'Language',
+                    training: Text('English'),
+                    onTap: () {
+                      final cubit = context.read<LanguageCubit>();
+                      if (cubit.state.languageCode == 'en') {
+                        cubit.switchToArabic();
+                      } else {
+                        cubit.switchToEnglish();
+                      }
+                    },
+                    state: state,
+                  ),
+                  const Spacer(),
+                  Text(
+                    _appVersion,
+                    style: TextStyle(
+                      color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                      fontSize: 10,
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

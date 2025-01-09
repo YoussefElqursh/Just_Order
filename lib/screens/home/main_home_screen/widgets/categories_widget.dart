@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/restaurant_model.dart';
 
-Widget buildCategoriesWidget(Restaurant restaurant) {
+Widget buildCategoriesWidget(Restaurant restaurant, ThemeState state) {
   return Stack(
     alignment: Alignment.topCenter,
     children: [
       Align(
         alignment: Alignment.bottomCenter,
         child: Container(
-          decoration: const BoxDecoration(
-            color: Color(0x0CE02C45),
-            borderRadius: BorderRadius.only(
+          decoration: BoxDecoration(
+            color: state.themeMode == ThemeMode.light ? const Color(0x0CE02C45) : const Color(0x5FE02C45),
+            borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(10),
               bottomRight: Radius.circular(10),
             ),
@@ -27,8 +28,8 @@ Widget buildCategoriesWidget(Restaurant restaurant) {
                 padding: const EdgeInsets.only(left: 5, bottom: 10, right: 5),
                 child: Text(
                   restaurant.name,
-                  style: const TextStyle(
-                    color: Colors.black,
+                  style: TextStyle(
+                    color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                     fontSize: 10,
                     fontFamily: 'Inter',
                     fontWeight: FontWeight.w500,

@@ -6,10 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_order/blocs/fingerprint/fingerprint_cubit.dart';
 import 'package:just_order/blocs/fingerprint/fingerprint_state.dart';
+import 'package:just_order/blocs/theming/theming_cubit.dart';
+import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/user_model.dart';
 import 'package:just_order/screens/account/app_settings/app_settings_screen.dart';
 import 'package:just_order/shared/function/connectivity_plus.dart';
-import 'package:just_order/shared/function/validations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
@@ -29,7 +30,6 @@ class ChangePasswordScreen extends StatefulWidget {
 }
 
 class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
-
   User? user;
 
   late TextEditingController currentPasswordController;
@@ -60,169 +60,178 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       });
     }
   }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text(
-          'Change Password',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 14,
-            fontFamily: 'Inter',
-            fontWeight: FontWeight.w600,
-          ),
-          overflow: TextOverflow.ellipsis,
-          maxLines: 1,
-        ),
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 20.0, top: 10.0, bottom: 10.0),
-          child: Container(
-            width: 34,
-            height: 34,
-            clipBehavior: Clip.antiAlias,
-            decoration: ShapeDecoration(
-              color: const Color(0xFFF4F4F4),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8)),
-            ),
-            child: IconButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => AppSettingsScreen(),
-                  ),
-                );
-              },
-              icon: const Icon(
-                Icons.arrow_back,
-                color: Colors.black,
-                size: 18,
+    return BlocBuilder<ThemeCubit, ThemeState>(
+      builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(
+            centerTitle: true,
+            title: Text(
+              'Change Password',
+              style: TextStyle(
+                color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                fontSize: 14,
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w600,
               ),
-              style: ButtonStyle(
-                shape: WidgetStatePropertyAll(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+            ),
+            leading: Padding(
+              padding:
+                  const EdgeInsets.only(left: 20.0, top: 10.0, bottom: 10.0),
+              child: Container(
+                width: 34,
+                height: 34,
+                clipBehavior: Clip.antiAlias,
+                decoration: ShapeDecoration(
+                  color: const Color(0xFFF4F4F4),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)),
+                ),
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AppSettingsScreen(),
+                      ),
+                    );
+                  },
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: Colors.black,
+                    size: 18,
+                  ),
+                  style: ButtonStyle(
+                    shape: WidgetStatePropertyAll(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
                   ),
                 ),
               ),
             ),
+            leadingWidth: 55.0,
           ),
-        ),
-        leadingWidth: 55.0,
-      ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 20.0),
-        scrollDirection: Axis.vertical,
-        physics: BouncingScrollPhysics(),
-        child: Form(
-          key: formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(height: 20.0),
-              buildInputField(
-                label: 'Current Password',
-                controller: currentPasswordController,
-                hintText: 'Current Password',
-                isEnabled: true,
-                validator: (value) {
-                  if (value == null ||
-                      value.isEmpty) {
-                    return 'Please enter a valid Password';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 20.0),
-              buildInputField(
-                label: 'New Password',
-                controller: newPasswordController,
-                isEnabled: true,
-                hintText: 'New Password',
-                keyboardType: TextInputType.emailAddress,
-                validator: (value) {
-                  if (value == null ||
-                      value.isEmpty) {
-                    return 'Please enter a valid Password';
-                  }
-                  if (value == currentPasswordController.text) {
-                    return 'New Password cannot be the same as Current Password';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 20.0),
-              buildInputField(
-                label: 'Confirm Password',
-                controller: confirmPasswordController,
-                isEnabled: true,
-                hintText: 'Confirm Password',
-                keyboardType: TextInputType.phone,
-                validator: (value) {
-                  if (value == null ||
-                      value.isEmpty ||
-                      value != newPasswordController.text) {
-                    return 'Please enter a Confirm Password as New Password';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 20.0),
-              BlocConsumer<FingerprintCubit, FingerprintState>(
-                listener: (context, state) {
-                  if (state is FingerprintSuccess) {
-                    if(formKey.currentState!.validate()){
-                      updateUserPassword(
-                          user: user!,
-                          currentPassword: currentPasswordController.text,
-                          newPassword: newPasswordController.text,
-                          confirmedPassword: confirmPasswordController.text);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                            content: Text('Password updated successfully.')),
-                      );
-                    }
-                  } else if (state is FingerprintFailure) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Authentication failed.')),
-                    );
-                  }
-                },
-                builder: (context, state) {
-                  return ElevatedButton(
-                    onPressed: () {
-                        context.read<FingerprintCubit>().checkFingerprint();
+          body: SingleChildScrollView(
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            scrollDirection: Axis.vertical,
+            physics: BouncingScrollPhysics(),
+            child: Form(
+              key: formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 20.0),
+                  buildInputField(
+                    label: 'Current Password',
+                    controller: currentPasswordController,
+                    hintText: 'Current Password',
+                    isEnabled: true,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter a valid Password';
+                      }
+                      return null;
                     },
-                    style: ElevatedButton.styleFrom(
-                        elevation: 0.0,
-                        fixedSize: Size(MediaQuery.sizeOf(context).width,30),
-                        backgroundColor: const Color(0xFFE02C45),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+                    state: state
+                  ),
+                  const SizedBox(height: 20.0),
+                  buildInputField(
+                    label: 'New Password',
+                    controller: newPasswordController,
+                    isEnabled: true,
+                    hintText: 'New Password',
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter a valid Password';
+                      }
+                      if (value == currentPasswordController.text) {
+                        return 'New Password cannot be the same as Current Password';
+                      }
+                      return null;
+                    }, state: state,
+                  ),
+                  const SizedBox(height: 20.0),
+                  buildInputField(
+                    label: 'Confirm Password',
+                    controller: confirmPasswordController,
+                    isEnabled: true,
+                    hintText: 'Confirm Password',
+                    keyboardType: TextInputType.phone,
+                    validator: (value) {
+                      if (value == null ||
+                          value.isEmpty ||
+                          value != newPasswordController.text) {
+                        return 'Please enter a Confirm Password as New Password';
+                      }
+                      return null;
+                    }, state: state,
+                  ),
+                  const SizedBox(height: 20.0),
+                  BlocConsumer<FingerprintCubit, FingerprintState>(
+                    listener: (context, state) {
+                      if (state is FingerprintSuccess) {
+                        if (formKey.currentState!.validate()) {
+                          updateUserPassword(
+                              user: user!,
+                              currentPassword: currentPasswordController.text,
+                              newPassword: newPasswordController.text,
+                              confirmedPassword:
+                                  confirmPasswordController.text);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content:
+                                    Text('Password updated successfully.')),
+                          );
+                        }
+                      } else if (state is FingerprintFailure) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                              content: Text('Authentication failed.')),
+                        );
+                      }
+                    },
+                    builder: (context, state) {
+                      return ElevatedButton(
+                        onPressed: () {
+                          context.read<FingerprintCubit>().checkFingerprint();
+                        },
+                        style: ElevatedButton.styleFrom(
+                            elevation: 0.0,
+                            fixedSize:
+                                Size(MediaQuery.sizeOf(context).width, 30),
+                            backgroundColor: const Color(0xFFE02C45),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap),
+                        child: Text(
+                          'Change Password',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w600,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
                         ),
-                        tapTargetSize: MaterialTapTargetSize.shrinkWrap),
-                    child: Text(
-                      'Change Password',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 10,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w600,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                    ),
-                  );
-                },
+                      );
+                    },
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
@@ -233,14 +242,15 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     bool isEnabled = false,
     String? hintText,
     TextInputType keyboardType = TextInputType.text,
+    required ThemeState state,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label,
-          style: const TextStyle(
-            color: Colors.black,
+          style: TextStyle(
+            color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
             fontSize: 10,
             fontWeight: FontWeight.w500,
           ),
@@ -250,8 +260,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           controller: controller,
           keyboardType: keyboardType,
           validator: validator,
+          cursorColor: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
           style: TextStyle(
-            color: isEnabled ? Colors.black : const Color(0xFFCCCCCC),
+            color: isEnabled ? state.themeMode == ThemeMode.light ? Colors.black : Colors.white : const Color(0xFFCCCCCC),
             fontSize: 12,
             fontWeight: FontWeight.w500,
           ),

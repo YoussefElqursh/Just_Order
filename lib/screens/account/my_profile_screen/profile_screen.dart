@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_order/blocs/fingerprint/fingerprint_cubit.dart';
 import 'package:just_order/blocs/fingerprint/fingerprint_state.dart';
+import 'package:just_order/blocs/theming/theming_cubit.dart';
+import 'package:just_order/blocs/theming/theming_state.dart';
+import 'package:just_order/layouts/main_layout.dart';
 import 'package:just_order/models/user_model.dart';
-import 'package:just_order/screens/account/main_account_screen/account_screen.dart';
 import 'package:just_order/shared/function/connectivity_plus.dart';
 import 'package:just_order/shared/function/validations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -61,7 +63,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         phoneController.text = loadedUser.phoneNumber;
       });
     }
-
   }
 
   void toggleEditing() {
@@ -72,201 +73,218 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text(
-          'My Profile',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 14,
-            fontFamily: 'Inter',
-            fontWeight: FontWeight.w600,
-          ),
-          overflow: TextOverflow.ellipsis,
-          maxLines: 1,
-        ),
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 20.0, top: 10.0, bottom: 10.0),
-          child: Container(
-            width: 34,
-            height: 34,
-            clipBehavior: Clip.antiAlias,
-            decoration: ShapeDecoration(
-              color: const Color(0xFFF4F4F4),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8)),
+    return BlocBuilder<ThemeCubit, ThemeState>(
+      builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(
+            centerTitle: true,
+            title: Text(
+              'My Profile',
+              style: TextStyle(
+                color: state.themeMode == ThemeMode.light
+                    ? Colors.black
+                    : Colors.white,
+                fontSize: 14,
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w600,
+              ),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
             ),
-            child: IconButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => AccountScreen(),
-                  ),
-                );
-              },
-              icon: const Icon(
-                Icons.arrow_back,
-                color: Colors.black,
-                size: 18,
-              ),
-              style: ButtonStyle(
-                shape: WidgetStatePropertyAll(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
+            leading: Padding(
+              padding:
+                  const EdgeInsets.only(left: 20.0, top: 10.0, bottom: 10.0),
+              child: Container(
+                width: 34,
+                height: 34,
+                clipBehavior: Clip.antiAlias,
+                decoration: ShapeDecoration(
+                  color: const Color(0xFFF4F4F4),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)),
                 ),
-              ),
-            ),
-          ),
-        ),
-        leadingWidth: 55.0,
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20.0),
-        child: Form(
-          key: formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(height: 20.0),
-              CircleAvatar(
-                radius: 40,
-                backgroundColor: Colors.grey[200],
-                child: Text(
-                  user != null
-                      ? '${user!.firstName[0].toUpperCase()}${user!.lastName[0].toUpperCase()}'
-                      : '',
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 40,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10.0),
-              Text(
-                '${user?.firstName} ${user?.lastName}'.toUpperCase(),
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(height: 5.0),
-              Text(
-                user?.email ?? '',
-                style: const TextStyle(
-                  color: Color(0xFFAFAFAF),
-                  fontSize: 10,
-                ),
-              ),
-              const SizedBox(height: 20.0),
-              BlocConsumer<FingerprintCubit, FingerprintState>(
-                listener: (context, state) {
-                  if (state is FingerprintSuccess) {
-                    if (!hasProfileChanged()) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('No changes to save.')),
-                      );
-                      toggleEditing();
-                    } else {
-                      if (formKey.currentState!.validate()) {
-                        updateUserData(
-                          email: emailController.text,
-                          firstName: usernameController.text.split(' ')[0],
-                          lastName: usernameController.text.split(' ')[1],
-                          phoneNumber: phoneController.text,
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                              content: Text('Profile updated successfully.')),
-                        );
-                        toggleEditing();
-                      }
-                    }
-                  } else if (state is FingerprintFailure) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Authentication failed.')),
-                    );
-                  }
-                },
-                builder: (context, state) {
-                  return ElevatedButton(
-                    onPressed: () {
-                      if (isEditing) {
-                        context.read<FingerprintCubit>().checkFingerprint();
-                      } else {
-                        toggleEditing();
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                        elevation: 0.0,
-                        fixedSize: Size.fromHeight(30),
-                        backgroundColor: const Color(0xFFE02C45),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50),
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MainLayout(
+                          pageNumber: 2,
                         ),
-                        tapTargetSize: MaterialTapTargetSize.shrinkWrap),
+                      ),
+                    );
+                  },
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: Colors.black,
+                    size: 18,
+                  ),
+                  style: ButtonStyle(
+                    shape: WidgetStatePropertyAll(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            leadingWidth: 55.0,
+          ),
+          body: SingleChildScrollView(
+            padding: const EdgeInsets.all(20.0),
+            child: Form(
+              key: formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 20.0),
+                  CircleAvatar(
+                    radius: 40,
+                    backgroundColor: Colors.grey[200],
                     child: Text(
-                      isEditing ? 'Save Profile' : 'Edit Profile',
+                      user != null
+                          ? '${user!.firstName[0].toUpperCase()}${user!.lastName[0].toUpperCase()}'
+                          : '',
                       style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 10,
-                        fontFamily: 'Inter',
+                        color: Colors.black,
+                        fontSize: 40,
                         fontWeight: FontWeight.w600,
                       ),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
                     ),
-                  );
-                },
+                  ),
+                  const SizedBox(height: 10.0),
+                  Text(
+                    '${user?.firstName} ${user?.lastName}'.toUpperCase(),
+                    style: TextStyle(
+                      color: state.themeMode == ThemeMode.light
+                          ? Colors.black
+                          : Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 5.0),
+                  Text(
+                    user?.email ?? '',
+                    style: const TextStyle(
+                      color: Color(0xFFAFAFAF),
+                      fontSize: 10,
+                    ),
+                  ),
+                  const SizedBox(height: 20.0),
+                  BlocConsumer<FingerprintCubit, FingerprintState>(
+                    listener: (context, state) {
+                      if (state is FingerprintSuccess) {
+                        if (!hasProfileChanged()) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text('No changes to save.')),
+                          );
+                          toggleEditing();
+                        } else {
+                          if (formKey.currentState!.validate()) {
+                            updateUserData(
+                              email: emailController.text,
+                              firstName: usernameController.text.split(' ')[0],
+                              lastName: usernameController.text.split(' ')[1],
+                              phoneNumber: phoneController.text,
+                            );
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content:
+                                      Text('Profile updated successfully.')),
+                            );
+                            toggleEditing();
+                          }
+                        }
+                      } else if (state is FingerprintFailure) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                              content: Text('Authentication failed.')),
+                        );
+                      }
+                    },
+                    builder: (context, state) {
+                      return ElevatedButton(
+                        onPressed: () {
+                          if (isEditing) {
+                            context.read<FingerprintCubit>().checkFingerprint();
+                          } else {
+                            toggleEditing();
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                            elevation: 0.0,
+                            fixedSize: Size.fromHeight(30),
+                            backgroundColor: const Color(0xFFE02C45),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap),
+                        child: Text(
+                          isEditing ? 'Save Profile' : 'Edit Profile',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w600,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 20.0),
+                  buildInputField(
+                    label: 'Username',
+                    controller: usernameController,
+                    isEnabled: isEditing,
+                    hintText: '${user?.firstName} ${user?.lastName}',
+                    validator: (value) {
+                      if (value == null || value.isEmpty || value.length < 3) {
+                        return 'Please enter valid name';
+                      }
+                      return null;
+                    },
+                    state: state,
+                  ),
+                  const SizedBox(height: 20.0),
+                  buildInputField(
+                    label: 'Email',
+                    controller: emailController,
+                    isEnabled: false,
+                    hintText: user?.email,
+                    keyboardType: TextInputType.emailAddress,
+                    state: state,
+                  ),
+                  const SizedBox(height: 20.0),
+                  buildInputField(
+                    label: 'Phone Number',
+                    controller: phoneController,
+                    isEnabled: isEditing,
+                    hintText: user?.phoneNumber,
+                    keyboardType: TextInputType.phone,
+                    validator: (value) {
+                      if (value == null ||
+                          value.isEmpty ||
+                          value.startsWith('01') == false) {
+                        return 'Please enter a valid phone number';
+                      }
+                      if (!RegExp(r'^\d{11}$').hasMatch(value)) {
+                        return 'Please enter a valid 11-digit phone number';
+                      }
+                      return null;
+                    },
+                    state: state,
+                  ),
+                ],
               ),
-              const SizedBox(height: 20.0),
-              buildInputField(
-                label: 'Username',
-                controller: usernameController,
-                isEnabled: isEditing,
-                hintText: '${user?.firstName} ${user?.lastName}',
-                validator: (value) {
-                  if (value == null || value.isEmpty || value.length < 3) {
-                    return 'Please enter valid name';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 20.0),
-              buildInputField(
-                label: 'Email',
-                controller: emailController,
-                isEnabled: false,
-                hintText: user?.email,
-                keyboardType: TextInputType.emailAddress,
-              ),
-              const SizedBox(height: 20.0),
-              buildInputField(
-                label: 'Phone Number',
-                controller: phoneController,
-                isEnabled: isEditing,
-                hintText: user?.phoneNumber,
-                keyboardType: TextInputType.phone,
-                validator: (value) {
-                  if (value == null ||
-                      value.isEmpty ||
-                      value.startsWith('01') == false) {
-                    return 'Please enter a valid phone number';
-                  }
-                  if (!RegExp(r'^\d{11}$').hasMatch(value)) {
-                    return 'Please enter a valid 11-digit phone number';
-                  }
-                  return null;
-                },
-              ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
@@ -277,14 +295,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
     bool isEnabled = false,
     String? hintText,
     TextInputType keyboardType = TextInputType.text,
+    required ThemeState state,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label,
-          style: const TextStyle(
-            color: Colors.black,
+          style: TextStyle(
+            color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
             fontSize: 10,
             fontWeight: FontWeight.w500,
           ),
@@ -295,8 +314,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           enabled: isEnabled,
           keyboardType: keyboardType,
           validator: validator,
+          cursorColor: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
           style: TextStyle(
-            color: isEnabled ? Colors.black : const Color(0xFFCCCCCC),
+            color: isEnabled ? state.themeMode == ThemeMode.light ? Colors.black : Colors.white : const Color(0xFFCCCCCC),
             fontSize: 12,
             fontWeight: FontWeight.w500,
           ),

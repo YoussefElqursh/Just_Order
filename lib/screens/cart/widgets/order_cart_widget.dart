@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/cart_item_model.dart';
 
 Widget buildOrderCartWidget({
@@ -7,6 +8,7 @@ Widget buildOrderCartWidget({
   required void Function()? onPressed2,
   required int counter,
   required CartItem cartItem,
+  required ThemeState state,
 }) {
   return Row(
     mainAxisSize: MainAxisSize.min,
@@ -41,8 +43,8 @@ Widget buildOrderCartWidget({
             children: [
               Text(
                 cartItem.item.name,
-                style: const TextStyle(
-                  color: Colors.black,
+                style: TextStyle(
+                  color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                   fontSize: 12,
                   fontFamily: 'Inter',
                   fontWeight: FontWeight.w600,
@@ -80,8 +82,8 @@ Widget buildOrderCartWidget({
                 children: [
                   Text(
                     'EGP ${cartItem.totalPrice}',
-                    style: const TextStyle(
-                      color: Colors.black,
+                    style: TextStyle(
+                      color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                       fontSize: 10,
                       fontFamily: 'Inter',
                       fontWeight: FontWeight.w600,
@@ -95,7 +97,7 @@ Widget buildOrderCartWidget({
                     height: 34,
                     clipBehavior: Clip.antiAlias,
                     decoration: ShapeDecoration(
-                      color: const Color(0x0CE02C45),
+                      color: state.themeMode == ThemeMode.light ? const Color(0x0CE02C45) : const Color(0x5FE02C45),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8)),
                     ),
@@ -117,8 +119,8 @@ Widget buildOrderCartWidget({
                   ),
                   const SizedBox(width: 10.0),
                   Text('$counter',
-                      style: const TextStyle(
-                        color: Colors.black,
+                      style: TextStyle(
+                        color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                         fontSize: 12,
                         fontFamily: 'Inter',
                         fontWeight: FontWeight.w500,
@@ -131,7 +133,7 @@ Widget buildOrderCartWidget({
                     height: 34,
                     clipBehavior: Clip.antiAlias,
                     decoration: ShapeDecoration(
-                      color: const Color(0x0CE02C45),
+                      color: state.themeMode == ThemeMode.light ? const Color(0x0CE02C45) : const Color(0x5FE02C45),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8)),
                     ),

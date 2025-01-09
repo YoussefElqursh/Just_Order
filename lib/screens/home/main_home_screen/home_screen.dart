@@ -2,6 +2,9 @@ import 'dart:math';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:just_order/blocs/theming/theming_cubit.dart';
+import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/repository/user_repository/user_repository.dart';
 import 'package:just_order/screens/home/main_home_screen/place_details_sheet.dart';
@@ -77,9 +80,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BlocBuilder<ThemeCubit, ThemeState>(
+      builder: (context, state) {
+        return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
         leadingWidth: 200,
         shadowColor: Colors.grey,
         leading: Padding(
@@ -93,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 36,
                 clipBehavior: Clip.antiAlias,
                 decoration: ShapeDecoration(
-                  color: const Color(0x0CE02C45),
+                  color: state.themeMode == ThemeMode.light ? const Color(0x0CE02C45) : const Color(0x5FE02C45),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(6),
                   ),
@@ -116,10 +120,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         'Delivering to',
                         style: TextStyle(
-                          color: Color(0xFF878787),
+                          color: state.themeMode == ThemeMode.light ? Color(0xFF878787) : Colors.white,
                           fontSize: 8,
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w400,
@@ -130,8 +134,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       const SizedBox(height: 3),
                       Text(
                         'Table $tableCode',
-                        style: const TextStyle(
-                          color: Colors.black,
+                        style: TextStyle(
+                          color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                           fontSize: 10,
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w500,
@@ -262,7 +266,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         decoration: BoxDecoration(
                           color: i == _currentPage
                               ? const Color(0xFFE02C45)
-                              : const Color(0x0CE02C45),
+                              : state.themeMode == ThemeMode.light ? const Color(0x0CE02C45) : const Color(0x5FE02C45),
                           shape: BoxShape.circle,
                         ),
                       ),
@@ -271,12 +275,12 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(height: 25.0),
               // All Restaurants
-              const Padding(
+              Padding(
                 padding: EdgeInsets.only(left: 20.0),
                 child: Text(
                   'All Restaurants',
                   style: TextStyle(
-                    color: Colors.black,
+                    color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                     fontSize: 14,
                     fontFamily: 'Inter',
                     fontWeight: FontWeight.w600,
@@ -291,7 +295,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 100.0,
                 child: ListView.separated(
                   itemBuilder: (context, index) =>
-                      buildCategoriesWidget(restaurants[index]),
+                      buildCategoriesWidget(restaurants[index], state),
                   separatorBuilder: (context, index) =>
                       const SizedBox(width: 10.0),
                   itemCount: restaurants.length,
@@ -328,10 +332,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Text(
+                    Text(
                       'Popular Today',
                       style: TextStyle(
-                        color: Colors.black,
+                        color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                         fontSize: 14,
                         fontFamily: 'Inter',
                         fontWeight: FontWeight.w600,
@@ -367,7 +371,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 201.0,
                 child: ListView.separated(
                   itemBuilder: (context, index) => buildPopularTodayWidget(
-                      context: context, restaurant: restaurants[index]),
+                      context: context, restaurant: restaurants[index], state: state),
                   separatorBuilder: (context, index) =>
                       const SizedBox(width: 10.0),
                   itemCount: min(restaurants.length, 5),
@@ -383,7 +387,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: MediaQuery.sizeOf(context).width,
                 child: ListView.separated(
                   itemBuilder: (context, index) => buildRestaurantsWidget(
-                      context: context, restaurant: restaurants[index]),
+                      context: context, restaurant: restaurants[index],state: state),
                   separatorBuilder: (context, index) => const Padding(
                     padding: EdgeInsets.symmetric(vertical: 10.0),
                     child: Divider(
@@ -402,6 +406,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-    );
+    );},);
   }
 }

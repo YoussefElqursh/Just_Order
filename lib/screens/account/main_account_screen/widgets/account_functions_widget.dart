@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:just_order/blocs/theming/theming_state.dart';
 
 Widget accountFunctionWidget({
   required BuildContext context,
@@ -7,6 +8,7 @@ Widget accountFunctionWidget({
   bool isText = false,
   String? text,
   required void Function()? onPressed,
+  required ThemeState state,
 }) {
   return MaterialButton(
     onPressed: onPressed,
@@ -43,9 +45,8 @@ Widget accountFunctionWidget({
         ),
         Text(
           label,
-          style: const TextStyle(
-            color: Colors.black,
-            fontSize: 12,
+          style: TextStyle(
+            color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
             fontFamily: 'Inter',
             fontWeight: FontWeight.w500,
           ),
@@ -53,9 +54,9 @@ Widget accountFunctionWidget({
           maxLines: 1,
         ),
         const Spacer(),
-        isText ? Text(text!) : const Icon(
+        isText ? Text(text!) : Icon(
           Icons.arrow_forward_ios,
-          color: Colors.black,
+          color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
           size: 18,
         ),
       ],

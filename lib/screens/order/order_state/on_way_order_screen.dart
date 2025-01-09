@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:just_order/blocs/theming/theming_cubit.dart';
+import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/order_model.dart';
 import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/shared/function/functions.dart';
@@ -29,13 +32,15 @@ class OnWayOrderScreen extends StatefulWidget {
 class _OnWayOrderScreenState extends State<OnWayOrderScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BlocBuilder<ThemeCubit, ThemeState>(
+        builder: (context, state) {
+      return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
+        title: Text(
           'On Way Orders',
           style: TextStyle(
-            color: Colors.black,
+            color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
             fontSize: 14,
             fontFamily: 'Inter',
             fontWeight: FontWeight.w600,
@@ -87,16 +92,16 @@ class _OnWayOrderScreenState extends State<OnWayOrderScreen> {
                       setPhoto(
                         kind: 0,
                         path: 'assets/images/order.png',
-                        height: 30,
-                        width: 30,
+                        height: 100,
+                        width: 250,
                       ),
                       const SizedBox(
                         height: 15,
                       ),
                       Text(
-                        'No Declined Orders',
+                        'No Way Orders',
                         style: TextStyle(
-                          color: Colors.black,
+                          color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                           fontSize: 12,
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w600,
@@ -115,7 +120,7 @@ class _OnWayOrderScreenState extends State<OnWayOrderScreen> {
                   width: 70,
                   order: widget.orders[index],
                   restaurant:
-                  widget.restaurantMap[widget.orders[index].restaurantId]!,
+                  widget.restaurantMap[widget.orders[index].restaurantId]!, state: state,
                 ),
                 separatorBuilder: (context, index) => const SizedBox(
                   height: 12.0,
@@ -129,6 +134,6 @@ class _OnWayOrderScreenState extends State<OnWayOrderScreen> {
           },),
         ),
       ),
-    );
+    );},);
   }
 }

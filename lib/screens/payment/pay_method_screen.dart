@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:just_order/blocs/theming/theming_cubit.dart';
+import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/cart_item_model.dart';
 import 'package:just_order/models/enums/payment_type.dart';
 import 'package:just_order/models/invoice_model.dart';
@@ -62,13 +65,15 @@ class _PayMethodScreenState extends State<PayMethodScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BlocBuilder<ThemeCubit, ThemeState>(
+      builder: (context, state) {
+        return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
+        title: Text(
           'Payment Method',
           style: TextStyle(
-            color: Colors.black,
+            color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
             fontSize: 14,
             fontFamily: 'Inter',
             fontWeight: FontWeight.w600,
@@ -96,9 +101,9 @@ class _PayMethodScreenState extends State<PayMethodScreen> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              icon: const Icon(
+              icon: Icon(
                 Icons.arrow_back,
-                color: Colors.black,
+                color: state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
                 size: 18,
               ),
               style: ButtonStyle(
@@ -134,7 +139,7 @@ class _PayMethodScreenState extends State<PayMethodScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 12.0),
                   clipBehavior: Clip.antiAlias,
                   decoration: ShapeDecoration(
-                    color: Colors.white,
+                    color: state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
                     shape: RoundedRectangleBorder(
                       side: BorderSide(
                         width: 1,
@@ -190,7 +195,7 @@ class _PayMethodScreenState extends State<PayMethodScreen> {
                                 clicked2 = false;
                                 widget.order.paymentType = PaymentType.cash;
                               });
-                            },
+                            }, state: state,
                           ),
                         ],
                       ),
@@ -203,7 +208,7 @@ class _PayMethodScreenState extends State<PayMethodScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 12.0),
                   clipBehavior: Clip.antiAlias,
                   decoration: ShapeDecoration(
-                    color: Colors.white,
+                    color: state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
                     shape: RoundedRectangleBorder(
                       side: BorderSide(
                         width: 1,
@@ -263,7 +268,7 @@ class _PayMethodScreenState extends State<PayMethodScreen> {
                                     clicked2 = true;
                                     widget.order.paymentType = PaymentType.card;
                                   });
-                                },
+                                }, state: state,
                               ),
                             ],
                           ),
@@ -491,6 +496,6 @@ class _PayMethodScreenState extends State<PayMethodScreen> {
           ),
         ),
       ),
-    );
+    );},);
   }
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:just_order/blocs/theming/theming_cubit.dart';
 
 class SwitchBtnWidget extends StatefulWidget {
   const SwitchBtnWidget({super.key});
@@ -24,6 +26,7 @@ class _SwitchBtnWidgetState extends State<SwitchBtnWidget> {
       onChanged: (bool value) {
         setState(() {
         _lights = value;
+        context.read<ThemeCubit>().toggleTheme();
       });
       },
     );

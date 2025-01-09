@@ -76,12 +76,17 @@ dependencies:
   internet_connection_checker: ^3.0.1
   local_auth: ^2.3.0
 
+  #CodeGenerator
+  freezed: ^2.5.7
+  freezed_annotation: ^2.4.4
+
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: "^0.13.1"
+  build_runner: ^2.4.6
 
 flutter_launcher_icons:
   android: "launcher_icon"

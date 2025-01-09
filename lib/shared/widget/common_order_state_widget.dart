@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/order_model.dart';
 import 'package:just_order/models/restaurant_model.dart';
 
@@ -10,12 +11,13 @@ Widget buildOrderStateWidget({
   required double width,
   required Order order,
   required Restaurant restaurant,
+  required ThemeState state,
 }) {
   return Container(
     height: 96,
     width: MediaQuery.sizeOf(context).width,
-    decoration: const ShapeDecoration(
-      color: Colors.white,
+    decoration: ShapeDecoration(
+      color: state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
       shape: RoundedRectangleBorder(
         side: BorderSide(
           width: 1,
@@ -65,7 +67,7 @@ Widget buildOrderStateWidget({
                       decoration: ShapeDecoration(
                         image: DecorationImage(
                           image: NetworkImage(restaurant.imageUrl ??
-                              'https://via.placeholder.com/150'),
+                              'https://via.placeholder.com/150*150'),
                           fit: BoxFit.cover,
                         ),
                         shape: RoundedRectangleBorder(
@@ -91,8 +93,10 @@ Widget buildOrderStateWidget({
                             children: [
                               Text(
                                 restaurant.name,
-                                style: const TextStyle(
-                                  color: Colors.black,
+                                style: TextStyle(
+                                  color: state.themeMode == ThemeMode.light
+                                      ? Colors.black
+                                      : Colors.white,
                                   fontSize: 12,
                                   fontFamily: 'Inter',
                                   fontWeight: FontWeight.w600,
@@ -163,8 +167,10 @@ Widget buildOrderStateWidget({
                     const Spacer(),
                     Text(
                       'EGP ${order.totalAmount}',
-                      style: const TextStyle(
-                        color: Colors.black,
+                      style: TextStyle(
+                        color: state.themeMode == ThemeMode.light
+                            ? Colors.black
+                            : Colors.white,
                         fontSize: 12,
                         fontFamily: 'Inter',
                         fontWeight: FontWeight.w700,
@@ -187,6 +193,7 @@ Widget buildOrderPendingStateWidget({
   required Order order,
   required Restaurant restaurant,
   required Function()? onPressed,
+  required ThemeState state,
 }) {
   // Calculate the time difference in minutes
   final now = DateTime.now();
@@ -206,11 +213,11 @@ Widget buildOrderPendingStateWidget({
   }
 
   return Container(
-    height: 96,
+    height: 145,
     width: MediaQuery.sizeOf(context).width,
-    decoration: const ShapeDecoration(
-      color: Colors.white,
-      shape: RoundedRectangleBorder(
+    decoration: ShapeDecoration(
+      color: state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
+      shape: const RoundedRectangleBorder(
         side: BorderSide(
           width: 1,
           strokeAlign: BorderSide.strokeAlignCenter,
@@ -225,7 +232,7 @@ Widget buildOrderPendingStateWidget({
       children: [
         Container(
           width: 5,
-          height: 96,
+          height: 145,
           decoration: ShapeDecoration(
             color: borderColor,
             shape: RoundedRectangleBorder(
@@ -285,8 +292,10 @@ Widget buildOrderPendingStateWidget({
                             children: [
                               Text(
                                 restaurant.name,
-                                style: const TextStyle(
-                                  color: Colors.black,
+                                style: TextStyle(
+                                  color: state.themeMode == ThemeMode.light
+                                      ? Colors.black
+                                      : Colors.white,
                                   fontSize: 12,
                                   fontFamily: 'Inter',
                                   fontWeight: FontWeight.w600,
@@ -369,7 +378,7 @@ Widget buildOrderPendingStateWidget({
                 buildMaterialButton(
                   context: context,
                   onPressed: onPressed,
-                  title: 'Finalized',
+                  title: 'Cancel',
                   height: 36,
                 ),
               ],
@@ -386,6 +395,7 @@ Widget buildOrderPreparingStateWidget({
   required double width,
   required Order order,
   required Restaurant restaurant,
+  required ThemeState state,
 }) {
   // Calculate the time difference in minutes
   final now = DateTime.now();
@@ -407,8 +417,8 @@ Widget buildOrderPreparingStateWidget({
   return Container(
     height: 96,
     width: MediaQuery.sizeOf(context).width,
-    decoration: const ShapeDecoration(
-      color: Colors.white,
+    decoration: ShapeDecoration(
+      color: state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
       shape: RoundedRectangleBorder(
         side: BorderSide(
           width: 1,
@@ -484,8 +494,8 @@ Widget buildOrderPreparingStateWidget({
                             children: [
                               Text(
                                 restaurant.name,
-                                style: const TextStyle(
-                                  color: Colors.black,
+                                style: TextStyle(
+                                  color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                                   fontSize: 12,
                                   fontFamily: 'Inter',
                                   fontWeight: FontWeight.w600,
@@ -556,8 +566,8 @@ Widget buildOrderPreparingStateWidget({
                     const Spacer(),
                     Text(
                       'EGP ${order.totalAmount}',
-                      style: const TextStyle(
-                        color: Colors.black,
+                      style: TextStyle(
+                        color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                         fontSize: 12,
                         fontFamily: 'Inter',
                         fontWeight: FontWeight.w700,
@@ -574,16 +584,18 @@ Widget buildOrderPreparingStateWidget({
   );
 }
 
-Widget buildOrderOnWayStateWidget(
-    {required BuildContext context,
-    required Order order,
-    required double width,
-    required Restaurant restaurant}) {
+Widget buildOrderOnWayStateWidget({
+  required BuildContext context,
+  required Order order,
+  required double width,
+  required Restaurant restaurant,
+  required ThemeState state,
+}) {
   return Container(
     height: 96,
     width: MediaQuery.sizeOf(context).width,
-    decoration: const ShapeDecoration(
-      color: Colors.white,
+    decoration: ShapeDecoration(
+      color: state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
       shape: RoundedRectangleBorder(
         side: BorderSide(
           width: 1,
@@ -641,8 +653,8 @@ Widget buildOrderOnWayStateWidget(
                             children: [
                               Text(
                                 restaurant.name,
-                                style: const TextStyle(
-                                  color: Colors.black,
+                                style: TextStyle(
+                                  color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                                   fontSize: 12,
                                   fontFamily: 'Inter',
                                   fontWeight: FontWeight.w600,
@@ -713,8 +725,8 @@ Widget buildOrderOnWayStateWidget(
                     const Spacer(),
                     Text(
                       'EGP ${order.totalAmount}',
-                      style: const TextStyle(
-                        color: Colors.black,
+                      style: TextStyle(
+                        color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                         fontSize: 12,
                         fontFamily: 'Inter',
                         fontWeight: FontWeight.w700,
@@ -731,16 +743,18 @@ Widget buildOrderOnWayStateWidget(
   );
 }
 
-Widget buildOrderDeliveredStateWidget(
-    {required BuildContext context,
-    required Order order,
-    required double width,
-    required Restaurant restaurant}) {
+Widget buildOrderDeliveredStateWidget({
+  required BuildContext context,
+  required Order order,
+  required double width,
+  required Restaurant restaurant,
+  required ThemeState state,
+}) {
   return Container(
     height: 96,
     width: MediaQuery.sizeOf(context).width,
-    decoration: const ShapeDecoration(
-      color: Colors.white,
+    decoration: ShapeDecoration(
+      color: state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
       shape: RoundedRectangleBorder(
         side: BorderSide(
           width: 1,
@@ -798,8 +812,8 @@ Widget buildOrderDeliveredStateWidget(
                             children: [
                               Text(
                                 restaurant.name,
-                                style: const TextStyle(
-                                  color: Colors.black,
+                                style: TextStyle(
+                                  color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                                   fontSize: 12,
                                   fontFamily: 'Inter',
                                   fontWeight: FontWeight.w600,
@@ -870,8 +884,8 @@ Widget buildOrderDeliveredStateWidget(
                     const Spacer(),
                     Text(
                       'EGP ${order.totalAmount}',
-                      style: const TextStyle(
-                        color: Colors.black,
+                      style: TextStyle(
+                        color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                         fontSize: 12,
                         fontFamily: 'Inter',
                         fontWeight: FontWeight.w700,
@@ -888,16 +902,18 @@ Widget buildOrderDeliveredStateWidget(
   );
 }
 
-Widget buildOrderDeclinedStateWidget(
-    {required BuildContext context,
-    required Order order,
-    required double width,
-    required Restaurant restaurant}) {
+Widget buildOrderDeclinedStateWidget({
+  required BuildContext context,
+  required Order order,
+  required double width,
+  required Restaurant restaurant,
+  required ThemeState state,
+}) {
   return Container(
     height: 96,
     width: MediaQuery.sizeOf(context).width,
-    decoration: const ShapeDecoration(
-      color: Colors.white,
+    decoration: ShapeDecoration(
+      color: state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
       shape: RoundedRectangleBorder(
         side: BorderSide(
           width: 1,
@@ -955,8 +971,8 @@ Widget buildOrderDeclinedStateWidget(
                             children: [
                               Text(
                                 restaurant.name,
-                                style: const TextStyle(
-                                  color: Colors.black,
+                                style: TextStyle(
+                                  color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                                   fontSize: 12,
                                   fontFamily: 'Inter',
                                   fontWeight: FontWeight.w600,
@@ -1027,8 +1043,8 @@ Widget buildOrderDeclinedStateWidget(
                     const Spacer(),
                     Text(
                       'EGP ${order.totalAmount}',
-                      style: const TextStyle(
-                        color: Colors.black,
+                      style: TextStyle(
+                        color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                         fontSize: 12,
                         fontFamily: 'Inter',
                         fontWeight: FontWeight.w700,
@@ -1045,16 +1061,18 @@ Widget buildOrderDeclinedStateWidget(
   );
 }
 
-Widget buildOrderAutoDeclinedStateWidget(
-    {required BuildContext context,
-    required Order order,
-    required double width,
-    required Restaurant restaurant}) {
+Widget buildOrderAutoDeclinedStateWidget({
+  required BuildContext context,
+  required Order order,
+  required double width,
+  required Restaurant restaurant,
+  required ThemeState state,
+}) {
   return Container(
     height: 96,
     width: MediaQuery.sizeOf(context).width,
-    decoration: const ShapeDecoration(
-      color: Colors.white,
+    decoration: ShapeDecoration(
+      color: state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
       shape: RoundedRectangleBorder(
         side: BorderSide(
           width: 1,
@@ -1112,8 +1130,8 @@ Widget buildOrderAutoDeclinedStateWidget(
                             children: [
                               Text(
                                 restaurant.name,
-                                style: const TextStyle(
-                                  color: Colors.black,
+                                style: TextStyle(
+                                  color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                                   fontSize: 12,
                                   fontFamily: 'Inter',
                                   fontWeight: FontWeight.w600,
@@ -1184,8 +1202,8 @@ Widget buildOrderAutoDeclinedStateWidget(
                     const Spacer(),
                     Text(
                       'EGP ${order.totalAmount}',
-                      style: const TextStyle(
-                        color: Colors.black,
+                      style: TextStyle(
+                        color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                         fontSize: 12,
                         fontFamily: 'Inter',
                         fontWeight: FontWeight.w700,

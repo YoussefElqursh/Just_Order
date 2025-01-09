@@ -1,6 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:just_order/blocs/theming/theming_cubit.dart';
+import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/enums/status.dart';
 import 'package:just_order/models/order_model.dart';
 import 'package:just_order/models/restaurant_model.dart';
@@ -53,8 +56,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
     });
 
     final fetchedOrders = await _orderRepository.getOrders(user?.userId ?? '');
-    final restaurantIds = fetchedOrders.map((order) => order.restaurantId).toList();
-    final fetchedRestaurants = await _orderRepository.getRestaurants(restaurantIds);
+    final restaurantIds =
+        fetchedOrders.map((order) => order.restaurantId).toList();
+    final fetchedRestaurants =
+        await _orderRepository.getRestaurants(restaurantIds);
 
     setState(() {
       restaurantMap = {
@@ -83,69 +88,113 @@ class _HistoryScreenState extends State<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
     return _isLoading
-        ? Scaffold(body: Center(child: CircularProgressIndicator(color: const Color(0xFFE02C45),)))
+        ? Scaffold(
+            body: Center(
+                child: CircularProgressIndicator(
+            color: const Color(0xFFE02C45),
+          )))
         : Consumer<OrderProvider>(builder: (context, orderProvider, child) {
-      final orders = getFilteredOrders(orderProvider.orders);
+            final orders = getFilteredOrders(orderProvider.orders);
 
-      return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: const Text(
-            'History',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 14,
-              fontFamily: 'Inter',
-              fontWeight: FontWeight.w600,
-            ),
-            overflow: TextOverflow.ellipsis,
-            maxLines: 1,
-          ),
-          leading: IconButton(
-            onPressed: () => Navigator.pop(context),
-            icon: const Icon(Icons.arrow_back, color: Colors.black),
-          ),
-        ),
-        body: orders.isEmpty
-            ? Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              setPhoto(
-                kind: 0,
-                path: 'assets/images/order.png',
-                height: 100,
-                width: 100,
-              ),
-              const SizedBox(height: 15),
-              const Text(
-                'No History Orders',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 12,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
-          ),
-        )
-            : ListView.separated(
-          itemBuilder: (context, index) {
-            final order = orders[index];
-            final restaurant = restaurantMap[order.restaurantId] ?? Restaurant.empty();
-            return buildOrderDeliveredStateWidget(
-              context: context,
-              order: order,
-              restaurant: restaurant,
-              width: 70,
+            return BlocBuilder<ThemeCubit, ThemeState>(
+              builder: (context, state) {
+                return Scaffold(
+                  appBar: AppBar(
+                    centerTitle: true,
+                    title: Text(
+                      'History',
+                      style: TextStyle(
+                        color: state.themeMode == ThemeMode.light
+                            ? Colors.black
+                            : Colors.white,
+                        fontSize: 14,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w600,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                    leading: Padding(
+                      padding: const EdgeInsets.only(
+                          left: 20.0, top: 10.0, bottom: 10.0),
+                      child: Container(
+                        width: 34,
+                        height: 34,
+                        clipBehavior: Clip.antiAlias,
+                        decoration: ShapeDecoration(
+                          color: const Color(0xFFF4F4F4),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                        ),
+                        child: IconButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          icon: const Icon(
+                            Icons.arrow_back,
+                            color: Colors.black,
+                            size: 18,
+                          ),
+                          style: ButtonStyle(
+                            shape: WidgetStatePropertyAll(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  body: orders.isEmpty
+                      ? Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              setPhoto(
+                                kind: 0,
+                                path: 'assets/images/order.png',
+                                height: 100,
+                                width: 250,
+                              ),
+                              const SizedBox(height: 15),
+                              Text(
+                                'No History Orders',
+                                style: TextStyle(
+                                  color: state.themeMode == ThemeMode.light
+                                      ? Colors.black
+                                      : Colors.white,
+                                  fontSize: 12,
+                                  fontFamily: 'Inter',
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : ListView.separated(
+                          itemBuilder: (context, index) {
+                            final order = orders[index];
+                            final restaurant =
+                                restaurantMap[order.restaurantId] ??
+                                    Restaurant.empty();
+                            return buildOrderDeliveredStateWidget(
+                              context: context,
+                              order: order,
+                              restaurant: restaurant,
+                              width: 70,
+                              state: state,
+                            );
+                          },
+                          separatorBuilder: (context, index) =>
+                              const SizedBox(height: 12),
+                          itemCount: orders.length,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20.0, vertical: 10.0),
+                        ),
+                );
+              },
             );
-          },
-          separatorBuilder: (context, index) => const SizedBox(height: 12),
-          itemCount: orders.length,
-          padding: EdgeInsets.symmetric(horizontal: 20.0),
-        ),
-      );
-    });
+          });
   }
 }

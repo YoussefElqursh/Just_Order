@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/cart_item_model.dart';
 
-Widget buildOrderComponentsWidget(CartItem cartItem) {
+Widget buildOrderComponentsWidget(CartItem cartItem, ThemeState state) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.start,
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,8 +33,8 @@ Widget buildOrderComponentsWidget(CartItem cartItem) {
           children: [
             Text(
               cartItem.item.name,
-              style: const TextStyle(
-                color: Colors.black,
+              style: TextStyle(
+                color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                 fontSize: 10,
                 fontFamily: 'Inter',
                 fontWeight: FontWeight.w600,
@@ -70,8 +71,8 @@ Widget buildOrderComponentsWidget(CartItem cartItem) {
             const SizedBox(height: 6.0),
             Text(
               'EGP ${cartItem.totalPrice}',
-              style: const TextStyle(
-                color: Colors.black,
+              style: TextStyle(
+                color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                 fontSize: 8,
                 fontFamily: 'Inter',
                 fontWeight: FontWeight.w600,
@@ -88,7 +89,7 @@ Widget buildOrderComponentsWidget(CartItem cartItem) {
         height: 29,
         clipBehavior: Clip.antiAlias,
         decoration: ShapeDecoration(
-          color: const Color(0x0CE02C45),
+          color: state.themeMode == ThemeMode.light ? const Color(0x0CE02C45) : const Color(0x5FE02C45),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
         ),
         child: Center(
