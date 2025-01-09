@@ -103,7 +103,7 @@ class _PayMethodScreenState extends State<PayMethodScreen> {
               },
               icon: Icon(
                 Icons.arrow_back,
-                color: state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
+                color: Colors.black,
                 size: 18,
               ),
               style: ButtonStyle(
