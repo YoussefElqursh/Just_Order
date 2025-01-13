@@ -66,7 +66,7 @@ Widget buildOrderCartWidget({
               ),
               const SizedBox(height: 5.0),
               Text(
-                cartItem.size!.keys.join(', '),
+                cartItem.size?.keys.join(', ') ?? '',
                 style: const TextStyle(
                   color: Color(0xFFAFAFAF),
                   fontSize: 10,

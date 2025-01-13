@@ -357,9 +357,12 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                 }, state: state,
                               );
                             },
-                            separatorBuilder: (context, index) => Divider(
-                              height: 1,
-                              color: Color(0x4CC8C8C8),
+                            separatorBuilder: (context, index) => Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 15.0),
+                              child: Divider(
+                                height: 1,
+                                color: Color(0x4CC8C8C8),
+                              ),
                             ),
                             itemCount: filteredItems.length,
                             scrollDirection: Axis.vertical,

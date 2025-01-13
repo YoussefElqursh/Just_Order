@@ -248,42 +248,44 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                             maxLines: 2,
                           ),
                           const SizedBox(height: 26.0),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                'EGP ${price.toStringAsFixed(2)}',
-                                style: TextStyle(
-                                  color: state.themeMode == ThemeMode.light
-                                      ? Colors.black
-                                      : Colors.white,
-                                  fontSize: 14,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w600,
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 20.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'EGP ${price.toStringAsFixed(2)}',
+                                  style: TextStyle(
+                                    color: state.themeMode == ThemeMode.light
+                                        ? Colors.black
+                                        : Colors.white,
+                                    fontSize: 14,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
                                 ),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                              ),
-                              const Spacer(),
-                              const Text(
-                                'EGP 0.00',
-                                style: TextStyle(
-                                  color: Color(0xFFE02C45),
-                                  fontSize: 12,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w400,
-                                  decoration: TextDecoration.lineThrough,
-                                  decorationColor: Color(0xFFE02C45),
+                                const Spacer(),
+                                const Text(
+                                  'EGP 0.00',
+                                  style: TextStyle(
+                                    color: Color(0xFFE02C45),
+                                    fontSize: 12,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w400,
+                                    decoration: TextDecoration.lineThrough,
+                                    decorationColor: Color(0xFFE02C45),
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
                                 ),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                           if (item.sizes != null && item.sizes!.isNotEmpty) ...[
-                            const SizedBox(height: 26.0),
                             Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.end,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Column(
@@ -292,7 +294,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Pizza Size',
+                                      'Options',
                                       style: TextStyle(
                                         color:
                                             state.themeMode == ThemeMode.light
@@ -375,7 +377,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                               item.extras!.isNotEmpty) ...[
                             const SizedBox(height: 26.0),
                             Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.end,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Column(
@@ -413,7 +415,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                   height: 23,
                                   clipBehavior: Clip.antiAlias,
                                   decoration: ShapeDecoration(
-                                    color: state.themeMode == ThemeMode.dark ? Colors.black :const Color(0x4CAFAFAF),
+                                    color: state.themeMode == ThemeMode.dark ? const Color(0x5FE02C45) :const Color(0x4CAFAFAF),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(50),
                                     ),

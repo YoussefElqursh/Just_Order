@@ -109,7 +109,7 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
                   ),
                   SettingsAppItems(
                     icon: Icons.dark_mode_outlined,
-                    title: 'Theme Mode',
+                    title: 'Dark Mode',
                     training: SwitchBtnWidget(),
                     state: state,
                   ),

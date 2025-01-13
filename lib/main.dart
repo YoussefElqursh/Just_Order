@@ -24,6 +24,8 @@ Future<void> main() async {
   await Firebase.initializeApp();
   Bloc.observer = MyBlocObserver();
   await dotenv.load(fileName: "assets/.env");
+  final themeCubit = ThemeCubit();
+  await themeCubit.loadTheme(); // Load saved theme before running the app
 
   runApp(
     EasyLocalization(

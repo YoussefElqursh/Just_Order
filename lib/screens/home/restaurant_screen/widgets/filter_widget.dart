@@ -8,7 +8,12 @@ class FilterWidget extends StatefulWidget {
   final String filters;
   final ThemeState state;
 
-  const FilterWidget({required this.items, super.key, required this.filters, required this.state});
+  const FilterWidget({
+    required this.items,
+    super.key,
+    required this.filters,
+    required this.state,
+  });
 
   @override
   // ignore: library_private_types_in_public_api
@@ -21,7 +26,7 @@ class _FilterWidgetState extends State<FilterWidget> {
     final List<Item> items = widget.items;
     final String filters = widget.filters;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -29,7 +34,9 @@ class _FilterWidgetState extends State<FilterWidget> {
           Text(
             filters,
             style: TextStyle(
-              color: widget.state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+              color: widget.state.themeMode == ThemeMode.light
+                  ? Colors.black
+                  : Colors.white,
               fontSize: 14,
               fontFamily: 'Inter',
               fontWeight: FontWeight.w600,
@@ -38,24 +45,46 @@ class _FilterWidgetState extends State<FilterWidget> {
             maxLines: 1,
           ),
           const SizedBox(height: 12.0),
-          SizedBox(
-            width: double.infinity,
-            child: ListView.separated(
-              itemBuilder: (context, index) =>
-                  buildMealWidget(context: context, item: items[index], state: widget.state),
-              separatorBuilder: (context, index) => const Padding(
-                padding: EdgeInsets.symmetric(vertical: 10.0),
-                child: Divider(
-                  height: 1,
-                  color: Colors.grey,
+          items.isNotEmpty
+              ? SizedBox(
+                  width: double.infinity,
+                  height: MediaQuery.sizeOf(context).height - 530,
+                  child: ListView.separated(
+                    itemBuilder: (context, index) => buildMealWidget(
+                      context: context,
+                      item: items[index],
+                      state: widget.state,
+                    ),
+                    separatorBuilder: (context, index) => const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10.0),
+                      child: Divider(
+                        height: 1,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    itemCount: items.length,
+                    scrollDirection: Axis.vertical,
+                    physics: const BouncingScrollPhysics(),
+                    shrinkWrap: true,
+                  ),
+                )
+              :
+          Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'No Meals',
+                        style: TextStyle(
+                          color: widget.state.themeMode == ThemeMode.light
+                              ? Colors.black
+                              : Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              itemCount: items.length,
-              scrollDirection: Axis.vertical,
-              physics: const BouncingScrollPhysics(),
-              shrinkWrap: true,
-            ),
-          ),
         ],
       ),
     );
