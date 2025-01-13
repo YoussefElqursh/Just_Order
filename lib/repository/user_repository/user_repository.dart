@@ -31,7 +31,10 @@ class UserRepository {
     for (String itemId in itemIds) {
       DocumentSnapshot snapshot =
           await firestore.collection('items').doc(itemId).get();
-      items.add(Item.fromMap(snapshot.data() as Map<String, dynamic>));
+      Item item = Item.fromMap(snapshot.data() as Map<String, dynamic>);
+      if (item.available) {
+        items.add(item);
+      }
     }
 
     return items;
