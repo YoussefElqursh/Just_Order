@@ -17,11 +17,14 @@ import 'package:just_order/screens/splash/splash_screen.dart';
 import 'package:just_order/shared/bloc_observer/bloc_observer.dart';
 import 'package:just_order/shared/routing/app_router.dart';
 import 'package:provider/provider.dart';
+import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   Bloc.observer = MyBlocObserver();
   await dotenv.load(fileName: "assets/.env");
   final themeCubit = ThemeCubit();

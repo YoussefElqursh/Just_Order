@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_order/blocs/theming/theming_cubit.dart';
@@ -37,6 +39,7 @@ class _SelectYourPlaceState extends State<SelectYourPlace>
     super.initState();
     _initSharedPreferences();
     WidgetsBinding.instance.addObserver(this);
+    unawaited(cameraController.start());
     _checkCameraPermission();
   }
 
@@ -48,25 +51,31 @@ class _SelectYourPlaceState extends State<SelectYourPlace>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      _checkCameraPermission(); // Re-check permission on returning from settings
+    _checkCameraPermission();
+    switch (state) {
+      case AppLifecycleState.detached:
+      case AppLifecycleState.hidden:
+      case AppLifecycleState.paused:
+        return;
+      case AppLifecycleState.resumed:
+        unawaited(cameraController.start());
+      case AppLifecycleState.inactive:
+        unawaited(cameraController.stop());
     }
   }
 
   Future<void> _checkCameraPermission() async {
-    var status = await Permission.camera.status;
-
-    if (status.isGranted) {
-      setState(() {
-        _hasPermission = true;
-        _isCheckingPermission = false;
-      });
-    } else {
+    if (!cameraController.value.hasCameraPermission) {
       setState(() {
         _hasPermission = false;
         _isCheckingPermission = false;
       });
+      return;
     }
+    setState(() {
+      _hasPermission = true;
+      _isCheckingPermission = false;
+    });
   }
 
   void _openAppSettings() {
@@ -156,12 +165,11 @@ class _SelectYourPlaceState extends State<SelectYourPlace>
                                       children: [
                                         MobileScanner(
                                           controller: cameraController,
-                                          allowDuplicates: true,
-                                          onDetect: (barcode, args) async {
+                                          onDetect: (barcode) async {
                                             if (!isScanCompleted) {
                                               isScanCompleted = true;
                                               String code =
-                                                  barcode.rawValue ?? "---";
+                                                  barcode.barcodes.firstOrNull?.rawValue ?? "---";
                                               Navigator.pushReplacement(
                                                 // ignore: use_build_context_synchronously
                                                 context,
