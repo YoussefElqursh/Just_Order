@@ -65,17 +65,18 @@ class _SelectYourPlaceState extends State<SelectYourPlace>
   }
 
   Future<void> _checkCameraPermission() async {
-    if (!cameraController.value.hasCameraPermission) {
+    var status = await Permission.camera.status;
+    if (status.isGranted) {
+      setState(() {
+        _hasPermission = true;
+        _isCheckingPermission = false;
+      });
+    } else {
       setState(() {
         _hasPermission = false;
         _isCheckingPermission = false;
       });
-      return;
     }
-    setState(() {
-      _hasPermission = true;
-      _isCheckingPermission = false;
-    });
   }
 
   void _openAppSettings() {
