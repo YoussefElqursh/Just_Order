@@ -33,6 +33,7 @@ class _SelectYourPlaceState extends State<SelectYourPlace>
   bool isScanCompleted = false;
   MobileScannerController cameraController = MobileScannerController();
   late SharedPreferences prefs;
+  bool isRoot = true;
 
   @override
   void initState() {
@@ -93,12 +94,37 @@ class _SelectYourPlaceState extends State<SelectYourPlace>
 
   @override
   Widget build(BuildContext context) {
+    isRoot = ModalRoute.of(context)?.isFirst ?? false;
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, state) {
         return PopScope(
           canPop: false,
           child: Scaffold(
             appBar: AppBar(
+              leading: isRoot? null : Padding(
+                padding:
+                const EdgeInsets.only(left: 20.0, top: 10.0, bottom: 10.0),
+                child: Container(
+                  width: 34,
+                  height: 34,
+                  clipBehavior: Clip.antiAlias,
+                  decoration: ShapeDecoration(
+                    color: const Color(0xFFF4F4F4),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8)),
+                  ),
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(
+                      Icons.arrow_back,
+                      color: Colors.black,
+                      size: 18,
+                    ),
+                  ),
+                ),
+              ),
               centerTitle: true,
               title: Text(
                 'Scan Order',
