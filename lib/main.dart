@@ -23,9 +23,7 @@ import 'firebase_options.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 late final prefs;
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   prefs = await SharedPreferences.getInstance();
@@ -37,7 +35,6 @@ Future<void> main() async {
   await dotenv.load(fileName: "assets/.env");
   final themeCubit = ThemeCubit();
   await themeCubit.loadTheme(); // Load saved theme before running the app
-
   runApp(
     EasyLocalization(
       supportedLocales: const [Locale('en'), Locale('ar')],
@@ -79,19 +76,13 @@ class MyApp extends StatelessWidget {
               return BlocBuilder<ThemeCubit, ThemeState>(
                 builder: (context, state) {
                   return MaterialApp(
-                    debugShowCheckedModeBanner: false,
-                    // locale: locale,
-                    // supportedLocales: context.supportedLocales,
-                    // localizationsDelegates: context.localizationDelegates,
-                    title: 'Just Order',
-
                     supportedLocales: L10n.all,
-                    locale: getUserPreferredLocal(),
+                    locale: locale, // Locale from LanguageCubit
                     localeResolutionCallback: (locale, supportedLocales) {
                       if (locale != null && supportedLocales.contains(locale)) {
                         return locale;
                       }
-                      return Locale('ar'); // Default fallback
+                      return const Locale('en'); // Default fallback
                     },
                     localizationsDelegates: [
                       AppLocalizations.delegate,
@@ -99,8 +90,8 @@ class MyApp extends StatelessWidget {
                       GlobalWidgetsLocalizations.delegate,
                       GlobalCupertinoLocalizations.delegate,
                     ],
-
-
+                    debugShowCheckedModeBanner: false,
+                    title: 'Just Order',
                     themeMode: state.themeMode,
                     darkTheme: ThemeData(
                       useMaterial3: true,
@@ -177,13 +168,8 @@ class MyApp extends StatelessWidget {
   }
 }
 
-Locale  getUserPreferredLocal(){
-  final String? preferredLocal = prefs.getString('locale');
-  if(preferredLocal!=null){
-    return Locale (preferredLocal);
-  }
-  else{
-    return Locale('en');
-  }
-
+Future<Locale> getUserPreferredLocal() async {
+  final prefs = await SharedPreferences.getInstance();
+  final localeCode = prefs.getString('locale') ?? 'en';
+  return Locale(localeCode);
 }

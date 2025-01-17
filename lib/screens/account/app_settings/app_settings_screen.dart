@@ -127,13 +127,11 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
                     training: Text(AppLocalizations.of(context)!.language),
                     onTap: () {
                       final cubit = context.read<LanguageCubit>();
-                      Locale currentLocale =getUserPreferredLocal();
-                      if (currentLocale.languageCode=='en') {
+                      Locale currentLocale = cubit.state;
+                      if (currentLocale.languageCode == 'en') {
                         cubit.switchToArabic();
-                        reRenderPage('ar');
                       } else {
                         cubit.switchToEnglish();
-                        reRenderPage('en');
                       }
                     },
                     state: state,
