@@ -144,7 +144,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     backgroundColor: Colors.grey[200],
                     child: Text(
                       user != null
-                          ? '${user!.firstName[0].toUpperCase()}${user!.lastName[0].toUpperCase()}'
+                          ? user?.lastName != ''
+                              ? '${user!.firstName[0].toUpperCase()}${user!.lastName[0].toUpperCase()}'
+                              : '${user!.firstName[0].toUpperCase()}'
                           : '',
                       style: const TextStyle(
                         color: Colors.black,
@@ -303,7 +305,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         Text(
           label,
           style: TextStyle(
-            color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+            color: state.themeMode == ThemeMode.light
+                ? Colors.black
+                : Colors.white,
             fontSize: 10,
             fontWeight: FontWeight.w500,
           ),
@@ -314,9 +318,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
           enabled: isEnabled,
           keyboardType: keyboardType,
           validator: validator,
-          cursorColor: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+          cursorColor:
+              state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
           style: TextStyle(
-            color: isEnabled ? state.themeMode == ThemeMode.light ? Colors.black : Colors.white : const Color(0xFFCCCCCC),
+            color: isEnabled
+                ? state.themeMode == ThemeMode.light
+                    ? Colors.black
+                    : Colors.white
+                : const Color(0xFFCCCCCC),
             fontSize: 12,
             fontWeight: FontWeight.w500,
           ),

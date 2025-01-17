@@ -19,16 +19,21 @@ class OrderRepository {
     });
   }
 
-  Future<List<Restaurant>> getRestaurants(List<String> restaurantIds) {
-    return _firestore
+  Future<List<Restaurant>> getRestaurants(List<String> restaurantIds) async {
+    // Return an empty list if restaurantIds is empty
+    if (restaurantIds.isEmpty) {
+      return [];
+    }
+
+    // Proceed with Firestore query if restaurantIds is not empty
+    final snapshot = await _firestore
         .collection('restaurants')
         .where(FieldPath.documentId, whereIn: restaurantIds)
-        .get()
-        .then((snapshot) {
-      return snapshot.docs.map((doc) {
-        return Restaurant.fromMap(doc.data());
-      }).toList();
-    });
+        .get();
+
+    return snapshot.docs.map((doc) {
+      return Restaurant.fromMap(doc.data());
+    }).toList();
   }
 
   Future<List<CartItem>> getCartItem(String orderId) async {
