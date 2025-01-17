@@ -5,7 +5,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import '../../models/cart_item_model.dart';
 import '../../models/invoice_model.dart';
 import '../../models/order_model.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class PaymentGatewayScreen extends StatefulWidget {
   static const String routeName = 'PaymentGatewayRoute';
