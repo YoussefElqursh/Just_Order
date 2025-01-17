@@ -12,6 +12,7 @@ import 'package:just_order/models/user_model.dart';
 import 'package:just_order/shared/function/connectivity_plus.dart';
 import 'package:just_order/shared/function/validations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -79,7 +80,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           appBar: AppBar(
             centerTitle: true,
             title: Text(
-              'My Profile',
+              AppLocalizations.of(context)!.my_profile,
               style: TextStyle(
                 color: state.themeMode == ThemeMode.light
                     ? Colors.black
@@ -180,8 +181,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       if (state is FingerprintSuccess) {
                         if (!hasProfileChanged()) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                                content: Text('No changes to save.')),
+                             SnackBar(
+                                content: Text(AppLocalizations.of(context)!.no_changes_to_save)),
                           );
                           toggleEditing();
                         } else {
@@ -193,17 +194,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               phoneNumber: phoneController.text,
                             );
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
+                               SnackBar(
                                   content:
-                                      Text('Profile updated successfully.')),
+                                      Text(AppLocalizations.of(context)!.profile_updated_successfully)),
                             );
                             toggleEditing();
                           }
                         }
                       } else if (state is FingerprintFailure) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                              content: Text('Authentication failed.')),
+                           SnackBar(
+                              content: Text(AppLocalizations.of(context)!.authentication_failed)),
                         );
                       }
                     },
@@ -225,7 +226,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             tapTargetSize: MaterialTapTargetSize.shrinkWrap),
                         child: Text(
-                          isEditing ? 'Save Profile' : 'Edit Profile',
+                          isEditing ? AppLocalizations.of(context)!.save_profile : AppLocalizations.of(context)!.edit_profile,
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 10,
@@ -240,13 +241,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   const SizedBox(height: 20.0),
                   buildInputField(
-                    label: 'Username',
+                    label: AppLocalizations.of(context)!.user_name,
                     controller: usernameController,
                     isEnabled: isEditing,
                     hintText: '${user?.firstName} ${user?.lastName}',
                     validator: (value) {
                       if (value == null || value.isEmpty || value.length < 3) {
-                        return 'Please enter valid name';
+                        return AppLocalizations.of(context)!.please_enter_valid_name;
                       }
                       return null;
                     },
@@ -254,7 +255,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   const SizedBox(height: 20.0),
                   buildInputField(
-                    label: 'Email',
+                    label: AppLocalizations.of(context)!.email,
                     controller: emailController,
                     isEnabled: false,
                     hintText: user?.email,
@@ -263,7 +264,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   const SizedBox(height: 20.0),
                   buildInputField(
-                    label: 'Phone Number',
+                    label: AppLocalizations.of(context)!.phone_number,
                     controller: phoneController,
                     isEnabled: isEditing,
                     hintText: user?.phoneNumber,
@@ -272,10 +273,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       if (value == null ||
                           value.isEmpty ||
                           value.startsWith('01') == false) {
-                        return 'Please enter a valid phone number';
+                        return AppLocalizations.of(context)!.please_enter_a_valid_phone_number;
                       }
                       if (!RegExp(r'^\d{11}$').hasMatch(value)) {
-                        return 'Please enter a valid 11-digit phone number';
+                        return AppLocalizations.of(context)!.please_enter_a_valid_11_digit_phone_number;
                       }
                       return null;
                     },
@@ -372,22 +373,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }) async {
     // Input Validation
     if (!InputValidator.isValidName(firstName)) {
-      debugPrint('Invalid First Name');
+      debugPrint(AppLocalizations.of(context)!.invalid_first_name);
       return;
     }
     if (!InputValidator.isValidName(lastName)) {
-      debugPrint('Invalid Last Name');
+      debugPrint(AppLocalizations.of(context)!.invalid_last_name);
       return;
     }
 
     if (!InputValidator.isValidPhoneNumber(phoneNumber)) {
-      debugPrint('Invalid phone number');
+      debugPrint(AppLocalizations.of(context)!.invalid_phone_number);
       return;
     }
 
     // Network Connectivity Check
     if (!await isConnected()) {
-      debugPrint('No Internet Connection');
+      debugPrint(AppLocalizations.of(context)!.no_internet_connection);
       return;
     }
 
@@ -399,7 +400,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           .get();
 
       if (existingUser.docs.isEmpty) {
-        debugPrint('User with this email not exists.');
+        debugPrint(AppLocalizations.of(context)!.user_with_this_email_not_exists);
         return;
       }
 
@@ -429,9 +430,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
       loadUserFromPreferences();
 
-      debugPrint('User updated successfully.');
+      debugPrint(AppLocalizations.of(context)!.user_updated_successfully);
     } catch (e) {
-      debugPrint('User update failed.');
+      debugPrint(AppLocalizations.of(context)!.user_update_failed);
     }
   }
 }

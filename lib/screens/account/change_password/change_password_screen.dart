@@ -12,6 +12,7 @@ import 'package:just_order/models/user_model.dart';
 import 'package:just_order/screens/account/app_settings/app_settings_screen.dart';
 import 'package:just_order/shared/function/connectivity_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
   const ChangePasswordScreen({super.key});
@@ -69,7 +70,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           appBar: AppBar(
             centerTitle: true,
             title: Text(
-              'Change Password',
+              AppLocalizations.of(context)!.change_password,
               style: TextStyle(
                 color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                 fontSize: 14,
@@ -129,13 +130,13 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 children: [
                   const SizedBox(height: 20.0),
                   buildInputField(
-                    label: 'Current Password',
+                    label: AppLocalizations.of(context)!.current_password,
                     controller: currentPasswordController,
-                    hintText: 'Current Password',
+                    hintText: AppLocalizations.of(context)!.current_password,
                     isEnabled: true,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter a valid Password';
+                        return AppLocalizations.of(context)!.please_enter_a_valid_password;
                       }
                       return null;
                     },
@@ -143,33 +144,33 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   ),
                   const SizedBox(height: 20.0),
                   buildInputField(
-                    label: 'New Password',
+                    label: AppLocalizations.of(context)!.new_password,
                     controller: newPasswordController,
                     isEnabled: true,
-                    hintText: 'New Password',
+                    hintText: AppLocalizations.of(context)!.new_password,
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter a valid Password';
+                        return AppLocalizations.of(context)!.please_enter_a_valid_password;
                       }
                       if (value == currentPasswordController.text) {
-                        return 'New Password cannot be the same as Current Password';
+                        return AppLocalizations.of(context)!.new_password_cannot_be_the_same_as_current_password;
                       }
                       return null;
                     }, state: state,
                   ),
                   const SizedBox(height: 20.0),
                   buildInputField(
-                    label: 'Confirm Password',
+                    label: AppLocalizations.of(context)!.confirm_password,
                     controller: confirmPasswordController,
                     isEnabled: true,
-                    hintText: 'Confirm Password',
+                    hintText: AppLocalizations.of(context)!.confirm_password,
                     keyboardType: TextInputType.phone,
                     validator: (value) {
                       if (value == null ||
                           value.isEmpty ||
                           value != newPasswordController.text) {
-                        return 'Please enter a Confirm Password as New Password';
+                        return AppLocalizations.of(context)!.please_enter_a_confirm_password_as_new_password;
                       }
                       return null;
                     }, state: state,
@@ -186,15 +187,17 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                               confirmedPassword:
                                   confirmPasswordController.text);
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
+                            SnackBar(
                                 content:
-                                    Text('Password updated successfully.')),
+                                    Text(
+                                        AppLocalizations.of(context)!.password_updated_successfully
+                                    )),
                           );
                         }
                       } else if (state is FingerprintFailure) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                              content: Text('Authentication failed.')),
+                           SnackBar(
+                              content: Text(AppLocalizations.of(context)!.authentication_failed)),
                         );
                       }
                     },
@@ -213,7 +216,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                             ),
                             tapTargetSize: MaterialTapTargetSize.shrinkWrap),
                         child: Text(
-                          'Change Password',
+                          AppLocalizations.of(context)!.change_password,
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 10,
@@ -318,7 +321,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
     // Network Connectivity Check
     if (!await isConnected()) {
-      debugPrint('No Internet Connection');
+      debugPrint(AppLocalizations.of(context)!.no_internet_connection);
       return;
     }
 
@@ -335,7 +338,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           .get();
 
       if (existingUser.docs.isEmpty) {
-        debugPrint('User with this email not exists.');
+        debugPrint(AppLocalizations.of(context)!.user_with_this_email_not_exists);
         return;
       }
 
@@ -370,9 +373,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       newPasswordController.clear();
       confirmPasswordController.clear();
 
-      debugPrint('User updated successfully.');
+      debugPrint(AppLocalizations.of(context)!.user_updated_successfully);
     } catch (e) {
-      debugPrint('User update failed.');
+      debugPrint(AppLocalizations.of(context)!.user_update_failed);
     }
   }
 }

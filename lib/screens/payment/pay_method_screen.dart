@@ -9,6 +9,7 @@ import 'package:just_order/models/order_model.dart';
 import 'package:just_order/shared/function/functions.dart';
 import 'package:just_order/shared/widget/custom_radio_button_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PayMethodScreen extends StatefulWidget {
   final Order order;
@@ -71,7 +72,7 @@ class _PayMethodScreenState extends State<PayMethodScreen> {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          'Payment Method',
+          AppLocalizations.of(context)!.payment_method,
           style: TextStyle(
             color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
             fontSize: 14,
@@ -185,8 +186,8 @@ class _PayMethodScreenState extends State<PayMethodScreen> {
                             context: context,
                             width: MediaQuery.sizeOf(context).width - 111,
                             hasDivider: false,
-                            label: 'Cash on Delivery',
-                            value: 'Cash on Delivery',
+                            label: AppLocalizations.of(context)!.cash_on_delivery,
+                            value: AppLocalizations.of(context)!.cash_on_delivery,
                             groupName: paymentMethod,
                             onChanged: (value) {
                               setState(() {
@@ -258,8 +259,8 @@ class _PayMethodScreenState extends State<PayMethodScreen> {
                                 context: context,
                                 width: MediaQuery.sizeOf(context).width - 111,
                                 hasDivider: false,
-                                label: 'Credit/Debit Card',
-                                value: 'Credit/Debit Card',
+                                label: AppLocalizations.of(context)!.cedit_debit_card,
+                                value: AppLocalizations.of(context)!.cedit_debit_card,
                                 groupName: paymentMethod,
                                 onChanged: (value) {
                                   setState(() {
@@ -477,9 +478,9 @@ class _PayMethodScreenState extends State<PayMethodScreen> {
                     borderRadius: BorderRadius.circular(6),
                   ),
                   color: (clicked1 || clicked2  == true) ? const Color(0xFFE02C45) : Colors.grey,
-                  child: const Center(
+                  child:  Center(
                     child: Text(
-                      'Continue',
+                      AppLocalizations.of(context)!.continue_,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 14,

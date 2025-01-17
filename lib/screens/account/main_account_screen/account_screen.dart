@@ -12,6 +12,7 @@ import 'package:just_order/screens/account/main_account_screen/widgets/account_f
 import 'package:just_order/shared/function/functions.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -112,7 +113,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Personal Information',
+                        AppLocalizations.of(context)!.personal_information,
                         style: TextStyle(
                           color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                           fontSize: 14,
@@ -129,7 +130,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     accountFunctionWidget(
                       context: context,
                       icon: Icons.person,
-                      label: 'My Profile',
+                      label: AppLocalizations.of(context)!.my_profile,
                       onPressed: () {
                         navigateTo(context, 'ProfileScreenRoute');
                       }, state: state,
@@ -139,7 +140,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Account Management',
+                        AppLocalizations.of(context)!.account_management,
                         style: TextStyle(
                           color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                           fontSize: 14,
@@ -156,7 +157,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     accountFunctionWidget(
                       context: context,
                       icon: Icons.history_outlined,
-                      label: 'Order History',
+                      label: AppLocalizations.of(context)!.order_history,
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -169,7 +170,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     accountFunctionWidget(
                       context: context,
                       icon: Icons.settings_sharp,
-                      label: 'Settings',
+                      label: AppLocalizations.of(context)!.settings,
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -184,7 +185,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'General',
+                        AppLocalizations.of(context)!.general,
                         style: TextStyle(
                           color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                           fontSize: 14,
@@ -201,7 +202,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     accountFunctionWidget(
                       context: context,
                       icon: Icons.info_outline_rounded,
-                      label: 'About App',
+                      label: AppLocalizations.of(context)!.about_app,
                       isText: true,
                       text: _appVersion,
                       onPressed: () {}, state: state,
@@ -209,7 +210,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     accountFunctionWidget(
                       context: context,
                       icon: Icons.logout,
-                      label: 'Logout',
+                      label: AppLocalizations.of(context)!.log_out,
                       onPressed: () {
                         loginRepository.logout();
                         Navigator.pushNamedAndRemoveUntil(

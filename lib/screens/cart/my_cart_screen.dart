@@ -15,6 +15,7 @@ import 'package:just_order/repository/cart_provider.dart';
 import 'package:just_order/screens/cart/widgets/order_cart_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MyCartScreen extends StatefulWidget {
   const MyCartScreen({super.key});
@@ -85,7 +86,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
           appBar: AppBar(
             centerTitle: true,
             title: Text(
-              'My Cart',
+              AppLocalizations.of(context)!.my_cart,
               style: TextStyle(
                 color: state.themeMode == ThemeMode.light
                     ? Colors.black
@@ -184,7 +185,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      restaurant?.name ?? 'Restaurant Name',
+                                      restaurant?.name ?? AppLocalizations.of(context)!.restaurant_name,
                                       style: TextStyle(
                                         color:
                                             state.themeMode == ThemeMode.light
@@ -198,8 +199,8 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                       maxLines: 1,
                                     ),
                                     const SizedBox(height: 5.0),
-                                    const Text(
-                                      'Pizza, Pies, Crepes',
+                                     Text(
+                                      AppLocalizations.of(context)!.pizza_pies_crepes,
                                       style: TextStyle(
                                         color: Color(0xFFAFAFAF),
                                         fontSize: 10,
@@ -235,7 +236,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                               size: 24.0,
                             ),
                             title: Text(
-                              'Any items found in another cart is saved',
+                              AppLocalizations.of(context)!.any_items_found_in_anothe_cart_is_saved,
                               style: TextStyle(
                                 color: state.themeMode == ThemeMode.light
                                     ? Colors.black
@@ -276,7 +277,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                 TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: 'Items',
+                                      text: AppLocalizations.of(context)!.items,
                                       style: TextStyle(
                                         color:
                                             state.themeMode == ThemeMode.light
@@ -328,8 +329,8 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                     ),
                                   ),
                                 ),
-                                child: const Text(
-                                  'Remove All',
+                                child:  Text(
+                                  AppLocalizations.of(context)!.remove_all,
                                   style: TextStyle(
                                     color: Color(0xFFE02C45),
                                     fontSize: 10,
@@ -398,7 +399,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Payment Summary',
+                            AppLocalizations.of(context)!.payment_summary,
                             style: TextStyle(
                               color: state.themeMode == ThemeMode.light
                                   ? Colors.black
@@ -417,7 +418,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                'Subtotal',
+                                AppLocalizations.of(context)!.subtotal,
                                 style: TextStyle(
                                   color: state.themeMode == ThemeMode.light
                                       ? Colors.black
@@ -432,7 +433,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                               const Spacer(),
                               Text(
                                 // ignore: avoid_types_as_parameter_names
-                                'EGP ${filteredItems.fold(0.0, (sum, item) => sum + item.totalPrice).toStringAsFixed(2)}',
+                                '${AppLocalizations.of(context)!.egp} ${filteredItems.fold(0.0, (sum, item) => sum + item.totalPrice).toStringAsFixed(2)}',
                                 style: TextStyle(
                                   color: state.themeMode == ThemeMode.light
                                       ? Colors.black
@@ -453,7 +454,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                'Delivery Fee',
+                                AppLocalizations.of(context)!.delivery_fee,
                                 style: TextStyle(
                                   color: state.themeMode == ThemeMode.light
                                       ? Colors.black
@@ -467,7 +468,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                               ),
                               const Spacer(),
                               Text(
-                                'EGP ${restaurant?.deliveryFee ?? 0.0}',
+                                '${AppLocalizations.of(context)!.egp} ${restaurant?.deliveryFee ?? 0.0}',
                                 style: TextStyle(
                                   color: state.themeMode == ThemeMode.light
                                       ? Colors.black
@@ -488,7 +489,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                'Service Fees',
+                                AppLocalizations.of(context)!.service_fees,
                                 style: TextStyle(
                                   color: state.themeMode == ThemeMode.light
                                       ? Colors.black
@@ -502,7 +503,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                               ),
                               Spacer(),
                               Text(
-                                'EGP 10.00',
+                                AppLocalizations.of(context)!.egp_10_00,
                                 style: TextStyle(
                                   color: Color(0xFFE02C45),
                                   fontSize: 12,
@@ -526,7 +527,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                'Total',
+                                AppLocalizations.of(context)!.total,
                                 style: TextStyle(
                                   color: state.themeMode == ThemeMode.light
                                       ? Colors.black
@@ -541,7 +542,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                               const Spacer(),
                               Text(
                                 // ignore: avoid_types_as_parameter_names
-                                'EGP ${(filteredItems.fold(0.0, (sum, item) => sum + item.totalPrice) + 10.0 + (restaurant?.deliveryFee ?? 0.0)).toStringAsFixed(2)}',
+                                '${AppLocalizations.of(context)!.egp}${(filteredItems.fold(0.0, (sum, item) => sum + item.totalPrice) + 10.0 + (restaurant?.deliveryFee ?? 0.0)).toStringAsFixed(2)}',
                                 style: TextStyle(
                                   color: state.themeMode == ThemeMode.light
                                       ? Colors.black
@@ -572,9 +573,9 @@ class _MyCartScreenState extends State<MyCartScreen> {
                       onPressed: () async {
                         if (filteredItems.isEmpty) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
+                             SnackBar(
                               content: Text(
-                                'Your cart is empty',
+                                AppLocalizations.of(context)!.your_cart_is_empty,
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 14,
@@ -643,9 +644,9 @@ class _MyCartScreenState extends State<MyCartScreen> {
                         borderRadius: BorderRadius.circular(6),
                       ),
                       color: const Color(0xFFE02C45),
-                      child: const Center(
+                      child:  Center(
                         child: Text(
-                          'Checkout',
+                            AppLocalizations.of(context)!.checkout,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 14,

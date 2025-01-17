@@ -12,6 +12,7 @@ import 'package:just_order/screens/home/main_home_screen/widgets/categories_widg
 import 'package:just_order/screens/home/main_home_screen/widgets/popular_today_widget.dart';
 import 'package:just_order/screens/home/main_home_screen/widgets/restaurants_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -121,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Delivering to',
+                        AppLocalizations.of(context)!.delivering_to,
                         style: TextStyle(
                           color: state.themeMode == ThemeMode.light ? Color(0xFF878787) : Colors.white,
                           fontSize: 8,
@@ -133,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       const SizedBox(height: 3),
                       Text(
-                        'Table $tableCode',
+                        '${AppLocalizations.of(context)!.table} $tableCode',
                         style: TextStyle(
                           color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                           fontSize: 10,
@@ -278,7 +279,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: EdgeInsets.only(left: 20.0),
                 child: Text(
-                  'All Restaurants',
+                  AppLocalizations.of(context)!.all_restaurants,
                   style: TextStyle(
                     color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                     fontSize: 14,
@@ -333,7 +334,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      'Popular Today',
+                      AppLocalizations.of(context)!.popular_today,
                       style: TextStyle(
                         color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                         fontSize: 14,

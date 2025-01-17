@@ -11,6 +11,7 @@ import 'package:just_order/shared/widget/custom_check_box_button_widget.dart';
 import 'package:just_order/shared/widget/custom_radio_button_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MealDetailsScreen extends StatefulWidget {
   final Item item;
@@ -254,7 +255,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Text(
-                                  'EGP ${price.toStringAsFixed(2)}',
+                                  '${AppLocalizations.of(context)!.egp} ${price.toStringAsFixed(2)}',
                                   style: TextStyle(
                                     color: state.themeMode == ThemeMode.light
                                         ? Colors.black
@@ -267,8 +268,8 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                   maxLines: 1,
                                 ),
                                 const Spacer(),
-                                const Text(
-                                  'EGP 0.00',
+                                 Text(
+                                  AppLocalizations.of(context)!.egp_0_00,
                                   style: TextStyle(
                                     color: Color(0xFFE02C45),
                                     fontSize: 12,
@@ -294,7 +295,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Options',
+                                      AppLocalizations.of(context)!.options,
                                       style: TextStyle(
                                         color:
                                             state.themeMode == ThemeMode.light
@@ -309,7 +310,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                     ),
                                     SizedBox(height: 6),
                                     Text(
-                                      'Choose 1 option ',
+                                      AppLocalizations.of(context)!.choose_1_option,
                                       style: TextStyle(
                                         color: Color(0xFFAFAFAF),
                                         fontSize: 12,
@@ -334,9 +335,9 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                       borderRadius: BorderRadius.circular(50),
                                     ),
                                   ),
-                                  child: const Center(
+                                  child:  Center(
                                     child: Text(
-                                      'Required',
+                                      AppLocalizations.of(context)!.required,
                                       style: TextStyle(
                                         color: Color(0xFFE02C45),
                                         fontSize: 10,
@@ -356,7 +357,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                 context: context,
                                 hasExtraText: true,
                                 extraText:
-                                    '(+EGP ${item.sizes![size]!.toStringAsFixed(2)})',
+                                    '(${AppLocalizations.of(context)!.plus_egp} ${item.sizes![size]!.toStringAsFixed(2)})',
                                 width: MediaQuery.sizeOf(context).width,
                                 hasDivider: true,
                                 label: size,
@@ -385,7 +386,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text('Extras',
+                                    Text(AppLocalizations.of(context)!.extras,
                                         style: TextStyle(
                                           color:
                                               state.themeMode == ThemeMode.light
@@ -398,7 +399,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 1),
                                     SizedBox(height: 6),
-                                    Text('Choose up to 1 option ',
+                                    Text(AppLocalizations.of(context)!.choose_up_to_1_option,
                                         style: TextStyle(
                                           color: Color(0xFFAFAFAF),
                                           fontSize: 12,
@@ -420,9 +421,9 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                       borderRadius: BorderRadius.circular(50),
                                     ),
                                   ),
-                                  child: const Center(
+                                  child:  Center(
                                     child: Text(
-                                      'Optional',
+                                      AppLocalizations.of(context)!.optional,
                                       style: TextStyle(
                                         color: Color(0xFF898888),
                                         fontSize: 10,
@@ -442,7 +443,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                 context: context,
                                 hasExtraText: true,
                                 extraText:
-                                    '(+EGP ${item.extras![extra]!.toStringAsFixed(2)})',
+                                    '(${AppLocalizations.of(context)!.plus_egp} ${item.extras![extra]!.toStringAsFixed(2)})',
                                 label: extra,
                                 value: selectedExtras.containsKey(extra),
                                 onChanged: (value) {
@@ -481,7 +482,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text('Quantity Order',
+                              Text(AppLocalizations.of(context)!.quantity_order,
                                   style: TextStyle(
                                     color: state.themeMode == ThemeMode.light
                                         ? Colors.black
@@ -587,7 +588,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Add to Cart ',
+                                  AppLocalizations.of(context)!.add_to_cart,
                                   style: TextStyle(
                                     color: state.themeMode == ThemeMode.light
                                         ? Colors.black
@@ -601,7 +602,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                 ),
                                 const Spacer(),
                                 Text(
-                                  'EGP ${totalPrice.toStringAsFixed(2)}',
+                                  '${AppLocalizations.of(context)!.plus_egp} ${totalPrice.toStringAsFixed(2)}',
                                   style: TextStyle(
                                     color: state.themeMode == ThemeMode.light
                                         ? Colors.black
@@ -615,7 +616,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                 ),
                                 const SizedBox(width: 2),
                                 Text(
-                                  'EGP 0.00',
+                                  AppLocalizations.of(context)!.egp_0_00,
                                   style: TextStyle(
                                     color: state.themeMode == ThemeMode.light
                                         ? Colors.black

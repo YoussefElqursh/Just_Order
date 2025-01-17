@@ -9,6 +9,7 @@ import 'package:just_order/models/user_model.dart';
 import 'package:just_order/repository/auth_repository/login_repository.dart';
 import 'package:just_order/screens/QR/select_your_place_screen.dart';
 import 'package:just_order/shared/function/functions.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -55,7 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
             } else if (state is LoginSuccess) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text('Welcome, ${state.user.firstName} ! '),
+                  content: Text('${AppLocalizations.of(context)!.welcome}, ${state.user.firstName} ! '),
                 ),
               );
               navigateToWithoutBack(context, const SelectYourPlace());
@@ -132,9 +133,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                       ],
                                     ),
                                     const SizedBox(height: 20.0),
-                                    const SizedBox(
+                                     SizedBox(
                                       width: 230,
-                                      child: Text('Sign in to your Account',
+                                      child: Text(AppLocalizations.of(context)!.sign_in_to_your_account,
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             color: Colors.white,
@@ -147,8 +148,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                           maxLines: 2),
                                     ),
                                     const SizedBox(height: 12.0),
-                                    const Text(
-                                      'Enter your email and password to Login ',
+                                     Text(
+                                      AppLocalizations.of(context)!.enter_your_email_and_password_to_login,
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 12,
@@ -242,7 +243,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                               ),
                                               const SizedBox(width: 10.0),
                                               Text(
-                                                'Continue with Google',
+                                                AppLocalizations.of(context)!.continue_with_google,
                                                 style: TextStyle(
                                                   color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                                                   fontSize: 14,
@@ -279,7 +280,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             ),
                                             const SizedBox(width: 15),
                                             Text(
-                                              'Or login with',
+                                              AppLocalizations.of(context)!.or_login_with,
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 color: state.themeMode == ThemeMode.dark ? Colors.white : Color(0xFF898888),
@@ -312,7 +313,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            'Email',
+                                            AppLocalizations.of(context)!.email,
                                             style: TextStyle(
                                               color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                                               fontSize: 10,
@@ -392,7 +393,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             validator: (value) {
                                               if (value == null ||
                                                   value.isEmpty) {
-                                                return 'Please enter your email';
+                                                return AppLocalizations.of(context)!.please_enter_your_email;
                                               } else if (!RegExp(
                                                 r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
                                               ).hasMatch(value)) {
@@ -405,7 +406,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            'Password',
+                                            AppLocalizations.of(context)!.password,
                                             style: TextStyle(
                                               color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                                               fontSize: 10,
@@ -500,9 +501,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                               validator: (value) {
                                                 if (value == null ||
                                                     value.isEmpty) {
-                                                  return 'Please enter your password';
+                                                  return AppLocalizations.of(context)!.please_enter_your_password;
                                                 } else if (value.length < 6) {
-                                                  return 'Password must be at least 6 characters';
+                                                  return AppLocalizations.of(context)!.password_must_be_at_least_6_characters;
                                                 }
                                                 return null;
                                               }),
@@ -514,8 +515,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                           alignment: Alignment.centerRight,
                                           child: GestureDetector(
                                             onTap: () {},
-                                            child: const Text(
-                                              'Forgot password?',
+                                            child:  Text(
+                                              AppLocalizations.of(context)!.forget_password,
                                               style: TextStyle(
                                                 color: Color(0xFFE02C45),
                                                 fontSize: 10,
@@ -540,7 +541,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 );
                                                 if (user != null) {
                                                   _showSnackBar(
-                                                      'Login successful',
+                                                      AppLocalizations.of(context)!.login_sucessful,
                                                       Colors.green);
                                                   navigateToWithoutBack(
                                                     // ignore: use_build_context_synchronously
@@ -549,7 +550,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   );
                                                 } else {
                                                   _showSnackBar(
-                                                      'Invalid email or password',
+                                                      AppLocalizations.of(context)!.invalid_email_or_password,
                                                       Colors.red);
                                                 }
                                               } catch (e) {
@@ -574,9 +575,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                                     color: Colors.white,
                                                   ),
                                                 )
-                                              : const Center(
+                                              :  Center(
                                                   child: Text(
-                                                    'Login',
+                                                    AppLocalizations.of(context)!.login,
                                                     style: TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 14,
@@ -595,8 +596,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           children: [
-                                            const Text(
-                                              'Don’t have an account?',
+                                             Text(
+                                              AppLocalizations.of(context)!.dont_have_an_account,
                                               style: TextStyle(
                                                 color: Color(0xFF898888),
                                                 fontSize: 12,
@@ -611,8 +612,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 navigateTo(context,
                                                     'SignUpScreenRoute');
                                               },
-                                              child: const Text(
-                                                'Sign Up',
+                                              child:  Text(
+                                                AppLocalizations.of(context)!.sign_up,
                                                 style: TextStyle(
                                                   color: Color(0xFFE02C45),
                                                   fontSize: 12,

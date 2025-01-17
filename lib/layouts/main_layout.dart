@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:just_order/screens/account/main_account_screen/account_screen.dart';
 import 'package:just_order/screens/home/main_home_screen/home_screen.dart';
 import 'package:just_order/screens/order/orders/order_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MainLayout extends StatefulWidget {
   int? pageNumber;
@@ -56,21 +57,21 @@ class _MainLayoutState extends State<MainLayout> {
               widget.pageNumber = value;
             });
           },
-          items: const [
+          items:  [
             BottomNavigationBarItem(
               icon: Icon(Icons.home_outlined),
               activeIcon: Icon(Icons.home),
-              label: 'Home',
+              label: AppLocalizations.of(context)!.home_,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.list_alt_outlined),
               activeIcon: Icon(Icons.list_alt),
-              label: 'Orders',
+              label: AppLocalizations.of(context)!.orders_,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person_outline),
               activeIcon: Icon(Icons.person),
-              label: 'Account',
+              label: AppLocalizations.of(context)!.account_,
             ),
           ],
         ),

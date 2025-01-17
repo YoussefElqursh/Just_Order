@@ -6,7 +6,7 @@ import 'package:just_order/models/order_model.dart';
 import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/shared/function/functions.dart';
 import '../../../shared/widget/common_order_state_widget.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class DeclineOrderScreen extends StatefulWidget {
   final List<Order> orders;
   final Map<String, Restaurant> restaurantMap;
@@ -38,7 +38,7 @@ class _DeclineOrderScreenState extends State<DeclineOrderScreen> {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          'Decline Orders',
+          AppLocalizations.of(context)!.declined_orders,
           style: TextStyle(
             color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
             fontSize: 14,
@@ -99,7 +99,7 @@ class _DeclineOrderScreenState extends State<DeclineOrderScreen> {
                         height: 15,
                       ),
                       Text(
-                        'No Declined Orders',
+                        AppLocalizations.of(context)!.no_declined_orders,
                         style: TextStyle(
                           color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                           fontSize: 12,

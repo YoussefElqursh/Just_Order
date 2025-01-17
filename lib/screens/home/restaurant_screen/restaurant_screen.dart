@@ -12,6 +12,7 @@ import 'package:just_order/screens/home/restaurant_screen/widgets/filter_widget.
 import 'package:just_order/shared/function/functions.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RestaurantScreen extends StatefulWidget {
   final Restaurant restaurant;
@@ -63,12 +64,12 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
 
   Future<void> _addRestaurantToPrefs() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('restaurant', jsonEncode(widget.restaurant.toJson()));
+    await prefs.setString(AppLocalizations.of(context)!.restaurant_name, jsonEncode(widget.restaurant.toJson()));
   }
 
   Future<void> _removeRestaurantFromPrefs() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('restaurant');
+    await prefs.remove(AppLocalizations.of(context)!.restaurant_name);
   }
 
   void _onWillPop(bool result, dynamic data) async {
@@ -247,8 +248,8 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                               Icon(Icons.star,
                                   color: Colors.yellow.shade700, size: 15),
                               const SizedBox(width: 3),
-                              const Text(
-                                '(30,265 Ratings)',
+                               Text(
+                                AppLocalizations.of(context)!.ratings_30265,
                                 style: TextStyle(
                                   color: Color(0xFFAFAFAF),
                                   fontSize: 10,
@@ -262,10 +263,10 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                           ),
                         ),
                         const SizedBox(height: 16.0),
-                        const Padding(
+                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20.0),
                           child: Text(
-                            'Pizza, Pies, Crepes ',
+                            AppLocalizations.of(context)!.pizza_pies_crepes,
                             style: TextStyle(
                               color: Color(0xFFAFAFAF),
                               fontSize: 12,
@@ -333,8 +334,8 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                                   const SizedBox(width: 6.0),
                                   Text(
                                     (restaurant.deliveryFee != null)
-                                        ? 'EGP ${restaurant.deliveryFee}'
-                                        : 'Free',
+                                        ? '${AppLocalizations.of(context)!.egp} ${restaurant.deliveryFee}'
+                                        : AppLocalizations.of(context)!.free,
                                     style: TextStyle(
                                       color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                                       fontSize: 12,

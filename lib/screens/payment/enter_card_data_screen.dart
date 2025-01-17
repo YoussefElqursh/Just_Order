@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_order/blocs/theming/theming_cubit.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/shared/function/functions.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EnterCardDataScreen extends StatefulWidget {
   const EnterCardDataScreen({super.key});
@@ -31,7 +32,7 @@ class _EnterCardDataScreenState extends State<EnterCardDataScreen> {
           appBar: AppBar(
             centerTitle: true,
             title: Text(
-              'Add Card',
+              AppLocalizations.of(context)!.add_card,
               style: TextStyle(
                 color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                 fontSize: 14,
@@ -127,7 +128,7 @@ class _EnterCardDataScreenState extends State<EnterCardDataScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Cardholder Name',
+                          AppLocalizations.of(context)!.cardholder_name,
                           style: TextStyle(
                             color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                             fontSize: 10,
@@ -182,8 +183,8 @@ class _EnterCardDataScreenState extends State<EnterCardDataScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Card Number',
+                         Text(
+                          AppLocalizations.of(context)!.card_number,
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 10,
@@ -243,8 +244,8 @@ class _EnterCardDataScreenState extends State<EnterCardDataScreen> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
-                                'Expire Date',
+                               Text(
+                                AppLocalizations.of(context)!.expiration,
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 10,
@@ -306,8 +307,8 @@ class _EnterCardDataScreenState extends State<EnterCardDataScreen> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
-                                'Security Code (CCV)',
+                               Text(
+                                 AppLocalizations.of(context)!.security_code,
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 10,
@@ -383,8 +384,8 @@ class _EnterCardDataScreenState extends State<EnterCardDataScreen> {
                             });
                           },
                         ),
-                        const Text(
-                          'Save this card for faster payments.',
+                         Text(
+                            AppLocalizations.of(context)!.card_saving,
                           style: TextStyle(
                             color: Color(0xFF898888),
                             fontSize: 10,
@@ -407,8 +408,8 @@ class _EnterCardDataScreenState extends State<EnterCardDataScreen> {
                         borderRadius: BorderRadius.circular(6),
                       ),
                       color: const Color(0xFFE02C45),
-                      child: const Center(
-                        child: Text('Continue',
+                      child:  Center(
+                        child: Text(AppLocalizations.of(context)!.continue_,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 14,

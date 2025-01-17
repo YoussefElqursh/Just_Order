@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/cart_item_model.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Widget buildOrderComponentsWidget(CartItem cartItem, ThemeState state) {
   return Row(

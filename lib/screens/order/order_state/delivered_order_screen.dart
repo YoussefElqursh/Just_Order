@@ -5,6 +5,7 @@ import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/order_model.dart';
 import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/shared/function/functions.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../shared/widget/common_order_state_widget.dart';
 
@@ -40,7 +41,7 @@ class _DeliveredOrderScreenState extends State<DeliveredOrderScreen> {
           appBar: AppBar(
             centerTitle: true,
             title: Text(
-              'Delivered Orders',
+              AppLocalizations.of(context)!.delivered_orders,
               style: TextStyle(
                 color: state.themeMode == ThemeMode.light
                     ? Colors.black
@@ -103,7 +104,7 @@ class _DeliveredOrderScreenState extends State<DeliveredOrderScreen> {
                               height: 15,
                             ),
                             Text(
-                              'No Delivered Orders',
+                              AppLocalizations.of(context)!.no_delivered_orders,
                               style: TextStyle(
                                 color: state.themeMode == ThemeMode.light
                                     ? Colors.black
