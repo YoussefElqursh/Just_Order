@@ -37,11 +37,20 @@ class _MyCartScreenState extends State<MyCartScreen> {
   User? user;
 
   bool isVisible = true;
+  String tableCode = '';
 
   @override
   void initState() {
     super.initState();
     _loadRestaurantAndUser();
+    _loadTableCode();
+  }
+
+  Future<void> _loadTableCode() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      tableCode = prefs.getString('code') ?? 'Unknown';
+    });
   }
 
   Future<void> _loadRestaurantAndUser() async {
@@ -593,27 +602,20 @@ class _MyCartScreenState extends State<MyCartScreen> {
                             createdAt: DateTime.now(),
                           );
                           final order = order_model.Order(
-                            orderId: FirebaseFirestore.instance
-                                .collection('orders')
-                                .doc()
-                                .id,
+                            orderId: FirebaseFirestore.instance.collection('orders').doc().id,
                             userId: user?.userId ?? 'userId',
                             clubId: restaurant?.clubId ?? 'clubId',
-                            restaurantId:
-                                restaurant?.restaurantId ?? 'restaurantId',
+                            restaurantId: restaurant?.restaurantId ?? 'restaurantId',
                             orderCode: 'temp',
                             status: Status.pending,
                             paymentType: PaymentType.cash,
                             invoiceId: invoice.invoiceId,
                             orderTimeOut: restaurant?.orderTimeOut ?? 0,
                             createdAt: DateTime.now(),
-                            totalAmount: filteredItems.fold(
-                                  0.0,
-                                  // ignore: avoid_types_as_parameter_names
-                                  (sum, item) => sum + item.totalPrice,
-                                ) +
-                                invoice.totalFees,
+                            totalAmount: filteredItems.fold(0.0, // ignore: avoid_types_as_parameter_names
+                              (sum, item) => sum + item.totalPrice,) + invoice.totalFees,
                             orderCodeForRestaurant: 'temp',
+                            orderTable: tableCode,
                           );
                           invoice.orderId = order.orderId;
                           String orderCode =

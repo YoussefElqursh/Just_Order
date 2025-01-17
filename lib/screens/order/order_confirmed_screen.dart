@@ -135,7 +135,10 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                               data: widget.order.orderCode,
                               size: 120,
                               version: QrVersions.auto,
-                              backgroundColor: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                              backgroundColor: state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
+                              foregroundColor: state.themeMode == ThemeMode.light
+                                  ? Colors.black
+                                  : Colors.white,
                             ),
                             Text(
                               widget.order.orderCode,

@@ -645,13 +645,15 @@ class _OrderScreenState extends State<OrderScreen> {
                                               order: orders
                                                   .where((order) =>
                                                       order.status ==
-                                                      Status.delivered)
+                                                      Status.delivered && order.status ==
+                                                          Status.finalized )
                                                   .toList()[index],
                                               width: 70,
                                               restaurant: restaurantMap[orders
                                                       .where((order) =>
                                                           order.status ==
-                                                          Status.delivered)
+                                                          Status.delivered && order.status ==
+                                                              Status.finalized )
                                                       .toList()[index]
                                                       .restaurantId] ??
                                                   Restaurant.empty(), state: state),
@@ -664,7 +666,8 @@ class _OrderScreenState extends State<OrderScreen> {
                                           orders
                                               .where((order) =>
                                                   order.status ==
-                                                  Status.delivered)
+                                                  Status.delivered && order.status ==
+                                                      Status.finalized )
                                               .length),
                                       scrollDirection: Axis.vertical,
                                       physics: const BouncingScrollPhysics(),

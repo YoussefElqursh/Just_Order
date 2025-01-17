@@ -325,7 +325,10 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           data: widget.order.orderCode,
                           size: 200,
                           version: QrVersions.auto,
-                          backgroundColor: state.themeMode == ThemeMode.light
+                          backgroundColor: state.themeMode == ThemeMode.dark
+                              ? Colors.black
+                              : Colors.white,
+                          foregroundColor: state.themeMode == ThemeMode.light
                               ? Colors.black
                               : Colors.white,
                         ),
