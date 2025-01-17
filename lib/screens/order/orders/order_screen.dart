@@ -15,6 +15,7 @@ import 'package:just_order/shared/function/functions.dart';
 import 'package:just_order/shared/widget/common_order_state_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OrderScreen extends StatefulWidget {
   const OrderScreen({super.key});
@@ -80,7 +81,7 @@ class _OrderScreenState extends State<OrderScreen> {
             centerTitle: true,
             shadowColor: Colors.grey,
             title: Text(
-              'Orders',
+              AppLocalizations.of(context)!.orders,
               style: TextStyle(
                 color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                 fontSize: 14,
@@ -138,7 +139,7 @@ class _OrderScreenState extends State<OrderScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Pending Orders',
+                                  AppLocalizations.of(context)!.pending_orders,
                                   style: TextStyle(
                                     color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                                     fontSize: 12,
@@ -162,7 +163,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                         ]);
                                   },
                                   child: Text(
-                                    'View All (${orders.where((order) => order.status == Status.pending).length})',
+                                    '${AppLocalizations.of(context)!.view_all} (${orders.where((order) => order.status == Status.pending).length})',
                                     style: const TextStyle(
                                       color: Color(0xFFE02C45),
                                       fontSize: 10,
@@ -205,7 +206,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                               height: 15,
                                             ),
                                             Text(
-                                              'No Pending Orders',
+                                              AppLocalizations.of(context)!.no_pending_orders,
                                               style: TextStyle(
                                                 color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                                                 fontSize: 12,
@@ -286,7 +287,7 @@ class _OrderScreenState extends State<OrderScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Preparing Orders',
+                                  AppLocalizations.of(context)!.preparing_orders,
                                   style: TextStyle(
                                     color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                                     fontSize: 12,
@@ -310,7 +311,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                         ]);
                                   },
                                   child: Text(
-                                    'View All (${orders.where((order) => order.status == Status.preparing).length})',
+                                    '${AppLocalizations.of(context)!.view_all} (${orders.where((order) => order.status == Status.preparing).length})',
                                     style: const TextStyle(
                                       color: Color(0xFFE02C45),
                                       fontSize: 10,
@@ -353,7 +354,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                               height: 15,
                                             ),
                                             Text(
-                                              'No Preparing Orders',
+                                              AppLocalizations.of(context)!.no_preparing_orders,
                                               style: TextStyle(
                                                 color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                                                 fontSize: 12,
@@ -421,7 +422,7 @@ class _OrderScreenState extends State<OrderScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'On Way Orders',
+                                  AppLocalizations.of(context)!.on_way_orders,
                                   style: TextStyle(
                                     color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                                     fontSize: 12,
@@ -445,7 +446,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                         ]);
                                   },
                                   child: Text(
-                                    'View All (${orders.where((order) => order.status == Status.onTheWay).length})',
+                                    '${AppLocalizations.of(context)!.view_all} (${orders.where((order) => order.status == Status.onTheWay).length})',
                                     style: const TextStyle(
                                       color: Color(0xFFE02C45),
                                       fontSize: 10,
@@ -488,7 +489,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                               height: 15,
                                             ),
                                             Text(
-                                              'No On Way Orders',
+                                              AppLocalizations.of(context)!.no_on_way_orders,
                                               style: TextStyle(
                                                 color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                                                 fontSize: 12,
@@ -556,7 +557,7 @@ class _OrderScreenState extends State<OrderScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Delivered Orders',
+                                  AppLocalizations.of(context)!.delivered_orders,
                                   style: TextStyle(
                                     color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                                     fontSize: 12,
@@ -580,7 +581,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                         ]);
                                   },
                                   child: Text(
-                                    'View All (${orders.where((order) => order.status == Status.delivered).length})',
+                                    '${AppLocalizations.of(context)!.view_all} (${orders.where((order) => order.status == Status.delivered).length})',
                                     style: const TextStyle(
                                       color: Color(0xFFE02C45),
                                       fontSize: 10,
@@ -623,7 +624,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                               height: 15,
                                             ),
                                             Text(
-                                              'No Delivered Orders',
+                                              AppLocalizations.of(context)!.no_delivered_orders,
                                               style: TextStyle(
                                                 color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                                                 fontSize: 12,
@@ -691,7 +692,7 @@ class _OrderScreenState extends State<OrderScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Declined Orders',
+                                  AppLocalizations.of(context)!.declined_orders,
                                   style: TextStyle(
                                     color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                                     fontSize: 12,
@@ -717,7 +718,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                         ]);
                                   },
                                   child: Text(
-                                    'View All (${orders.where((order) => order.status == Status.declined || order.status == Status.autoDeclined).length})',
+                                    '${AppLocalizations.of(context)!.view_all} (${orders.where((order) => order.status == Status.declined || order.status == Status.autoDeclined).length})',
                                     style: const TextStyle(
                                       color: Color(0xFFE02C45),
                                       fontSize: 10,
@@ -761,7 +762,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                               height: 15,
                                             ),
                                             Text(
-                                              'No Declined Orders',
+                                              AppLocalizations.of(context)!.no_declined_orders,
                                               style: TextStyle(
                                                 color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                                                 fontSize: 12,

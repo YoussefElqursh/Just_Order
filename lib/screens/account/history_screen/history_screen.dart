@@ -14,6 +14,7 @@ import 'package:just_order/shared/function/functions.dart';
 import 'package:just_order/shared/widget/common_order_state_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
@@ -102,7 +103,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   appBar: AppBar(
                     centerTitle: true,
                     title: Text(
-                      'History',
+                      AppLocalizations.of(context)!.history,
                       style: TextStyle(
                         color: state.themeMode == ThemeMode.light
                             ? Colors.black
@@ -159,7 +160,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                               ),
                               const SizedBox(height: 15),
                               Text(
-                                'No History Orders',
+                                AppLocalizations.of(context)!.no_history_orders,
                                 style: TextStyle(
                                   color: state.themeMode == ThemeMode.light
                                       ? Colors.black

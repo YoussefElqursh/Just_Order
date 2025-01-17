@@ -4,10 +4,12 @@ import 'package:just_order/blocs/localization/language_cubit.dart';
 import 'package:just_order/blocs/theming/theming_cubit.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/layouts/main_layout.dart';
+import 'package:just_order/main.dart';
 import 'package:just_order/screens/account/app_settings/widget/settings_app_items/settings_app_items.dart';
 import 'package:just_order/screens/account/app_settings/widget/switch_btn_widget/switch_btn_widget.dart';
 import 'package:just_order/shared/function/functions.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AppSettingsScreen extends StatefulWidget {
   const AppSettingsScreen({super.key});
@@ -18,6 +20,12 @@ class AppSettingsScreen extends StatefulWidget {
 
 class _AppSettingsScreenState extends State<AppSettingsScreen> {
   String _appVersion = '';
+  String _locale = '';
+  void reRenderPage(String locale){
+    setState(() {
+      _locale = locale;
+    });
+  }
 
   @override
   void initState() {
@@ -40,7 +48,7 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
           appBar: AppBar(
             centerTitle: true,
             title: Text(
-              'Settings',
+              AppLocalizations.of(context)!.settings,
               style: TextStyle(
                 color: state.themeMode == ThemeMode.light
                     ? Colors.black
@@ -95,7 +103,7 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
                         navigateTo(context, 'ChangePasswordScreenRoute');
                       },
                       icon: Icons.lock_outline_sharp,
-                      title: 'Change Password',
+                      title: AppLocalizations.of(context)!.change_password,
                       training: const SizedBox(),
                       state: state),
                   SettingsAppItems(
@@ -103,26 +111,29 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
                       navigateTo(context, 'SelectYourPlaceRoute');
                     },
                     icon: Icons.location_on_outlined,
-                    title: 'Change Location',
+                    title: AppLocalizations.of(context)!.change_location,
                     training: const SizedBox(),
                     state: state,
                   ),
                   SettingsAppItems(
                     icon: Icons.dark_mode_outlined,
-                    title: 'Dark Mode',
+                    title: AppLocalizations.of(context)!.dark_mode,
                     training: SwitchBtnWidget(),
                     state: state,
                   ),
                   SettingsAppItems(
                     icon: Icons.language_outlined,
-                    title: 'Language',
-                    training: Text('English'),
+                    title: AppLocalizations.of(context)!.language_,
+                    training: Text(AppLocalizations.of(context)!.language),
                     onTap: () {
                       final cubit = context.read<LanguageCubit>();
-                      if (cubit.state.languageCode == 'en') {
+                      Locale currentLocale =getUserPreferredLocal();
+                      if (currentLocale.languageCode=='en') {
                         cubit.switchToArabic();
+                        reRenderPage('ar');
                       } else {
                         cubit.switchToEnglish();
+                        reRenderPage('en');
                       }
                     },
                     state: state,

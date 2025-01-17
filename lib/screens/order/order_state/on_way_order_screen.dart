@@ -6,6 +6,7 @@ import 'package:just_order/models/order_model.dart';
 import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/shared/function/functions.dart';
 import '../../../shared/widget/common_order_state_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OnWayOrderScreen extends StatefulWidget {
   final List<Order> orders;
@@ -38,7 +39,7 @@ class _OnWayOrderScreenState extends State<OnWayOrderScreen> {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          'On Way Orders',
+          AppLocalizations.of(context)!.on_way_orders,
           style: TextStyle(
             color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
             fontSize: 14,
@@ -99,7 +100,7 @@ class _OnWayOrderScreenState extends State<OnWayOrderScreen> {
                         height: 15,
                       ),
                       Text(
-                        'No Way Orders',
+                        AppLocalizations.of(context)!.no_on_way_orders,
                         style: TextStyle(
                           color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                           fontSize: 12,

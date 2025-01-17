@@ -9,7 +9,7 @@ import 'package:just_order/models/order_model.dart';
 import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/repository/order_repository/order_repository.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../widgets/order_components_widget.dart';
 
 class OrderDetailsScreen extends StatefulWidget {
@@ -68,7 +68,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
           appBar: AppBar(
             centerTitle: true,
             title: Text(
-              'Order Summary',
+              AppLocalizations.of(context)!.order_summary,
               style: TextStyle(
                 color: state.themeMode == ThemeMode.light
                     ? Colors.black
@@ -156,8 +156,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                             const SizedBox(
                               height: 5,
                             ),
-                            const Text(
-                              'Pizza, Pies, Crepes ',
+                             Text(
+                              AppLocalizations.of(context)!.pizza_pies_crepes,
                               style: TextStyle(
                                 color: Color(0xFF898888),
                                 fontSize: 10,
@@ -184,7 +184,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'General Details',
+                          AppLocalizations.of(context)!.general_details,
                           style: TextStyle(
                             color: state.themeMode == ThemeMode.light
                                 ? Colors.black
@@ -199,8 +199,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            const Text(
-                              'Order ID',
+                             Text(
+                              AppLocalizations.of(context)!.order_iD,
                               style: TextStyle(
                                 color: Color(0xFF898888),
                                 fontSize: 12,
@@ -226,8 +226,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            const Text(
-                              'Date',
+                             Text(
+                              AppLocalizations.of(context)!.date,
                               style: TextStyle(
                                 color: Color(0xFF898888),
                                 fontSize: 12,
@@ -254,8 +254,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            const Text(
-                              'Order Status',
+                             Text(
+                              AppLocalizations.of(context)!.order_status,
                               style: TextStyle(
                                 color: Color(0xFF898888),
                                 fontSize: 12,
@@ -307,7 +307,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                         Align(
                           alignment: Alignment.topLeft,
                           child: Text(
-                            'Order QR Code',
+                            AppLocalizations.of(context)!.order_qr_code,
                             style: TextStyle(
                               color: state.themeMode == ThemeMode.light
                                   ? Colors.black
@@ -362,7 +362,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       TextSpan(
                         children: [
                           TextSpan(
-                            text: 'Items',
+                            text: AppLocalizations.of(context)!.items,
                             style: TextStyle(
                               color: state.themeMode == ThemeMode.light
                                   ? Colors.black
@@ -423,7 +423,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Payment Summary',
+                          AppLocalizations.of(context)!.payment_summary,
                           style: TextStyle(
                             color: state.themeMode == ThemeMode.light
                                 ? Colors.black
@@ -438,7 +438,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Subtotal',
+                              AppLocalizations.of(context)!.subtotal,
                               style: TextStyle(
                                 color: state.themeMode == ThemeMode.light
                                     ? Colors.black
@@ -450,7 +450,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                             ),
                             const Spacer(),
                             Text(
-                              'EGP ${widget.order.totalAmount - (invoice?.totalFees ?? 0)}',
+                              '${AppLocalizations.of(context)!.egp} ${widget.order.totalAmount - (invoice?.totalFees ?? 0)}',
                               style: TextStyle(
                                 color: state.themeMode == ThemeMode.light
                                     ? Colors.black
@@ -467,7 +467,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Service Fees',
+                              AppLocalizations.of(context)!.service_fees,
                               style: TextStyle(
                                 color: state.themeMode == ThemeMode.light
                                     ? Colors.black
@@ -479,7 +479,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                             ),
                             const Spacer(),
                             Text(
-                              'EGP ${invoice?.serviceFees ?? 0}',
+                              '${AppLocalizations.of(context)!.egp} ${invoice?.serviceFees ?? 0}',
                               style: TextStyle(
                                 color: state.themeMode == ThemeMode.light
                                     ? Colors.black
@@ -496,7 +496,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Delivery Fee',
+                              AppLocalizations.of(context)!.delivery_fee,
                               style: TextStyle(
                                 color: state.themeMode == ThemeMode.light
                                     ? Colors.black
@@ -508,7 +508,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                             ),
                             const Spacer(),
                             Text(
-                              'EGP ${(invoice?.totalFees ?? 0) - (invoice?.serviceFees ?? 0)}',
+                              '${AppLocalizations.of(context)!.egp} ${(invoice?.totalFees ?? 0) - (invoice?.serviceFees ?? 0)}',
                               style: TextStyle(
                                 color: state.themeMode == ThemeMode.light
                                     ? Colors.black
@@ -525,7 +525,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Payment Method',
+                              AppLocalizations.of(context)!.payment_method,
                               style: TextStyle(
                                 color: state.themeMode == ThemeMode.light
                                     ? Colors.black
@@ -558,7 +558,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Total',
+                              AppLocalizations.of(context)!.total,
                               style: TextStyle(
                                 color: state.themeMode == ThemeMode.light
                                     ? Colors.black
@@ -570,7 +570,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                             ),
                             const Spacer(),
                             Text(
-                              'EGP ${widget.order.totalAmount}',
+                              '${AppLocalizations.of(context)!.egp} ${widget.order.totalAmount}',
                               style: TextStyle(
                                 color: state.themeMode == ThemeMode.light
                                     ? Colors.black

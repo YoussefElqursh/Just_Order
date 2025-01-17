@@ -10,6 +10,7 @@ import 'package:just_order/blocs/login_cubit/login_cubit.dart';
 import 'package:just_order/blocs/sign_up_cubit/sign_up_cubit.dart';
 import 'package:just_order/blocs/theming/theming_cubit.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
+import 'package:just_order/l10n/l10n.dart';
 import 'package:just_order/repository/auth_repository/login_repository.dart';
 import 'package:just_order/repository/cart_provider.dart';
 import 'package:just_order/repository/order_provider.dart';
@@ -17,10 +18,18 @@ import 'package:just_order/screens/splash/splash_screen.dart';
 import 'package:just_order/shared/bloc_observer/bloc_observer.dart';
 import 'package:just_order/shared/routing/app_router.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:just_order/l10n/l10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+
+late final prefs;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  prefs = await SharedPreferences.getInstance();
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -76,6 +85,23 @@ class MyApp extends StatelessWidget {
                     // supportedLocales: context.supportedLocales,
                     // localizationsDelegates: context.localizationDelegates,
                     title: 'Just Order',
+
+                    supportedLocales: L10n.all,
+                    locale: getUserPreferredLocal(),
+                    localeResolutionCallback: (locale, supportedLocales) {
+                      if (locale != null && supportedLocales.contains(locale)) {
+                        return locale;
+                      }
+                      return Locale('ar'); // Default fallback
+                    },
+                    localizationsDelegates: [
+                      AppLocalizations.delegate,
+                      GlobalMaterialLocalizations.delegate,
+                      GlobalWidgetsLocalizations.delegate,
+                      GlobalCupertinoLocalizations.delegate,
+                    ],
+
+
                     themeMode: state.themeMode,
                     darkTheme: ThemeData(
                       useMaterial3: true,
@@ -150,4 +176,15 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
+}
+
+Locale  getUserPreferredLocal(){
+  final String? preferredLocal = prefs.getString('locale');
+  if(preferredLocal!=null){
+    return Locale (preferredLocal);
+  }
+  else{
+    return Locale('en');
+  }
+
 }

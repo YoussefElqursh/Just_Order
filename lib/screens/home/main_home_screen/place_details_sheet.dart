@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:just_order/screens/QR/select_your_place_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PlaceDetailsSheet extends StatelessWidget {
   const PlaceDetailsSheet({
@@ -60,7 +61,7 @@ class PlaceDetailsSheet extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  'Table Location',
+                  AppLocalizations.of(context)!.table_location,
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 16,
@@ -94,7 +95,7 @@ class PlaceDetailsSheet extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Club Name',
+                  AppLocalizations.of(context)!.club_name,
                   style: TextStyle(
                     color: Color(0xFFAFAFAF),
                     fontSize: 12,
@@ -104,7 +105,7 @@ class PlaceDetailsSheet extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Al Ahly Club',
+                  AppLocalizations.of(context)!.al_ahly_club,
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 14,
@@ -125,7 +126,7 @@ class PlaceDetailsSheet extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Table Code',
+                  AppLocalizations.of(context)!.table_code,
                   style: TextStyle(
                     color: Color(0xFFAFAFAF),
                     fontSize: 12,
@@ -135,7 +136,7 @@ class PlaceDetailsSheet extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  tableCode,
+                  AppLocalizations.of(context)!.table_code,
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 14,
@@ -168,7 +169,7 @@ class PlaceDetailsSheet extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  'Change Table ',
+                  AppLocalizations.of(context)!.change_table,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 14,

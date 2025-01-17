@@ -14,6 +14,7 @@ import 'package:just_order/screens/login/login_screen.dart';
 import 'package:just_order/shared/function/functions.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -64,9 +65,9 @@ class _SplashScreenState extends State<SplashScreen> {
     if (!_dialogShown) {
       showDialog(
         context: context,
-        builder: (context) => const AlertDialog(
-          title: Text('No Internet Connection'),
-          content: Text('Please check your internet connection and try again.'),
+        builder: (context) =>  AlertDialog(
+          title: Text(AppLocalizations.of(context)!.no_internet_connection),
+          content: Text(AppLocalizations.of(context)!.please_check_your_internet_connection_and_try_again),
         ),
       );
     }

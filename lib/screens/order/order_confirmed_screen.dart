@@ -9,6 +9,7 @@ import 'package:just_order/models/order_model.dart';
 import 'package:just_order/repository/user_repository/user_repository.dart';
 import 'package:lottie/lottie.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OrderConfirmedScreen extends StatefulWidget {
   final Order order;
@@ -105,8 +106,8 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             const SizedBox(height: 60.0),
-                            const Text(
-                              'Bon Appétit!',
+                             Text(
+                              AppLocalizations.of(context)!.bon_appetit,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Color(0xFFE02C45),
@@ -119,7 +120,7 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                             ),
                             const SizedBox(height: 12.0),
                             Text(
-                              'Order Confirmed!',
+                              AppLocalizations.of(context)!.order_confirmed,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
@@ -156,7 +157,7 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Subtotal',
+                                  AppLocalizations.of(context)!.subtotal,
                                   style: TextStyle(
                                     color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                                     fontSize: 12,
@@ -168,7 +169,7 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                                 ),
                                 const Spacer(),
                                 Text(
-                                  'EGP ${widget.cartItems.fold(0.0, (previousValue, element) => previousValue + element.totalPrice)}',
+                                  '${AppLocalizations.of(context)!.egp} ${widget.cartItems.fold(0.0, (previousValue, element) => previousValue + element.totalPrice)}',
                                   style: TextStyle(
                                     color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                                     fontSize: 12,
@@ -187,7 +188,7 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Delivery Fee',
+                                  AppLocalizations.of(context)!.delivery_fee,
                                   style: TextStyle(
                                     color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                                     fontSize: 12,
@@ -199,7 +200,7 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                                 ),
                                 const Spacer(),
                                 Text(
-                                  'EGP ${((widget.invoice.totalFees) - (widget.invoice.serviceFees))}',
+                                  '${AppLocalizations.of(context)!.egp} ${((widget.invoice.totalFees) - (widget.invoice.serviceFees))}',
                                   style: TextStyle(
                                     color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                                     fontSize: 12,
@@ -218,7 +219,7 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Service Fee',
+                                  AppLocalizations.of(context)!.service_fee,
                                   style: TextStyle(
                                     color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                                     fontSize: 12,
@@ -230,7 +231,7 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                                 ),
                                 const Spacer(),
                                 Text(
-                                  'EGP ${widget.invoice.serviceFees}',
+                                  '${AppLocalizations.of(context)!.egp} ${widget.invoice.serviceFees}',
                                   style: const TextStyle(
                                     color: Color(0xFFE02C45),
                                     fontSize: 12,
@@ -249,7 +250,7 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Payment Method',
+                                  AppLocalizations.of(context)!.payment_method,
                                   style: TextStyle(
                                     color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                                     fontSize: 12,
@@ -284,7 +285,7 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Total',
+                                  AppLocalizations.of(context)!.total,
                                   style: TextStyle(
                                     color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                                     fontSize: 14,
@@ -296,7 +297,7 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                                 ),
                                 const Spacer(),
                                 Text(
-                                  'EGP ${widget.order.totalAmount}',
+                                  '${AppLocalizations.of(context)!.egp} ${widget.order.totalAmount}',
                                   style: TextStyle(
                                     color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                                     fontSize: 14,

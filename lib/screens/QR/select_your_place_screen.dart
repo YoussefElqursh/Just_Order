@@ -9,6 +9,7 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_scanner_overlay/qr_scanner_overlay.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SelectYourPlace extends StatefulWidget {
   const SelectYourPlace({super.key});
@@ -101,7 +102,7 @@ class _SelectYourPlaceState extends State<SelectYourPlace>
             appBar: AppBar(
               centerTitle: true,
               title: Text(
-                'Scan Order',
+                AppLocalizations.of(context)!.scan_order,
                 style: TextStyle(
                   color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                   fontSize: 14,
@@ -145,7 +146,7 @@ class _SelectYourPlaceState extends State<SelectYourPlace>
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                              'Scan QR Code of the table',
+                              AppLocalizations.of(context)!.scan_qr_code_of_the_table,
                               style: TextStyle(
                                 color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                                 fontSize: 14,
@@ -210,7 +211,7 @@ class _SelectYourPlaceState extends State<SelectYourPlace>
                                                     .height *
                                                 0.3),
                                         Text(
-                                          "Camera permission is required to scan QR codes. You can't continue without this permission",
+                                          AppLocalizations.of(context)!.camera_permission_is_required_to_scan_qr_codes,
                                           textAlign: TextAlign.center,
                                         ),
                                         SizedBox(height: 25),
@@ -227,7 +228,7 @@ class _SelectYourPlaceState extends State<SelectYourPlace>
                                           ),
                                           child: Center(
                                             child: Text(
-                                              'Open Settings',
+                                              AppLocalizations.of(context)!.open_settings,
                                               style: TextStyle(
                                                 color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                                                 fontSize: 14,

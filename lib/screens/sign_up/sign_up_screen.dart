@@ -5,6 +5,7 @@ import 'package:just_order/blocs/sign_up_cubit/sign_up_cubit.dart';
 import 'package:just_order/blocs/theming/theming_cubit.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/screens/login/login_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../shared/function/functions.dart';
 
@@ -45,8 +46,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
               );
             } else if (state is SignUpISuccessState) {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Sign up process succeeded'),
+                 SnackBar(
+                  content: Text(AppLocalizations.of(context)!.sign_up_process_succeeded),
                 ),
               );
               navigateToWithoutBack(context, const LoginScreen());
@@ -124,10 +125,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       ],
                                     ),
                                     const SizedBox(height: 40.0),
-                                    const SizedBox(
+                                     SizedBox(
                                       width: 220,
                                       child: Text(
-                                        'Sign Up',
+                                        AppLocalizations.of(context)!.sign_up,
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           color: Colors.white,
@@ -189,7 +190,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            'First Name',
+                                            AppLocalizations.of(context)!.first_name,
                                             style: TextStyle(
                                               color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                                               fontSize: 10,
@@ -249,7 +250,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               if (value == null ||
                                                   value.isEmpty ||
                                                   value.length < 3) {
-                                                return 'Please enter valid first name';
+                                                return AppLocalizations.of(context)!.please_enter_valid_first_name;
                                               }
                                               return null;
                                             },
@@ -259,7 +260,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            'Last Name',
+                                            AppLocalizations.of(context)!.last_name,
                                             style: TextStyle(
                                               color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                                               fontSize: 10,
@@ -319,7 +320,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               if (value == null ||
                                                   value.isEmpty ||
                                                   value.length < 3) {
-                                                return 'Please enter valid last name';
+                                                return AppLocalizations.of(context)!.please_enter_valid_name;
                                               }
                                               return null;
                                             },
@@ -329,7 +330,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            'Email',
+                                            AppLocalizations.of(context)!.email,
                                             style: TextStyle(
                                               color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                                               fontSize: 10,
@@ -389,11 +390,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             validator: (value) {
                                               if (value == null ||
                                                   value.isEmpty) {
-                                                return 'Please enter your email';
+                                                return AppLocalizations.of(context)!.please_enter_your_email;
                                               } else if (!RegExp(
                                                 r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
                                               ).hasMatch(value)) {
-                                                return 'Please enter a valid email';
+                                                return AppLocalizations.of(context)!.please_enter_valid_email;
                                               }
                                               return null;
                                             },
@@ -403,7 +404,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            'Phone Number',
+                                            AppLocalizations.of(context)!.phone_number,
                                             style: TextStyle(
                                               color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                                               fontSize: 10,
@@ -464,7 +465,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                   value.isEmpty ||
                                                   value.startsWith('01') ==
                                                       false) {
-                                                return 'Please enter a valid phone number';
+                                                return AppLocalizations.of(context)!.please_enter_a_valid_phone_number;
                                               }
                                               if (!RegExp(r'^\d{11}$')
                                                   .hasMatch(value)) {
@@ -478,7 +479,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            'Password',
+                                            AppLocalizations.of(context)!.password,
                                             style: TextStyle(
                                               color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                                               fontSize: 10,
@@ -555,9 +556,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             validator: (value) {
                                               if (value == null ||
                                                   value.isEmpty) {
-                                                return 'Please enter your password';
+                                                return AppLocalizations.of(context)!.please_enter_your_password;
                                               } else if (value.length < 6) {
-                                                return 'Password must be at least 6 characters';
+                                                return AppLocalizations.of(context)!.password_must_be_at_least_6_characters;
                                               }
                                               return null;
                                             },
@@ -607,9 +608,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                     color: Colors.white,
                                                   ),
                                                 )
-                                              : const Center(
+                                              :  Center(
                                                   child: Text(
-                                                    'Sign up',
+                                                    AppLocalizations.of(context)!.sign_up,
                                                     style: TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 14,
@@ -628,8 +629,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           children: [
-                                            const Text(
-                                              'Already have an account?',
+                                             Text(
+                                               AppLocalizations.of(context)!.already_have_an_account,
                                               style: TextStyle(
                                                 color: Color(0xFF898888),
                                                 fontSize: 12,
@@ -644,8 +645,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                 navigateTo(context,
                                                     'LoginScreenRoute');
                                               },
-                                              child: const Text(
-                                                'Log in',
+                                              child:  Text(
+                                                AppLocalizations.of(context)!.login,
                                                 style: TextStyle(
                                                   color: Color(0xFFE02C45),
                                                   fontSize: 12,

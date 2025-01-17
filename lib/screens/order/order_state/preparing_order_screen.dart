@@ -5,6 +5,7 @@ import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/order_model.dart';
 import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/shared/function/functions.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../shared/widget/common_order_state_widget.dart';
 
@@ -40,7 +41,7 @@ class _PreparingOrderScreenState extends State<PreparingOrderScreen> {
           appBar: AppBar(
             centerTitle: true,
             title: Text(
-              'Preparing Orders',
+              AppLocalizations.of(context)!.preparing_orders,
               style: TextStyle(
                 color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                 fontSize: 14,
@@ -101,7 +102,7 @@ class _PreparingOrderScreenState extends State<PreparingOrderScreen> {
                               height: 15,
                             ),
                             Text(
-                              'No Preparing Orders',
+                              AppLocalizations.of(context)!.no_preparing_orders,
                               style: TextStyle(
                                 color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                                 fontSize: 12,
