@@ -3,7 +3,7 @@ import 'package:just_order/blocs/theming/theming_state.dart';
 
 Widget accountFunctionWidget({
   required BuildContext context,
-  required IconData icon,
+  required Widget icon,
   required String label,
   bool isText = false,
   String? text,
@@ -16,8 +16,10 @@ Widget accountFunctionWidget({
     color: Colors.transparent,
     elevation: 0.0,
     highlightElevation: 0.0,
+    padding: EdgeInsets.all(0.0),
     shape: const ContinuousRectangleBorder(borderRadius: BorderRadius.zero),
     minWidth: MediaQuery.sizeOf(context).width,
+    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
     child: Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -33,11 +35,7 @@ Widget accountFunctionWidget({
             ),
           ),
           child: Center(
-            child: Icon(
-              icon,
-              color: const Color(0xFFE02C45),
-              size: 20,
-            ),
+            child: icon
           ),
         ),
         const SizedBox(

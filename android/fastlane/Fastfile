@@ -11,7 +11,7 @@ platform :android do
     firebase_cli_token: "1//03s5pz_zWGvoZCgYIARAAGAMSNwF-L9IrwH5au0S3W3GEIwvRuva5Rc1WSyAkNwEaTvYv8LnzMDiGJO-sBU2JeHdRFlNpav_WvsA",
     android_artifact_type: "APK",
     android_artifact_path: "../build/app/outputs/flutter-apk/app-release.apk",
-    upload_timeout: 1600,
+    upload_timeout: 2600,
     release_notes: "release 1.0.1 for testing"
   )
   end

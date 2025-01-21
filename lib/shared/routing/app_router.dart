@@ -5,6 +5,7 @@ import 'package:just_order/models/invoice_model.dart';
 import 'package:just_order/models/item_model.dart';
 import 'package:just_order/models/order_model.dart';
 import 'package:just_order/models/restaurant_model.dart';
+import 'package:just_order/models/user_model.dart';
 import 'package:just_order/screens/account/change_password/change_password_screen.dart';
 import 'package:just_order/screens/order/order_state/decline_order_screen.dart';
 import 'package:just_order/screens/order/order_state/delivered_order_screen.dart';
@@ -40,9 +41,9 @@ class AppRouter {
       case 'MainLayoutRoute':
         return MainLayout.route();
       case 'RestaurantScreenRoute':
-        if (settings.arguments is Restaurant) {
-          final restaurant = settings.arguments as Restaurant;
-          return RestaurantScreen.route(restaurant);
+        if (settings.arguments is RestaurantScreenArguments) {
+          final args = settings.arguments as RestaurantScreenArguments;
+          return RestaurantScreen.route(args.restaurant, args.user);
         }
         return _errorRoute();
       case 'MealDetailsScreenRoute':

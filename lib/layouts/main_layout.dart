@@ -8,6 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MainLayout extends StatefulWidget {
   int? pageNumber;
+
   MainLayout({super.key, this.pageNumber});
 
   static const String routeName = 'MainLayoutRoute';
@@ -31,18 +32,19 @@ class _MainLayoutState extends State<MainLayout> {
     const OrderScreen(),
     const AccountScreen(),
   ];
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: () async {
-      // Show a confirmation dialog or directly close the app
-      final shouldExit = await showExitConfirmationDialog(context);
-      if (shouldExit) {
-        // Exit the app
-        exit(0);
-      }
-      return false; // Prevent default pop behavior
-    },
+      onWillPop: () async {
+        // Show a confirmation dialog or directly close the app
+        final shouldExit = await showExitConfirmationDialog(context);
+        if (shouldExit) {
+          // Exit the app
+          exit(0);
+        }
+        return false; // Prevent default pop behavior
+      },
       child: Scaffold(
         body: IndexedStack(
           index: widget.pageNumber ?? currentPage,
@@ -57,20 +59,36 @@ class _MainLayoutState extends State<MainLayout> {
               widget.pageNumber = value;
             });
           },
-          items:  [
+          items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
-              activeIcon: Icon(Icons.home),
+              icon: Image.asset(
+                'assets/icons/unselected_home.png',
+                height: 20,
+                width: 20,
+              ),
+              activeIcon: Image.asset(
+                'assets/icons/home.png',
+                height: 20,
+                width: 20,
+              ),
               label: AppLocalizations.of(context)!.home_,
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.list_alt_outlined),
-              activeIcon: Icon(Icons.list_alt),
+              icon: Image.asset(
+                'assets/icons/unselected_order.png',
+                height: 20,
+                width: 20,
+              ),
+              activeIcon: Image.asset(
+                'assets/icons/order.png',
+                height: 20,
+                width: 20,
+              ),
               label: AppLocalizations.of(context)!.orders_,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person_outline),
-              activeIcon: Icon(Icons.person),
+              activeIcon: Icon(Icons.person_outline),
               label: AppLocalizations.of(context)!.account_,
             ),
           ],
@@ -81,22 +99,44 @@ class _MainLayoutState extends State<MainLayout> {
 
   Future<bool> showExitConfirmationDialog(BuildContext context) async {
     return await showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Exit App'),
-        content: Text('Are you sure you want to exit the app?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: Text('Cancel'),
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Exit App'),
+            content: Text('Are you sure you want to exit the app?'),
+            backgroundColor: Colors.white,
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: Text(
+                  'Cancel',
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: Text(
+                  'Exit',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+                style: ButtonStyle(
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                    const Color(0xFFE02C45),
+                  ),
+                  shape: WidgetStatePropertyAll(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            child: Text('Exit'),
-          ),
-        ],
-      ),
-    ) ??
+        ) ??
         false;
   }
 }

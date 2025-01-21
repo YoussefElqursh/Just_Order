@@ -659,10 +659,10 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                   color: Color(0xFFE02C45),
                 ),
               ),
-              child: const Icon(
-                Icons.shopping_bag_outlined,
-                color: Colors.white,
-                size: 18,
+              child: Image.asset(
+                'assets/icons/cart.png',
+                height: 20,
+                width: 20,
               ),
             ),
           ),

@@ -129,7 +129,11 @@ class _AccountScreenState extends State<AccountScreen> {
                     ),
                     accountFunctionWidget(
                       context: context,
-                      icon: Icons.person,
+                      icon: Icon(
+                        Icons.person_outline,
+                        color: const Color(0xFFE02C45),
+                        size: 20,
+                      ),
                       label: AppLocalizations.of(context)!.my_profile,
                       onPressed: () {
                         navigateTo(context, 'ProfileScreenRoute');
@@ -156,7 +160,11 @@ class _AccountScreenState extends State<AccountScreen> {
                     ),
                     accountFunctionWidget(
                       context: context,
-                      icon: Icons.history_outlined,
+                      icon: Icon(
+                        Icons.history_outlined,
+                        color: const Color(0xFFE02C45),
+                        size: 20,
+                      ),
                       label: AppLocalizations.of(context)!.order_history,
                       onPressed: () {
                         Navigator.push(
@@ -169,7 +177,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     ),
                     accountFunctionWidget(
                       context: context,
-                      icon: Icons.settings_sharp,
+                      icon: Image.asset('assets/icons/settings.png',height: 20,width: 20,),
                       label: AppLocalizations.of(context)!.settings,
                       onPressed: () {
                         Navigator.push(
@@ -201,7 +209,11 @@ class _AccountScreenState extends State<AccountScreen> {
                     ),
                     accountFunctionWidget(
                       context: context,
-                      icon: Icons.info_outline_rounded,
+                      icon: Icon(
+                        Icons.info_outline_rounded,
+                        color: const Color(0xFFE02C45),
+                        size: 20,
+                      ),
                       label: AppLocalizations.of(context)!.about_app,
                       isText: true,
                       text: _appVersion,
@@ -209,7 +221,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     ),
                     accountFunctionWidget(
                       context: context,
-                      icon: Icons.logout,
+                      icon: Image.asset('assets/icons/logout.png',height: 20,width: 20,),
                       label: AppLocalizations.of(context)!.log_out,
                       onPressed: () {
                         loginRepository.logout();
