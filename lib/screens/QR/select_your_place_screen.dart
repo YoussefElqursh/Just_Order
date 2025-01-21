@@ -30,7 +30,7 @@ class SelectYourPlace extends StatefulWidget {
 class _SelectYourPlaceState extends State<SelectYourPlace>
     with WidgetsBindingObserver {
   bool _hasPermission = false;
-  bool _isCheckingPermission = true;
+  bool isCheckingPermission = true;
   bool isScanCompleted = false;
   MobileScannerController cameraController = MobileScannerController();
   late SharedPreferences prefs;
@@ -71,12 +71,12 @@ class _SelectYourPlaceState extends State<SelectYourPlace>
     if (status.isGranted) {
       setState(() {
         _hasPermission = true;
-        _isCheckingPermission = false;
+        isCheckingPermission = false;
       });
     } else {
       setState(() {
         _hasPermission = false;
-        _isCheckingPermission = false;
+        isCheckingPermission = false;
       });
     }
   }

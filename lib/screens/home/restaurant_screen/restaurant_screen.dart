@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_order/blocs/theming/theming_cubit.dart';
@@ -41,10 +40,14 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
     'Trending',
     'Discounts',
     'Up to 40% off',
+    'Meals',
+    'Sandwich',
+    'Salad',
     'Pizza',
     'Crepe',
-    'Pies',
     'Beverages',
+    'Soft Drinks',
+    'Desserts',
   ];
 
   @override
@@ -91,7 +94,7 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
         return PopScope(
           onPopInvokedWithResult: _onWillPop as void Function(bool, dynamic)?,
           child: DefaultTabController(
-            length: 7,
+            length: 11,
             child: Scaffold(
               body: isLoading
                   ? const Center(child: CircularProgressIndicator(color: Color(0xFFE02C45),))
@@ -429,13 +432,18 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                           ),
                           indicatorColor: const Color(0xFFE02C45),
                           tabs: [
-                            Tab(text: filter[0]),
-                            Tab(text: filter[1]),
-                            Tab(text: filter[2]),
-                            Tab(text: filter[3]),
-                            Tab(text: filter[4]),
-                            Tab(text: filter[5]),
-                            Tab(text: filter[6]),
+                            Tab(text: filter[0]),//Trending
+                            Tab(text: filter[1]),//Discounts
+                            Tab(text: filter[2]),//Up to 40% off
+                            Tab(text: filter[3]),//meal
+                            Tab(text: filter[4]),//sandwich
+                            Tab(text: filter[5]),//salad
+                            Tab(text: filter[6]),//pizza
+                            Tab(text: filter[7]),//crepe
+                            Tab(text: filter[8]),//beverages
+                            Tab(text: filter[9]),//softDrink
+                            Tab(text: filter[10],//dessert
+                            ),
                           ],
                         ),
                         SingleChildScrollView(
@@ -491,6 +499,34 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                                       .where((element) => element.category == filter[6])
                                       .toList(),
                                   filters: filter[6],
+                                  state: state,
+                                ),
+                                FilterWidget(
+                                  items: items
+                                      .where((element) => element.category == filter[7])
+                                      .toList(),
+                                  filters: filter[7],
+                                  state: state,
+                                ),
+                                FilterWidget(
+                                  items: items
+                                      .where((element) => (element.category == filter[8]))
+                                      .toList(),
+                                  filters: filter[8],
+                                  state: state,
+                                ),
+                                FilterWidget(
+                                  items: items
+                                      .where((element) =>  element.category == filter[9])
+                                      .toList(),
+                                  filters: filter[9],
+                                  state: state,
+                                ),
+                                FilterWidget(
+                                  items: items
+                                      .where((element) => element.category == filter[10])
+                                      .toList(),
+                                  filters: filter[10],
                                   state: state,
                                 ),
                               ],

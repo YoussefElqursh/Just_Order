@@ -24,6 +24,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 late final prefs;
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   prefs = await SharedPreferences.getInstance();
@@ -77,7 +78,8 @@ class MyApp extends StatelessWidget {
                 builder: (context, state) {
                   return MaterialApp(
                     supportedLocales: L10n.all,
-                    locale: locale, // Locale from LanguageCubit
+                    locale: locale,
+                    // Locale from LanguageCubit
                     localeResolutionCallback: (locale, supportedLocales) {
                       if (locale != null && supportedLocales.contains(locale)) {
                         return locale;

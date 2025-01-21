@@ -4,7 +4,6 @@ import 'package:just_order/blocs/localization/language_cubit.dart';
 import 'package:just_order/blocs/theming/theming_cubit.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/layouts/main_layout.dart';
-import 'package:just_order/main.dart';
 import 'package:just_order/screens/account/app_settings/widget/settings_app_items/settings_app_items.dart';
 import 'package:just_order/screens/account/app_settings/widget/switch_btn_widget/switch_btn_widget.dart';
 import 'package:just_order/shared/function/functions.dart';
@@ -20,10 +19,10 @@ class AppSettingsScreen extends StatefulWidget {
 
 class _AppSettingsScreenState extends State<AppSettingsScreen> {
   String _appVersion = '';
-  String _locale = '';
+  String locale = '';
   void reRenderPage(String locale){
     setState(() {
-      _locale = locale;
+      locale = locale;
     });
   }
 

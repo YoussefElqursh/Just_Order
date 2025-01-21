@@ -3,5 +3,7 @@ enum ItemType {
   side,
   addition,
   drink,
+  soft_drink,
   meal,
+  sandwich,
 }
