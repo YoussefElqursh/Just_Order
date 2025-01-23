@@ -28,12 +28,19 @@ class UserRepository {
   Future<List<Item>> getItems(List<String> itemIds) async {
     List<Item> items = [];
 
-    for (String itemId in itemIds) {
-      DocumentSnapshot snapshot =
-          await firestore.collection('items').doc(itemId).get();
-      Item item = Item.fromMap(snapshot.data() as Map<String, dynamic>);
-      if (item.available) {
-        items.add(item);
+    for (int i = 0; i < itemIds.length; i += 10) {
+      final batchIds = itemIds.sublist(i, i + 10 > itemIds.length ? itemIds.length : i + 10);
+
+      QuerySnapshot snapshot = await firestore
+          .collection('items')
+          .where(FieldPath.documentId, whereIn: batchIds)
+          .get();
+
+      for (var doc in snapshot.docs) {
+        Item item = Item.fromMap(doc.data() as Map<String, dynamic>);
+        if (item.available) {
+          items.add(item);
+        }
       }
     }
 

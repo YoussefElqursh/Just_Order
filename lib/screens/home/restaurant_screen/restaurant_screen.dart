@@ -71,13 +71,19 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
   @override
   void initState() {
     super.initState();
-    _loadItems();
-    _addRestaurantToPrefs();
-    _checkIfFavorite();
+    _initializeScreen();
+  }
+
+  Future<void> _initializeScreen() async {
+    await Future.wait([
+      _loadItems(),
+      _addRestaurantToPrefs(),
+      _checkIfFavorite(),
+    ]);
   }
 
   // Check favorite using isolate
-  void _checkIfFavorite() async {
+  Future<void> _checkIfFavorite() async {
     try {
       DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
           .collection('users')
