@@ -402,9 +402,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 201.0,
                     child: ListView.separated(
                       itemBuilder: (context, index) => buildPopularTodayWidget(
-                          context: context,
-                          restaurant: restaurants[index],
-                          state: state),
+                        context: context,
+                        restaurant: restaurants[index],
+                        state: state,
+                        user: user,
+                      ),
                       separatorBuilder: (context, index) =>
                           const SizedBox(width: 10.0),
                       itemCount: min(restaurants.length, 5),

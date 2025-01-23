@@ -134,327 +134,347 @@ class _PayMethodScreenState extends State<PayMethodScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const SizedBox(height: 50.0),
-                Container(
-                  width: MediaQuery.sizeOf(context).width,
-                  height: 65,
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                  clipBehavior: Clip.antiAlias,
-                  decoration: ShapeDecoration(
-                    color: state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        width: 1,
-                        strokeAlign: BorderSide.strokeAlignCenter,
-                        color: clicked1
-                            ? const Color(0xFFE02C45)
-                            : const Color(0x4CAFAFAF),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      paymentMethod = AppLocalizations.of(context)!.cash_on_delivery;
+                      clicked1 = true;
+                      clicked2 = false;
+                      widget.order.paymentType = PaymentType.cash;
+                    });
+                  },
+                  child: Container(
+                    width: MediaQuery.sizeOf(context).width,
+                    height: 65,
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    clipBehavior: Clip.antiAlias,
+                    decoration: ShapeDecoration(
+                      color: state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          width: 1,
+                          strokeAlign: BorderSide.strokeAlignCenter,
+                          color: clicked1
+                              ? const Color(0xFFE02C45)
+                              : const Color(0x4CAFAFAF),
+                        ),
+                        borderRadius: BorderRadius.circular(6),
                       ),
-                      borderRadius: BorderRadius.circular(6),
                     ),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 34,
-                        height: 34,
-                        clipBehavior: Clip.antiAlias,
-                        decoration: ShapeDecoration(
-                          color: const Color(0x19548229),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 34,
+                          height: 34,
+                          clipBehavior: Clip.antiAlias,
+                          decoration: ShapeDecoration(
+                            color: const Color(0x19548229),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          child: Center(
+                            child: setPhoto(
+                              kind: 1,
+                              path: 'assets/images/cash.svg',
+                              width: 20.0,
+                              height: 20.0,
+                            ),
                           ),
                         ),
-                        child: Center(
-                          child: setPhoto(
-                            kind: 1,
-                            path: 'assets/images/cash.svg',
-                            width: 20.0,
-                            height: 20.0,
-                          ),
+                        const SizedBox(width: 12.0),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const SizedBox(height: 5),
+                            customRadioButtonWidget(
+                              context: context,
+                              width: MediaQuery.sizeOf(context).width - 111,
+                              hasDivider: false,
+                              label: AppLocalizations.of(context)!.cash_on_delivery,
+                              value: AppLocalizations.of(context)!.cash_on_delivery,
+                              groupName: paymentMethod,
+                              onChanged: (value) {
+                                setState(() {
+                                  paymentMethod = value!;
+                                  clicked1 = true;
+                                  clicked2 = false;
+                                  widget.order.paymentType = PaymentType.cash;
+                                });
+                              }, state: state,
+                            ),
+                          ],
                         ),
-                      ),
-                      const SizedBox(width: 12.0),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const SizedBox(height: 5),
-                          customRadioButtonWidget(
-                            context: context,
-                            width: MediaQuery.sizeOf(context).width - 111,
-                            hasDivider: false,
-                            label: AppLocalizations.of(context)!.cash_on_delivery,
-                            value: AppLocalizations.of(context)!.cash_on_delivery,
-                            groupName: paymentMethod,
-                            onChanged: (value) {
-                              setState(() {
-                                paymentMethod = value!;
-                                clicked1 = true;
-                                clicked2 = false;
-                                widget.order.paymentType = PaymentType.cash;
-                              });
-                            }, state: state,
-                          ),
-                        ],
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
                 const SizedBox(height: 16.0),
-                Container(
-                  width: MediaQuery.sizeOf(context).width,
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                  clipBehavior: Clip.antiAlias,
-                  decoration: ShapeDecoration(
-                    color: state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        width: 1,
-                        strokeAlign: BorderSide.strokeAlignCenter,
-                        color: clicked2
-                            ? const Color(0xFFE02C45)
-                            : const Color(0x4CAFAFAF),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      paymentMethod = AppLocalizations.of(context)!.cedit_debit_card;
+                      clicked1 = false;
+                      clicked2 = true;
+                      widget.order.paymentType = PaymentType.card;
+                    });
+                  },
+                  child: Container(
+                    width: MediaQuery.sizeOf(context).width,
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    clipBehavior: Clip.antiAlias,
+                    decoration: ShapeDecoration(
+                      color: state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          width: 1,
+                          strokeAlign: BorderSide.strokeAlignCenter,
+                          color: clicked2
+                              ? const Color(0xFFE02C45)
+                              : const Color(0x4CAFAFAF),
+                        ),
+                        borderRadius: BorderRadius.circular(6),
                       ),
-                      borderRadius: BorderRadius.circular(6),
                     ),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: 34,
-                            height: 34,
-                            clipBehavior: Clip.antiAlias,
-                            decoration: ShapeDecoration(
-                              color: const Color(0x19548229),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 34,
+                              height: 34,
+                              clipBehavior: Clip.antiAlias,
+                              decoration: ShapeDecoration(
+                                color: const Color(0x19548229),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                              child: Center(
+                                child: setPhoto(
+                                  kind: 1,
+                                  path: 'assets/images/credit.svg',
+                                  width: 20.0,
+                                  height: 20.0,
+                                ),
                               ),
                             ),
-                            child: Center(
-                              child: setPhoto(
-                                kind: 1,
-                                path: 'assets/images/credit.svg',
-                                width: 20.0,
-                                height: 20.0,
-                              ),
+                            const SizedBox(width: 12.0),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const SizedBox(height: 5),
+                                customRadioButtonWidget(
+                                  context: context,
+                                  width: MediaQuery.sizeOf(context).width - 111,
+                                  hasDivider: false,
+                                  label: AppLocalizations.of(context)!.cedit_debit_card,
+                                  value: AppLocalizations.of(context)!.cedit_debit_card,
+                                  groupName: paymentMethod,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      paymentMethod = value!;
+                                      clicked1 = false;
+                                      clicked2 = true;
+                                      widget.order.paymentType = PaymentType.card;
+                                    });
+                                  }, state: state,
+                                ),
+                              ],
                             ),
-                          ),
-                          const SizedBox(width: 12.0),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              const SizedBox(height: 5),
-                              customRadioButtonWidget(
-                                context: context,
-                                width: MediaQuery.sizeOf(context).width - 111,
-                                hasDivider: false,
-                                label: AppLocalizations.of(context)!.cedit_debit_card,
-                                value: AppLocalizations.of(context)!.cedit_debit_card,
-                                groupName: paymentMethod,
-                                onChanged: (value) {
-                                  setState(() {
-                                    paymentMethod = value!;
-                                    clicked1 = false;
-                                    clicked2 = true;
-                                    widget.order.paymentType = PaymentType.card;
-                                  });
-                                }, state: state,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      // SizedBox(
-                      //   width: MediaQuery.sizeOf(context).width,
-                      //   child: clicked2
-                      //       ? Padding(
-                      //           padding: const EdgeInsets.symmetric(
-                      //               horizontal: 10.0, vertical: 20.0),
-                      //           child: Column(
-                      //             mainAxisAlignment: MainAxisAlignment.start,
-                      //             crossAxisAlignment: CrossAxisAlignment.center,
-                      //             children: [
-                      //               Column(
-                      //                 mainAxisAlignment:
-                      //                     MainAxisAlignment.center,
-                      //                 crossAxisAlignment:
-                      //                     CrossAxisAlignment.center,
-                      //                 children: [
-                      //                   for (var card in savedCards)
-                      //                     Container(
-                      //                       width: MediaQuery.sizeOf(context)
-                      //                           .width,
-                      //                       height: 65,
-                      //                       padding: const EdgeInsets.symmetric(
-                      //                           horizontal: 12.0),
-                      //                       clipBehavior: Clip.antiAlias,
-                      //                       decoration: ShapeDecoration(
-                      //                         color: Colors.white,
-                      //                         shape: RoundedRectangleBorder(
-                      //                           side: BorderSide(
-                      //                             width: 1,
-                      //                             strokeAlign: BorderSide
-                      //                                 .strokeAlignCenter,
-                      //                             color: clicked3
-                      //                                 ? const Color(0xFFE02C45)
-                      //                                 : const Color(0x4CAFAFAF),
-                      //                           ),
-                      //                           borderRadius:
-                      //                               BorderRadius.circular(6),
-                      //                         ),
-                      //                       ),
-                      //                       child: Row(
-                      //                         mainAxisSize: MainAxisSize.min,
-                      //                         mainAxisAlignment:
-                      //                             MainAxisAlignment.center,
-                      //                         crossAxisAlignment:
-                      //                             CrossAxisAlignment.center,
-                      //                         children: [
-                      //                           Container(
-                      //                             width: 34,
-                      //                             height: 34,
-                      //                             clipBehavior: Clip.antiAlias,
-                      //                             decoration: ShapeDecoration(
-                      //                               color:
-                      //                                   const Color(0x19548229),
-                      //                               shape:
-                      //                                   RoundedRectangleBorder(
-                      //                                 borderRadius:
-                      //                                     BorderRadius.circular(
-                      //                                         8),
-                      //                               ),
-                      //                             ),
-                      //                             child: Center(
-                      //                               child: setPhoto(
-                      //                                 kind: 1,
-                      //                                 path:
-                      //                                     'assets/images/Visa.svg',
-                      //                                 width: 20.0,
-                      //                                 height: 20.0,
-                      //                               ),
-                      //                             ),
-                      //                           ),
-                      //                           const SizedBox(width: 12.0),
-                      //                           Column(
-                      //                             mainAxisAlignment:
-                      //                                 MainAxisAlignment.center,
-                      //                             crossAxisAlignment:
-                      //                                 CrossAxisAlignment.center,
-                      //                             children: [
-                      //                               const SizedBox(height: 5),
-                      //                               customRadioButtonWidget(
-                      //                                 context: context,
-                      //                                 width: MediaQuery.sizeOf(
-                      //                                             context)
-                      //                                         .width -
-                      //                                     156,
-                      //                                 hasDivider: false,
-                      //                                 label: card,
-                      //                                 value: card,
-                      //                                 groupName: cardKind,
-                      //                                 onChanged: (value) {
-                      //                                   setState(() {
-                      //                                     cardKind = value!;
-                      //                                     clicked2 = true;
-                      //                                     clicked3 = true;
-                      //                                     clicked4 = false;
-                      //                                   });
-                      //                                 },
-                      //                               ),
-                      //                             ],
-                      //                           ),
-                      //                         ],
-                      //                       ),
-                      //                     ),
-                      //                   const SizedBox(height: 15),
-                      //                   Container(
-                      //                     width:
-                      //                         MediaQuery.sizeOf(context).width,
-                      //                     height: 65,
-                      //                     padding: const EdgeInsets.symmetric(
-                      //                         horizontal: 12.0),
-                      //                     clipBehavior: Clip.antiAlias,
-                      //                     decoration: ShapeDecoration(
-                      //                       color: Colors.white,
-                      //                       shape: RoundedRectangleBorder(
-                      //                         side: const BorderSide(
-                      //                           width: 1,
-                      //                           strokeAlign: BorderSide
-                      //                               .strokeAlignCenter,
-                      //                           color: Color(0x4CAFAFAF),
-                      //                         ),
-                      //                         borderRadius:
-                      //                             BorderRadius.circular(6),
-                      //                       ),
-                      //                     ),
-                      //                     child: Row(
-                      //                       mainAxisSize: MainAxisSize.min,
-                      //                       mainAxisAlignment:
-                      //                           MainAxisAlignment.start,
-                      //                       crossAxisAlignment:
-                      //                           CrossAxisAlignment.center,
-                      //                       children: [
-                      //                         Container(
-                      //                           width: 34,
-                      //                           height: 34,
-                      //                           clipBehavior: Clip.antiAlias,
-                      //                           decoration:
-                      //                               const ShapeDecoration(
-                      //                             color: Color(0xFFE02C45),
-                      //                             shape: CircleBorder(),
-                      //                           ),
-                      //                           child: IconButton(
-                      //                             onPressed: () {
-                      //                               navigateTo(context,
-                      //                                   'EnterCardDataScreenRoute');
-                      //                             },
-                      //                             icon: const Icon(
-                      //                               Icons.add,
-                      //                               color: Colors.white,
-                      //                               size: 18,
-                      //                             ),
-                      //                             style: const ButtonStyle(
-                      //                               shape:
-                      //                                   WidgetStatePropertyAll(
-                      //                                 CircleBorder(),
-                      //                               ),
-                      //                             ),
-                      //                           ),
-                      //                         ),
-                      //                         const SizedBox(width: 28.0),
-                      //                         const Text(
-                      //                           'Add Card',
-                      //                           style: TextStyle(
-                      //                             color: Colors.black,
-                      //                             fontSize: 10,
-                      //                             fontFamily: 'Inter',
-                      //                             fontWeight: FontWeight.w500,
-                      //                           ),
-                      //                           overflow: TextOverflow.ellipsis,
-                      //                           maxLines: 1,
-                      //                         )
-                      //                       ],
-                      //                     ),
-                      //                   ),
-                      //                 ],
-                      //               ),
-                      //             ],
-                      //           ),
-                      //         )
-                      //       : null,
-                      // ),
-                    ],
+                          ],
+                        ),
+                        // SizedBox(
+                        //   width: MediaQuery.sizeOf(context).width,
+                        //   child: clicked2
+                        //       ? Padding(
+                        //           padding: const EdgeInsets.symmetric(
+                        //               horizontal: 10.0, vertical: 20.0),
+                        //           child: Column(
+                        //             mainAxisAlignment: MainAxisAlignment.start,
+                        //             crossAxisAlignment: CrossAxisAlignment.center,
+                        //             children: [
+                        //               Column(
+                        //                 mainAxisAlignment:
+                        //                     MainAxisAlignment.center,
+                        //                 crossAxisAlignment:
+                        //                     CrossAxisAlignment.center,
+                        //                 children: [
+                        //                   for (var card in savedCards)
+                        //                     Container(
+                        //                       width: MediaQuery.sizeOf(context)
+                        //                           .width,
+                        //                       height: 65,
+                        //                       padding: const EdgeInsets.symmetric(
+                        //                           horizontal: 12.0),
+                        //                       clipBehavior: Clip.antiAlias,
+                        //                       decoration: ShapeDecoration(
+                        //                         color: Colors.white,
+                        //                         shape: RoundedRectangleBorder(
+                        //                           side: BorderSide(
+                        //                             width: 1,
+                        //                             strokeAlign: BorderSide
+                        //                                 .strokeAlignCenter,
+                        //                             color: clicked3
+                        //                                 ? const Color(0xFFE02C45)
+                        //                                 : const Color(0x4CAFAFAF),
+                        //                           ),
+                        //                           borderRadius:
+                        //                               BorderRadius.circular(6),
+                        //                         ),
+                        //                       ),
+                        //                       child: Row(
+                        //                         mainAxisSize: MainAxisSize.min,
+                        //                         mainAxisAlignment:
+                        //                             MainAxisAlignment.center,
+                        //                         crossAxisAlignment:
+                        //                             CrossAxisAlignment.center,
+                        //                         children: [
+                        //                           Container(
+                        //                             width: 34,
+                        //                             height: 34,
+                        //                             clipBehavior: Clip.antiAlias,
+                        //                             decoration: ShapeDecoration(
+                        //                               color:
+                        //                                   const Color(0x19548229),
+                        //                               shape:
+                        //                                   RoundedRectangleBorder(
+                        //                                 borderRadius:
+                        //                                     BorderRadius.circular(
+                        //                                         8),
+                        //                               ),
+                        //                             ),
+                        //                             child: Center(
+                        //                               child: setPhoto(
+                        //                                 kind: 1,
+                        //                                 path:
+                        //                                     'assets/images/Visa.svg',
+                        //                                 width: 20.0,
+                        //                                 height: 20.0,
+                        //                               ),
+                        //                             ),
+                        //                           ),
+                        //                           const SizedBox(width: 12.0),
+                        //                           Column(
+                        //                             mainAxisAlignment:
+                        //                                 MainAxisAlignment.center,
+                        //                             crossAxisAlignment:
+                        //                                 CrossAxisAlignment.center,
+                        //                             children: [
+                        //                               const SizedBox(height: 5),
+                        //                               customRadioButtonWidget(
+                        //                                 context: context,
+                        //                                 width: MediaQuery.sizeOf(
+                        //                                             context)
+                        //                                         .width -
+                        //                                     156,
+                        //                                 hasDivider: false,
+                        //                                 label: card,
+                        //                                 value: card,
+                        //                                 groupName: cardKind,
+                        //                                 onChanged: (value) {
+                        //                                   setState(() {
+                        //                                     cardKind = value!;
+                        //                                     clicked2 = true;
+                        //                                     clicked3 = true;
+                        //                                     clicked4 = false;
+                        //                                   });
+                        //                                 },
+                        //                               ),
+                        //                             ],
+                        //                           ),
+                        //                         ],
+                        //                       ),
+                        //                     ),
+                        //                   const SizedBox(height: 15),
+                        //                   Container(
+                        //                     width:
+                        //                         MediaQuery.sizeOf(context).width,
+                        //                     height: 65,
+                        //                     padding: const EdgeInsets.symmetric(
+                        //                         horizontal: 12.0),
+                        //                     clipBehavior: Clip.antiAlias,
+                        //                     decoration: ShapeDecoration(
+                        //                       color: Colors.white,
+                        //                       shape: RoundedRectangleBorder(
+                        //                         side: const BorderSide(
+                        //                           width: 1,
+                        //                           strokeAlign: BorderSide
+                        //                               .strokeAlignCenter,
+                        //                           color: Color(0x4CAFAFAF),
+                        //                         ),
+                        //                         borderRadius:
+                        //                             BorderRadius.circular(6),
+                        //                       ),
+                        //                     ),
+                        //                     child: Row(
+                        //                       mainAxisSize: MainAxisSize.min,
+                        //                       mainAxisAlignment:
+                        //                           MainAxisAlignment.start,
+                        //                       crossAxisAlignment:
+                        //                           CrossAxisAlignment.center,
+                        //                       children: [
+                        //                         Container(
+                        //                           width: 34,
+                        //                           height: 34,
+                        //                           clipBehavior: Clip.antiAlias,
+                        //                           decoration:
+                        //                               const ShapeDecoration(
+                        //                             color: Color(0xFFE02C45),
+                        //                             shape: CircleBorder(),
+                        //                           ),
+                        //                           child: IconButton(
+                        //                             onPressed: () {
+                        //                               navigateTo(context,
+                        //                                   'EnterCardDataScreenRoute');
+                        //                             },
+                        //                             icon: const Icon(
+                        //                               Icons.add,
+                        //                               color: Colors.white,
+                        //                               size: 18,
+                        //                             ),
+                        //                             style: const ButtonStyle(
+                        //                               shape:
+                        //                                   WidgetStatePropertyAll(
+                        //                                 CircleBorder(),
+                        //                               ),
+                        //                             ),
+                        //                           ),
+                        //                         ),
+                        //                         const SizedBox(width: 28.0),
+                        //                         const Text(
+                        //                           'Add Card',
+                        //                           style: TextStyle(
+                        //                             color: Colors.black,
+                        //                             fontSize: 10,
+                        //                             fontFamily: 'Inter',
+                        //                             fontWeight: FontWeight.w500,
+                        //                           ),
+                        //                           overflow: TextOverflow.ellipsis,
+                        //                           maxLines: 1,
+                        //                         )
+                        //                       ],
+                        //                     ),
+                        //                   ),
+                        //                 ],
+                        //               ),
+                        //             ],
+                        //           ),
+                        //         )
+                        //       : null,
+                        // ),
+                      ],
+                    ),
                   ),
                 ),
                 const Spacer(),

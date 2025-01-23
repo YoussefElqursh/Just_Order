@@ -59,16 +59,6 @@ Widget customCheckBoxButtonWidget({
           ],
         ),
         const SizedBox(height: 10.0),
-        SizedBox(
-          width: MediaQuery.sizeOf(context).width,
-          height: 1,
-          child: hasDivider == true
-              ? const Divider(
-                  height: 1,
-                  color: Color(0x4CC8C8C8),
-                )
-              : null,
-        ),
       ],
     ),
   );

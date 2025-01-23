@@ -169,7 +169,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
 Future<Locale> getUserPreferredLocal() async {
   final prefs = await SharedPreferences.getInstance();
   final localeCode = prefs.getString('locale') ?? 'en';

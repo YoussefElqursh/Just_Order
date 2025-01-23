@@ -37,6 +37,7 @@ class _OrderScreenState extends State<OrderScreen> {
   final OrderRepository _orderRepository = OrderRepository();
   Map<String, Restaurant> restaurantMap = {};
   User? user;
+  bool isExpanded = false;
 
   @override
   void initState() {
@@ -83,7 +84,9 @@ class _OrderScreenState extends State<OrderScreen> {
             title: Text(
               AppLocalizations.of(context)!.orders,
               style: TextStyle(
-                color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                color: state.themeMode == ThemeMode.light
+                    ? Colors.black
+                    : Colors.white,
                 fontSize: 14,
                 fontFamily: 'Inter',
                 fontWeight: FontWeight.w600,
@@ -141,7 +144,9 @@ class _OrderScreenState extends State<OrderScreen> {
                                 Text(
                                   AppLocalizations.of(context)!.pending_orders,
                                   style: TextStyle(
-                                    color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                                    color: state.themeMode == ThemeMode.light
+                                        ? Colors.black
+                                        : Colors.white,
                                     fontSize: 12,
                                     fontFamily: 'Inter',
                                     fontWeight: FontWeight.w600,
@@ -206,9 +211,13 @@ class _OrderScreenState extends State<OrderScreen> {
                                               height: 15,
                                             ),
                                             Text(
-                                              AppLocalizations.of(context)!.no_pending_orders,
+                                              AppLocalizations.of(context)!
+                                                  .no_pending_orders,
                                               style: TextStyle(
-                                                color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                                                color: state.themeMode ==
+                                                        ThemeMode.light
+                                                    ? Colors.black
+                                                    : Colors.white,
                                                 fontSize: 12,
                                                 fontFamily: 'Inter',
                                                 fontWeight: FontWeight.w600,
@@ -250,7 +259,8 @@ class _OrderScreenState extends State<OrderScreen> {
                                                           order.orderId,
                                                           Status.cancelled);
                                                 });
-                                              }, state: state),
+                                              },
+                                              state: state),
                                       separatorBuilder: (context, index) =>
                                           const SizedBox(
                                         height: 12.0,
@@ -287,9 +297,12 @@ class _OrderScreenState extends State<OrderScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  AppLocalizations.of(context)!.preparing_orders,
+                                  AppLocalizations.of(context)!
+                                      .preparing_orders,
                                   style: TextStyle(
-                                    color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                                    color: state.themeMode == ThemeMode.light
+                                        ? Colors.black
+                                        : Colors.white,
                                     fontSize: 12,
                                     fontFamily: 'Inter',
                                     fontWeight: FontWeight.w600,
@@ -354,9 +367,13 @@ class _OrderScreenState extends State<OrderScreen> {
                                               height: 15,
                                             ),
                                             Text(
-                                              AppLocalizations.of(context)!.no_preparing_orders,
+                                              AppLocalizations.of(context)!
+                                                  .no_preparing_orders,
                                               style: TextStyle(
-                                                color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                                                color: state.themeMode ==
+                                                        ThemeMode.light
+                                                    ? Colors.black
+                                                    : Colors.white,
                                                 fontSize: 12,
                                                 fontFamily: 'Inter',
                                                 fontWeight: FontWeight.w600,
@@ -385,7 +402,8 @@ class _OrderScreenState extends State<OrderScreen> {
                                                           Status.preparing)
                                                       .toList()[index]
                                                       .restaurantId] ??
-                                                  Restaurant.empty(), state: state),
+                                                  Restaurant.empty(),
+                                              state: state),
                                       separatorBuilder: (context, index) =>
                                           const SizedBox(
                                         height: 12.0,
@@ -424,7 +442,9 @@ class _OrderScreenState extends State<OrderScreen> {
                                 Text(
                                   AppLocalizations.of(context)!.on_way_orders,
                                   style: TextStyle(
-                                    color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                                    color: state.themeMode == ThemeMode.light
+                                        ? Colors.black
+                                        : Colors.white,
                                     fontSize: 12,
                                     fontFamily: 'Inter',
                                     fontWeight: FontWeight.w600,
@@ -489,9 +509,13 @@ class _OrderScreenState extends State<OrderScreen> {
                                               height: 15,
                                             ),
                                             Text(
-                                              AppLocalizations.of(context)!.no_on_way_orders,
+                                              AppLocalizations.of(context)!
+                                                  .no_on_way_orders,
                                               style: TextStyle(
-                                                color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                                                color: state.themeMode ==
+                                                        ThemeMode.light
+                                                    ? Colors.black
+                                                    : Colors.white,
                                                 fontSize: 12,
                                                 fontFamily: 'Inter',
                                                 fontWeight: FontWeight.w600,
@@ -507,20 +531,27 @@ class _OrderScreenState extends State<OrderScreen> {
                                     return ListView.separated(
                                       itemBuilder: (context, index) =>
                                           buildOrderOnWayStateWidget(
-                                              context: context,
-                                              order: orders
-                                                  .where((order) =>
-                                                      order.status ==
-                                                      Status.onTheWay)
-                                                  .toList()[index],
-                                              width: 70,
-                                              restaurant: restaurantMap[orders
-                                                      .where((order) =>
-                                                          order.status ==
-                                                          Status.onTheWay)
-                                                      .toList()[index]
-                                                      .restaurantId] ??
-                                                  Restaurant.empty(), state: state),
+                                        context: context,
+                                        order: orders
+                                            .where((order) =>
+                                                order.status == Status.onTheWay)
+                                            .toList()[index],
+                                        width: 70,
+                                        restaurant: restaurantMap[orders
+                                                .where((order) =>
+                                                    order.status ==
+                                                    Status.onTheWay)
+                                                .toList()[index]
+                                                .restaurantId] ??
+                                            Restaurant.empty(),
+                                        state: state,
+                                        onTap: () {
+                                          setState(() {
+                                            isExpanded = !isExpanded;
+                                          });
+                                        },
+                                        isExpanded: isExpanded,
+                                      ),
                                       separatorBuilder: (context, index) =>
                                           const SizedBox(
                                         height: 12.0,
@@ -557,9 +588,12 @@ class _OrderScreenState extends State<OrderScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  AppLocalizations.of(context)!.delivered_orders,
+                                  AppLocalizations.of(context)!
+                                      .delivered_orders,
                                   style: TextStyle(
-                                    color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                                    color: state.themeMode == ThemeMode.light
+                                        ? Colors.black
+                                        : Colors.white,
                                     fontSize: 12,
                                     fontFamily: 'Inter',
                                     fontWeight: FontWeight.w600,
@@ -624,9 +658,13 @@ class _OrderScreenState extends State<OrderScreen> {
                                               height: 15,
                                             ),
                                             Text(
-                                              AppLocalizations.of(context)!.no_delivered_orders,
+                                              AppLocalizations.of(context)!
+                                                  .no_delivered_orders,
                                               style: TextStyle(
-                                                color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                                                color: state.themeMode ==
+                                                        ThemeMode.light
+                                                    ? Colors.black
+                                                    : Colors.white,
                                                 fontSize: 12,
                                                 fontFamily: 'Inter',
                                                 fontWeight: FontWeight.w600,
@@ -646,18 +684,22 @@ class _OrderScreenState extends State<OrderScreen> {
                                               order: orders
                                                   .where((order) =>
                                                       order.status ==
-                                                      Status.delivered && order.status ==
-                                                          Status.finalized )
+                                                          Status.delivered &&
+                                                      order.status ==
+                                                          Status.finalized)
                                                   .toList()[index],
                                               width: 70,
                                               restaurant: restaurantMap[orders
                                                       .where((order) =>
                                                           order.status ==
-                                                          Status.delivered && order.status ==
-                                                              Status.finalized )
+                                                              Status
+                                                                  .delivered &&
+                                                          order.status ==
+                                                              Status.finalized)
                                                       .toList()[index]
                                                       .restaurantId] ??
-                                                  Restaurant.empty(), state: state),
+                                                  Restaurant.empty(),
+                                              state: state),
                                       separatorBuilder: (context, index) =>
                                           const SizedBox(
                                         height: 12.0,
@@ -667,8 +709,9 @@ class _OrderScreenState extends State<OrderScreen> {
                                           orders
                                               .where((order) =>
                                                   order.status ==
-                                                  Status.delivered && order.status ==
-                                                      Status.finalized )
+                                                      Status.delivered &&
+                                                  order.status ==
+                                                      Status.finalized)
                                               .length),
                                       scrollDirection: Axis.vertical,
                                       physics: const BouncingScrollPhysics(),
@@ -697,7 +740,9 @@ class _OrderScreenState extends State<OrderScreen> {
                                 Text(
                                   AppLocalizations.of(context)!.declined_orders,
                                   style: TextStyle(
-                                    color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                                    color: state.themeMode == ThemeMode.light
+                                        ? Colors.black
+                                        : Colors.white,
                                     fontSize: 12,
                                     fontFamily: 'Inter',
                                     fontWeight: FontWeight.w600,
@@ -765,9 +810,13 @@ class _OrderScreenState extends State<OrderScreen> {
                                               height: 15,
                                             ),
                                             Text(
-                                              AppLocalizations.of(context)!.no_declined_orders,
+                                              AppLocalizations.of(context)!
+                                                  .no_declined_orders,
                                               style: TextStyle(
-                                                color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                                                color: state.themeMode ==
+                                                        ThemeMode.light
+                                                    ? Colors.black
+                                                    : Colors.white,
                                                 fontSize: 12,
                                                 fontFamily: 'Inter',
                                                 fontWeight: FontWeight.w600,
@@ -798,14 +847,16 @@ class _OrderScreenState extends State<OrderScreen> {
                                                 width: 70,
                                                 restaurant: restaurantMap[
                                                         order.restaurantId] ??
-                                                    Restaurant.empty(), state: state)
+                                                    Restaurant.empty(),
+                                                state: state)
                                             : buildOrderDeclinedStateWidget(
                                                 context: context,
                                                 order: order,
                                                 width: 70,
                                                 restaurant: restaurantMap[
                                                         order.restaurantId] ??
-                                                    Restaurant.empty(), state: state);
+                                                    Restaurant.empty(),
+                                                state: state);
                                       },
                                       separatorBuilder: (context, index) =>
                                           const SizedBox(

@@ -319,4 +319,3 @@ class _RestaurantWidgetState extends State<RestaurantWidget> {
     }
   }
 }
-

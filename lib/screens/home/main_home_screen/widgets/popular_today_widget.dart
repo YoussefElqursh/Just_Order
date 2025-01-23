@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/restaurant_model.dart';
+import 'package:just_order/models/user_model.dart';
+import 'package:just_order/screens/home/restaurant_screen/restaurant_screen.dart';
 
 Widget buildPopularTodayWidget({
   required BuildContext context,
   required Restaurant restaurant,
+  required User user,
   required ThemeState state,
 }) {
   return GestureDetector(
     onTap: () {
       Navigator.pushNamed(context, 'RestaurantScreenRoute',
-          arguments: restaurant);
+        arguments: RestaurantScreenArguments(
+          restaurant: restaurant,
+          user: user,
+        ),);
     },
     child: Column(
       children: [

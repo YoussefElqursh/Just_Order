@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/order_model.dart';
 import 'package:just_order/models/restaurant_model.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 import 'common_button.dart';
 
@@ -375,6 +376,9 @@ Widget buildOrderPendingStateWidget({
                     ),
                   ],
                 ),
+                SizedBox(
+                  height: 4,
+                ),
                 buildMaterialButton(
                   context: context,
                   onPressed: onPressed,
@@ -495,7 +499,9 @@ Widget buildOrderPreparingStateWidget({
                               Text(
                                 restaurant.name,
                                 style: TextStyle(
-                                  color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                                  color: state.themeMode == ThemeMode.light
+                                      ? Colors.black
+                                      : Colors.white,
                                   fontSize: 12,
                                   fontFamily: 'Inter',
                                   fontWeight: FontWeight.w600,
@@ -567,7 +573,9 @@ Widget buildOrderPreparingStateWidget({
                     Text(
                       'EGP ${order.totalAmount}',
                       style: TextStyle(
-                        color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                        color: state.themeMode == ThemeMode.light
+                            ? Colors.black
+                            : Colors.white,
                         fontSize: 12,
                         fontFamily: 'Inter',
                         fontWeight: FontWeight.w700,
@@ -590,155 +598,235 @@ Widget buildOrderOnWayStateWidget({
   required double width,
   required Restaurant restaurant,
   required ThemeState state,
+  required void Function()? onTap,
+  bool isExpanded = false,
 }) {
-  return Container(
-    height: 96,
-    width: MediaQuery.sizeOf(context).width,
-    decoration: ShapeDecoration(
-      color: state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
-      shape: RoundedRectangleBorder(
-        side: BorderSide(
-          width: 1,
-          strokeAlign: BorderSide.strokeAlignCenter,
-          color: Color(0x4CAFAFAF),
+  return GestureDetector(
+    onTap: onTap,
+    child: Container(
+      height: !isExpanded ? 106 : 200,
+      width: MediaQuery.sizeOf(context).width,
+      decoration: ShapeDecoration(
+        color: state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+            width: 1,
+            strokeAlign: BorderSide.strokeAlignCenter,
+            color: Color(0x4CAFAFAF),
+          ),
+          borderRadius: BorderRadius.all(Radius.circular(8)),
         ),
-        borderRadius: BorderRadius.all(Radius.circular(8)),
       ),
-    ),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: SizedBox(
-            width: MediaQuery.sizeOf(context).width - width,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: 40,
-                      height: 40,
-                      decoration: ShapeDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(restaurant.imageUrl ??
-                              'https://via.placeholder.com/150'),
-                          fit: BoxFit.cover,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          side: const BorderSide(
-                            width: 1,
-                            strokeAlign: BorderSide.strokeAlignCenter,
-                            color: Color(0xFFF4F4F4),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: SizedBox(
+              width: MediaQuery.sizeOf(context).width - width,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 12,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: 40,
+                        height: 40,
+                        decoration: ShapeDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage(restaurant.imageUrl ??
+                                'https://via.placeholder.com/150'),
+                            fit: BoxFit.cover,
                           ),
-                          borderRadius: BorderRadius.circular(6),
+                          shape: RoundedRectangleBorder(
+                            side: const BorderSide(
+                              width: 1,
+                              strokeAlign: BorderSide.strokeAlignCenter,
+                              color: Color(0xFFF4F4F4),
+                            ),
+                            borderRadius: BorderRadius.circular(6),
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 10),
-                    SizedBox(
-                      width: MediaQuery.sizeOf(context).width - width - 50,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                restaurant.name,
-                                style: TextStyle(
-                                  color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
-                                  fontSize: 12,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w600,
+                      const SizedBox(width: 10),
+                      SizedBox(
+                        width: MediaQuery.sizeOf(context).width - width - 50,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  restaurant.name,
+                                  style: TextStyle(
+                                    color: state.themeMode == ThemeMode.light
+                                        ? Colors.black
+                                        : Colors.white,
+                                    fontSize: 12,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
-                              ),
-                              const Spacer(),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.pushNamed(
-                                      context, 'OrderDetailsScreenRoute',
+                                const Spacer(),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      'OrderDetailsScreenRoute',
                                       arguments: [
                                         order,
                                         restaurant,
-                                      ]);
-                                },
-                                child: const Icon(
-                                  Icons.more_horiz,
-                                  color: Color(0xFF898888),
-                                  size: 18.0,
+                                      ],
+                                    );
+                                  },
+                                  child: const Icon(
+                                    Icons.more_horiz,
+                                    color: Color(0xFF898888),
+                                    size: 18.0,
+                                  ),
                                 ),
+                              ],
+                            ),
+                            const SizedBox(height: 4.0),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.calendar_month_outlined,
+                                  color: Color(0xFF898888),
+                                  size: 12,
+                                ),
+                                const SizedBox(width: 5),
+                                Text(
+                                  DateFormat('dd MMM yyyy hh:mm a')
+                                      .format(order.createdAt),
+                                  style: const TextStyle(
+                                    color: Color(0xFF898888),
+                                    fontSize: 10,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        'Order ID: ${order.orderId}',
+                        style: const TextStyle(
+                          color: Color(0xFF898888),
+                          fontSize: 12,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w600,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                      const Spacer(),
+                      Text(
+                        'EGP ${order.totalAmount}',
+                        style: TextStyle(
+                          color: state.themeMode == ThemeMode.light
+                              ? Colors.black
+                              : Colors.white,
+                          fontSize: 12,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Visibility(
+                    visible: isExpanded,
+                    child: SizedBox(
+                      width: MediaQuery.sizeOf(context).width,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        spacing: 10,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(1.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(8.0),
                               ),
-                            ],
+                              border: Border.all(
+                                color: Color(0x66AFAFAF),
+                                style: BorderStyle.solid
+                              )
+                            ),
+                            child: QrImageView(
+                              data: order.orderCode,
+                              size: 80,
+                              version: QrVersions.auto,
+                              backgroundColor: state.themeMode == ThemeMode.dark
+                                  ? Colors.black
+                                  : Colors.white,
+                              foregroundColor: state.themeMode == ThemeMode.light
+                                  ? Colors.black
+                                  : Colors.white,
+                            ),
                           ),
-                          const SizedBox(height: 4.0),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              const Icon(
-                                Icons.calendar_month_outlined,
-                                color: Color(0xFF898888),
-                                size: 12,
-                              ),
-                              const SizedBox(width: 5),
-                              Text(
-                                DateFormat('dd MMM yyyy hh:mm a')
-                                    .format(order.createdAt),
-                                style: const TextStyle(
-                                  color: Color(0xFF898888),
-                                  fontSize: 10,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w500,
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 10.0),
+                            child: Container(
+                              height: 30,
+                              width: 2,
+                              decoration: const ShapeDecoration(
+                                color: Color(0x66AFAFAF),
+                                shape: RoundedRectangleBorder(
+                                  side: BorderSide(
+                                    width: 1,
+                                    strokeAlign: BorderSide.strokeAlignCenter,
+                                    color: Color(0x66AFAFAF),
+                                  ),
                                 ),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
                               ),
-                            ],
+                            ),
+                          ),
+                          Text(
+                            order.orderCode,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: state.themeMode == ThemeMode.light
+                                  ? Colors.black
+                                  : Colors.white,
+                              fontSize: 18,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w700,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
                           ),
                         ],
                       ),
                     ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                Row(
-                  children: [
-                    Text(
-                      'Order ID: ${order.orderId}',
-                      style: const TextStyle(
-                        color: Color(0xFF898888),
-                        fontSize: 12,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w600,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                    ),
-                    const Spacer(),
-                    Text(
-                      'EGP ${order.totalAmount}',
-                      style: TextStyle(
-                        color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
-                        fontSize: 12,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     ),
   );
 }
@@ -750,154 +838,170 @@ Widget buildOrderDeliveredStateWidget({
   required Restaurant restaurant,
   required ThemeState state,
 }) {
-  return Container(
-    height: 96,
-    width: MediaQuery.sizeOf(context).width,
-    decoration: ShapeDecoration(
-      color: state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
-      shape: RoundedRectangleBorder(
-        side: BorderSide(
-          width: 1,
-          strokeAlign: BorderSide.strokeAlignCenter,
-          color: Color(0x4CAFAFAF),
+  return GestureDetector(
+    onTap: () {
+      Navigator.pushNamed(
+        context,
+        'OrderDetailsScreenRoute',
+        arguments: [
+          order,
+          restaurant,
+        ],
+      );
+    },
+    child: Container(
+      height: 96,
+      width: MediaQuery.sizeOf(context).width,
+      decoration: ShapeDecoration(
+        color: state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+            width: 1,
+            strokeAlign: BorderSide.strokeAlignCenter,
+            color: Color(0x4CAFAFAF),
+          ),
+          borderRadius: BorderRadius.all(Radius.circular(8)),
         ),
-        borderRadius: BorderRadius.all(Radius.circular(8)),
       ),
-    ),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: SizedBox(
-            width: MediaQuery.sizeOf(context).width - width,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: 40,
-                      height: 40,
-                      decoration: ShapeDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(restaurant.imageUrl ??
-                              'https://via.placeholder.com/150'),
-                          fit: BoxFit.cover,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: SizedBox(
+              width: MediaQuery.sizeOf(context).width - width,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: 40,
+                        height: 40,
+                        decoration: ShapeDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage(restaurant.imageUrl ??
+                                'https://via.placeholder.com/150'),
+                            fit: BoxFit.cover,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            side: const BorderSide(
+                              width: 1,
+                              strokeAlign: BorderSide.strokeAlignCenter,
+                              color: Color(0xFFF4F4F4),
+                            ),
+                            borderRadius: BorderRadius.circular(6),
+                          ),
                         ),
-                        shape: RoundedRectangleBorder(
-                          side: const BorderSide(
-                            width: 1,
-                            strokeAlign: BorderSide.strokeAlignCenter,
-                            color: Color(0xFFF4F4F4),
-                          ),
-                          borderRadius: BorderRadius.circular(6),
+                      ),
+                      const SizedBox(width: 10),
+                      SizedBox(
+                        width: MediaQuery.sizeOf(context).width - width - 50,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  restaurant.name,
+                                  style: TextStyle(
+                                    color: state.themeMode == ThemeMode.light
+                                        ? Colors.black
+                                        : Colors.white,
+                                    fontSize: 12,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                const Spacer(),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                        context, 'OrderDetailsScreenRoute',
+                                        arguments: [
+                                          order,
+                                          restaurant,
+                                        ]);
+                                  },
+                                  child: const Icon(
+                                    Icons.more_horiz,
+                                    color: Color(0xFF898888),
+                                    size: 18.0,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 4.0),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.calendar_month_outlined,
+                                  color: Color(0xFF898888),
+                                  size: 12,
+                                ),
+                                const SizedBox(width: 5),
+                                Text(
+                                  DateFormat('dd MMM yyyy hh:mm a')
+                                      .format(order.createdAt),
+                                  style: const TextStyle(
+                                    color: Color(0xFF898888),
+                                    fontSize: 10,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 10),
-                    SizedBox(
-                      width: MediaQuery.sizeOf(context).width - width - 50,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                restaurant.name,
-                                style: TextStyle(
-                                  color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
-                                  fontSize: 12,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              const Spacer(),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.pushNamed(
-                                      context, 'OrderDetailsScreenRoute',
-                                      arguments: [
-                                        order,
-                                        restaurant,
-                                      ]);
-                                },
-                                child: const Icon(
-                                  Icons.more_horiz,
-                                  color: Color(0xFF898888),
-                                  size: 18.0,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 4.0),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              const Icon(
-                                Icons.calendar_month_outlined,
-                                color: Color(0xFF898888),
-                                size: 12,
-                              ),
-                              const SizedBox(width: 5),
-                              Text(
-                                DateFormat('dd MMM yyyy hh:mm a')
-                                    .format(order.createdAt),
-                                style: const TextStyle(
-                                  color: Color(0xFF898888),
-                                  fontSize: 10,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                              ),
-                            ],
-                          ),
-                        ],
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  Row(
+                    children: [
+                      Text(
+                        'Order ID: ${order.orderId}',
+                        style: const TextStyle(
+                          color: Color(0xFF898888),
+                          fontSize: 12,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w600,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                Row(
-                  children: [
-                    Text(
-                      'Order ID: ${order.orderId}',
-                      style: const TextStyle(
-                        color: Color(0xFF898888),
-                        fontSize: 12,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w600,
+                      const Spacer(),
+                      Text(
+                        'EGP ${order.totalAmount}',
+                        style: TextStyle(
+                          color: state.themeMode == ThemeMode.light
+                              ? Colors.black
+                              : Colors.white,
+                          fontSize: 12,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                    ),
-                    const Spacer(),
-                    Text(
-                      'EGP ${order.totalAmount}',
-                      style: TextStyle(
-                        color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
-                        fontSize: 12,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     ),
   );
 }
@@ -909,154 +1013,172 @@ Widget buildOrderDeclinedStateWidget({
   required Restaurant restaurant,
   required ThemeState state,
 }) {
-  return Container(
-    height: 96,
-    width: MediaQuery.sizeOf(context).width,
-    decoration: ShapeDecoration(
-      color: state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
-      shape: RoundedRectangleBorder(
-        side: BorderSide(
-          width: 1,
-          strokeAlign: BorderSide.strokeAlignCenter,
-          color: Color(0x4CAFAFAF),
+  return GestureDetector(
+    onTap: () {
+      Navigator.pushNamed(
+        context,
+        'OrderDetailsScreenRoute',
+        arguments: [
+          order,
+          restaurant,
+        ],
+      );
+    },
+    child: Container(
+      height: 96,
+      width: MediaQuery.sizeOf(context).width,
+      decoration: ShapeDecoration(
+        color: state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+            width: 1,
+            strokeAlign: BorderSide.strokeAlignCenter,
+            color: Color(0x4CAFAFAF),
+          ),
+          borderRadius: BorderRadius.all(Radius.circular(8)),
         ),
-        borderRadius: BorderRadius.all(Radius.circular(8)),
       ),
-    ),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: SizedBox(
-            width: MediaQuery.sizeOf(context).width - width,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: 40,
-                      height: 40,
-                      decoration: ShapeDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(restaurant.imageUrl ??
-                              'https://via.placeholder.com/150'),
-                          fit: BoxFit.cover,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          side: const BorderSide(
-                            width: 1,
-                            strokeAlign: BorderSide.strokeAlignCenter,
-                            color: Color(0xFFF4F4F4),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: SizedBox(
+              width: MediaQuery.sizeOf(context).width - width,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: 40,
+                        height: 40,
+                        decoration: ShapeDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage(restaurant.imageUrl ??
+                                'https://via.placeholder.com/150'),
+                            fit: BoxFit.cover,
                           ),
-                          borderRadius: BorderRadius.circular(6),
+                          shape: RoundedRectangleBorder(
+                            side: const BorderSide(
+                              width: 1,
+                              strokeAlign: BorderSide.strokeAlignCenter,
+                              color: Color(0xFFF4F4F4),
+                            ),
+                            borderRadius: BorderRadius.circular(6),
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 10),
-                    SizedBox(
-                      width: MediaQuery.sizeOf(context).width - width - 50,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                restaurant.name,
-                                style: TextStyle(
-                                  color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
-                                  fontSize: 12,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w600,
+                      const SizedBox(width: 10),
+                      SizedBox(
+                        width: MediaQuery.sizeOf(context).width - width - 50,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  restaurant.name,
+                                  style: TextStyle(
+                                    color: state.themeMode == ThemeMode.light
+                                        ? Colors.black
+                                        : Colors.white,
+                                    fontSize: 12,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
-                              ),
-                              const Spacer(),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.pushNamed(
-                                      context, 'OrderDetailsScreenRoute',
+                                const Spacer(),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      'OrderDetailsScreenRoute',
                                       arguments: [
                                         order,
                                         restaurant,
-                                      ]);
-                                },
-                                child: const Icon(
-                                  Icons.more_horiz,
-                                  color: Color(0xFF898888),
-                                  size: 18.0,
+                                      ],
+                                    );
+                                  },
+                                  child: const Icon(
+                                    Icons.more_horiz,
+                                    color: Color(0xFF898888),
+                                    size: 18.0,
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 4.0),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              const Icon(
-                                Icons.calendar_month_outlined,
-                                color: Color(0xFF898888),
-                                size: 12,
-                              ),
-                              const SizedBox(width: 5),
-                              Text(
-                                DateFormat('dd MMM yyyy hh:mm a')
-                                    .format(order.createdAt),
-                                style: const TextStyle(
+                              ],
+                            ),
+                            const SizedBox(height: 4.0),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.calendar_month_outlined,
                                   color: Color(0xFF898888),
-                                  fontSize: 10,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w500,
+                                  size: 12,
                                 ),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                              ),
-                            ],
-                          ),
-                        ],
+                                const SizedBox(width: 5),
+                                Text(
+                                  DateFormat('dd MMM yyyy hh:mm a')
+                                      .format(order.createdAt),
+                                  style: const TextStyle(
+                                    color: Color(0xFF898888),
+                                    fontSize: 10,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                Row(
-                  children: [
-                    Text(
-                      'Order ID: ${order.orderId}',
-                      style: const TextStyle(
-                        color: Color(0xFF898888),
-                        fontSize: 12,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w600,
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  Row(
+                    children: [
+                      Text(
+                        'Order ID: ${order.orderId}',
+                        style: const TextStyle(
+                          color: Color(0xFF898888),
+                          fontSize: 12,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w600,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
                       ),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                    ),
-                    const Spacer(),
-                    Text(
-                      'EGP ${order.totalAmount}',
-                      style: TextStyle(
-                        color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
-                        fontSize: 12,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w700,
+                      const Spacer(),
+                      Text(
+                        'EGP ${order.totalAmount}',
+                        style: TextStyle(
+                          color: state.themeMode == ThemeMode.light
+                              ? Colors.black
+                              : Colors.white,
+                          fontSize: 12,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     ),
   );
 }
@@ -1068,154 +1190,172 @@ Widget buildOrderAutoDeclinedStateWidget({
   required Restaurant restaurant,
   required ThemeState state,
 }) {
-  return Container(
-    height: 96,
-    width: MediaQuery.sizeOf(context).width,
-    decoration: ShapeDecoration(
-      color: state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
-      shape: RoundedRectangleBorder(
-        side: BorderSide(
-          width: 1,
-          strokeAlign: BorderSide.strokeAlignCenter,
-          color: Color(0x4CAFAFAF),
+  return GestureDetector(
+    onTap: () {
+      Navigator.pushNamed(
+        context,
+        'OrderDetailsScreenRoute',
+        arguments: [
+          order,
+          restaurant,
+        ],
+      );
+    },
+    child: Container(
+      height: 96,
+      width: MediaQuery.sizeOf(context).width,
+      decoration: ShapeDecoration(
+        color: state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+            width: 1,
+            strokeAlign: BorderSide.strokeAlignCenter,
+            color: Color(0x4CAFAFAF),
+          ),
+          borderRadius: BorderRadius.all(Radius.circular(8)),
         ),
-        borderRadius: BorderRadius.all(Radius.circular(8)),
       ),
-    ),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: SizedBox(
-            width: MediaQuery.sizeOf(context).width - width,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: 40,
-                      height: 40,
-                      decoration: ShapeDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(restaurant.imageUrl ??
-                              'https://via.placeholder.com/150'),
-                          fit: BoxFit.cover,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          side: const BorderSide(
-                            width: 1,
-                            strokeAlign: BorderSide.strokeAlignCenter,
-                            color: Color(0xFFF4F4F4),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: SizedBox(
+              width: MediaQuery.sizeOf(context).width - width,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: 40,
+                        height: 40,
+                        decoration: ShapeDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage(restaurant.imageUrl ??
+                                'https://via.placeholder.com/150'),
+                            fit: BoxFit.cover,
                           ),
-                          borderRadius: BorderRadius.circular(6),
+                          shape: RoundedRectangleBorder(
+                            side: const BorderSide(
+                              width: 1,
+                              strokeAlign: BorderSide.strokeAlignCenter,
+                              color: Color(0xFFF4F4F4),
+                            ),
+                            borderRadius: BorderRadius.circular(6),
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 10),
-                    SizedBox(
-                      width: MediaQuery.sizeOf(context).width - width - 50,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                restaurant.name,
-                                style: TextStyle(
-                                  color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
-                                  fontSize: 12,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w600,
+                      const SizedBox(width: 10),
+                      SizedBox(
+                        width: MediaQuery.sizeOf(context).width - width - 50,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  restaurant.name,
+                                  style: TextStyle(
+                                    color: state.themeMode == ThemeMode.light
+                                        ? Colors.black
+                                        : Colors.white,
+                                    fontSize: 12,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
-                              ),
-                              const Spacer(),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.pushNamed(
-                                      context, 'OrderDetailsScreenRoute',
+                                const Spacer(),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      'OrderDetailsScreenRoute',
                                       arguments: [
                                         order,
                                         restaurant,
-                                      ]);
-                                },
-                                child: const Icon(
-                                  Icons.more_horiz,
-                                  color: Color(0xFF898888),
-                                  size: 18.0,
+                                      ],
+                                    );
+                                  },
+                                  child: const Icon(
+                                    Icons.more_horiz,
+                                    color: Color(0xFF898888),
+                                    size: 18.0,
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 4.0),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              const Icon(
-                                Icons.calendar_month_outlined,
-                                color: Color(0xFF898888),
-                                size: 12,
-                              ),
-                              const SizedBox(width: 5),
-                              Text(
-                                DateFormat('dd MMM yyyy hh:mm a')
-                                    .format(order.createdAt),
-                                style: const TextStyle(
+                              ],
+                            ),
+                            const SizedBox(height: 4.0),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.calendar_month_outlined,
                                   color: Color(0xFF898888),
-                                  fontSize: 10,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w500,
+                                  size: 12,
                                 ),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                              ),
-                            ],
-                          ),
-                        ],
+                                const SizedBox(width: 5),
+                                Text(
+                                  DateFormat('dd MMM yyyy hh:mm a')
+                                      .format(order.createdAt),
+                                  style: const TextStyle(
+                                    color: Color(0xFF898888),
+                                    fontSize: 10,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                Row(
-                  children: [
-                    Text(
-                      'Order ID: ${order.orderId}',
-                      style: const TextStyle(
-                        color: Color(0xFF898888),
-                        fontSize: 12,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w600,
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  Row(
+                    children: [
+                      Text(
+                        'Order ID: ${order.orderId}',
+                        style: const TextStyle(
+                          color: Color(0xFF898888),
+                          fontSize: 12,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w600,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
                       ),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                    ),
-                    const Spacer(),
-                    Text(
-                      'EGP ${order.totalAmount}',
-                      style: TextStyle(
-                        color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
-                        fontSize: 12,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w700,
+                      const Spacer(),
+                      Text(
+                        'EGP ${order.totalAmount}',
+                        style: TextStyle(
+                          color: state.themeMode == ThemeMode.light
+                              ? Colors.black
+                              : Colors.white,
+                          fontSize: 12,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     ),
   );
 }

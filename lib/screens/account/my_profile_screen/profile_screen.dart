@@ -9,6 +9,7 @@ import 'package:just_order/blocs/theming/theming_cubit.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/layouts/main_layout.dart';
 import 'package:just_order/models/user_model.dart';
+import 'package:just_order/screens/account/app_settings/app_settings_screen.dart';
 import 'package:just_order/shared/function/connectivity_plus.dart';
 import 'package:just_order/shared/function/validations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -131,6 +132,40 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
             leadingWidth: 55.0,
+            actions: [
+              Padding(
+                padding:
+                const EdgeInsets.only(right: 20.0, top: 10.0, bottom: 10.0),
+                child: Container(
+                  width: 34,
+                  height: 34,
+                  clipBehavior: Clip.antiAlias,
+                  decoration: ShapeDecoration(
+                    color: const Color(0xFFF4F4F4),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8)),
+                  ),
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AppSettingsScreen(),
+                        ),
+                      );
+                    },
+                    icon: Image.asset('assets/icons/unselected_settings.png', height: 18.0, width: 18.0,),
+                    style: ButtonStyle(
+                      shape: WidgetStatePropertyAll(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
           body: SingleChildScrollView(
             padding: const EdgeInsets.all(20.0),
