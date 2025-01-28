@@ -136,7 +136,7 @@ class PlaceDetailsSheet extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  AppLocalizations.of(context)!.table_code,
+                  tableCode,
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 14,

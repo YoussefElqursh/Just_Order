@@ -217,7 +217,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       label: AppLocalizations.of(context)!.about_app,
                       isText: true,
                       text: _appVersion,
-                      onPressed: () {}, state: state,
+                      onPressed: null, state: state,
                     ),
                     accountFunctionWidget(
                       context: context,
