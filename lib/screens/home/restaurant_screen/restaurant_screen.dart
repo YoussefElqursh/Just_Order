@@ -617,7 +617,7 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                           SingleChildScrollView(
                             child: SizedBox(
                               width: MediaQuery.sizeOf(context).width,
-                              height: MediaQuery.sizeOf(context).height - 530,
+                              height: MediaQuery.sizeOf(context).height - 500,
                               child: TabBarView(
                                 children: [
                                   FilterWidget(

@@ -48,7 +48,7 @@ class _FilterWidgetState extends State<FilterWidget> {
           items.isNotEmpty
               ? SizedBox(
                   width: double.infinity,
-                  height: MediaQuery.sizeOf(context).height - 582,
+                  height: MediaQuery.sizeOf(context).height - 552,
                   child: ListView.separated(
                     itemBuilder: (context, index) => buildMealWidget(
                       context: context,
