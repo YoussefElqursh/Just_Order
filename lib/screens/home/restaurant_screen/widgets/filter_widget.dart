@@ -48,7 +48,7 @@ class _FilterWidgetState extends State<FilterWidget> {
           items.isNotEmpty
               ? SizedBox(
                   width: double.infinity,
-                  height: MediaQuery.sizeOf(context).height - 534,
+                  height: MediaQuery.sizeOf(context).height - 582,
                   child: ListView.separated(
                     itemBuilder: (context, index) => buildMealWidget(
                       context: context,
@@ -68,8 +68,7 @@ class _FilterWidgetState extends State<FilterWidget> {
                     shrinkWrap: true,
                   ),
                 )
-              :
-          Center(
+              : Center(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
