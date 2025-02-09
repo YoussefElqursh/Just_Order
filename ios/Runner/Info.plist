@@ -51,6 +51,8 @@
 	<true/>
 	<key>GIDClientID</key>
     <string>1073837037972-7eqdt5q78113jq6a52ut97h3amc1tpfj.apps.googleusercontent.com</string>
+    <key>NSFaceIDUsageDescription</key>
+    <string>To Authenticate critical operations as changing password</string>
     <key>CFBundleURLTypes</key>
     <array>
       <dict>

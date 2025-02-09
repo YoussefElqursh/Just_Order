@@ -1,14 +1,24 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:just_order/blocs/localization/language_cubit.dart';
+import 'package:just_order/blocs/login_cubit/login_cubit.dart';
+import 'package:just_order/blocs/login_cubit/login_state.dart';
 import 'package:just_order/blocs/theming/theming_cubit.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/layouts/main_layout.dart';
+import 'package:just_order/main.dart';
 import 'package:just_order/screens/account/app_settings/widget/settings_app_items/settings_app_items.dart';
 import 'package:just_order/screens/account/app_settings/widget/switch_btn_widget/switch_btn_widget.dart';
 import 'package:just_order/shared/function/functions.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../models/user_model.dart';
 
 class AppSettingsScreen extends StatefulWidget {
   const AppSettingsScreen({super.key});
@@ -20,6 +30,7 @@ class AppSettingsScreen extends StatefulWidget {
 class _AppSettingsScreenState extends State<AppSettingsScreen> {
   String _appVersion = '';
   String locale = '';
+  bool _showChangePassword = true;
   void reRenderPage(String locale){
     setState(() {
       locale = locale;
@@ -30,6 +41,7 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
   void initState() {
     super.initState();
     _loadAppVersion();
+    unawaited(showChangePassword());
   }
 
   Future<void> _loadAppVersion() async {
@@ -37,6 +49,17 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
     setState(() {
       _appVersion = 'Version ${packageInfo.version}';
     });
+  }
+
+  Future<void> showChangePassword() async {
+    final prefs = await SharedPreferences.getInstance();
+    final userString = prefs.getString('user');
+    if (userString != null) {
+      final loadedUser = User.fromJson(jsonDecode(userString));
+      setState(() {
+        _showChangePassword = !(loadedUser?.loginWithGoogle)!;
+      });
+    }
   }
 
   @override
@@ -97,14 +120,15 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
               height: MediaQuery.sizeOf(context).height,
               child: Column(
                 children: [
-                  SettingsAppItems(
-                      onTap: () {
-                        navigateTo(context, 'ChangePasswordScreenRoute');
-                      },
-                      icon: Icons.lock_outline_sharp,
-                      title: AppLocalizations.of(context)!.change_password,
-                      training: const SizedBox(),
-                      state: state),
+                  if(_showChangePassword)
+                    SettingsAppItems(
+                        onTap: () {
+                          navigateTo(context, 'ChangePasswordScreenRoute');
+                        },
+                        icon: Icons.lock_outline_sharp,
+                        title: AppLocalizations.of(context)!.change_password,
+                        training: const SizedBox(),
+                        state: state),
                   SettingsAppItems(
                     onTap: () {
                       navigateTo(context, 'SelectYourPlaceRoute');

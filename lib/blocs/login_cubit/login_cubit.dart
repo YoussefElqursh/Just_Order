@@ -89,6 +89,7 @@ class LoginCubit extends Cubit<LoginState> {
           lastName: '',
           email: email,
           password: digestPassword(googleAuth.accessToken.toString()),
+          loginWithGoogle: true,
           phoneNumber: '--',
           userType: UserType.customer,
           emailVerified: true,

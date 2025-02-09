@@ -13,6 +13,7 @@ class User {
   UserType userType;
   bool emailVerified;
   bool phoneNumberVerified;
+  bool loginWithGoogle;
   DateTime createdAt;
   DateTime? updatedAt;
 
@@ -26,6 +27,7 @@ class User {
     required this.userType,
     required this.emailVerified,
     required this.phoneNumberVerified,
+    this.loginWithGoogle = false,
     required this.createdAt,
     this.updatedAt,
   });
@@ -46,6 +48,7 @@ class User {
       userType: UserType.values
           .firstWhere((e) => e.toString() == 'UserType.${map['userType']}'),
       emailVerified: map['emailVerified'] as bool,
+      loginWithGoogle: map["loginWithGoogle"] as bool,
       phoneNumberVerified: map['phoneNumberVerified'] as bool,
       createdAt: map['createdAt'] != null ? _parseDate(map['createdAt']): DateTime.now(),
       updatedAt: map['updatedAt'] != null ? _parseDate(map['updatedAt']): DateTime.now(),
@@ -68,6 +71,7 @@ class User {
       'userType': userType.toString().split('.').last,
       'emailVerified': emailVerified,
       'phoneNumberVerified': phoneNumberVerified,
+      'loginWithGoogle': loginWithGoogle,
       'createdAt': createdAt.toIso8601String(),
       'updatedAt': updatedAt?.toIso8601String(),
     };
@@ -94,6 +98,7 @@ class User {
           .firstWhere((e) => e.toString() == 'UserType.${json['userType']}'),
       emailVerified: json['emailVerified'],
       phoneNumberVerified: json['phoneNumberVerified'],
+      loginWithGoogle: json['loginWithGoogle'],
       createdAt: json['createdAt'] is Timestamp
           ? (json['createdAt'] as Timestamp).toDate()
           : DateTime.parse(json['createdAt'])  ,
