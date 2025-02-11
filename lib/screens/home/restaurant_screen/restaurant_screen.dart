@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_order/blocs/theming/theming_cubit.dart';
@@ -76,20 +75,15 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
   }
 
   Future<void> _initializeScreen() async {
-    DateTime startLoad = DateTime.now();
     await Future.wait([
       _loadItems(),
       _addRestaurantToPrefs(),
       _checkIfFavorite(),
     ]);
-    if(kDebugMode){
-      print("Time take to load restaurant is " + DateTime.now().difference(startLoad).inMilliseconds.toString());
-    }
   }
 
   // Check favorite using isolate
   Future<void> _checkIfFavorite() async {
-    DateTime checkFavourite = DateTime.now();
     try {
       DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
           .collection('users')
@@ -108,37 +102,23 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
           isFavorite = false;
         });
       }
-      if(kDebugMode){
-        print("Time take to check favourite is : " + DateTime.now().difference(checkFavourite).inMilliseconds.toString());
-      }
     } catch (e) {
-      if(kDebugMode){
-        print('Failed to check favorite status: $e');
-        print("Time take to check favourite is : " + DateTime.now().difference(checkFavourite).inMilliseconds.toString());
-      }
+      print('Failed to check favorite status: $e');
     }
   }
 
   Future<void> _loadItems() async {
-    DateTime startLoadItems = DateTime.now();
     final fetchItems = await userRepository.getItems(widget.restaurant.itemIds);
     setState(() {
       items = fetchItems;
       isLoading = false;
     });
-    if(kDebugMode){
-      print("Time take to load items is : " + DateTime.now().difference(startLoadItems).inMilliseconds.toString());
-    }
   }
 
   Future<void> _addRestaurantToPrefs() async {
-    DateTime startAddRestaurant = DateTime.now();
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(AppLocalizations.of(context)!.restaurant_name,
         jsonEncode(widget.restaurant.toJson()));
-    if(kDebugMode){
-      print("Time take to add restaurant is : " + DateTime.now().difference(startAddRestaurant).inMilliseconds.toString());
-    }
   }
 
   Future<void> _removeRestaurantFromPrefs() async {
@@ -704,13 +684,10 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
           .collection('favouriteRestaurant')
           .doc(restaurantData['favouriteRestaurant'])
           .set(restaurantData);
-      if(kDebugMode){
-        print('Restaurant added successfully!');
-      }
+
+      print('Restaurant added successfully!');
     } catch (e) {
-      if(kDebugMode){
-        print('Failed to add restaurant: $e');
-      }
+      print('Failed to add restaurant: $e');
     }
   }
 
@@ -726,18 +703,12 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
 
       if (docSnapshot.exists) {
         await restaurantDocRef.delete();
-        if(kDebugMode){
-          print('Restaurant removed successfully!');
-        }
+        print('Restaurant removed successfully!');
       } else {
-        if(kDebugMode){
-          print('Error: Restaurant document does not exist.');
-        }
+        print('Error: Restaurant document does not exist.');
       }
     } catch (e) {
-      if(kDebugMode){
-        print('Failed to remove restaurant: $e');
-      }
+      print('Failed to remove restaurant: $e');
     }
   }
 }
