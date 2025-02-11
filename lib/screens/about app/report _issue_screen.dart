@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ReportIssueScreen extends StatefulWidget {
   @override
@@ -13,13 +14,6 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
   TextEditingController descriptionController = TextEditingController();
   TextEditingController searchController = TextEditingController();
   List<File> selectedImages = [];
-
-  final List<String> issueTypes = [
-    "Ordering Issue",
-    "Payment Issue",
-    "App Bug/Technical Problem",
-    "Other"
-  ];
 
   final ImagePicker _picker = ImagePicker();
 
@@ -40,6 +34,14 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Localized issue types
+    final List<String> issueTypes = [
+      AppLocalizations.of(context)!.ordering_issue,
+      AppLocalizations.of(context)!.payment_issue,
+      AppLocalizations.of(context)!.app_bug_technical_problem,
+      AppLocalizations.of(context)!.other
+    ];
+
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.all(16.0),
@@ -49,8 +51,8 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
             TextField(
               controller: searchController,
               decoration: InputDecoration(
-                hintText: "Search",
-                prefixIcon: Icon(Icons.search ,color: Color(0xFFE02C45),),
+                hintText: AppLocalizations.of(context)!.search,
+                prefixIcon: Icon(Icons.search, color: Color(0xFFE02C45)),
                 filled: true,
                 fillColor: Color(0xFFF4F4F4),
                 border: OutlineInputBorder(
@@ -60,7 +62,7 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
               ),
             ),
             SizedBox(height: 16),
-            Text("Issue Type*", style: TextStyle(fontWeight: FontWeight.bold)),
+            Text(AppLocalizations.of(context)!.issue_type, style: TextStyle(fontWeight: FontWeight.bold)),
             SizedBox(height: 10),
             Wrap(
               spacing: 8.0,
@@ -80,14 +82,14 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
                 );
               }).toList(),
             ),
-            if (selectedIssueType == "Ordering Issue") ...[
+            if (selectedIssueType == AppLocalizations.of(context)!.ordering_issue) ...[
               SizedBox(height: 16),
-              Text("Order ID*", style: TextStyle(fontWeight: FontWeight.bold)),
+              Text(AppLocalizations.of(context)!.order_id, style: TextStyle(fontWeight: FontWeight.bold)),
               SizedBox(height: 5),
               TextField(
                 controller: orderIdController,
                 decoration: InputDecoration(
-                  hintText: "Enter Order ID",
+                  hintText: AppLocalizations.of(context)!.enter_order_id,
                   filled: true,
                   fillColor: Color(0xFFF4F4F4),
                   border: OutlineInputBorder(
@@ -98,13 +100,13 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
               ),
             ],
             SizedBox(height: 16),
-            Text("Issue Description*", style: TextStyle(fontWeight: FontWeight.bold)),
+            Text(AppLocalizations.of(context)!.issue_description, style: TextStyle(fontWeight: FontWeight.bold)),
             SizedBox(height: 5),
             TextField(
               controller: descriptionController,
               maxLines: 4,
               decoration: InputDecoration(
-                hintText: "Please describe the issue in detail...",
+                hintText: AppLocalizations.of(context)!.please_describe_the_issue_in_detail,
                 filled: true,
                 fillColor: Color(0xFFF4F4F4),
                 border: OutlineInputBorder(
@@ -114,7 +116,7 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
               ),
             ),
             SizedBox(height: 16),
-            Text("Attach Screenshot or Photo", style: TextStyle(fontWeight: FontWeight.bold)),
+            Text(AppLocalizations.of(context)!.attach_screenshot_or_Photo, style: TextStyle(fontWeight: FontWeight.bold)),
             SizedBox(height: 5),
             Row(
               children: [
@@ -162,7 +164,7 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
               ],
             ),
             SizedBox(height: 5),
-            Text("Max file size: 5MB", style: TextStyle(color: Colors.grey, fontSize: 12)),
+            Text(AppLocalizations.of(context)!.max_file_size_5MB, style: TextStyle(color: Colors.grey, fontSize: 12)),
             SizedBox(height: 20),
             SizedBox(
               width: double.infinity,
@@ -177,7 +179,7 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                child: Text("Submit", style: TextStyle(color: Colors.white, fontSize: 16)),
+                child: Text(AppLocalizations.of(context)!.submit, style: TextStyle(color: Colors.white, fontSize: 16)),
               ),
             ),
           ],
@@ -186,4 +188,3 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
     );
   }
 }
-

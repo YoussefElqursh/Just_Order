@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ContactUsScreen extends StatelessWidget {
   @override
@@ -11,7 +12,7 @@ class ContactUsScreen extends StatelessWidget {
           TextField(
             decoration: InputDecoration(
               prefixIcon: Icon(Icons.search, color: Color(0xFFE02C45)),
-              hintText: "Search",
+              hintText: AppLocalizations.of(context)!.search,
               filled: true,
               fillColor: Color(0xFFF4F4F4),
               border: OutlineInputBorder(
@@ -26,19 +27,19 @@ class ContactUsScreen extends StatelessWidget {
               children: [
                 ContactTile(
                     icon: Icons.headset_mic,
-                    title: "Customer Service",
+                    title: AppLocalizations.of(context)!.customer_service,
                     url: "https://www.talabat.com/egypt"),
                 ContactTile(
                     icon: Icons.language,
-                    title: "Website",
+                    title: AppLocalizations.of(context)!.website,
                     url: "https://www.talabat.com/egypt"),
                 ContactTile(
                     icon: Icons.facebook,
-                    title: "Facebook",
+                    title: AppLocalizations.of(context)!.facebook,
                     url: "https://www.talabat.com/egypt"),
                 ContactTile(
                     icon: Icons.camera_alt,
-                    title: "Instagram",
+                    title: AppLocalizations.of(context)!.instagram,
                     url: "https://www.talabat.com/egypt"),
               ],
             ),

@@ -13,6 +13,7 @@ import 'package:just_order/shared/function/functions.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import '../../about app/about app.dart';
 
 class AccountScreen extends StatefulWidget {

@@ -607,9 +607,11 @@ class _OrderScreenState extends State<OrderScreen> {
                                         'DeliveredOrderScreenRoute',
                                         arguments: [
                                           orders
-                                              .where((order) =>
-                                                  order.status ==
-                                                  Status.delivered)
+                                              .where(
+                                                (order) =>
+                                                    order.status ==
+                                                    Status.delivered,
+                                              )
                                               .toList(),
                                           restaurantMap
                                         ]);
@@ -636,8 +638,10 @@ class _OrderScreenState extends State<OrderScreen> {
                               child: Builder(
                                 builder: (context) {
                                   if (orders
-                                      .where((order) =>
-                                          order.status == Status.delivered)
+                                      .where(
+                                        (order) =>
+                                            order.status == Status.delivered,
+                                      )
                                       .isEmpty) {
                                     return Padding(
                                       padding: const EdgeInsets.all(20.0),
@@ -680,39 +684,46 @@ class _OrderScreenState extends State<OrderScreen> {
                                     return ListView.separated(
                                       itemBuilder: (context, index) =>
                                           buildOrderDeliveredStateWidget(
-                                              context: context,
-                                              order: orders
-                                                  .where((order) =>
+                                        context: context,
+                                        order: orders
+                                            .where(
+                                              (order) =>
+                                                  order.status ==
+                                                      Status.delivered &&
+                                                  order.status ==
+                                                      Status.finalized,
+                                            )
+                                            .toList()[index],
+                                        width: 70,
+                                        restaurant: restaurantMap[orders
+                                                .where(
+                                                  (order) =>
                                                       order.status ==
                                                           Status.delivered &&
                                                       order.status ==
-                                                          Status.finalized)
-                                                  .toList()[index],
-                                              width: 70,
-                                              restaurant: restaurantMap[orders
-                                                      .where((order) =>
-                                                          order.status ==
-                                                              Status
-                                                                  .delivered &&
-                                                          order.status ==
-                                                              Status.finalized)
-                                                      .toList()[index]
-                                                      .restaurantId] ??
-                                                  Restaurant.empty(),
-                                              state: state),
+                                                          Status.finalized,
+                                                )
+                                                .toList()[index]
+                                                .restaurantId] ??
+                                            Restaurant.empty(),
+                                        state: state,
+                                      ),
                                       separatorBuilder: (context, index) =>
                                           const SizedBox(
                                         height: 12.0,
                                       ),
                                       itemCount: min(
-                                          3,
-                                          orders
-                                              .where((order) =>
+                                        3,
+                                        orders
+                                            .where(
+                                              (order) =>
                                                   order.status ==
                                                       Status.delivered &&
                                                   order.status ==
-                                                      Status.finalized)
-                                              .length),
+                                                      Status.finalized,
+                                            )
+                                            .length,
+                                      ),
                                       scrollDirection: Axis.vertical,
                                       physics: const BouncingScrollPhysics(),
                                       shrinkWrap: true,
@@ -756,17 +767,24 @@ class _OrderScreenState extends State<OrderScreen> {
                                         'DeclineOrderScreenRoute',
                                         arguments: [
                                           orders
-                                              .where((order) =>
-                                                  order.status ==
-                                                      Status.declined ||
-                                                  order.status ==
-                                                      Status.autoDeclined)
+                                              .where(
+                                                (order) =>
+                                                    order.status ==
+                                                        Status.declined ||
+                                                    order.status ==
+                                                        Status.autoDeclined,
+                                              )
                                               .toList(),
                                           restaurantMap
                                         ]);
                                   },
                                   child: Text(
-                                    '${AppLocalizations.of(context)!.view_all} (${orders.where((order) => order.status == Status.declined || order.status == Status.autoDeclined).length})',
+                                    '${AppLocalizations.of(context)!.view_all} (${orders.where(
+                                          (order) =>
+                                              order.status == Status.declined ||
+                                              order.status ==
+                                                  Status.autoDeclined,
+                                        ).length})',
                                     style: const TextStyle(
                                       color: Color(0xFFE02C45),
                                       fontSize: 10,
@@ -787,9 +805,11 @@ class _OrderScreenState extends State<OrderScreen> {
                               child: Builder(
                                 builder: (context) {
                                   if (orders
-                                      .where((order) =>
-                                          order.status == Status.declined ||
-                                          order.status == Status.autoDeclined)
+                                      .where(
+                                        (order) =>
+                                            order.status == Status.declined ||
+                                            order.status == Status.autoDeclined,
+                                      )
                                       .isEmpty) {
                                     return Padding(
                                       padding: const EdgeInsets.all(20.0),
@@ -832,11 +852,13 @@ class _OrderScreenState extends State<OrderScreen> {
                                     return ListView.separated(
                                       itemBuilder: (context, index) {
                                         final orderList = orders
-                                            .where((order) =>
-                                                order.status ==
-                                                    Status.declined ||
-                                                order.status ==
-                                                    Status.autoDeclined)
+                                            .where(
+                                              (order) =>
+                                                  order.status ==
+                                                      Status.declined ||
+                                                  order.status ==
+                                                      Status.autoDeclined,
+                                            )
                                             .toList();
                                         final order = orderList[index];
                                         return order.status ==
@@ -848,7 +870,8 @@ class _OrderScreenState extends State<OrderScreen> {
                                                 restaurant: restaurantMap[
                                                         order.restaurantId] ??
                                                     Restaurant.empty(),
-                                                state: state)
+                                                state: state,
+                                              )
                                             : buildOrderDeclinedStateWidget(
                                                 context: context,
                                                 order: order,
@@ -856,21 +879,25 @@ class _OrderScreenState extends State<OrderScreen> {
                                                 restaurant: restaurantMap[
                                                         order.restaurantId] ??
                                                     Restaurant.empty(),
-                                                state: state);
+                                                state: state,
+                                              );
                                       },
                                       separatorBuilder: (context, index) =>
                                           const SizedBox(
                                         height: 12.0,
                                       ),
                                       itemCount: min(
-                                          3,
-                                          orders
-                                              .where((order) =>
+                                        3,
+                                        orders
+                                            .where(
+                                              (order) =>
                                                   order.status ==
                                                       Status.declined ||
                                                   order.status ==
-                                                      Status.autoDeclined)
-                                              .length),
+                                                      Status.autoDeclined,
+                                            )
+                                            .length,
+                                      ),
                                       scrollDirection: Axis.vertical,
                                       physics: const BouncingScrollPhysics(),
                                       shrinkWrap: true,

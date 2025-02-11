@@ -56,7 +56,8 @@ class _MyCartScreenState extends State<MyCartScreen> {
 
   Future<void> _loadRestaurantAndUser() async {
     final prefs = await SharedPreferences.getInstance();
-    final restaurantString = prefs.getString('restaurant');
+    final restaurantString =
+        prefs.getString(AppLocalizations.of(context)!.restaurant_name);
     final userString = prefs.getString('user');
     if (restaurantString != null) {
       setState(() {
@@ -75,11 +76,12 @@ class _MyCartScreenState extends State<MyCartScreen> {
     final cartProvider = Provider.of<CartProvider>(context);
     final filteredItems = restaurant != null
         ? cartProvider.items
-        .where((item) =>
-        item.cartItemId.endsWith('_${restaurant!.restaurantId}'))
-        .toList()
+            .where(
+              (item) =>
+                  item.cartItemId.endsWith('_${restaurant!.restaurantId}'),
+            )
+            .toList()
         : cartProvider.items;
-
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, state) {
         return Scaffold(
@@ -100,7 +102,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
             ),
             leading: Padding(
               padding:
-              const EdgeInsets.only(left: 20.0, top: 10.0, bottom: 10.0),
+                  const EdgeInsets.only(left: 20.0, top: 10.0, bottom: 10.0),
               child: Container(
                 width: 34,
                 height: 34,
@@ -185,12 +187,14 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      restaurant?.name ?? AppLocalizations.of(context)!.restaurant_name,
+                                      restaurant?.name ??
+                                          AppLocalizations.of(context)!
+                                              .restaurant_name,
                                       style: TextStyle(
                                         color:
-                                        state.themeMode == ThemeMode.light
-                                            ? Colors.black
-                                            : Colors.white,
+                                            state.themeMode == ThemeMode.light
+                                                ? Colors.black
+                                                : Colors.white,
                                         fontSize: 12,
                                         fontFamily: 'Inter',
                                         fontWeight: FontWeight.w600,
@@ -200,7 +204,8 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                     ),
                                     const SizedBox(height: 5.0),
                                     Text(
-                                      AppLocalizations.of(context)!.pizza_pies_crepes,
+                                      AppLocalizations.of(context)!
+                                          .pizza_pies_crepes,
                                       style: TextStyle(
                                         color: Color(0xFFAFAFAF),
                                         fontSize: 10,
@@ -236,7 +241,8 @@ class _MyCartScreenState extends State<MyCartScreen> {
                               size: 24.0,
                             ),
                             title: Text(
-                              AppLocalizations.of(context)!.any_items_found_in_anothe_cart_is_saved,
+                              AppLocalizations.of(context)!
+                                  .any_items_found_in_anothe_cart_is_saved,
                               style: TextStyle(
                                 color: state.themeMode == ThemeMode.light
                                     ? Colors.black
@@ -280,9 +286,9 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                       text: AppLocalizations.of(context)!.items,
                                       style: TextStyle(
                                         color:
-                                        state.themeMode == ThemeMode.light
-                                            ? Colors.black
-                                            : Colors.white,
+                                            state.themeMode == ThemeMode.light
+                                                ? Colors.black
+                                                : Colors.white,
                                         fontSize: 14,
                                         fontFamily: 'Inter',
                                         fontWeight: FontWeight.w600,
@@ -292,9 +298,9 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                       text: ' ',
                                       style: TextStyle(
                                         color:
-                                        state.themeMode == ThemeMode.light
-                                            ? Colors.black
-                                            : Colors.white,
+                                            state.themeMode == ThemeMode.light
+                                                ? Colors.black
+                                                : Colors.white,
                                         fontSize: 14,
                                         fontFamily: 'Inter',
                                         fontWeight: FontWeight.w500,
@@ -304,9 +310,9 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                       text: '(${filteredItems.length} Items)',
                                       style: TextStyle(
                                         color:
-                                        state.themeMode == ThemeMode.light
-                                            ? Colors.black
-                                            : Colors.white,
+                                            state.themeMode == ThemeMode.light
+                                                ? Colors.black
+                                                : Colors.white,
                                         fontSize: 12,
                                         fontFamily: 'Inter',
                                         fontWeight: FontWeight.w500,
@@ -329,7 +335,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                     ),
                                   ),
                                 ),
-                                child:  Text(
+                                child: Text(
                                   AppLocalizations.of(context)!.remove_all,
                                   style: TextStyle(
                                     color: Color(0xFFE02C45),
@@ -364,11 +370,13 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                   setState(() {
                                     cartItem.quantity++;
                                   });
-                                }, state: state,
+                                },
+                                state: state,
                               );
                             },
                             separatorBuilder: (context, index) => Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 15.0),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 15.0),
                               child: Divider(
                                 height: 1,
                                 color: Color(0x4CC8C8C8),
@@ -565,7 +573,8 @@ class _MyCartScreenState extends State<MyCartScreen> {
             ),
           ),
           bottomNavigationBar: Container(
-            color: state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
+            color:
+                state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 12.0),
               child: Column(
@@ -588,7 +597,8 @@ class _MyCartScreenState extends State<MyCartScreen> {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
-                                AppLocalizations.of(context)!.your_cart_is_empty,
+                                AppLocalizations.of(context)!
+                                    .your_cart_is_empty,
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 14,
@@ -610,32 +620,39 @@ class _MyCartScreenState extends State<MyCartScreen> {
                             orderId: 'testOrderId',
                             clubId: restaurant?.clubId ?? 'clubId',
                             restaurantId:
-                            restaurant?.restaurantId ?? 'restaurantId',
+                                restaurant?.restaurantId ?? 'restaurantId',
                             serviceFees: 10.0,
                             totalFees: 10.0 + (restaurant?.deliveryFee ?? 0.0),
                             createdAt: DateTime.now(),
                           );
                           final order = order_model.Order(
-                            orderId: FirebaseFirestore.instance.collection('orders').doc().id,
+                            orderId: FirebaseFirestore.instance
+                                .collection('orders')
+                                .doc()
+                                .id,
                             userId: user?.userId ?? 'userId',
                             clubId: restaurant?.clubId ?? 'clubId',
-                            restaurantId: restaurant?.restaurantId ?? 'restaurantId',
+                            restaurantId:
+                                restaurant?.restaurantId ?? 'restaurantId',
                             orderCode: 'temp',
                             status: Status.pending,
                             paymentType: PaymentType.cash,
                             invoiceId: invoice.invoiceId,
                             orderTimeOut: restaurant?.orderTimeOut ?? 0,
                             createdAt: DateTime.now(),
-                            totalAmount: filteredItems.fold(0.0, // ignore: avoid_types_as_parameter_names
-                                  (sum, item) => sum + item.totalPrice,) + invoice.totalFees,
+                            totalAmount: filteredItems.fold(
+                                  0.0, // ignore: avoid_types_as_parameter_names
+                                  (sum, item) => sum + item.totalPrice,
+                                ) +
+                                invoice.totalFees,
                             orderCodeForRestaurant: 'temp',
                             orderTable: tableCode,
                           );
                           invoice.orderId = order.orderId;
                           String orderCode =
-                          await order.generateUniqueOrderCode();
+                              await order.generateUniqueOrderCode();
                           String orderCodeForRestaurant =
-                          await order.generateOrderCodeForRestaurant();
+                              await order.generateOrderCodeForRestaurant();
                           order.orderCode = orderCode;
                           order.orderCodeForRestaurant = orderCodeForRestaurant;
 
@@ -657,7 +674,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                         borderRadius: BorderRadius.circular(6),
                       ),
                       color: const Color(0xFFE02C45),
-                      child:  Center(
+                      child: Center(
                         child: Text(
                           AppLocalizations.of(context)!.checkout,
                           style: TextStyle(

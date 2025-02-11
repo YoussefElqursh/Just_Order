@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'help_support.dart';
 import 'privacy & policy.dart';
-
 import 'terms & conditions.dart';
 
 class AboutApp extends StatefulWidget {
@@ -20,15 +20,14 @@ class _AboutAppState extends State<AboutApp> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: Padding(
-          padding: const EdgeInsets.only(left: 20.0 , top: 8 , bottom: 8 ),
+          padding: const EdgeInsets.only(left: 12.0),
           child: Container(
-            // width: double.infinity,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: Color(0xFFF4F4F4) 
+              color: Color(0xFFF4F4F4), // Background color for the container
+              borderRadius: BorderRadius.circular(7), // Rounded corners for the container
             ),
             child: IconButton(
-              icon: Icon(Icons.arrow_back),
+              icon: const Icon(Icons.arrow_back, color: Colors.black), // Arrow icon color
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -40,7 +39,7 @@ class _AboutAppState extends State<AboutApp> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("About App",
+              Text(AppLocalizations.of(context)!.about_app,
                 style: TextStyle(
                   fontSize: 17.0,
                   fontWeight: FontWeight.w700,
@@ -57,7 +56,7 @@ class _AboutAppState extends State<AboutApp> {
           children: [
             _buildRoundedButton(
               "assets/icons/terms_conditions.png",
-              "Terms & Conditions",
+              AppLocalizations.of(context)!.terms_conditions,
                   () {
                     Navigator.push(
                       context,
@@ -69,7 +68,7 @@ class _AboutAppState extends State<AboutApp> {
             ),
             _buildRoundedButton(
               "assets/icons/privacy_policy.png",
-              "Privacy Policy",
+              AppLocalizations.of(context)!.privacy_policy,
                   () {
                     Navigator.push(
                       context,
@@ -81,7 +80,7 @@ class _AboutAppState extends State<AboutApp> {
             ),
             _buildRoundedButton(
               "assets/icons/help_support.png",
-              "Help & Support",
+              AppLocalizations.of(context)!.help_support,
                   () {
                     Navigator.push(
                       context,
@@ -93,10 +92,10 @@ class _AboutAppState extends State<AboutApp> {
             ),
             _buildAppVersionTile(), // Non-clickable App Version
             const SizedBox(height: 345), // Space before footer
-            const Align(
+             Align(
               alignment: Alignment.center,
               child: Text(
-                "Powered by Just Order © 2025.",
+                AppLocalizations.of(context)!.powered_by_just_order,
                 style: TextStyle(color: Color(0xFFE02C45), fontSize: 12),
                 textAlign: TextAlign.center,
               ),
@@ -153,8 +152,8 @@ class _AboutAppState extends State<AboutApp> {
           children: [
             Image.asset("assets/icons/app_version.png", width: 24, height: 24),
             const SizedBox(width: 12),
-            const Text(
-              "App Version",
+             Text(
+              AppLocalizations.of(context)!.app_version,
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
             ),
             const Spacer(),

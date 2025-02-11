@@ -87,6 +87,8 @@ dependencies:
   #CodeGenerator
   freezed: ^2.5.7
   freezed_annotation: ^2.4.4
+  fluttertoast: ^8.2.11
+  elegant_notification: ^2.4.1
 
 dev_dependencies:
   flutter_test:

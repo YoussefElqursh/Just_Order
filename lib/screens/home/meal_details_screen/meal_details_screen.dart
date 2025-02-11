@@ -71,17 +71,17 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
 
   void _addToCart() async {
     final prefs = await SharedPreferences.getInstance();
-    final restaurantString = prefs.getString('restaurant');
-    Restaurant? resturant;
+    final restaurantString = prefs.getString(AppLocalizations.of(context)!.restaurant_name);
+    Restaurant? restaurant;
     if (restaurantString != null) {
       setState(() {
-        resturant = Restaurant.fromJson(restaurantString);
+        restaurant = Restaurant.fromJson(restaurantString);
       });
     }
     // ignore: use_build_context_synchronously
     final cartProvider = Provider.of<CartProvider>(context, listen: false);
     final cartItem = CartItem(
-      cartItemId: '${UniqueKey().toString()}_${resturant?.restaurantId}',
+      cartItemId: '${UniqueKey().toString()}_${restaurant?.restaurantId}',
       item: widget.item,
       quantity: counter,
       price: price,

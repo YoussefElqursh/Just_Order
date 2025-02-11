@@ -225,9 +225,14 @@
 
   "no_internet_connection": "لا يوجد اتصال بالإنترنت",
   "please_check_your_internet_connection_and_try_again": "من فضلك تحقق من اتصالك بالإنترنت وحاول مرة أخرى",
+
+  "about_app":"حول التطبيق",
+  "help_support":"المساعدة والدعم",
+  "powered_by_just_order" : "مدعوم بواسطة Just Order © 2025.",
+  "app_version" : "إصدار التطبيق",
+
+
   "last_update" : "آخر تحديث: 24 يناير 2025",
-
-
   "terms_conditions" : "الشروط والأحكام",
 
   "introduction" : "مقدمة",
@@ -413,8 +418,30 @@
   "appropriate_measures_for_data_protection": "سنتخذ تدابير مناسبة لضمان حماية بياناتك الشخصية وفقًا لقوانين حماية البيانات المعمول بها.",
   "we_may_update_this_data_privacy_policy": "قد نقوم بتحديث سياسة الخصوصية هذه من وقت لآخر.",
   "we_will_notify_you_of_changes": "سنقوم بإعلامك بأي تغييرات عن طريق نشر السياسة المعدلة على التطبيق و/أو إرسال إشعار عبر البريد الإلكتروني.",
-  "contact_us_for_questions": "إذا كان لديك أي أسئلة حول سياسة الخصوصية هذه، يرجى الاتصال بنا على:"
+  "contact_us_for_questions": "إذا كان لديك أي أسئلة حول سياسة الخصوصية هذه، يرجى الاتصال بنا على:",
 
 
+  "faq" : "الأسئلة الشائعة",
+  "report_issue" : "الإبلاغ عن مشكلة",
+  "all" :"الكل",
+  "general" : "عام",
+  "using_the_app" : "استخدام التطبيق",
+  "search" : "بحث",
+  "customer_service" : "خدمة العملاء",
+  "website" : "موقع إلكتروني",
+  "facebook" : "فيسبوك",
+  "instagram" : "إنستجرام",
 
+  "issue_type" : "نوع المشكلة*",
+  "ordering_issue" : "مشكلة في الطلب",
+  "order_id" : "معرف الطلب",
+  "enter_order_id" : "أدخل معرف الطلب",
+  "payment_issue" : "مشكلة الدفع",
+  "app_bug_technical_problem" : "مشكلة تقنية في التطبيق",
+  "other" : "آخر",
+  "issue_description" : "وصف المشكلة*",
+  "please_describe_the_issue_in_detail": "الرجاء وصف المشكلة بالتفصيل...",
+  "attach_screenshot_or_Photo" : "إرفاق لقطة شاشة أو صورة",
+  "max_file_size_5MB" : "الحد الأقصى لحجم الملف: 5 ميجا بايت",
+  "submit" : "إرسال"
 }
