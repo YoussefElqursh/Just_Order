@@ -6,6 +6,7 @@ import 'package:just_order/models/item_model.dart';
 import 'package:just_order/models/order_model.dart';
 import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/screens/account/change_password/change_password_screen.dart';
+import 'package:just_order/screens/forgot_password_screen/forgot_password_screen.dart';
 import 'package:just_order/screens/order/order_state/decline_order_screen.dart';
 import 'package:just_order/screens/order/order_state/delivered_order_screen.dart';
 import 'package:just_order/screens/order/order_state/on_way_order_screen.dart';
@@ -167,6 +168,8 @@ class AppRouter {
         return LoginScreen.route();
       case 'SignUpScreenRoute':
         return SignUpScreen.route();
+      case 'ForgotPasswordRoute':
+        return ForgotPasswordScreen.route();
       case 'ProfileScreenRoute':
         return ProfileScreen.route();
       case 'ChangePasswordScreenRoute':

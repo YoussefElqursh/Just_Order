@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart' as svg;
 import 'package:just_order/blocs/login_cubit/login_cubit.dart';
 import 'package:just_order/blocs/login_cubit/login_state.dart';
@@ -9,7 +10,6 @@ import 'package:just_order/models/user_model.dart';
 import 'package:just_order/repository/auth_repository/login_repository.dart';
 import 'package:just_order/screens/QR/select_your_place_screen.dart';
 import 'package:just_order/shared/function/functions.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -56,7 +56,8 @@ class _LoginScreenState extends State<LoginScreen> {
             } else if (state is LoginSuccess) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text('${AppLocalizations.of(context)!.welcome}, ${state.user.firstName} ! '),
+                  content: Text(
+                      '${AppLocalizations.of(context)!.welcome}, ${state.user.firstName} ! '),
                 ),
               );
               navigateToWithoutBack(context, const SelectYourPlace());
@@ -100,9 +101,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     SizedBox(
-                                        height:
-                                            MediaQuery.sizeOf(context).width *
-                                                0.135),
+                                      height: MediaQuery.sizeOf(context).width *
+                                          0.135,
+                                    ),
                                     Row(
                                       mainAxisSize: MainAxisSize.min,
                                       mainAxisAlignment:
@@ -133,9 +134,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                       ],
                                     ),
                                     const SizedBox(height: 20.0),
-                                     SizedBox(
+                                    SizedBox(
                                       width: 230,
-                                      child: Text(AppLocalizations.of(context)!.sign_in_to_your_account,
+                                      child: Text(
+                                          AppLocalizations.of(context)!
+                                              .sign_in_to_your_account,
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             color: Colors.white,
@@ -148,8 +151,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                           maxLines: 2),
                                     ),
                                     const SizedBox(height: 12.0),
-                                     Text(
-                                      AppLocalizations.of(context)!.enter_your_email_and_password_to_login,
+                                    Text(
+                                      AppLocalizations.of(context)!
+                                          .enter_your_email_and_password_to_login,
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 12,
@@ -195,7 +199,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                     vertical: 30,
                                   ),
                                   decoration: ShapeDecoration(
-                                    color: state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
+                                    color: state.themeMode == ThemeMode.dark
+                                        ? Colors.black
+                                        : Colors.white,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(20),
                                     ),
@@ -223,7 +229,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                               width: 1,
                                               strokeAlign:
                                                   BorderSide.strokeAlignCenter,
-                                              color: state.themeMode == ThemeMode.dark ? Colors.white : Color(0x4CAFAFAF),
+                                              color: state.themeMode ==
+                                                      ThemeMode.dark
+                                                  ? Colors.white
+                                                  : Color(0x4CAFAFAF),
                                             ),
                                             borderRadius:
                                                 BorderRadius.circular(6),
@@ -243,9 +252,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                               ),
                                               const SizedBox(width: 10.0),
                                               Text(
-                                                AppLocalizations.of(context)!.continue_with_google,
+                                                AppLocalizations.of(context)!
+                                                    .continue_with_google,
                                                 style: TextStyle(
-                                                  color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                                                  color: state.themeMode ==
+                                                          ThemeMode.light
+                                                      ? Colors.black
+                                                      : Colors.white,
                                                   fontSize: 14,
                                                   fontFamily: 'Inter',
                                                   fontWeight: FontWeight.w600,
@@ -272,7 +285,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                                       width: 0.50,
                                                       strokeAlign: BorderSide
                                                           .strokeAlignCenter,
-                                                      color: state.themeMode == ThemeMode.dark ? Colors.white : Color(0x4CAFAFAF),
+                                                      color: state.themeMode ==
+                                                              ThemeMode.dark
+                                                          ? Colors.white
+                                                          : Color(0x4CAFAFAF),
                                                     ),
                                                   ),
                                                 ),
@@ -280,10 +296,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                             ),
                                             const SizedBox(width: 15),
                                             Text(
-                                              AppLocalizations.of(context)!.or_login_with,
+                                              AppLocalizations.of(context)!
+                                                  .or_login_with,
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
-                                                color: state.themeMode == ThemeMode.dark ? Colors.white : Color(0xFF898888),
+                                                color: state.themeMode ==
+                                                        ThemeMode.dark
+                                                    ? Colors.white
+                                                    : Color(0xFF898888),
                                                 fontSize: 12,
                                                 fontFamily: 'Inter',
                                                 fontWeight: FontWeight.w400,
@@ -301,7 +321,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                                       width: 0.50,
                                                       strokeAlign: BorderSide
                                                           .strokeAlignCenter,
-                                                      color: state.themeMode == ThemeMode.dark ? Colors.white : Color(0x4CAFAFAF),
+                                                      color: state.themeMode ==
+                                                              ThemeMode.dark
+                                                          ? Colors.white
+                                                          : Color(0x4CAFAFAF),
                                                     ),
                                                   ),
                                                 ),
@@ -315,7 +338,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                           child: Text(
                                             AppLocalizations.of(context)!.email,
                                             style: TextStyle(
-                                              color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                                              color: state.themeMode ==
+                                                      ThemeMode.light
+                                                  ? Colors.black
+                                                  : Colors.white,
                                               fontSize: 10,
                                               fontFamily: 'Inter',
                                               fontWeight: FontWeight.w500,
@@ -330,11 +356,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                           child: TextFormField(
                                             controller: _emailController,
                                             maxLines: 1,
-                                            cursorColor:state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                                            cursorColor: state.themeMode ==
+                                                    ThemeMode.light
+                                                ? Colors.black
+                                                : Colors.white,
                                             keyboardType:
                                                 TextInputType.emailAddress,
                                             style: TextStyle(
-                                              color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                                              color: state.themeMode ==
+                                                      ThemeMode.light
+                                                  ? Colors.black
+                                                  : Colors.white,
                                               fontSize: 12,
                                               fontFamily: 'Inter',
                                               fontWeight: FontWeight.w500,
@@ -393,7 +425,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                             validator: (value) {
                                               if (value == null ||
                                                   value.isEmpty) {
-                                                return AppLocalizations.of(context)!.please_enter_your_email;
+                                                return AppLocalizations.of(
+                                                        context)!
+                                                    .please_enter_your_email;
                                               } else if (!RegExp(
                                                 r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
                                               ).hasMatch(value)) {
@@ -406,9 +440,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                         Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            AppLocalizations.of(context)!.password,
+                                            AppLocalizations.of(context)!
+                                                .password,
                                             style: TextStyle(
-                                              color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                                              color: state.themeMode ==
+                                                      ThemeMode.light
+                                                  ? Colors.black
+                                                  : Colors.white,
                                               fontSize: 10,
                                               fontFamily: 'Inter',
                                               fontWeight: FontWeight.w500,
@@ -426,11 +464,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   .read<LoginCubit>()
                                                   .isPassword,
                                               maxLines: 1,
-                                              cursorColor: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                                              cursorColor: state.themeMode ==
+                                                      ThemeMode.light
+                                                  ? Colors.black
+                                                  : Colors.white,
                                               keyboardType:
                                                   TextInputType.visiblePassword,
                                               style: TextStyle(
-                                                color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                                                color: state.themeMode ==
+                                                        ThemeMode.light
+                                                    ? Colors.black
+                                                    : Colors.white,
                                                 fontSize: 12,
                                                 fontFamily: 'Inter',
                                                 fontWeight: FontWeight.w500,
@@ -501,9 +545,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                               validator: (value) {
                                                 if (value == null ||
                                                     value.isEmpty) {
-                                                  return AppLocalizations.of(context)!.please_enter_your_password;
+                                                  return AppLocalizations.of(
+                                                          context)!
+                                                      .please_enter_your_password;
                                                 } else if (value.length < 6) {
-                                                  return AppLocalizations.of(context)!.password_must_be_at_least_6_characters;
+                                                  return AppLocalizations.of(
+                                                          context)!
+                                                      .password_must_be_at_least_6_characters;
                                                 }
                                                 return null;
                                               }),
@@ -514,9 +562,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                         Align(
                                           alignment: Alignment.centerRight,
                                           child: GestureDetector(
-                                            onTap: () {},
-                                            child:  Text(
-                                              AppLocalizations.of(context)!.forget_password,
+                                            onTap: () {
+                                              navigateTo(context,
+                                                  'ForgotPasswordRoute');
+                                            },
+                                            child: Text(
+                                              AppLocalizations.of(context)!
+                                                  .forget_password,
                                               style: TextStyle(
                                                 color: Color(0xFFE02C45),
                                                 fontSize: 10,
@@ -541,7 +593,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 );
                                                 if (user != null) {
                                                   _showSnackBar(
-                                                      AppLocalizations.of(context)!.login_sucessful,
+                                                      AppLocalizations.of(
+                                                              context)!
+                                                          .login_sucessful,
                                                       Colors.green);
                                                   navigateToWithoutBack(
                                                     // ignore: use_build_context_synchronously
@@ -550,7 +604,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   );
                                                 } else {
                                                   _showSnackBar(
-                                                      AppLocalizations.of(context)!.invalid_email_or_password,
+                                                      AppLocalizations.of(
+                                                              context)!
+                                                          .invalid_email_or_password,
                                                       Colors.red);
                                                 }
                                               } catch (e) {
@@ -575,9 +631,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                                     color: Colors.white,
                                                   ),
                                                 )
-                                              :  Center(
+                                              : Center(
                                                   child: Text(
-                                                    AppLocalizations.of(context)!.login,
+                                                    AppLocalizations.of(
+                                                            context)!
+                                                        .login,
                                                     style: TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 14,
@@ -596,8 +654,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           children: [
-                                             Text(
-                                              AppLocalizations.of(context)!.dont_have_an_account,
+                                            Text(
+                                              AppLocalizations.of(context)!
+                                                  .dont_have_an_account,
                                               style: TextStyle(
                                                 color: Color(0xFF898888),
                                                 fontSize: 12,
@@ -612,8 +671,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 navigateTo(context,
                                                     'SignUpScreenRoute');
                                               },
-                                              child:  Text(
-                                                AppLocalizations.of(context)!.sign_up,
+                                              child: Text(
+                                                AppLocalizations.of(context)!
+                                                    .sign_up,
                                                 style: TextStyle(
                                                   color: Color(0xFFE02C45),
                                                   fontSize: 12,
