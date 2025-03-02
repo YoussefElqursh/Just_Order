@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:just_order/models/cart_item_model.dart';
 import 'package:just_order/models/invoice_model.dart';
 import 'package:just_order/models/item_model.dart';
-import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/models/order_model.dart' as order_model;
+import 'package:just_order/models/restaurant_model.dart';
 
 class UserRepository {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -30,22 +30,26 @@ class UserRepository {
     Set<String> itemIdSet = itemIds.toSet();
     List<Future<void>> futures = [];
 
-    for (int i = 0; i < itemIds.length; i += 20) { // Adjusted batch size to 20
-      final batchIds = itemIds.sublist(i, i + 20 > itemIds.length ? itemIds.length : i + 20);
+    for (int i = 0; i < itemIds.length; i += 20) {
+      // Adjusted batch size to 20
+      final batchIds =
+          itemIds.sublist(i, i + 20 > itemIds.length ? itemIds.length : i + 20);
 
       futures.add(
         firestore
             .collection('items')
             .where(FieldPath.documentId, whereIn: batchIds)
             .get()
-            .then((QuerySnapshot snapshot) {
-          for (var doc in snapshot.docs) {
-            Item item = Item.fromMap(doc.data() as Map<String, dynamic>);
-            if (item.available && itemIdSet.contains(doc.id)) {
-              items.add(item);
+            .then(
+          (QuerySnapshot snapshot) {
+            for (var doc in snapshot.docs) {
+              Item item = Item.fromMap(doc.data() as Map<String, dynamic>);
+              if (item.available && itemIdSet.contains(doc.id)) {
+                items.add(item);
+              }
             }
-          }
-        }),
+          },
+        ),
       );
     }
 

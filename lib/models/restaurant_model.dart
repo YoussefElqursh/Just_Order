@@ -8,6 +8,7 @@ class Restaurant {
   String? imageUrl;
   String? location;
   List<String> itemIds;
+  List<String> categoriesId;
   double? deliveryFee;
   int orderTimeOut;
 
@@ -19,6 +20,7 @@ class Restaurant {
     this.imageUrl,
     this.location,
     required this.itemIds,
+    required this.categoriesId,
     this.deliveryFee,
     required this.orderTimeOut,
   });
@@ -32,6 +34,7 @@ class Restaurant {
       imageUrl: data['imageUrl'],
       location: data['location'],
       itemIds: List<String>.from(data['itemIds']),
+      categoriesId: List<String>.from(data['categoriesId']),
       deliveryFee: (data['deliveryFee'] as num?)?.toDouble(),
       orderTimeOut: (data['orderTimeOut'] as num).toInt(),
     );
@@ -46,6 +49,7 @@ class Restaurant {
       'imageUrl': imageUrl,
       'location': location,
       'itemIds': itemIds,
+      'categoriesId': categoriesId,
       'deliveryFee': deliveryFee,
       'orderTimeOut': orderTimeOut,
     };
@@ -62,6 +66,7 @@ class Restaurant {
       managerId: '',
       clubId: '',
       itemIds: [],
+      categoriesId: [],
       orderTimeOut: 0,
     );
   }
