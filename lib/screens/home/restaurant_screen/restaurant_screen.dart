@@ -63,19 +63,7 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
   bool isLoading = true;
   bool isFavorite = true;
 
-  List<String> filter = [
-    // 'Trending',
-    // 'Discounts',
-    // 'Up to 40% off',
-    // 'Meals',
-    // 'Sandwich',
-    // 'Salad',
-    // 'Pizza',
-    // 'Crepe',
-    // 'Beverages',
-    // 'Soft Drinks',
-    // 'Desserts',
-  ];
+  List<String> filter = [];
 
   @override
   void initState() {
