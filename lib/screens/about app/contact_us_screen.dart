@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ContactUsScreen extends StatelessWidget {
   @override
@@ -26,21 +26,34 @@ class ContactUsScreen extends StatelessWidget {
             child: ListView(
               children: [
                 ContactTile(
-                    icon: Icons.headset_mic,
-                    title: AppLocalizations.of(context)!.customer_service,
-                    url: "https://www.talabat.com/egypt"),
+                  icon: Icons.headset_mic,
+                  title: AppLocalizations.of(context)!.customer_service,
+                  url: "https://www.talabat.com/egypt",
+                ),
+                SizedBox(
+                  height: 8,
+                ),
                 ContactTile(
-                    icon: Icons.language,
-                    title: AppLocalizations.of(context)!.website,
-                    url: "https://www.talabat.com/egypt"),
+                  icon: Icons.language,
+                  title: AppLocalizations.of(context)!.website,
+                  url: "https://www.talabat.com/egypt",
+                ),
+                SizedBox(
+                  height: 8,
+                ),
                 ContactTile(
-                    icon: Icons.facebook,
-                    title: AppLocalizations.of(context)!.facebook,
-                    url: "https://www.talabat.com/egypt"),
+                  icon: Icons.facebook,
+                  title: AppLocalizations.of(context)!.facebook,
+                  url: "https://www.talabat.com/egypt",
+                ),
+                SizedBox(
+                  height: 8,
+                ),
                 ContactTile(
-                    icon: Icons.camera_alt,
-                    title: AppLocalizations.of(context)!.instagram,
-                    url: "https://www.talabat.com/egypt"),
+                  icon: Icons.camera_alt,
+                  title: AppLocalizations.of(context)!.instagram,
+                  url: "https://www.talabat.com/egypt",
+                ),
               ],
             ),
           ),
@@ -55,12 +68,19 @@ class ContactTile extends StatelessWidget {
   final String title;
   final String url;
 
-  ContactTile({required this.icon, required this.title, required this.url});
+  ContactTile({
+    required this.icon,
+    required this.title,
+    required this.url,
+  });
 
   void _launchURL() async {
     final Uri uri = Uri.parse(url);
     if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
+      await launchUrl(
+        uri,
+        mode: LaunchMode.externalApplication,
+      );
     } else {
       print("Could not launch $url");
     }
@@ -68,11 +88,32 @@ class ContactTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Colors.white,
+    return Container(
+      clipBehavior: Clip.antiAlias,
+      decoration: ShapeDecoration(
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+            width: 1,
+            strokeAlign: BorderSide.strokeAlignCenter,
+            color: Color(0x4CAFAFAF) /* Gray-30% */,
+          ),
+          borderRadius: BorderRadius.circular(6),
+        ),
+      ),
       child: ListTile(
-        leading: Icon(icon, color: Color(0xFFE02C45)),
-        title: Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+        leading: Icon(
+          icon,
+          color: Color(0xFFE02C45),
+        ),
+        title: Text(
+          title,
+          style: TextStyle(
+            color: Color(0xFF090909) /* Black */,
+            fontSize: 14,
+            fontFamily: 'Inter',
+            fontWeight: FontWeight.w500,
+          ),
+        ),
         onTap: _launchURL, // Open the link when tapped
       ),
     );

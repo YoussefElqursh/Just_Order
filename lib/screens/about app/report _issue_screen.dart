@@ -1,9 +1,11 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
 import 'dart:io';
-import 'package:image_picker/image_picker.dart';
+
+import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:image_picker/image_picker.dart';
+import 'package:just_order/shared/style/colors.dart';
 
 // abstract class MyButton extends StatelessWidget {
 //   const MyButton({super.key});
@@ -13,19 +15,15 @@ import 'dart:convert';
 //
 // }
 
-
 class ReportIssueScreen extends StatefulWidget {
   @override
   _ReportIssueScreenState createState() => _ReportIssueScreenState();
 }
 
 class _ReportIssueScreenState extends State<ReportIssueScreen> {
-
-
-
-
   Future<void> sendRequest() async {
-    final url = Uri.parse('https://report-problem.justorder-eg.com/report-problem');
+    final url =
+        Uri.parse('https://report-problem.justorder-eg.com/report-problem');
 
     try {
       final response = await http.post(
@@ -107,13 +105,37 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
               ),
             ),
             SizedBox(height: 16),
-            Text(AppLocalizations.of(context)!.issue_type, style: TextStyle(fontWeight: FontWeight.bold)),
+            Text.rich(
+              TextSpan(
+                children: [
+                  TextSpan(
+                    text: AppLocalizations.of(context)!.issue_type,
+                    style: TextStyle(
+                      color: Color(0xFF090909) /* Black */,
+                      fontSize: 12,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  TextSpan(
+                    text: '*',
+                    style: TextStyle(
+                      color: Color(0xFFF44336) /* Red */,
+                      fontSize: 12,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            ),
             SizedBox(height: 10),
             Wrap(
               spacing: 8.0,
               children: issueTypes.map((type) {
                 bool isSelected = selectedIssueType == type;
                 return ChoiceChip(
+                  checkmarkColor: AppColor.whiteColor,
                   label: Text(type),
                   selected: isSelected,
                   onSelected: (selected) {
@@ -123,13 +145,21 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
                   },
                   selectedColor: Color(0xFFE02C45),
                   backgroundColor: Color(0xFFF4F4F4),
-                  labelStyle: TextStyle(color: isSelected ? Colors.white : Colors.black),
+                  labelStyle: TextStyle(
+                    color: isSelected ? Colors.white : Colors.black,
+                  ),
                 );
               }).toList(),
             ),
-            if (selectedIssueType == AppLocalizations.of(context)!.ordering_issue) ...[
+            if (selectedIssueType ==
+                AppLocalizations.of(context)!.ordering_issue) ...[
               SizedBox(height: 16),
-              Text(AppLocalizations.of(context)!.order_id, style: TextStyle(fontWeight: FontWeight.bold)),
+              Text(
+                AppLocalizations.of(context)!.order_id,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               SizedBox(height: 5),
               TextField(
                 controller: orderIdController,
@@ -145,13 +175,37 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
               ),
             ],
             SizedBox(height: 16),
-            Text(AppLocalizations.of(context)!.issue_description, style: TextStyle(fontWeight: FontWeight.bold)),
+            Text.rich(
+              TextSpan(
+                children: [
+                  TextSpan(
+                    text: AppLocalizations.of(context)!.issue_description,
+                    style: TextStyle(
+                      color: Color(0xFF090909) /* Black */,
+                      fontSize: 12,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  TextSpan(
+                    text: '*',
+                    style: TextStyle(
+                      color: Color(0xFFF44336) /* Red */,
+                      fontSize: 12,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            ),
             SizedBox(height: 5),
             TextField(
               controller: descriptionController,
-              maxLines: 10,
+              maxLines: 4,
               decoration: InputDecoration(
-                hintText: AppLocalizations.of(context)!.please_describe_the_issue_in_detail,
+                hintText: AppLocalizations.of(context)!
+                    .please_describe_the_issue_in_detail,
                 filled: true,
                 fillColor: Color(0xFFF4F4F4),
                 border: OutlineInputBorder(
@@ -225,7 +279,13 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                child: Text(AppLocalizations.of(context)!.submit, style: TextStyle(color: Colors.white, fontSize: 16)),
+                child: Text(
+                  AppLocalizations.of(context)!.submit,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+                ),
               ),
             ),
           ],
@@ -234,5 +294,3 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
     );
   }
 }
-
-

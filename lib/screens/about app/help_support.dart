@@ -1,86 +1,103 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'contact_us_screen.dart';
 import 'faq_screen.dart';
 import 'report _issue_screen.dart';
 
 class HelpSupportScreen extends StatefulWidget {
+  const HelpSupportScreen({super.key});
+
   @override
-  _HelpSupportScreenState createState() => _HelpSupportScreenState();
+  State<HelpSupportScreen> createState() => _HelpSupportScreenState();
 }
 
 class _HelpSupportScreenState extends State<HelpSupportScreen> {
-  String selectedFilter = 'All'; // Default value
-  List<String> filters = [];
+  late final List<String> filters;
+  String selectedFilter = 'All'; // Default
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (filters.isEmpty) {
-      filters = [
-        AppLocalizations.of(context)!.all,
-        AppLocalizations.of(context)!.general,
-        AppLocalizations.of(context)!.using_the_app,
-        AppLocalizations.of(context)!.account_,
-      ];
-    }
+    final loc = AppLocalizations.of(context)!;
+    filters = [
+      loc.all,
+      loc.general,
+      loc.using_the_app,
+      loc.account_,
+    ];
   }
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
+
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        appBar: AppBar(
-          leading: Padding(
-            padding: const EdgeInsets.only(left: 12.0),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Color(0xFFF4F4F4),
-                borderRadius: BorderRadius.circular(7),
-              ),
-              child: IconButton(
-                icon: const Icon(Icons.arrow_back, color: Colors.black),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
+        backgroundColor: Colors.white,
+        appBar: _buildAppBar(loc),
+        body: TabBarView(
+          children: [
+            FAQSection(selectedFilter: selectedFilter),
+            ContactUsScreen(),
+            ReportIssueScreen(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  PreferredSizeWidget _buildAppBar(AppLocalizations loc) {
+    return AppBar(
+      elevation: 0,
+      leading: Padding(
+        padding: const EdgeInsets.only(
+          left: 20.0,
+          top: 10.0,
+          bottom: 10.0,
+        ),
+        child: Container(
+          width: 34,
+          height: 34,
+          clipBehavior: Clip.antiAlias,
+          decoration: ShapeDecoration(
+            color: const Color(0xFFF4F4F4),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
             ),
           ),
-          title: Text(
-            AppLocalizations.of(context)!.help_support,
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
-          ),
-          centerTitle: true,
-          backgroundColor: Colors.white,
-          elevation: 0,
-          bottom: TabBar(
-            labelColor: Color(0xFFE02C45),
-            unselectedLabelColor: Color(0xFF898888),
-            indicatorColor: Color(0xFFE02C45),
-            tabs: [
-              Tab(text: AppLocalizations.of(context)!.faq),
-              Tab(text: AppLocalizations.of(context)!.contact_us),
-              Tab(text: AppLocalizations.of(context)!.report_issue),
-            ],
+          child: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.black,
+              size: 18,
+            ),
           ),
         ),
-        body: Container(
-          color: Colors.white,
-          child: Column(
-            children: [
-              Expanded(
-                child: TabBarView(
-                  children: [
-                    FAQSection(selectedFilter: selectedFilter), // Pass the default filter
-                    ContactUsScreen(),
-                    ReportIssueScreen(),
-                  ],
-                ),
-              ),
-            ],
-          ),
+      ),
+      centerTitle: true,
+      title: Text(
+        loc.help_support,
+        style: TextStyle(
+          color: Color(0xFF090909) /* Black */,
+          fontSize: 14,
+          fontFamily: 'Inter',
+          fontWeight: FontWeight.w600,
         ),
+      ),
+      bottom: TabBar(
+        labelColor: const Color(0xFFE02C45),
+        unselectedLabelColor: const Color(0xFF898888),
+        indicatorColor: const Color(0xFFE02C45),
+        tabs: [
+          Tab(text: loc.faq),
+          Tab(text: loc.contact_us),
+          Tab(text: loc.report_issue),
+        ],
       ),
     );
   }
