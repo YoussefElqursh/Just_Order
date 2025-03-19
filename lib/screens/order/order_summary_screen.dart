@@ -58,7 +58,7 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
 
   Future<void> _loadRestaurant() async {
     final prefs = await SharedPreferences.getInstance();
-    final restaurantString = prefs.getString('restaurant');
+    final restaurantString = prefs.getString(AppLocalizations.of(context)!.restaurant_name);
     if (restaurantString != null) {
       setState(() {
         restaurant = Restaurant.fromJson(restaurantString);

@@ -185,6 +185,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
         decoration: BoxDecoration(
           color: isDark ? Colors.black : Colors.white,
           borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Color(0x19000000),
+              blurRadius: 30,
+              offset: Offset(0, 1),
+              spreadRadius: 0,
+            )
+          ],
         ),
         child: Form(
           key: _formKey,

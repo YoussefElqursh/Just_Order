@@ -214,7 +214,7 @@ Widget buildOrderPendingStateWidget({
   }
 
   return Container(
-    height: 145,
+    height: 146,
     width: MediaQuery.sizeOf(context).width,
     decoration: ShapeDecoration(
       color: state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
@@ -233,7 +233,7 @@ Widget buildOrderPendingStateWidget({
       children: [
         Container(
           width: 5,
-          height: 145,
+          height: 146,
           decoration: ShapeDecoration(
             color: borderColor,
             shape: RoundedRectangleBorder(

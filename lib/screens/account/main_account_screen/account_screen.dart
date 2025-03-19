@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:just_order/blocs/theming/theming_cubit.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/user_model.dart';
@@ -12,7 +13,6 @@ import 'package:just_order/screens/account/main_account_screen/widgets/account_f
 import 'package:just_order/shared/function/functions.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../about app/about app.dart';
 
@@ -90,7 +90,9 @@ class _AccountScreenState extends State<AccountScreen> {
                     Text(
                       '${user?.firstName} ${user?.lastName}',
                       style: TextStyle(
-                        color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                        color: state.themeMode == ThemeMode.light
+                            ? Colors.black
+                            : Colors.white,
                         fontSize: 14,
                         fontFamily: 'Inter',
                         fontWeight: FontWeight.w600,
@@ -117,7 +119,9 @@ class _AccountScreenState extends State<AccountScreen> {
                       child: Text(
                         AppLocalizations.of(context)!.personal_information,
                         style: TextStyle(
-                          color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                          color: state.themeMode == ThemeMode.light
+                              ? Colors.black
+                              : Colors.white,
                           fontSize: 14,
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w600,
@@ -139,7 +143,8 @@ class _AccountScreenState extends State<AccountScreen> {
                       label: AppLocalizations.of(context)!.my_profile,
                       onPressed: () {
                         navigateTo(context, 'ProfileScreenRoute');
-                      }, state: state,
+                      },
+                      state: state,
                     ),
                     //Account Management Section
                     const SizedBox(height: 25.0),
@@ -148,7 +153,9 @@ class _AccountScreenState extends State<AccountScreen> {
                       child: Text(
                         AppLocalizations.of(context)!.account_management,
                         style: TextStyle(
-                          color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                          color: state.themeMode == ThemeMode.light
+                              ? Colors.black
+                              : Colors.white,
                           fontSize: 14,
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w600,
@@ -175,11 +182,16 @@ class _AccountScreenState extends State<AccountScreen> {
                             builder: (context) => HistoryScreen(),
                           ),
                         );
-                      }, state: state,
+                      },
+                      state: state,
                     ),
                     accountFunctionWidget(
                       context: context,
-                      icon: Image.asset('assets/icons/settings.png',height: 20,width: 20,),
+                      icon: Image.asset(
+                        'assets/icons/settings.png',
+                        height: 20,
+                        width: 20,
+                      ),
                       label: AppLocalizations.of(context)!.settings,
                       onPressed: () {
                         Navigator.push(
@@ -188,7 +200,8 @@ class _AccountScreenState extends State<AccountScreen> {
                             builder: (context) => AppSettingsScreen(),
                           ),
                         );
-                      }, state: state,
+                      },
+                      state: state,
                     ),
                     //General Section
                     const SizedBox(height: 25.0),
@@ -197,7 +210,9 @@ class _AccountScreenState extends State<AccountScreen> {
                       child: Text(
                         AppLocalizations.of(context)!.general,
                         style: TextStyle(
-                          color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                          color: state.themeMode == ThemeMode.light
+                              ? Colors.black
+                              : Colors.white,
                           fontSize: 14,
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w600,
@@ -226,17 +241,26 @@ class _AccountScreenState extends State<AccountScreen> {
                             builder: (context) => AboutApp(),
                           ),
                         );
-                      }, state: state,
+                      },
+                      state: state,
                     ),
                     accountFunctionWidget(
                       context: context,
-                      icon: Image.asset('assets/icons/logout.png',height: 20,width: 20,),
+                      icon: Image.asset(
+                        'assets/icons/logout.png',
+                        height: 20,
+                        width: 20,
+                      ),
                       label: AppLocalizations.of(context)!.log_out,
                       onPressed: () {
                         loginRepository.logout();
                         Navigator.pushNamedAndRemoveUntil(
-                            context, 'LoginScreenRoute', (route) => false);
-                      }, state: state,
+                          context,
+                          'LoginScreenRoute',
+                          (route) => false,
+                        );
+                      },
+                      state: state,
                     ),
                   ],
                 ),

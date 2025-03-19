@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import 'help_support.dart';
 import 'privacy & policy.dart';
@@ -11,6 +12,21 @@ class AboutApp extends StatefulWidget {
 }
 
 class _AboutAppState extends State<AboutApp> {
+  String _appVersion = '';
+
+  @override
+  void initState() {
+    _loadAppVersion();
+    super.initState();
+  }
+
+  Future<void> _loadAppVersion() async {
+    final packageInfo = await PackageInfo.fromPlatform();
+    setState(() {
+      _appVersion = 'Version ${packageInfo.version}';
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -195,8 +211,8 @@ class _AboutAppState extends State<AboutApp> {
             ),
           ),
           const Spacer(),
-          const Text(
-            "Version 1.2.0",
+          Text(
+            _appVersion,
             style: TextStyle(
               color: Color(0xFFAFAFAF) /* Gray */,
               fontSize: 12,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:just_order/blocs/theming/theming_cubit.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/cart_item_model.dart';
@@ -11,12 +12,14 @@ import 'package:just_order/shared/widget/custom_check_box_button_widget.dart';
 import 'package:just_order/shared/widget/custom_radio_button_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MealDetailsScreen extends StatefulWidget {
   final Item item;
 
-  const MealDetailsScreen({super.key, required this.item});
+  const MealDetailsScreen({
+    super.key,
+    required this.item,
+  });
 
   static const String routeName = 'MealDetailsScreenRoute';
 
@@ -57,7 +60,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
         ? widget.item.sizes![selectedSize]!
         : widget.item.price;
     double extrasPrice =
-    selectedExtras.values.fold(0.0, (sum, item) => sum + item);
+        selectedExtras.values.fold(0.0, (sum, item) => sum + item);
     totalPrice = (basePrice + extrasPrice) * counter;
   }
 
@@ -71,7 +74,8 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
 
   void _addToCart() async {
     final prefs = await SharedPreferences.getInstance();
-    final restaurantString = prefs.getString(AppLocalizations.of(context)!.restaurant_name);
+    final restaurantString =
+        prefs.getString(AppLocalizations.of(context)!.restaurant_name);
     Restaurant? restaurant;
     if (restaurantString != null) {
       setState(() {
@@ -99,9 +103,9 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
     final cartProvider = Provider.of<CartProvider>(context);
     final filteredItems = restaurant != null
         ? cartProvider.items
-        .where((item) =>
-        item.cartItemId.endsWith('_${restaurant!.restaurantId}'))
-        .toList()
+            .where((item) =>
+                item.cartItemId.endsWith('_${restaurant!.restaurantId}'))
+            .toList()
         : cartProvider.items;
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, state) {
@@ -298,9 +302,9 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                       AppLocalizations.of(context)!.options,
                                       style: TextStyle(
                                         color:
-                                        state.themeMode == ThemeMode.light
-                                            ? Colors.black
-                                            : Colors.white,
+                                            state.themeMode == ThemeMode.light
+                                                ? Colors.black
+                                                : Colors.white,
                                         fontSize: 14,
                                         fontFamily: 'Inter',
                                         fontWeight: FontWeight.w600,
@@ -310,7 +314,8 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                     ),
                                     SizedBox(height: 6),
                                     Text(
-                                      AppLocalizations.of(context)!.choose_1_option,
+                                      AppLocalizations.of(context)!
+                                          .choose_1_option,
                                       style: TextStyle(
                                         color: Color(0xFFAFAFAF),
                                         fontSize: 12,
@@ -335,7 +340,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                       borderRadius: BorderRadius.circular(50),
                                     ),
                                   ),
-                                  child:  Center(
+                                  child: Center(
                                     child: Text(
                                       AppLocalizations.of(context)!.required,
                                       style: TextStyle(
@@ -357,7 +362,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                 context: context,
                                 hasExtraText: true,
                                 extraText:
-                                '(${AppLocalizations.of(context)!.plus_egp} ${item.sizes![size]!.toStringAsFixed(2)})',
+                                    '(${AppLocalizations.of(context)!.plus_egp} ${item.sizes![size]!.toStringAsFixed(2)})',
                                 width: MediaQuery.sizeOf(context).width,
                                 hasDivider: true,
                                 label: size,
@@ -369,7 +374,8 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                     updateTotalPrice();
                                     updatePrice();
                                   });
-                                }, state: state,
+                                },
+                                state: state,
                               ),
                               const SizedBox(height: 10.0),
                             ],
@@ -389,9 +395,9 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                     Text(AppLocalizations.of(context)!.extras,
                                         style: TextStyle(
                                           color:
-                                          state.themeMode == ThemeMode.light
-                                              ? Colors.black
-                                              : Colors.white,
+                                              state.themeMode == ThemeMode.light
+                                                  ? Colors.black
+                                                  : Colors.white,
                                           fontSize: 14,
                                           fontFamily: 'Inter',
                                           fontWeight: FontWeight.w600,
@@ -399,7 +405,9 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 1),
                                     SizedBox(height: 6),
-                                    Text(AppLocalizations.of(context)!.choose_up_to_1_option,
+                                    Text(
+                                        AppLocalizations.of(context)!
+                                            .choose_up_to_1_option,
                                         style: TextStyle(
                                           color: Color(0xFFAFAFAF),
                                           fontSize: 12,
@@ -416,12 +424,14 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                   height: 23,
                                   clipBehavior: Clip.antiAlias,
                                   decoration: ShapeDecoration(
-                                    color: state.themeMode == ThemeMode.dark ? const Color(0x5FE02C45) :const Color(0x4CAFAFAF),
+                                    color: state.themeMode == ThemeMode.dark
+                                        ? const Color(0x5FE02C45)
+                                        : const Color(0x4CAFAFAF),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(50),
                                     ),
                                   ),
-                                  child:  Center(
+                                  child: Center(
                                     child: Text(
                                       AppLocalizations.of(context)!.optional,
                                       style: TextStyle(
@@ -443,7 +453,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                 context: context,
                                 hasExtraText: true,
                                 extraText:
-                                '(${AppLocalizations.of(context)!.plus_egp} ${item.extras![extra]!.toStringAsFixed(2)})',
+                                    '(${AppLocalizations.of(context)!.plus_egp} ${item.extras![extra]!.toStringAsFixed(2)})',
                                 label: extra,
                                 value: selectedExtras.containsKey(extra),
                                 onChanged: (value) {
@@ -456,7 +466,8 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                     }
                                     updateTotalPrice();
                                   });
-                                }, state: state,
+                                },
+                                state: state,
                               ),
                               const SizedBox(height: 15.0),
                             ],
@@ -495,7 +506,8 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
             ),
           ),
           bottomNavigationBar: Container(
-            color: state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
+            color:
+                state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.start,

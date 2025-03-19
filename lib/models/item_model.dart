@@ -1,6 +1,7 @@
 class Item {
   String itemId;
   double price;
+  double discount;
   String imageUrl;
   bool available;
   String name;
@@ -13,6 +14,7 @@ class Item {
   Item({
     required this.itemId,
     required this.price,
+    required this.discount,
     required this.imageUrl,
     required this.available,
     required this.name,
@@ -27,6 +29,7 @@ class Item {
     return Item(
       itemId: item['itemId'],
       price: (item['price'] as num).toDouble(),
+      discount: (item['discount'] as num).toDouble(),
       imageUrl: item['imageUrl'],
       available: item['available'],
       name: item['name'],
@@ -34,12 +37,20 @@ class Item {
       type: item['type'],
       category: item['category'],
       sizes: item['sizes'] != null
-          ? (item['sizes'] as Map<String, dynamic>)
-              .map((key, value) => MapEntry(key, (value as num).toDouble()))
+          ? (item['sizes'] as Map<String, dynamic>).map(
+              (key, value) => MapEntry(
+                key,
+                (value as num).toDouble(),
+              ),
+            )
           : null,
       extras: item['extras'] != null
-          ? (item['extras'] as Map<String, dynamic>)
-              .map((key, value) => MapEntry(key, (value as num).toDouble()))
+          ? (item['extras'] as Map<String, dynamic>).map(
+              (key, value) => MapEntry(
+                key,
+                (value as num).toDouble(),
+              ),
+            )
           : null,
     );
   }
@@ -48,6 +59,7 @@ class Item {
     return {
       'itemId': itemId,
       'price': price,
+      'discount': discount,
       'imageUrl': imageUrl,
       'available': available,
       'name': name,
