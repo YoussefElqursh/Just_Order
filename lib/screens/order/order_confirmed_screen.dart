@@ -14,24 +14,23 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class OrderConfirmedScreen extends StatefulWidget {
   final Order order;
   final List<CartItem> cartItems;
-  final Invoice invoice;
 
   const OrderConfirmedScreen(
       {super.key,
       required this.order,
       required this.cartItems,
-      required this.invoice});
+      });
 
   static const String routeName = 'OrderConfirmedScreenRoute';
 
   static Route route(
       {required Order order,
       required List<CartItem> cartItems,
-      required Invoice invoice}) {
+      }) {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
       builder: (context) => OrderConfirmedScreen(
-          order: order, cartItems: cartItems, invoice: invoice),
+          order: order, cartItems: cartItems),
     );
   }
 
@@ -52,7 +51,7 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
 
   Future<void> _pushOrderToDatabase() async {
     await userRepository.pushOrder(
-        widget.order, widget.cartItems, widget.invoice);
+        widget.order, widget.cartItems);
   }
 
   Future<bool> _onWillPop() async {
@@ -203,7 +202,7 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                                 ),
                                 const Spacer(),
                                 Text(
-                                  '${AppLocalizations.of(context)!.egp} ${((widget.invoice.totalFees) - (widget.invoice.serviceFees))}',
+                                  '${AppLocalizations.of(context)!.egp} ${widget.order.deliveryFee}',
                                   style: TextStyle(
                                     color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                                     fontSize: 12,
@@ -234,7 +233,7 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                                 ),
                                 const Spacer(),
                                 Text(
-                                  '${AppLocalizations.of(context)!.egp} ${widget.invoice.serviceFees}',
+                                  '${AppLocalizations.of(context)!.egp} ${widget.order.serviceFee}',
                                   style: const TextStyle(
                                     color: Color(0xFFE02C45),
                                     fontSize: 12,

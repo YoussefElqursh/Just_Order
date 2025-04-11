@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:just_order/Utils/Util.dart';
 import 'package:just_order/blocs/theming/theming_cubit.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/enums/payment_type.dart';
@@ -39,12 +41,14 @@ class _MyCartScreenState extends State<MyCartScreen> {
 
   bool isVisible = true;
   String tableCode = '';
+  double serviceFees = 0;
 
   @override
   void initState() {
     super.initState();
     _loadRestaurantAndUser();
     _loadTableCode();
+    _getServiceFees();
   }
 
   Future<void> _loadTableCode() async {
@@ -52,6 +56,15 @@ class _MyCartScreenState extends State<MyCartScreen> {
     setState(() {
       tableCode = prefs.getString('code') ?? 'Unknown';
     });
+  }
+
+  Future<void> _getServiceFees() async {
+    double fetchedServiceFees = await Util.getServiceFees();
+    if(mounted){
+      setState(() {
+        serviceFees = fetchedServiceFees;
+      });
+    }
   }
 
   Future<void> _loadRestaurantAndUser() async {
@@ -511,7 +524,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                               ),
                               Spacer(),
                               Text(
-                                AppLocalizations.of(context)!.egp_10_00,
+                                '${AppLocalizations.of(context)!.egp} ${serviceFees}',
                                 style: TextStyle(
                                   color: Color(0xFFE02C45),
                                   fontSize: 12,
@@ -550,7 +563,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                               const Spacer(),
                               Text(
                                 // ignore: avoid_types_as_parameter_names
-                                '${AppLocalizations.of(context)!.egp}${(filteredItems.fold(0.0, (sum, item) => sum + item.totalPrice) + 10.0 + (restaurant?.deliveryFee ?? 0.0)).toStringAsFixed(2)}',
+                                '${AppLocalizations.of(context)!.egp}${(filteredItems.fold(0.0, (sum, item) => sum + item.totalPrice) + serviceFees + (restaurant?.deliveryFee ?? 0.0)).toStringAsFixed(2)}',
                                 style: TextStyle(
                                   color: state.themeMode == ThemeMode.light
                                       ? Colors.black
@@ -612,19 +625,6 @@ class _MyCartScreenState extends State<MyCartScreen> {
                             ),
                           );
                         } else {
-                          final invoice = Invoice(
-                            invoiceId: FirebaseFirestore.instance
-                                .collection('invoices')
-                                .doc()
-                                .id,
-                            orderId: 'testOrderId',
-                            clubId: restaurant?.clubId ?? 'clubId',
-                            restaurantId:
-                                restaurant?.restaurantId ?? 'restaurantId',
-                            serviceFees: 10.0,
-                            totalFees: 10.0 + (restaurant?.deliveryFee ?? 0.0),
-                            createdAt: DateTime.now(),
-                          );
                           final order = order_model.Order(
                             orderId: FirebaseFirestore.instance
                                 .collection('orders')
@@ -637,18 +637,21 @@ class _MyCartScreenState extends State<MyCartScreen> {
                             orderCode: 'temp',
                             status: Status.pending,
                             paymentType: PaymentType.cash,
-                            invoiceId: invoice.invoiceId,
+                            serviceFee: serviceFees,
+                            deliveryFee: (restaurant!.deliveryFee)!,
                             orderTimeOut: restaurant?.orderTimeOut ?? 0,
                             createdAt: DateTime.now(),
-                            totalAmount: filteredItems.fold(
+                            subTotal: filteredItems.fold(
                                   0.0, // ignore: avoid_types_as_parameter_names
                                   (sum, item) => sum + item.totalPrice,
-                                ) +
-                                invoice.totalFees,
+                                ),
+                            totalAmount: filteredItems.fold(
+                              0.0, // ignore: avoid_types_as_parameter_names
+                                  (sum, item) => sum + item.totalPrice,
+                            ) + serviceFees + restaurant!.deliveryFee!,
                             orderCodeForRestaurant: 'temp',
                             orderTable: tableCode,
                           );
-                          invoice.orderId = order.orderId;
                           String orderCode =
                               await order.generateUniqueOrderCode();
                           String orderCodeForRestaurant =
@@ -663,7 +666,6 @@ class _MyCartScreenState extends State<MyCartScreen> {
                             arguments: {
                               'order': order,
                               'cartItems': filteredItems,
-                              'invoice': invoice,
                             },
                           );
                         }

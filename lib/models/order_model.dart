@@ -14,10 +14,12 @@ class Order {
   String orderTable;
   Status status;
   PaymentType paymentType;
-  String invoiceId;
   int orderTimeOut;
   DateTime createdAt;
   double totalAmount;
+  double subTotal;
+  double serviceFee;
+  double deliveryFee;
   String? deliveryId;
   DateTime? updatedAt;
   DateTime? assignedDateTime;
@@ -36,7 +38,6 @@ class Order {
     this.deliveryId,
     required this.status,
     required this.paymentType,
-    required this.invoiceId,
     this.notes,
     required this.orderTimeOut,
     this.assignedDateTime,
@@ -45,6 +46,9 @@ class Order {
     required this.createdAt,
     this.updatedAt,
     required this.totalAmount,
+    required this.subTotal,
+    required this.serviceFee,
+    required this.deliveryFee
   });
 
   static Order fromMap(Map<String, dynamic> data) {
@@ -63,7 +67,6 @@ class Order {
       paymentType: PaymentType.values.firstWhere(
           // ignore: prefer_interpolation_to_compose_strings
           (e) => e.toString() == 'PaymentType.' + data['paymentType']),
-      invoiceId: data['invoiceId'],
       notes: data['notes'],
       orderTimeOut: data['orderTimeOut'],
       assignedDateTime: data['assignedDateTime'] != null
@@ -80,6 +83,9 @@ class Order {
           ? (data['updatedAt'] as Timestamp).toDate()
           : null,
       totalAmount: data['totalAmount'].toDouble(),
+      subTotal: data['subTotal']?.toDouble() ?? 0,
+      serviceFee: data['serviceFee'].toDouble(),
+      deliveryFee: data['deliveryFee'].toDouble()
     );
   }
 
@@ -95,7 +101,6 @@ class Order {
       'deliveryId': deliveryId,
       'status': status.toString().split('.').last,
       'paymentType': paymentType.toString().split('.').last,
-      'invoiceId': invoiceId,
       'notes': notes,
       'orderTimeOut': orderTimeOut,
       'assignedDateTime': assignedDateTime,
@@ -104,6 +109,9 @@ class Order {
       'createdAt': createdAt,
       'updatedAt': updatedAt,
       'totalAmount': totalAmount,
+      'serviceFee': serviceFee,
+      'deliveryFee': deliveryFee,
+      'subTotal': subTotal
     };
   }
 

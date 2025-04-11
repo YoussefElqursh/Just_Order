@@ -4,9 +4,27 @@ class Assets {
 
   static const String animationDone = 'assets/animation/Done.json';
   static const String assets = 'assets/.env';
+  static const String assetsIconsTimer = 'assets/icons/timer_.png';
   static const String assetsImagesAppIcon = 'assets/images/app_icon.png';
   static const String fontsInterVariable = 'assets/fonts/InterVariable.ttf';
   static const String fontsInterVariableItalic = 'assets/fonts/InterVariable-Italic.ttf';
+  static const String iconsAppVersion = 'assets/icons/app_version.png';
+  static const String iconsCart = 'assets/icons/cart.png';
+  static const String iconsDeliveryTaxes = 'assets/icons/delivery_taxes.png';
+  static const String iconsHelpSupport = 'assets/icons/help_support.png';
+  static const String iconsHome = 'assets/icons/home.png';
+  static const String iconsInfo = 'assets/icons/info.png';
+  static const String iconsLogout = 'assets/icons/logout.png';
+  static const String iconsNotificationBellNew = 'assets/icons/notification-bell-new.png';
+  static const String iconsOrder = 'assets/icons/order.png';
+  static const String iconsPrivacyPolicy = 'assets/icons/privacy_policy.png';
+  static const String iconsSearch = 'assets/icons/search.png';
+  static const String iconsSettings = 'assets/icons/settings.png';
+  static const String iconsTermsConditions = 'assets/icons/terms_conditions.png';
+  static const String iconsTimer = 'assets/icons/timer.png';
+  static const String iconsUnselectedHome = 'assets/icons/unselected_home.png';
+  static const String iconsUnselectedOrder = 'assets/icons/unselected_order.png';
+  static const String iconsUnselectedSettings = 'assets/icons/unselected_settings.png';
   static const String imagesAppIcon = 'assets/images/AppIcon.png';
   static const String imagesBackgroundLogin = 'assets/images/background_login.svg';
   static const String imagesBasicAdv = 'assets/images/basicAdv.jpg';

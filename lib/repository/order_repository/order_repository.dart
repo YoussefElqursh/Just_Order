@@ -53,23 +53,7 @@ class OrderRepository {
     }
   }
 
-  Future<Invoice> getInvoice(String orderId) async {
-    try {
-      final snapshot = await _firestore
-          .collection('invoices')
-          .where('orderId', isEqualTo: orderId)
-          .get();
 
-      if (snapshot.docs.isNotEmpty) {
-        return Invoice.fromMap(snapshot.docs.first.data());
-      } else {
-        throw Exception('Invoice not found');
-      }
-    } catch (e) {
-      print("Error fetching invoice: $e");
-      throw Exception('Failed to fetch invoice');
-    }
-  }
   Future<void> updateOrderStatus(String orderId, String status) async {
     await _firestore
         .collection('orders')

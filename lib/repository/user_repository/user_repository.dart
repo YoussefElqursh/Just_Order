@@ -57,8 +57,10 @@ class UserRepository {
     return items;
   }
 
-  Future<String> pushOrder(order_model.Order order, List<CartItem> cartItems,
-      Invoice invoice) async {
+  Future<String> pushOrder(
+    order_model.Order order,
+    List<CartItem> cartItems,
+  ) async {
     await firestore.collection('orders').doc(order.orderId).set(order.toMap());
     for (CartItem cartItem in cartItems) {
       String cartItemId = firestore
@@ -75,11 +77,7 @@ class UserRepository {
           .doc(cartItem.cartItemId)
           .set(cartItem.toMap());
     }
-    await firestore
-        .collection('invoices')
-        .doc(order.invoiceId)
-        .set(invoice.toMap());
 
-    return 'Order placed successfully with order id: ${order.orderId} and invoice id: ${invoice.invoiceId} and cart items: ${cartItems.length}';
+    return 'Order placed successfully with order id: ${order.orderId} and cart items: ${cartItems.length}';
   }
 }

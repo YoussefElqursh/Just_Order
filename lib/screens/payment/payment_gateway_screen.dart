@@ -12,27 +12,23 @@ class PaymentGatewayScreen extends StatefulWidget {
   final String secretClient;
   final Order order;
   final List<CartItem> cartItems;
-  final Invoice invoice;
 
   const PaymentGatewayScreen(
       {super.key,
       required this.secretClient,
       required this.order,
-      required this.cartItems,
-      required this.invoice});
+      required this.cartItems,});
 
   static Route route(
       {required String secretClient,
       required Order order,
-      required List<CartItem> cartItems,
-      required Invoice invoice}) {
+      required List<CartItem> cartItems,}) {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
       builder: (context) => PaymentGatewayScreen(
         secretClient: secretClient,
         order: order,
         cartItems: cartItems,
-        invoice: invoice,
       ), // Future work send the saved token
     );
   }
@@ -41,21 +37,18 @@ class PaymentGatewayScreen extends StatefulWidget {
   State<PaymentGatewayScreen> createState() => _PaymentGatewayScreen(
       secretClient: secretClient,
       order: order,
-      cartItems: cartItems,
-      invoice: invoice);
+      cartItems: cartItems);
 }
 
 class _PaymentGatewayScreen extends State<PaymentGatewayScreen> {
   final String secretClient;
   final Order order;
   final List<CartItem> cartItems;
-  final Invoice invoice;
 
   _PaymentGatewayScreen({
     required this.secretClient,
     required this.order,
     required this.cartItems,
-    required this.invoice,
   });
 
   @override
@@ -96,7 +89,6 @@ class _PaymentGatewayScreen extends State<PaymentGatewayScreen> {
                   arguments: {
                     'order': order,
                     'cartItems': cartItems,
-                    'invoice': invoice,
                   });
             } else {
               // TODO: Create a UI to show what happened

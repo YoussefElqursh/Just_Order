@@ -59,11 +59,9 @@ class AppRouter {
           final args = settings.arguments as Map<String, dynamic>;
           final order = args['order'] as Order;
           final cartItems = args['cartItems'] as List<CartItem>;
-          final invoice = args['invoice'] as Invoice;
           return PayMethodScreen.route(
             order: order,
             cartItems: cartItems,
-            invoice: invoice,
           );
         }
         return _errorRoute();
@@ -74,11 +72,9 @@ class AppRouter {
           final args = settings.arguments as Map<String, dynamic>;
           final order = args['order'] as Order;
           final cartItems = args['cartItems'] as List<CartItem>;
-          final invoice = args['invoice'] as Invoice;
           return OrderSummaryScreen.route(
             order: order,
             cartItems: cartItems,
-            invoice: invoice,
           );
         }
         return _errorRoute();
@@ -88,12 +84,11 @@ class AppRouter {
           final String secretClient = args["clientSecret"];
           final Order order = args["order"];
           final List<CartItem> cartItems=args["cartItems"];
-          final Invoice invoice= args["invoice"];
           return PaymentGatewayScreen.route(
               secretClient: secretClient,
               order: order,
               cartItems: cartItems,
-              invoice: invoice);
+             );
         }
         return _errorRoute();
       case 'OrderConfirmedScreenRoute':
@@ -101,11 +96,9 @@ class AppRouter {
           final args = settings.arguments as Map<String, dynamic>;
           final order = args['order'] as Order;
           final cartItems = args['cartItems'] as List<CartItem>;
-          final invoice = args['invoice'] as Invoice;
           return OrderConfirmedScreen.route(
             order: order,
             cartItems: cartItems,
-            invoice: invoice,
           );
         }
         return _errorRoute();

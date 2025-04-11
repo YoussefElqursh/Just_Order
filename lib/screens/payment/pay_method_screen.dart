@@ -14,27 +14,23 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class PayMethodScreen extends StatefulWidget {
   final Order order;
   final List<CartItem> cartItems;
-  final Invoice invoice;
 
   const PayMethodScreen(
       {super.key,
       required this.order,
-      required this.cartItems,
-      required this.invoice});
+      required this.cartItems,});
 
   static const String routeName = 'PayMethodScreenRoute';
 
   static Route route({
     required Order order,
     required List<CartItem> cartItems,
-    required Invoice invoice,
   }) {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
       builder: (context) => PayMethodScreen(
         order: order,
         cartItems: cartItems,
-        invoice: invoice,
       ),
     );
   }
@@ -487,7 +483,6 @@ class _PayMethodScreenState extends State<PayMethodScreen> {
                         arguments: {
                           'order': widget.order,
                           'cartItems': widget.cartItems,
-                          'invoice': widget.invoice
                         },
                       );
                     }

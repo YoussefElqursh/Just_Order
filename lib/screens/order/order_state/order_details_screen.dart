@@ -36,13 +36,11 @@ class OrderDetailsScreen extends StatefulWidget {
 class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   OrderRepository orderRepository = OrderRepository();
   List<CartItem> cartItems = [];
-  Invoice? invoice;
 
   @override
   void initState() {
     super.initState();
     getOrderItems();
-    getInvoice();
   }
 
   Future<void> getOrderItems() async {
@@ -53,12 +51,6 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
     });
   }
 
-  Future<void> getInvoice() async {
-    final fetchInvoice = await orderRepository.getInvoice(widget.order.orderId);
-    setState(() {
-      invoice = fetchInvoice;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -453,7 +445,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                             ),
                             const Spacer(),
                             Text(
-                              '${AppLocalizations.of(context)!.egp} ${widget.order.totalAmount - (invoice?.totalFees ?? 0)}',
+                              '${AppLocalizations.of(context)!.egp} ${widget.order.subTotal}',
                               style: TextStyle(
                                 color: state.themeMode == ThemeMode.light
                                     ? Colors.black
@@ -482,7 +474,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                             ),
                             const Spacer(),
                             Text(
-                              '${AppLocalizations.of(context)!.egp} ${invoice?.serviceFees ?? 0}',
+                              '${AppLocalizations.of(context)!.egp} ${widget.order.serviceFee}',
                               style: TextStyle(
                                 color: state.themeMode == ThemeMode.light
                                     ? Colors.black
@@ -511,7 +503,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                             ),
                             const Spacer(),
                             Text(
-                              '${AppLocalizations.of(context)!.egp} ${(invoice?.totalFees ?? 0) - (invoice?.serviceFees ?? 0)}',
+                              '${AppLocalizations.of(context)!.egp} ${widget.order.deliveryFee}',
                               style: TextStyle(
                                 color: state.themeMode == ThemeMode.light
                                     ? Colors.black

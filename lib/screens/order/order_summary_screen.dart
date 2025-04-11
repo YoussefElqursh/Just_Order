@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_order/blocs/theming/theming_cubit.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/cart_item_model.dart';
-import 'package:just_order/models/invoice_model.dart';
 import 'package:just_order/models/order_model.dart';
 import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/repository/payment_repository/payment_repository.dart';
@@ -16,13 +15,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class OrderSummaryScreen extends StatefulWidget {
   final Order order;
   final List<CartItem> cartItems;
-  final Invoice invoice;
 
   const OrderSummaryScreen({
     super.key,
     required this.order,
     required this.cartItems,
-    required this.invoice,
   });
 
   static const String routeName = 'OrderSummaryScreenRoute';
@@ -30,14 +27,12 @@ class OrderSummaryScreen extends StatefulWidget {
   static Route route({
     required Order order,
     required List<CartItem> cartItems,
-    required Invoice invoice,
   }) {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
       builder: (context) => OrderSummaryScreen(
         order: order,
         cartItems: cartItems,
-        invoice: invoice,
       ),
     );
   }
@@ -385,7 +380,7 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                               ),
                               const Spacer(),
                               Text(
-                                '${AppLocalizations.of(context)!.egp} ${widget.invoice.serviceFees}',
+                                '${AppLocalizations.of(context)!.egp} ${widget.order.serviceFee}',
                                 style: const TextStyle(
                                   color: Color(0xFFE02C45),
                                   fontSize: 12,
@@ -487,7 +482,6 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                               builder: (context) => OrderConfirmedScreen(
                                 order: widget.order,
                                 cartItems: widget.cartItems,
-                                invoice: widget.invoice,
                               ),
                             ),
                           );
@@ -508,7 +502,6 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                                   "clientSecret": clientSecret,
                                   "order": widget.order,
                                   "cartItems": widget.cartItems,
-                                  "invoice": widget.invoice
                                 });
                           });
                         }
