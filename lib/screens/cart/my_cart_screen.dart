@@ -650,7 +650,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                   (sum, item) => sum + item.totalPrice,
                             ) + serviceFees + restaurant!.deliveryFee!,
                             orderCodeForRestaurant: 'temp',
-                            orderTable: tableCode,
+                            orderTable: tableCode, processed: false, addedToInvoice: false,
                           );
                           String orderCode =
                               await order.generateUniqueOrderCode();

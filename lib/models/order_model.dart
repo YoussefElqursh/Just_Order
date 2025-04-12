@@ -25,6 +25,8 @@ class Order {
   DateTime? assignedDateTime;
   DateTime? deliveredDateTime;
   DateTime? finalisedDateTime;
+  bool processed;
+  bool addedToInvoice;
   String? notes;
 
   Order({
@@ -48,7 +50,9 @@ class Order {
     required this.totalAmount,
     required this.subTotal,
     required this.serviceFee,
-    required this.deliveryFee
+    required this.deliveryFee,
+    required this.processed,
+    required this.addedToInvoice
   });
 
   static Order fromMap(Map<String, dynamic> data) {
@@ -85,7 +89,9 @@ class Order {
       totalAmount: data['totalAmount'].toDouble(),
       subTotal: data['subTotal']?.toDouble() ?? 0,
       serviceFee: data['serviceFee'].toDouble(),
-      deliveryFee: data['deliveryFee'].toDouble()
+      deliveryFee: data['deliveryFee'].toDouble(),
+      processed: false,
+      addedToInvoice: false
     );
   }
 
