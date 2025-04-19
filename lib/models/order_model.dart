@@ -28,6 +28,7 @@ class Order {
   bool processed;
   bool addedToInvoice;
   String? notes;
+  bool deliveredByRestaurant;
 
   Order({
     required this.orderId,
@@ -52,7 +53,9 @@ class Order {
     required this.serviceFee,
     required this.deliveryFee,
     required this.processed,
-    required this.addedToInvoice
+    required this.addedToInvoice,
+    required this.deliveredByRestaurant
+
   });
 
   static Order fromMap(Map<String, dynamic> data) {
@@ -91,7 +94,8 @@ class Order {
       serviceFee: data['serviceFee'].toDouble(),
       deliveryFee: data['deliveryFee'].toDouble(),
       processed: false,
-      addedToInvoice: false
+      addedToInvoice: false,
+      deliveredByRestaurant: data['deliveredByRestaurant']
     );
   }
 
@@ -117,7 +121,8 @@ class Order {
       'totalAmount': totalAmount,
       'serviceFee': serviceFee,
       'deliveryFee': deliveryFee,
-      'subTotal': subTotal
+      'subTotal': subTotal,
+      'deliveredByRestaurant': deliveredByRestaurant
     };
   }
 

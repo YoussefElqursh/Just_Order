@@ -11,6 +11,7 @@ class Restaurant {
   List<String> categoriesId;
   double? deliveryFee;
   int orderTimeOut;
+  bool hasOwnDelivery;
 
   Restaurant({
     required this.restaurantId,
@@ -23,6 +24,7 @@ class Restaurant {
     required this.categoriesId,
     this.deliveryFee,
     required this.orderTimeOut,
+    required this.hasOwnDelivery
   });
 
   static Restaurant fromMap(Map<String, dynamic> data) {
@@ -37,6 +39,7 @@ class Restaurant {
       categoriesId: List<String>.from(data['categoriesId']),
       deliveryFee: (data['deliveryFee'] as num?)?.toDouble(),
       orderTimeOut: (data['orderTimeOut'] as num).toInt(),
+      hasOwnDelivery: (data['hasOwnDelivery']) as bool
     );
   }
 
@@ -52,6 +55,7 @@ class Restaurant {
       'categoriesId': categoriesId,
       'deliveryFee': deliveryFee,
       'orderTimeOut': orderTimeOut,
+      'hasOwnDelivery': hasOwnDelivery
     };
   }
 
@@ -68,6 +72,7 @@ class Restaurant {
       itemIds: [],
       categoriesId: [],
       orderTimeOut: 0,
+      hasOwnDelivery: false
     );
   }
 }
