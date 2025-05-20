@@ -23,11 +23,6 @@ import 'firebase_options.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'screens/about app/about app.dart';
-import 'screens/about app/help_support.dart';
-import 'screens/about app/privacy & policy.dart';
-import 'screens/about app/terms & conditions.dart';
-
 late final prefs;
 
 Future<void> main() async {

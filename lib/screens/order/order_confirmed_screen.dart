@@ -1,36 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:just_order/blocs/theming/theming_cubit.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/layouts/main_layout.dart';
 import 'package:just_order/models/cart_item_model.dart';
-import 'package:just_order/models/invoice_model.dart';
 import 'package:just_order/models/order_model.dart';
 import 'package:just_order/repository/user_repository/user_repository.dart';
 import 'package:lottie/lottie.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OrderConfirmedScreen extends StatefulWidget {
   final Order order;
   final List<CartItem> cartItems;
 
-  const OrderConfirmedScreen(
-      {super.key,
-      required this.order,
-      required this.cartItems,
-      });
+  const OrderConfirmedScreen({
+    super.key,
+    required this.order,
+    required this.cartItems,
+  });
 
   static const String routeName = 'OrderConfirmedScreenRoute';
 
-  static Route route(
-      {required Order order,
-      required List<CartItem> cartItems,
-      }) {
+  static Route route({
+    required Order order,
+    required List<CartItem> cartItems,
+  }) {
     return MaterialPageRoute(
-      settings: const RouteSettings(name: routeName),
+      settings: const RouteSettings(
+        name: routeName,
+      ),
       builder: (context) => OrderConfirmedScreen(
-          order: order, cartItems: cartItems),
+        order: order,
+        cartItems: cartItems,
+      ),
     );
   }
 
@@ -50,8 +53,7 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
   }
 
   Future<void> _pushOrderToDatabase() async {
-    await userRepository.pushOrder(
-        widget.order, widget.cartItems);
+    await userRepository.pushOrder(widget.order, widget.cartItems);
   }
 
   Future<bool> _onWillPop() async {
@@ -87,7 +89,9 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                         height: MediaQuery.sizeOf(context).height * 0.60,
                         padding: const EdgeInsets.all(20),
                         decoration: ShapeDecoration(
-                          color: state.themeMode == ThemeMode.dark? Colors.black : Colors.white,
+                          color: state.themeMode == ThemeMode.dark
+                              ? Colors.black
+                              : Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -105,7 +109,7 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             const SizedBox(height: 60.0),
-                             Text(
+                            Text(
                               AppLocalizations.of(context)!.bon_appetit,
                               textAlign: TextAlign.center,
                               style: TextStyle(
@@ -122,7 +126,9 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                               AppLocalizations.of(context)!.order_confirmed,
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                                color: state.themeMode == ThemeMode.light
+                                    ? Colors.black
+                                    : Colors.white,
                                 fontSize: 16,
                                 fontFamily: 'Inter',
                                 fontWeight: FontWeight.w700,
@@ -135,16 +141,21 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                               data: widget.order.orderCode,
                               size: 120,
                               version: QrVersions.auto,
-                              backgroundColor: state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
-                              foregroundColor: state.themeMode == ThemeMode.light
+                              backgroundColor: state.themeMode == ThemeMode.dark
                                   ? Colors.black
                                   : Colors.white,
+                              foregroundColor:
+                                  state.themeMode == ThemeMode.light
+                                      ? Colors.black
+                                      : Colors.white,
                             ),
                             Text(
                               widget.order.orderCode,
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                                color: state.themeMode == ThemeMode.light
+                                    ? Colors.black
+                                    : Colors.white,
                                 fontSize: 18,
                                 fontFamily: 'Inter',
                                 fontWeight: FontWeight.w700,
@@ -161,7 +172,9 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                                 Text(
                                   AppLocalizations.of(context)!.subtotal,
                                   style: TextStyle(
-                                    color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                                    color: state.themeMode == ThemeMode.light
+                                        ? Colors.black
+                                        : Colors.white,
                                     fontSize: 12,
                                     fontFamily: 'Inter',
                                     fontWeight: FontWeight.w400,
@@ -173,7 +186,9 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                                 Text(
                                   '${AppLocalizations.of(context)!.egp} ${widget.cartItems.fold(0.0, (previousValue, element) => previousValue + element.totalPrice)}',
                                   style: TextStyle(
-                                    color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                                    color: state.themeMode == ThemeMode.light
+                                        ? Colors.black
+                                        : Colors.white,
                                     fontSize: 12,
                                     fontFamily: 'Inter',
                                     fontWeight: FontWeight.w500,
@@ -192,7 +207,9 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                                 Text(
                                   AppLocalizations.of(context)!.delivery_fee,
                                   style: TextStyle(
-                                    color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                                    color: state.themeMode == ThemeMode.light
+                                        ? Colors.black
+                                        : Colors.white,
                                     fontSize: 12,
                                     fontFamily: 'Inter',
                                     fontWeight: FontWeight.w400,
@@ -204,7 +221,9 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                                 Text(
                                   '${AppLocalizations.of(context)!.egp} ${widget.order.deliveryFee}',
                                   style: TextStyle(
-                                    color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                                    color: state.themeMode == ThemeMode.light
+                                        ? Colors.black
+                                        : Colors.white,
                                     fontSize: 12,
                                     fontFamily: 'Inter',
                                     fontWeight: FontWeight.w500,
@@ -223,7 +242,9 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                                 Text(
                                   AppLocalizations.of(context)!.service_fee,
                                   style: TextStyle(
-                                    color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                                    color: state.themeMode == ThemeMode.light
+                                        ? Colors.black
+                                        : Colors.white,
                                     fontSize: 12,
                                     fontFamily: 'Inter',
                                     fontWeight: FontWeight.w400,
@@ -254,7 +275,9 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                                 Text(
                                   AppLocalizations.of(context)!.payment_method,
                                   style: TextStyle(
-                                    color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                                    color: state.themeMode == ThemeMode.light
+                                        ? Colors.black
+                                        : Colors.white,
                                     fontSize: 12,
                                     fontFamily: 'Inter',
                                     fontWeight: FontWeight.w400,
@@ -266,7 +289,9 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                                   widget.order.paymentType.name,
                                   textAlign: TextAlign.right,
                                   style: TextStyle(
-                                    color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                                    color: state.themeMode == ThemeMode.light
+                                        ? Colors.black
+                                        : Colors.white,
                                     fontSize: 12,
                                     fontFamily: 'Inter',
                                     fontWeight: FontWeight.w500,
@@ -289,7 +314,9 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                                 Text(
                                   AppLocalizations.of(context)!.total,
                                   style: TextStyle(
-                                    color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                                    color: state.themeMode == ThemeMode.light
+                                        ? Colors.black
+                                        : Colors.white,
                                     fontSize: 14,
                                     fontFamily: 'Inter',
                                     fontWeight: FontWeight.w500,
@@ -301,7 +328,9 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                                 Text(
                                   '${AppLocalizations.of(context)!.egp} ${widget.order.totalAmount}',
                                   style: TextStyle(
-                                    color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                                    color: state.themeMode == ThemeMode.light
+                                        ? Colors.black
+                                        : Colors.white,
                                     fontSize: 14,
                                     fontFamily: 'Inter',
                                     fontWeight: FontWeight.w700,

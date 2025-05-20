@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:just_order/models/enums/status.dart';
+
 import 'enums/payment_type.dart';
 
 class Order {
@@ -30,51 +31,50 @@ class Order {
   String? notes;
   bool deliveredByRestaurant;
 
-  Order({
-    required this.orderId,
-    required this.userId,
-    required this.clubId,
-    required this.restaurantId,
-    required this.orderCode,
-    required this.orderCodeForRestaurant,
-    required this.orderTable,
-    this.deliveryId,
-    required this.status,
-    required this.paymentType,
-    this.notes,
-    required this.orderTimeOut,
-    this.assignedDateTime,
-    this.deliveredDateTime,
-    this.finalisedDateTime,
-    required this.createdAt,
-    this.updatedAt,
-    required this.totalAmount,
-    required this.subTotal,
-    required this.serviceFee,
-    required this.deliveryFee,
-    required this.processed,
-    required this.addedToInvoice,
-    required this.deliveredByRestaurant
-
-  });
+  Order(
+      {required this.orderId,
+      required this.userId,
+      required this.clubId,
+      required this.restaurantId,
+      required this.orderCode,
+      required this.orderCodeForRestaurant,
+      required this.orderTable,
+      this.deliveryId,
+      required this.status,
+      required this.paymentType,
+      this.notes,
+      required this.orderTimeOut,
+      this.assignedDateTime,
+      this.deliveredDateTime,
+      this.finalisedDateTime,
+      required this.createdAt,
+      this.updatedAt,
+      required this.totalAmount,
+      required this.subTotal,
+      required this.serviceFee,
+      required this.deliveryFee,
+      required this.processed,
+      required this.addedToInvoice,
+      required this.deliveredByRestaurant});
 
   static Order fromMap(Map<String, dynamic> data) {
     return Order(
-      orderId: data['orderId'],
-      userId: data['userId'],
-      clubId: data['clubId'],
-      restaurantId: data['restaurantId'],
-      orderCode: data['orderCode'],
-      orderCodeForRestaurant: data['orderCodeForRestaurant']?? '',
-      orderTable: data['orderTable']?? '',
-      deliveryId: data['deliveryId'],
+      orderId: data['orderId'] ?? 'noOrderId',
+      userId: data['userId'] ?? 'noUserId',
+      clubId: data['clubId'] ?? 'noClubId',
+      restaurantId: data['restaurantId'] ?? 'noRestaurantId',
+      orderCode: data['orderCode'] ?? 'noOrderCode',
+      orderCodeForRestaurant:
+          data['orderCodeForRestaurant'] ?? 'noOrderCodeForRestaurant',
+      orderTable: data['orderTable'] ?? 'noOrderTable',
+      deliveryId: data['deliveryId'] ?? 'noDeliveryId',
       status: Status.values
           // ignore: prefer_interpolation_to_compose_strings
           .firstWhere((e) => e.toString() == 'Status.' + data['status']),
       paymentType: PaymentType.values.firstWhere(
           // ignore: prefer_interpolation_to_compose_strings
           (e) => e.toString() == 'PaymentType.' + data['paymentType']),
-      notes: data['notes'],
+      notes: data['notes'] ?? 'noNotes',
       orderTimeOut: data['orderTimeOut'],
       assignedDateTime: data['assignedDateTime'] != null
           ? (data['assignedDateTime'] as Timestamp).toDate()
@@ -89,13 +89,13 @@ class Order {
       updatedAt: data['updatedAt'] != null
           ? (data['updatedAt'] as Timestamp).toDate()
           : null,
-      totalAmount: data['totalAmount'].toDouble(),
-      subTotal: data['subTotal']?.toDouble() ?? 0,
-      serviceFee: data['serviceFee'].toDouble(),
-      deliveryFee: data['deliveryFee'].toDouble(),
+      totalAmount: data['totalAmount'] ?? 0,
+      subTotal: data['subTotal'] ?? 0,
+      serviceFee: data['serviceFee'] ?? 0,
+      deliveryFee: data['deliveryFee'] ?? 0,
       processed: false,
       addedToInvoice: false,
-      deliveredByRestaurant: data['deliveredByRestaurant']
+      deliveredByRestaurant: data['deliveredByRestaurant'] ?? false,
     );
   }
 
@@ -131,6 +131,7 @@ class Order {
     int randomNumber = 10000 + random.nextInt(90000);
     return randomNumber.toString();
   }
+
   String generateOrderCodeForRestaurant() {
     Random random = Random();
     int randomNumber = 10000 + random.nextInt(90000);
@@ -158,6 +159,7 @@ class Order {
 
     return orderCode;
   }
+
   Future<String> generateUniqueOrderCodeForRestaurant() async {
     String orderCodeForRestaurant;
     bool isUnique = false;

@@ -765,14 +765,12 @@ Widget buildOrderOnWayStateWidget({
                           Container(
                             padding: EdgeInsets.all(1.0),
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(8.0),
-                              ),
-                              border: Border.all(
-                                color: Color(0x66AFAFAF),
-                                style: BorderStyle.solid
-                              )
-                            ),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(8.0),
+                                ),
+                                border: Border.all(
+                                    color: Color(0x66AFAFAF),
+                                    style: BorderStyle.solid)),
                             child: QrImageView(
                               data: order.orderCode,
                               size: 80,
@@ -780,9 +778,10 @@ Widget buildOrderOnWayStateWidget({
                               backgroundColor: state.themeMode == ThemeMode.dark
                                   ? Colors.black
                                   : Colors.white,
-                              foregroundColor: state.themeMode == ThemeMode.light
-                                  ? Colors.black
-                                  : Colors.white,
+                              foregroundColor:
+                                  state.themeMode == ThemeMode.light
+                                      ? Colors.black
+                                      : Colors.white,
                             ),
                           ),
                           Padding(
@@ -884,8 +883,10 @@ Widget buildOrderDeliveredStateWidget({
                         height: 40,
                         decoration: ShapeDecoration(
                           image: DecorationImage(
-                            image: NetworkImage(restaurant.imageUrl ??
-                                'https://via.placeholder.com/150'),
+                            image: NetworkImage(
+                              restaurant.imageUrl ??
+                                  'https://via.placeholder.com/150',
+                            ),
                             fit: BoxFit.cover,
                           ),
                           shape: RoundedRectangleBorder(

@@ -122,14 +122,19 @@ class _DeliveredOrderScreenState extends State<DeliveredOrderScreen> {
                     );
                   } else {
                     return ListView.separated(
-                      itemBuilder: (context, index) => buildOrderStateWidget(
-                        context: context,
-                        width: 70,
-                        order: widget.orders[index],
-                        restaurant: widget
-                            .restaurantMap[widget.orders[index].restaurantId]!,
-                        state: state,
-                      ),
+                      itemBuilder: (context, index) {
+                        final order = widget.orders[index];
+                        final restaurant =
+                            widget.restaurantMap[order.restaurantId] ??
+                                Restaurant.empty();
+                        return buildOrderStateWidget(
+                          context: context,
+                          width: 70,
+                          order: order,
+                          restaurant: restaurant,
+                          state: state,
+                        );
+                      },
                       separatorBuilder: (context, index) => const SizedBox(
                         height: 12.0,
                       ),

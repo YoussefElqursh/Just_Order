@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:just_order/blocs/theming/theming_cubit.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/enums/status.dart';
@@ -15,7 +16,6 @@ import 'package:just_order/shared/function/functions.dart';
 import 'package:just_order/shared/widget/common_order_state_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OrderScreen extends StatefulWidget {
   const OrderScreen({super.key});
@@ -682,32 +682,34 @@ class _OrderScreenState extends State<OrderScreen> {
                                     );
                                   } else {
                                     return ListView.separated(
-                                      itemBuilder: (context, index) =>
-                                          buildOrderDeliveredStateWidget(
-                                        context: context,
-                                        order: orders
-                                            .where(
-                                              (order) =>
-                                                  order.status ==
-                                                      Status.delivered &&
-                                                  order.status ==
-                                                      Status.finalized,
-                                            )
-                                            .toList()[index],
-                                        width: 70,
-                                        restaurant: restaurantMap[orders
-                                                .where(
-                                                  (order) =>
-                                                      order.status ==
-                                                          Status.delivered &&
-                                                      order.status ==
-                                                          Status.finalized,
-                                                )
-                                                .toList()[index]
-                                                .restaurantId] ??
-                                            Restaurant.empty(),
-                                        state: state,
-                                      ),
+                                      itemBuilder: (context, index)
+                                      {
+                                        return buildOrderDeliveredStateWidget(
+                                          context: context,
+                                          order: orders
+                                              .where(
+                                                (order) =>
+                                                    order.status ==
+                                                        Status.delivered ||
+                                                    order.status ==
+                                                        Status.finalized,
+                                              )
+                                              .toList()[index],
+                                          width: 70,
+                                          restaurant: restaurantMap[orders
+                                                  .where(
+                                                    (order) =>
+                                                        order.status ==
+                                                            Status.delivered ||
+                                                        order.status ==
+                                                            Status.finalized,
+                                                  )
+                                                  .toList()[index]
+                                                  .restaurantId] ??
+                                              Restaurant.empty(),
+                                          state: state,
+                                        );
+                                      },
                                       separatorBuilder: (context, index) =>
                                           const SizedBox(
                                         height: 12.0,
@@ -718,7 +720,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                             .where(
                                               (order) =>
                                                   order.status ==
-                                                      Status.delivered &&
+                                                      Status.delivered ||
                                                   order.status ==
                                                       Status.finalized,
                                             )
@@ -764,19 +766,20 @@ class _OrderScreenState extends State<OrderScreen> {
                                 GestureDetector(
                                   onTap: () {
                                     Navigator.of(context).pushNamed(
-                                        'DeclineOrderScreenRoute',
-                                        arguments: [
-                                          orders
-                                              .where(
-                                                (order) =>
-                                                    order.status ==
-                                                        Status.declined ||
-                                                    order.status ==
-                                                        Status.autoDeclined,
-                                              )
-                                              .toList(),
-                                          restaurantMap
-                                        ]);
+                                      'DeclineOrderScreenRoute',
+                                      arguments: [
+                                        orders
+                                            .where(
+                                              (order) =>
+                                                  order.status ==
+                                                      Status.declined ||
+                                                  order.status ==
+                                                      Status.autoDeclined,
+                                            )
+                                            .toList(),
+                                        restaurantMap
+                                      ],
+                                    );
                                   },
                                   child: Text(
                                     '${AppLocalizations.of(context)!.view_all} (${orders.where(
