@@ -4,7 +4,6 @@ import 'package:just_order/blocs/theming/theming_cubit.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/cart_item_model.dart';
 import 'package:just_order/models/enums/payment_type.dart';
-import 'package:just_order/models/invoice_model.dart';
 import 'package:just_order/models/order_model.dart';
 import 'package:just_order/shared/function/functions.dart';
 import 'package:just_order/shared/widget/custom_radio_button_widget.dart';
@@ -98,7 +97,7 @@ class _PayMethodScreenState extends State<PayMethodScreen> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_back,
                 color: Colors.black,
                 size: 18,
@@ -496,7 +495,7 @@ class _PayMethodScreenState extends State<PayMethodScreen> {
                   child:  Center(
                     child: Text(
                       AppLocalizations.of(context)!.continue_,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 14,
                         fontFamily: 'Inter',

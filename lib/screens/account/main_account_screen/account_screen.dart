@@ -7,14 +7,13 @@ import 'package:just_order/blocs/theming/theming_cubit.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/user_model.dart';
 import 'package:just_order/repository/auth_repository/login_repository.dart';
+import 'package:just_order/screens/about_app/about_app_screen.dart';
 import 'package:just_order/screens/account/app_settings/app_settings_screen.dart';
 import 'package:just_order/screens/account/history_screen/history_screen.dart';
 import 'package:just_order/screens/account/main_account_screen/widgets/account_functions_widget.dart';
 import 'package:just_order/shared/function/functions.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../about app/about app.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -135,9 +134,9 @@ class _AccountScreenState extends State<AccountScreen> {
                     ),
                     accountFunctionWidget(
                       context: context,
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.person_outline,
-                        color: const Color(0xFFE02C45),
+                        color: Color(0xFFE02C45),
                         size: 20,
                       ),
                       label: AppLocalizations.of(context)!.my_profile,
@@ -169,9 +168,9 @@ class _AccountScreenState extends State<AccountScreen> {
                     ),
                     accountFunctionWidget(
                       context: context,
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.history_outlined,
-                        color: const Color(0xFFE02C45),
+                        color: Color(0xFFE02C45),
                         size: 20,
                       ),
                       label: AppLocalizations.of(context)!.order_history,
@@ -179,7 +178,7 @@ class _AccountScreenState extends State<AccountScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => HistoryScreen(),
+                            builder: (context) => const HistoryScreen(),
                           ),
                         );
                       },
@@ -197,7 +196,7 @@ class _AccountScreenState extends State<AccountScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => AppSettingsScreen(),
+                            builder: (context) => const AppSettingsScreen(),
                           ),
                         );
                       },
@@ -226,9 +225,9 @@ class _AccountScreenState extends State<AccountScreen> {
                     ),
                     accountFunctionWidget(
                       context: context,
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.info_outline_rounded,
-                        color: const Color(0xFFE02C45),
+                        color: Color(0xFFE02C45),
                         size: 20,
                       ),
                       label: AppLocalizations.of(context)!.about_app,
@@ -238,7 +237,7 @@ class _AccountScreenState extends State<AccountScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => AboutApp(),
+                            builder: (context) => const AboutApp(),
                           ),
                         );
                       },

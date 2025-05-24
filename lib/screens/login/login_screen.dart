@@ -178,7 +178,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Text(
                   AppLocalizations.of(context)!
                       .enter_your_email_and_password_to_login,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 12,
                     fontFamily: 'Inter',
@@ -220,7 +220,7 @@ class _LoginScreenState extends State<LoginScreen> {
         decoration: BoxDecoration(
           color: isDark ? Colors.black : Colors.white,
           borderRadius: BorderRadius.circular(20),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               color: Color(0x19000000),
               blurRadius: 30,
@@ -246,7 +246,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     strokeAlign: BorderSide.strokeAlignCenter,
                     color: state.themeMode == ThemeMode.dark
                         ? Colors.white
-                        : Color(0x4CAFAFAF),
+                        : const Color(0x4CAFAFAF),
                   ),
                   borderRadius: BorderRadius.circular(6),
                 ),
@@ -292,7 +292,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             strokeAlign: BorderSide.strokeAlignCenter,
                             color: state.themeMode == ThemeMode.dark
                                 ? Colors.white
-                                : Color(0x4CAFAFAF),
+                                : const Color(0x4CAFAFAF),
                           ),
                         ),
                       ),
@@ -305,7 +305,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: TextStyle(
                       color: state.themeMode == ThemeMode.dark
                           ? Colors.white
-                          : Color(0xFF898888),
+                          : const Color(0xFF898888),
                       fontSize: 12,
                       fontFamily: 'Inter',
                       fontWeight: FontWeight.w400,
@@ -324,7 +324,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             strokeAlign: BorderSide.strokeAlignCenter,
                             color: state.themeMode == ThemeMode.dark
                                 ? Colors.white
-                                : Color(0x4CAFAFAF),
+                                : const Color(0x4CAFAFAF),
                           ),
                         ),
                       ),
@@ -345,7 +345,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               BlocBuilder<LoginCubit, LoginState>(
                 buildWhen: (prev, curr) => curr is LoginShowPassword,
-                builder: (context, l_state) {
+                builder: (context, lState) {
                   final cubit = context.read<LoginCubit>();
                   return _buildLabeledTextField(
                     label: AppLocalizations.of(context)!.password,
@@ -389,7 +389,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                     child: Text(
                       AppLocalizations.of(context)!.forget_password,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Color(0xFFE02C45),
                         fontSize: 10,
                         fontFamily: 'Inter',
@@ -411,16 +411,19 @@ class _LoginScreenState extends State<LoginScreen> {
                           );
                           if (user != null) {
                             _showSnackBar(
+                              // ignore: use_build_context_synchronously
                               AppLocalizations.of(context)!.login_sucessful,
                               Colors.green,
                             );
                             Navigator.pushAndRemoveUntil(
+                              // ignore: use_build_context_synchronously
                               context,
-                              MaterialPageRoute(builder: (context) => SelectYourPlace()),
+                              MaterialPageRoute(builder: (context) => const SelectYourPlace()),
                                   (route) => false, // Remove all previous routes
                             );
                           } else {
                             _showSnackBar(
+                              // ignore: use_build_context_synchronously
                               AppLocalizations.of(context)!
                                   .invalid_email_or_password,
                               Colors.red,
@@ -512,7 +515,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 maxHeight: 42,
               ),
               hintText: hint,
-              hintStyle: TextStyle(
+              hintStyle: const TextStyle(
                 color: Color(0xFFCCCCCC) /* Gray-Smoke */,
                 fontSize: 12,
                 fontFamily: 'Inter',

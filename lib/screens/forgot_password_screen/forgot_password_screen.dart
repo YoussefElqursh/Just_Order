@@ -6,14 +6,14 @@ import 'package:just_order/blocs/theming/theming_cubit.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
-  ForgotPasswordScreen({super.key});
+  const ForgotPasswordScreen({super.key});
 
   static const String routeName = 'ForgotPasswordRoute';
 
   static Route route() {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
-      builder: (context) => ForgotPasswordScreen(),
+      builder: (context) => const ForgotPasswordScreen(),
     );
   }
 
@@ -72,7 +72,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 left: 20.0, top: 10.0, bottom: 10.0,),
               child: Container(
                 decoration: BoxDecoration(
-                  color: Color(0xFFF4F4F4),
+                  color: const Color(0xFFF4F4F4),
                   // Background color for the container
                   borderRadius: BorderRadius.circular(
                     7,), // Rounded corners for the container
@@ -86,7 +86,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 ),
               ),
             ),
-            title: Text(
+            title: const Text(
               'Forgot Password',
               style: TextStyle(
                 color: Colors.black,
@@ -103,7 +103,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Please enter your email, we will send an Email in the next step to reset your password.',
                     style: TextStyle(
                       color: Colors.black,
@@ -224,9 +224,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               Navigator.pop(context);
                             }
                           }
-                          return null;
+                          return;
                         },
-                        child: Text(
+                        child: const Text(
                           'Verify',
                           style: TextStyle(
                             color: Colors.white,

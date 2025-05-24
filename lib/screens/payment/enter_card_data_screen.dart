@@ -185,7 +185,7 @@ class _EnterCardDataScreenState extends State<EnterCardDataScreen> {
                       children: [
                          Text(
                           AppLocalizations.of(context)!.card_number,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.black,
                             fontSize: 10,
                             fontFamily: 'Inter',
@@ -246,7 +246,7 @@ class _EnterCardDataScreenState extends State<EnterCardDataScreen> {
                             children: [
                                Text(
                                 AppLocalizations.of(context)!.expiration,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 10,
                                   fontFamily: 'Inter',
@@ -309,7 +309,7 @@ class _EnterCardDataScreenState extends State<EnterCardDataScreen> {
                             children: [
                                Text(
                                  AppLocalizations.of(context)!.security_code,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 10,
                                   fontFamily: 'Inter',
@@ -386,7 +386,7 @@ class _EnterCardDataScreenState extends State<EnterCardDataScreen> {
                         ),
                          Text(
                             AppLocalizations.of(context)!.card_saving,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Color(0xFF898888),
                             fontSize: 10,
                             fontFamily: 'Inter',
@@ -410,7 +410,7 @@ class _EnterCardDataScreenState extends State<EnterCardDataScreen> {
                       color: const Color(0xFFE02C45),
                       child:  Center(
                         child: Text(AppLocalizations.of(context)!.continue_,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.white,
                               fontSize: 14,
                               fontFamily: 'Inter',

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PrivacyPolicyScreen extends StatefulWidget {
+  const PrivacyPolicyScreen({super.key});
+
   @override
   _PrivacyPolicyScreenState createState() => _PrivacyPolicyScreenState();
 }
@@ -142,7 +144,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
         centerTitle: true,
         title: Text(
           AppLocalizations.of(context)!.privacy_policy,
-          style: TextStyle(
+          style: const TextStyle(
             color: Color(0xFF090909) /* Black */,
             fontSize: 14,
             fontFamily: 'Inter',
@@ -169,7 +171,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                   ),
                   Text(
                     AppLocalizations.of(context)!.last_update,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Color(0xFFE02C45) /* Primary */,
                       fontSize: 12,
                       fontFamily: 'Inter',
@@ -216,10 +218,10 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                 child: Container(
                   padding: const EdgeInsets.all(6.0),
                   decoration: BoxDecoration(
-                    color: isExpanded ? Color(0x0DE02C45) : Color(0xFFF4F4F4),
+                    color: isExpanded ? const Color(0x0DE02C45) : const Color(0xFFF4F4F4),
                     // Background color
                     border: Border.all(
-                      color: Color(0xFFF4F4F4),
+                      color: const Color(0xFFF4F4F4),
                       width: 1,
                     ),
                     borderRadius: BorderRadius.circular(7),
@@ -228,9 +230,8 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                     isExpanded ? Icons.remove : Icons.add,
                     size: 22,
                     color: isExpanded
-                        ? Color(0xFFE02C45)
-                        : Color(
-                        0xFFB0B0B0), // Icon color when expanded/collapsed
+                        ? const Color(0xFFE02C45)
+                        : const Color(0xFFB0B0B0),
                   ),
                 ),
               ),
@@ -238,7 +239,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
               Expanded(
                 child: Text(
                   title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Color(0xFF090909) /* Black */,
                     fontSize: 14,
                     fontFamily: 'Inter',
@@ -255,7 +256,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
               ),
               child: Text(
                 content,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Color(0xFF898888) /* Gray-Dark */,
                   fontSize: 12,
                   fontFamily: 'Inter',
@@ -264,7 +265,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                 ),
               ),
             ),
-          SizedBox(height: 16.0),
+          const SizedBox(height: 16.0),
           const Divider(
             height: 1,
             color: Color(0x4CAFAFAF),

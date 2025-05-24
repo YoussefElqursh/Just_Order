@@ -150,7 +150,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => AppSettingsScreen(),
+                          builder: (context) => const AppSettingsScreen(),
                         ),
                       );
                     },
@@ -182,7 +182,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       user != null
                           ? user?.lastName != ''
                               ? '${user!.firstName[0].toUpperCase()}${user!.lastName[0].toUpperCase()}'
-                              : '${user!.firstName[0].toUpperCase()}'
+                              : user!.firstName[0].toUpperCase()
                           : '',
                       style: const TextStyle(
                         color: Colors.black,
@@ -254,7 +254,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         },
                         style: ElevatedButton.styleFrom(
                             elevation: 0.0,
-                            fixedSize: Size.fromHeight(30),
+                            fixedSize: const Size.fromHeight(30),
                             backgroundColor: const Color(0xFFE02C45),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(50),
@@ -423,6 +423,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     // Network Connectivity Check
     if (!await isConnected()) {
+      // ignore: use_build_context_synchronously
       debugPrint(AppLocalizations.of(context)!.no_internet_connection);
       return;
     }
@@ -435,6 +436,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           .get();
 
       if (existingUser.docs.isEmpty) {
+        // ignore: use_build_context_synchronously
         debugPrint(AppLocalizations.of(context)!.user_with_this_email_not_exists);
         return;
       }
@@ -455,7 +457,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           .get();
 
       if (result.docs.isEmpty) {
-        return null;
+        return;
       }
 
       final doc = result.docs.first;
@@ -464,9 +466,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
       await user?.saveUserToPreferences(user);
 
       loadUserFromPreferences();
-
+      // ignore: use_build_context_synchronously
       debugPrint(AppLocalizations.of(context)!.user_updated_successfully);
     } catch (e) {
+      // ignore: use_build_context_synchronously
       debugPrint(AppLocalizations.of(context)!.user_update_failed);
     }
   }

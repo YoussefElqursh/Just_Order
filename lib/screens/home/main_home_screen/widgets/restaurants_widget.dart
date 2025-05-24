@@ -50,7 +50,7 @@ class _RestaurantWidgetState extends State<RestaurantWidget> {
         });
       }
     } catch (e) {
-      print('Failed to check favorite status: $e');
+      debugPrint('Failed to check favorite status: $e');
     }
   }
 
@@ -145,7 +145,7 @@ class _RestaurantWidgetState extends State<RestaurantWidget> {
                                 ? widget.state.themeMode == ThemeMode.light
                                 ? Colors.black
                                 : Colors.white
-                                : Color(0xFFE02C45),
+                                : const Color(0xFFE02C45),
                             size: 15,
                           ),
                         ),
@@ -182,7 +182,7 @@ class _RestaurantWidgetState extends State<RestaurantWidget> {
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
-                            TextSpan(
+                            const TextSpan(
                               text: ' (79)',
                               style: TextStyle(
                                 color: Color(0xFFAFAFAF),
@@ -292,9 +292,9 @@ class _RestaurantWidgetState extends State<RestaurantWidget> {
           .doc(restaurantData['favouriteRestaurant'])
           .set(restaurantData);
 
-      print('Restaurant added successfully!');
+      debugPrint('Restaurant added successfully!');
     } catch (e) {
-      print('Failed to add restaurant: $e');
+      debugPrint('Failed to add restaurant: $e');
     }
   }
 
@@ -310,12 +310,12 @@ class _RestaurantWidgetState extends State<RestaurantWidget> {
 
       if (docSnapshot.exists) {
         await restaurantDocRef.delete();
-        print('Restaurant removed successfully!');
+        debugPrint('Restaurant removed successfully!');
       } else {
-        print('Error: Restaurant document does not exist.');
+        debugPrint('Error: Restaurant document does not exist.');
       }
     } catch (e) {
-      print('Failed to remove restaurant: $e');
+      debugPrint('Failed to remove restaurant: $e');
     }
   }
 }

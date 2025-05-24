@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 class Util {
   Util._(); // Private constructor to prevent instantiation
@@ -11,13 +12,13 @@ class Util {
       if (docs.docs.isNotEmpty) {
         var data = docs.docs[0].data() as Map<String, dynamic>;
         double serviceFees = (data['serviceFees'] ?? 30).toDouble();
-        print('Service fees : ${serviceFees}');
+        debugPrint('Service fees : $serviceFees');
         return serviceFees;
       }
       //TODO: We should throw and error and handle it bit for now we add default value
       return 30.0;
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       return 30.0;
     }
   }

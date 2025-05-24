@@ -81,8 +81,7 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
       ],
     );
     debugPrint(
-      "Time take to load restaurant is " +
-          DateTime.now().difference(startLoad).inMilliseconds.toString(),
+      "Time take to load restaurant is ${DateTime.now().difference(startLoad).inMilliseconds}",
     );
   }
 
@@ -108,20 +107,14 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
         });
       }
       if (kDebugMode) {
-        print("Time take to check favourite is : " +
-            DateTime.now()
-                .difference(checkFavourite)
-                .inMilliseconds
-                .toString());
+        print(
+            "Time take to check favourite is : ${DateTime.now().difference(checkFavourite).inMilliseconds}");
       }
     } catch (e) {
       if (kDebugMode) {
         print('Failed to check favorite status: $e');
-        print("Time take to check favourite is : " +
-            DateTime.now()
-                .difference(checkFavourite)
-                .inMilliseconds
-                .toString());
+        print(
+            "Time take to check favourite is : ${DateTime.now().difference(checkFavourite).inMilliseconds}");
       }
     }
   }
@@ -134,8 +127,8 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
       isLoading = false;
     });
     if (kDebugMode) {
-      print("Time take to load items is : " +
-          DateTime.now().difference(startLoadItems).inMilliseconds.toString());
+      print(
+          "Time take to load items is : ${DateTime.now().difference(startLoadItems).inMilliseconds}");
     }
   }
 
@@ -143,23 +136,21 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
     DateTime startAddRestaurant = DateTime.now();
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(
+      // ignore: use_build_context_synchronously
       AppLocalizations.of(context)!.restaurant_name,
       jsonEncode(
         widget.restaurant.toJson(),
       ),
     );
 
-    print(
-      "Time take to add restaurant is : " +
-          DateTime.now()
-              .difference(startAddRestaurant)
-              .inMilliseconds
-              .toString(),
+    debugPrint(
+      "Time take to add restaurant is : ${DateTime.now().difference(startAddRestaurant).inMilliseconds}",
     );
   }
 
   Future<void> _removeRestaurantFromPrefs() async {
     final prefs = await SharedPreferences.getInstance();
+    // ignore: use_build_context_synchronously
     await prefs.remove(AppLocalizations.of(context)!.restaurant_name);
   }
 
@@ -191,8 +182,8 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
             return cubit;
           },
           child: BlocBuilder<CategoryCubit, CategoryState>(
-            builder: (context, c_state) {
-              return c_state.when(
+            builder: (context, cState) {
+              return cState.when(
                 initial: () => const Center(
                   child: Scaffold(
                     body: Center(
@@ -262,7 +253,7 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                                               width: double.infinity,
                                               height: 250,
                                               margin:
-                                                  EdgeInsets.only(top: 30.0),
+                                                  const EdgeInsets.only(top: 30.0),
                                               decoration: BoxDecoration(
                                                 image: DecorationImage(
                                                   image: NetworkImage(
@@ -279,7 +270,7 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                                               child: Container(
                                                 width: 100,
                                                 height: 100,
-                                                padding: EdgeInsets.all(100.0),
+                                                padding: const EdgeInsets.all(100.0),
                                                 decoration: ShapeDecoration(
                                                   image: DecorationImage(
                                                     image: NetworkImage(
@@ -402,7 +393,7 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                                                                       .light
                                                               ? Colors.black
                                                               : Colors.white
-                                                          : Color(0xFFE02C45),
+                                                          : const Color(0xFFE02C45),
                                                       size: 18,
                                                     ),
                                                     style: ButtonStyle(
@@ -474,7 +465,7 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                                           Text(
                                             AppLocalizations.of(context)!
                                                 .ratings_30265,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               color: Color(0xFFAFAFAF),
                                               fontSize: 10,
                                               fontFamily: 'Inter',
@@ -488,13 +479,13 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                                     ),
                                     const SizedBox(height: 16.0),
                                     Padding(
-                                      padding: EdgeInsets.symmetric(
+                                      padding: const EdgeInsets.symmetric(
                                         horizontal: 20.0,
                                       ),
                                       child: Text(
                                         AppLocalizations.of(context)!
                                             .pizza_pies_crepes,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           color: Color(0xFFAFAFAF),
                                           fontSize: 12,
                                           fontFamily: 'Inter',
@@ -691,7 +682,9 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                                                 500,
                                         child: TabBarView(
                                           children: [
-                                            for (int i = 0; i < filter.length; i++)
+                                            for (int i = 0;
+                                                i < filter.length;
+                                                i++)
                                               FilterWidget(
                                                 items: items
                                                     .where((element) =>

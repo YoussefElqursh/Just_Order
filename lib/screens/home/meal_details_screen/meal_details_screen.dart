@@ -75,6 +75,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
   void _addToCart() async {
     final prefs = await SharedPreferences.getInstance();
     final restaurantString =
+    // ignore: use_build_context_synchronously
         prefs.getString(AppLocalizations.of(context)!.restaurant_name);
     Restaurant? restaurant;
     if (restaurantString != null) {
@@ -274,7 +275,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                 const Spacer(),
                                 Text(
                                   AppLocalizations.of(context)!.egp_0_00,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Color(0xFFE02C45),
                                     fontSize: 12,
                                     fontFamily: 'Inter',
@@ -312,11 +313,11 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 1,
                                     ),
-                                    SizedBox(height: 6),
+                                    const SizedBox(height: 6),
                                     Text(
                                       AppLocalizations.of(context)!
                                           .choose_1_option,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: Color(0xFFAFAFAF),
                                         fontSize: 12,
                                         fontFamily: 'Inter',
@@ -343,7 +344,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                   child: Center(
                                     child: Text(
                                       AppLocalizations.of(context)!.required,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: Color(0xFFE02C45),
                                         fontSize: 10,
                                         fontFamily: 'Inter',
@@ -404,11 +405,11 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                         ),
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 1),
-                                    SizedBox(height: 6),
+                                    const SizedBox(height: 6),
                                     Text(
                                         AppLocalizations.of(context)!
                                             .choose_up_to_1_option,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           color: Color(0xFFAFAFAF),
                                           fontSize: 12,
                                           fontFamily: 'Inter',
@@ -434,7 +435,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                   child: Center(
                                     child: Text(
                                       AppLocalizations.of(context)!.optional,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: Color(0xFF898888),
                                         fontSize: 10,
                                         fontFamily: 'Inter',

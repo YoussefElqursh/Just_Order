@@ -138,7 +138,7 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
                   SettingsAppItems(
                     icon: Icons.dark_mode_outlined,
                     title: AppLocalizations.of(context)!.dark_mode,
-                    training: SwitchBtnWidget(),
+                    training: const SwitchBtnWidget(),
                     state: state,
                   ),
                   SettingsAppItems(

@@ -6,6 +6,7 @@ import 'package:just_order/screens/home/main_home_screen/home_screen.dart';
 import 'package:just_order/screens/order/orders/order_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+// ignore: must_be_immutable
 class MainLayout extends StatefulWidget {
   int? pageNumber;
 
@@ -87,8 +88,8 @@ class _MainLayoutState extends State<MainLayout> {
               label: AppLocalizations.of(context)!.orders_,
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline),
-              activeIcon: Icon(Icons.person_outline),
+              icon: const Icon(Icons.person_outline),
+              activeIcon: const Icon(Icons.person_outline),
               label: AppLocalizations.of(context)!.account_,
             ),
           ],
@@ -101,13 +102,13 @@ class _MainLayoutState extends State<MainLayout> {
     return await showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: Text('Exit App'),
-            content: Text('Are you sure you want to exit the app?'),
+            title: const Text('Exit App'),
+            content: const Text('Are you sure you want to exit the app?'),
             backgroundColor: Colors.white,
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(false),
-                child: Text(
+                child: const Text(
                   'Cancel',
                   style: TextStyle(
                     color: Colors.black,
@@ -116,12 +117,6 @@ class _MainLayoutState extends State<MainLayout> {
               ),
               TextButton(
                 onPressed: () => Navigator.of(context).pop(true),
-                child: Text(
-                  'Exit',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
                 style: ButtonStyle(
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   backgroundColor: MaterialStateProperty.all<Color>(
@@ -131,6 +126,12 @@ class _MainLayoutState extends State<MainLayout> {
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
+                  ),
+                ),
+                child: const Text(
+                  'Exit',
+                  style: TextStyle(
+                    color: Colors.white,
                   ),
                 ),
               ),

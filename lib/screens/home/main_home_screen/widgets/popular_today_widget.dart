@@ -95,7 +95,7 @@ Widget buildPopularTodayWidget({
                 Text(
                   'Sandwiches, Fast Food',
                   style: TextStyle(
-                    color: state.themeMode == ThemeMode.light ? Color(0xFFAFAFAF) : Colors.white,
+                    color: state.themeMode == ThemeMode.light ? const Color(0xFFAFAFAF) : Colors.white,
                     fontSize: 10,
                     fontFamily: 'Inter',
                     fontWeight: FontWeight.w400,
@@ -123,7 +123,7 @@ Widget buildPopularTodayWidget({
                               fontWeight: FontWeight.w500,
                             ),
                           ),
-                          TextSpan(
+                          const TextSpan(
                             text: ' (86)',
                             style: TextStyle(
                               color: Color(0xFFAFAFAF),

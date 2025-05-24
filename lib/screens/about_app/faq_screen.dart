@@ -135,7 +135,7 @@ class _FAQSectionState extends State<FAQSection> {
                 padding: const EdgeInsets.all(20.0),
                 child: ListView.separated(
                   itemCount: filteredFaqs.length,
-                  separatorBuilder: (context, index) => SizedBox(
+                  separatorBuilder: (context, index) => const SizedBox(
                     height: 8.0,
                   ),
                   itemBuilder: (context, index) {
@@ -144,7 +144,7 @@ class _FAQSectionState extends State<FAQSection> {
                       clipBehavior: Clip.antiAlias,
                       decoration: ShapeDecoration(
                         shape: RoundedRectangleBorder(
-                          side: BorderSide(
+                          side: const BorderSide(
                             width: 1,
                             strokeAlign: BorderSide.strokeAlignCenter,
                             color: Color(0x4CAFAFAF) /* Gray-30% */,
@@ -160,7 +160,7 @@ class _FAQSectionState extends State<FAQSection> {
                           iconColor: AppColor.primaryColor,
                           title: Text(
                             faq['question']!,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Color(0xFF090909) /* Black */,
                               fontSize: 14,
                               fontFamily: 'Inter',
@@ -169,10 +169,10 @@ class _FAQSectionState extends State<FAQSection> {
                             ),
                           ),
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               width: double.infinity,
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                                padding: EdgeInsets.symmetric(horizontal: 16.0),
                                 child: Divider(
                                   height: 1,
                                   color: Color(0x4CAFAFAF),
@@ -185,7 +185,7 @@ class _FAQSectionState extends State<FAQSection> {
                                   const EdgeInsets.symmetric(vertical: 10.0),
                               child: Text(
                                 faq['answer']!,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Color(0xFF898888) /* Gray-Dark */,
                                   fontSize: 12,
                                   fontFamily: 'Inter',

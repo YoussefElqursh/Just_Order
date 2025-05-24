@@ -185,7 +185,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         decoration: BoxDecoration(
           color: isDark ? Colors.black : Colors.white,
           borderRadius: BorderRadius.circular(20),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               color: Color(0x19000000),
               blurRadius: 30,
@@ -298,14 +298,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         isDark ? AppColor.blackColor : AppColor.whiteColor,
                   ),
                   const SizedBox(width: 8),
-                  Expanded(
+                  const Expanded(
                     child: Text.rich(
                       TextSpan(
                         children: [
                           TextSpan(
                             text: 'I have read and agree to the ',
                             style: TextStyle(
-                              color: const Color(0xFF090909),
+                              color: Color(0xFF090909),
                               fontSize: 12,
                               fontWeight: FontWeight.w400,
                             ),
@@ -313,14 +313,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           TextSpan(
                             text: 'Terms & Conditions',
                             style: TextStyle(
-                              color: const Color(0xFFE02C45),
+                              color: Color(0xFFE02C45),
                               fontSize: 12,
                               fontWeight: FontWeight.w500,
                               decoration: TextDecoration.underline,
                               decorationColor: AppColor.primaryColor,
                             ),
                           ),
-                          const TextSpan(
+                          TextSpan(
                             text: ' and ',
                             style: TextStyle(
                               color: Color(0xFF090909),
@@ -331,14 +331,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           TextSpan(
                             text: 'Privacy Policy',
                             style: TextStyle(
-                              color: const Color(0xFFE02C45),
+                              color: Color(0xFFE02C45),
                               fontSize: 12,
                               fontWeight: FontWeight.w500,
                               decoration: TextDecoration.underline,
                               decorationColor: AppColor.primaryColor,
                             ),
                           ),
-                          const TextSpan(
+                          TextSpan(
                             text: '.',
                           ),
                         ],
@@ -348,8 +348,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ],
               ),
               if (_showTermsError)
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0, top: 4),
+                const Padding(
+                  padding: EdgeInsets.only(left: 8.0, top: 4),
                   child: Text(
                     "You must accept the Terms & Conditions.",
                     style: TextStyle(
@@ -443,7 +443,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             validator: validator,
             decoration: InputDecoration(
               hintText: hint,
-              hintStyle: TextStyle(
+              hintStyle: const TextStyle(
                 color: Color(0xFFCCCCCC) /* Gray-Smoke */,
                 fontSize: 12,
                 fontFamily: 'Inter',

@@ -6,7 +6,7 @@ import 'category_state.dart';
 
 class CategoryCubit extends Cubit<CategoryState> {
   final CategoryRepository _categoryRepository;
-  CategoryCubit(this._categoryRepository) : super(CategoryState.initial());
+  CategoryCubit(this._categoryRepository) : super(const CategoryState.initial());
 
   void listenToCategories() {
     _categoryRepository.getCategoriesStream().listen((categories) {
@@ -18,7 +18,7 @@ class CategoryCubit extends Cubit<CategoryState> {
 
   Future<void> fetchCategoriesByIds(List<String> categoryIds) async {
     try {
-      emit(CategoryState.loading());
+      emit(const CategoryState.loading());
       List<Categories> categories = [];
 
       for (var categoryId in categoryIds) {
@@ -40,7 +40,7 @@ class CategoryCubit extends Cubit<CategoryState> {
       await _categoryRepository.addCategoryToFirestore(category, restaurantId);
 
       if (!isClosed) {
-        emit(CategoryState.addedSuccessfully()); // Emit success state
+        emit(const CategoryState.addedSuccessfully()); // Emit success state
       }
     } catch (e) {
       if (!isClosed) {
@@ -56,7 +56,7 @@ class CategoryCubit extends Cubit<CategoryState> {
       await _categoryRepository.updateCategory(category);
 
       // Fetch updated clubs after updating
-      final categories = await _categoryRepository.getCategoriesStream();
+      final categories =  _categoryRepository.getCategoriesStream();
 
       if (!isClosed) {
         emit(CategoryState.success(

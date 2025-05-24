@@ -111,8 +111,9 @@ class User {
   }
   
   static DateTime _parseDate(Object timeStamp){
-    if(timeStamp.runtimeType == DateTime) return timeStamp as DateTime;
-    else if(timeStamp.runtimeType == String){
+    if(timeStamp.runtimeType == DateTime) {
+      return timeStamp as DateTime;
+    } else if(timeStamp.runtimeType == String){
       return DateTime.parse(timeStamp as String);
     }else{
       // We can throw Exception here but for now we will add current timestamp

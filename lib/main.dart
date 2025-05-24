@@ -23,7 +23,7 @@ import 'firebase_options.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-late final prefs;
+late final SharedPreferences prefs;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -86,7 +86,7 @@ class MyApp extends StatelessWidget {
                       }
                       return const Locale('en'); // Default fallback
                     },
-                    localizationsDelegates: [
+                    localizationsDelegates: const [
                       AppLocalizations.delegate,
                       GlobalMaterialLocalizations.delegate,
                       GlobalWidgetsLocalizations.delegate,
@@ -108,17 +108,17 @@ class MyApp extends StatelessWidget {
                         elevation: 0.5,
                       ),
                       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-                        selectedItemColor: const Color(0xFFE02C45),
-                        unselectedItemColor: const Color(0xFF898888),
+                        selectedItemColor: Color(0xFFE02C45),
+                        unselectedItemColor: Color(0xFF898888),
                         type: BottomNavigationBarType.fixed,
                         backgroundColor: Colors.black,
-                        selectedLabelStyle: const TextStyle(
+                        selectedLabelStyle: TextStyle(
                           color: Color(0xFFE02C45),
                           fontSize: 12,
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w600,
                         ),
-                        unselectedLabelStyle: const TextStyle(
+                        unselectedLabelStyle: TextStyle(
                           color: Color(0xFF898888),
                           fontSize: 12,
                           fontFamily: 'Inter',
@@ -139,17 +139,17 @@ class MyApp extends StatelessWidget {
                         elevation: 0.5,
                       ),
                       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-                        selectedItemColor: const Color(0xFFE02C45),
-                        unselectedItemColor: const Color(0xFF898888),
+                        selectedItemColor: Color(0xFFE02C45),
+                        unselectedItemColor: Color(0xFF898888),
                         type: BottomNavigationBarType.fixed,
                         backgroundColor: Colors.white,
-                        selectedLabelStyle: const TextStyle(
+                        selectedLabelStyle: TextStyle(
                           color: Color(0xFFE02C45),
                           fontSize: 12,
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w600,
                         ),
-                        unselectedLabelStyle: const TextStyle(
+                        unselectedLabelStyle: TextStyle(
                           color: Color(0xFF898888),
                           fontSize: 12,
                           fontFamily: 'Inter',

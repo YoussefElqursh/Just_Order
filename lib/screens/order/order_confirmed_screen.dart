@@ -112,7 +112,7 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                             Text(
                               AppLocalizations.of(context)!.bon_appetit,
                               textAlign: TextAlign.center,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Color(0xFFE02C45),
                                 fontSize: 12,
                                 fontFamily: 'Inter',

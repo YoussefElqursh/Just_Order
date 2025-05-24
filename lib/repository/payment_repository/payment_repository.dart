@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:just_order/models/cart_item_model.dart';
 import '../../models/payments_model/payment_request_model.dart';
@@ -14,7 +15,7 @@ class PaymentRepository {
     if (user == null) {
       String errorMessage =
           "Something went wrong while trying to fetch your info";
-      print(errorMessage);
+      debugPrint(errorMessage);
       return left(errorMessage);
     }
 

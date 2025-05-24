@@ -1,15 +1,14 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:just_order/Utils/Util.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:just_order/Utils/util.dart';
 import 'package:just_order/blocs/theming/theming_cubit.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/enums/payment_type.dart';
 import 'package:just_order/models/enums/status.dart';
-import 'package:just_order/models/invoice_model.dart';
 import 'package:just_order/models/order_model.dart' as order_model;
 import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/models/user_model.dart';
@@ -17,7 +16,6 @@ import 'package:just_order/repository/cart_provider.dart';
 import 'package:just_order/screens/cart/widgets/order_cart_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MyCartScreen extends StatefulWidget {
   const MyCartScreen({super.key});
@@ -60,7 +58,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
 
   Future<void> _getServiceFees() async {
     double fetchedServiceFees = await Util.getServiceFees();
-    if(mounted){
+    if (mounted) {
       setState(() {
         serviceFees = fetchedServiceFees;
       });
@@ -70,6 +68,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
   Future<void> _loadRestaurantAndUser() async {
     final prefs = await SharedPreferences.getInstance();
     final restaurantString =
+// ignore: use_build_context_synchronously
         prefs.getString(AppLocalizations.of(context)!.restaurant_name);
     final userString = prefs.getString('user');
     if (restaurantString != null) {
@@ -219,7 +218,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                     Text(
                                       AppLocalizations.of(context)!
                                           .pizza_pies_crepes,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: Color(0xFFAFAFAF),
                                         fontSize: 10,
                                         fontFamily: 'Inter',
@@ -243,12 +242,12 @@ class _MyCartScreenState extends State<MyCartScreen> {
                         Visibility(
                           visible: isVisible,
                           child: ListTile(
-                            contentPadding: EdgeInsets.symmetric(horizontal: 5),
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 5),
                             shape: ContinuousRectangleBorder(
                                 borderRadius: BorderRadius.circular(16)),
                             selected: true,
-                            selectedTileColor: Color(0x5FE02C45),
-                            leading: Icon(
+                            selectedTileColor: const Color(0x5FE02C45),
+                            leading: const Icon(
                               Icons.info_outline,
                               color: Color(0xFFE02C45),
                               size: 24.0,
@@ -262,7 +261,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                     : Colors.white,
                               ),
                             ),
-                            titleTextStyle: TextStyle(
+                            titleTextStyle: const TextStyle(
                               color: Color(0xFFE02C45),
                             ),
                             trailing: IconButton(
@@ -271,7 +270,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                   isVisible = !isVisible;
                                 });
                               },
-                              style: ButtonStyle(
+                              style: const ButtonStyle(
                                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               ),
                               icon: Icon(
@@ -350,7 +349,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                 ),
                                 child: Text(
                                   AppLocalizations.of(context)!.remove_all,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Color(0xFFE02C45),
                                     fontSize: 10,
                                     fontFamily: 'Inter',
@@ -387,9 +386,9 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                 state: state,
                               );
                             },
-                            separatorBuilder: (context, index) => Padding(
+                            separatorBuilder: (context, index) => const Padding(
                               padding:
-                                  const EdgeInsets.symmetric(vertical: 15.0),
+                                  EdgeInsets.symmetric(vertical: 15.0),
                               child: Divider(
                                 height: 1,
                                 color: Color(0x4CC8C8C8),
@@ -522,10 +521,10 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
                               ),
-                              Spacer(),
+                              const Spacer(),
                               Text(
-                                '${AppLocalizations.of(context)!.egp} ${serviceFees}',
-                                style: TextStyle(
+                                '${AppLocalizations.of(context)!.egp} $serviceFees',
+                                style: const TextStyle(
                                   color: Color(0xFFE02C45),
                                   fontSize: 12,
                                   fontFamily: 'Inter',
@@ -612,7 +611,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                               content: Text(
                                 AppLocalizations.of(context)!
                                     .your_cart_is_empty,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 14,
                                   fontFamily: 'Inter',
@@ -621,7 +620,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
                               ),
-                              backgroundColor: Color(0xFFE02C45),
+                              backgroundColor: const Color(0xFFE02C45),
                             ),
                           );
                         } else {
@@ -642,25 +641,30 @@ class _MyCartScreenState extends State<MyCartScreen> {
                             orderTimeOut: restaurant?.orderTimeOut ?? 0,
                             createdAt: DateTime.now(),
                             subTotal: filteredItems.fold(
-                                  0.0, // ignore: avoid_types_as_parameter_names
-                                  (sum, item) => sum + item.totalPrice,
-                                ),
-                            totalAmount: filteredItems.fold(
                               0.0, // ignore: avoid_types_as_parameter_names
-                                  (sum, item) => sum + item.totalPrice,
-                            ) + serviceFees + restaurant!.deliveryFee!,
+                              (summation, item) => summation + item.totalPrice,
+                            ),
+                            totalAmount: filteredItems.fold(
+                                  0.0, // ignore: avoid_types_as_parameter_names
+                                  (summation, item) => summation + item.totalPrice,
+                                ) +
+                                serviceFees +
+                                restaurant!.deliveryFee!,
                             orderCodeForRestaurant: 'temp',
-                            orderTable: tableCode, processed: false, addedToInvoice: false, deliveredByRestaurant: restaurant!.hasOwnDelivery,
+                            orderTable: tableCode,
+                            processed: false,
+                            addedToInvoice: false,
+                            deliveredByRestaurant: restaurant!.hasOwnDelivery,
                           );
                           String orderCode =
                               await order.generateUniqueOrderCode();
-                          String orderCodeForRestaurant =
-                              await order.generateOrderCodeForRestaurant();
+                          String orderCodeForRestaurant = order.generateOrderCodeForRestaurant();
                           order.orderCode = orderCode;
                           order.orderCodeForRestaurant = orderCodeForRestaurant;
 
-                          // ignore: use_build_context_synchronously
+
                           Navigator.pushNamed(
+                            // ignore: use_build_context_synchronously
                             context,
                             'PayMethodScreenRoute',
                             arguments: {
@@ -679,7 +683,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                       child: Center(
                         child: Text(
                           AppLocalizations.of(context)!.checkout,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 14,
                             fontFamily: 'Inter',

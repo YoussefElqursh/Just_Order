@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:just_order/models/category_model.dart' as category_model;
 
 class CategoryRepository {
@@ -53,10 +54,10 @@ class CategoryRepository {
       // Commit batch write
       await batch.commit();
 
-      print("Category added successfully and linked to the restaurant.");
+      debugPrint("Category added successfully and linked to the restaurant.");
     } catch (e) {
-      print("Error adding category: $e");
-      throw e; // Ensure the error is propagated to Cubit
+      debugPrint("Error adding category: $e");
+      rethrow; // Ensure the error is propagated to Cubit
     }
   }
 
@@ -71,7 +72,7 @@ class CategoryRepository {
           .doc(category.categoryId) // Using clubId as the document ID
           .update(category.toJson());
     } catch (e) {
-      print("Error updating club: $e");
+      debugPrint("Error updating club: $e");
     }
   }
 }

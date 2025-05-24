@@ -218,7 +218,7 @@ class _SelectYourPlaceState extends State<SelectYourPlace>
                                         ),
                                         QRScannerOverlay(
                                           overlayColor: state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
-                                          borderColor: state.themeMode == ThemeMode.light ? Colors.black : Color(0xFFE02C45),
+                                          borderColor: state.themeMode == ThemeMode.light ? Colors.black : const Color(0xFFE02C45),
                                           borderRadius: 10,
                                           borderStrokeWidth: 3,
                                           scanAreaWidth: 190,
@@ -240,7 +240,7 @@ class _SelectYourPlaceState extends State<SelectYourPlace>
                                           AppLocalizations.of(context)!.camera_permission_is_required_to_scan_qr_codes,
                                           textAlign: TextAlign.center,
                                         ),
-                                        SizedBox(height: 25),
+                                        const SizedBox(height: 25),
                                         MaterialButton(
                                           onPressed: _openAppSettings,
                                           height: 42,

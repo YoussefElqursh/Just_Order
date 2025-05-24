@@ -50,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _loadTableCode();
-    _UserFromPreferences();
+    _userFromPreferences();
   }
 
   Future<void> _loadTableCode() async {
@@ -61,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _loadRestaurants();
   }
 
-  Future<void> _UserFromPreferences() async {
+  Future<void> _userFromPreferences() async {
     final prefs = await SharedPreferences.getInstance();
     final userString = prefs.getString('user');
     if (userString != null) {
@@ -145,7 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             AppLocalizations.of(context)!.delivering_to,
                             style: TextStyle(
                               color: state.themeMode == ThemeMode.light
-                                  ? Color(0xFF878787)
+                                  ? const Color(0xFF878787)
                                   : Colors.white,
                               fontSize: 8,
                               fontFamily: 'Inter',

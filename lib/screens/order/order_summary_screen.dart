@@ -43,7 +43,7 @@ class OrderSummaryScreen extends StatefulWidget {
 
 class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
   Restaurant? restaurant;
-  PaymentRepository _paymentRepository = PaymentRepository();
+  final PaymentRepository _paymentRepository = PaymentRepository();
 
   @override
   void initState() {
@@ -54,6 +54,7 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
   Future<void> _loadRestaurant() async {
     final prefs = await SharedPreferences.getInstance();
     final restaurantString =
+    // ignore: use_build_context_synchronously
         prefs.getString(AppLocalizations.of(context)!.restaurant_name);
     if (restaurantString != null) {
       setState(() {
@@ -102,7 +103,7 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.arrow_back,
                     color: Colors.black,
                     size: 18,
@@ -188,7 +189,7 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                                     Text(
                                       AppLocalizations.of(context)!
                                           .pizza_pies_crepes,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: Color(0xFFAFAFAF),
                                         fontSize: 10,
                                         fontFamily: 'Inter',
@@ -501,7 +502,7 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                           res.fold(
                             (left) {
                               // Show UI error here to try again
-                              print("Failed to initiate the payment ");
+                              debugPrint("Failed to initiate the payment ");
                             },
                             (right) {
                               String clientSecret = right;

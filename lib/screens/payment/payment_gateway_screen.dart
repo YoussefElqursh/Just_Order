@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-
-import '../../models/cart_item_model.dart';
-import '../../models/invoice_model.dart';
-import '../../models/order_model.dart';
+import 'package:just_order/models/cart_item_model.dart';
+import 'package:just_order/models/order_model.dart';
 
 
 class PaymentGatewayScreen extends StatefulWidget {
@@ -67,7 +65,7 @@ class _PaymentGatewayScreen extends State<PaymentGatewayScreen> {
         ),
         onWebViewCreated: (controller) {
           String publicKey = dotenv.get("PYAMOB_PUBLIC_KEY");
-          if (this.secretClient.isEmpty || publicKey.isEmpty) {
+          if (secretClient.isEmpty || publicKey.isEmpty) {
             throw ("Can't establish a payment gateway screen due to lack of api/secret key");
           }
           controller.loadUrl(
@@ -82,7 +80,7 @@ class _PaymentGatewayScreen extends State<PaymentGatewayScreen> {
             bool success =
                 url.queryParameters["success"]?.toLowerCase() == "true";
             if (success) {
-              print("Success ");
+              debugPrint("Success ");
               Navigator.pushNamedAndRemoveUntil(
                   context, 'OrderConfirmedScreenRoute', (route) => false);
               Navigator.pushNamed(context, 'OrderConfirmedScreenRoute',
@@ -96,7 +94,7 @@ class _PaymentGatewayScreen extends State<PaymentGatewayScreen> {
             }
           } else {
             // Need to handle the timeout
-            print("Failed to parse the url");
+            debugPrint("Failed to parse the url");
           }
         },
       ),

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 class AppThemes {
   static final ThemeData lightTheme = ThemeData(
     useMaterial3: true,
-    primarySwatch: MaterialColor(
+    primarySwatch: const MaterialColor(
       0xFFE02C45,
       <int, Color>{
-        50: const Color(0xFFE02C45),
+        50: Color(0xFFE02C45),
       },
     ),
     scaffoldBackgroundColor: Colors.white,
@@ -33,10 +33,10 @@ class AppThemes {
 
   static final ThemeData darkTheme = ThemeData(
     useMaterial3: true,
-    primarySwatch: MaterialColor(
+    primarySwatch: const MaterialColor(
       0xFFE02C45,
       <int, Color>{
-        50: const Color(0xFFE02C45),
+        50: Color(0xFFE02C45),
       },
     ),
     scaffoldBackgroundColor: Colors.black,

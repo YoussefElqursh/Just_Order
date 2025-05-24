@@ -69,7 +69,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
       };
       _isLoading = false;
     });
-
+    // ignore: use_build_context_synchronously
     Provider.of<OrderProvider>(context, listen: false)
         .listenToOrders(user?.userId ?? '');
   }
@@ -89,10 +89,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
     return _isLoading
-        ? Scaffold(
+        ? const Scaffold(
             body: Center(
               child: CircularProgressIndicator(
-                color: const Color(0xFFE02C45),
+                color: Color(0xFFE02C45),
               ),
             ),
           )
@@ -205,7 +205,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             separatorBuilder: (context, index) =>
                                 const SizedBox(height: 12),
                             itemCount: orders.length,
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                               horizontal: 20.0,
                               vertical: 10.0,
                             ),

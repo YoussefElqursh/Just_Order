@@ -16,7 +16,7 @@ Widget accountFunctionWidget({
     color: Colors.transparent,
     elevation: 0.0,
     highlightElevation: 0.0,
-    padding: EdgeInsets.all(0.0),
+    padding: const EdgeInsets.all(0.0),
     shape: const ContinuousRectangleBorder(borderRadius: BorderRadius.zero),
     minWidth: MediaQuery.sizeOf(context).width,
     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,

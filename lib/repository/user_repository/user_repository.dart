@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:just_order/models/cart_item_model.dart';
-import 'package:just_order/models/invoice_model.dart';
 import 'package:just_order/models/item_model.dart';
 import 'package:just_order/models/order_model.dart' as order_model;
 import 'package:just_order/models/restaurant_model.dart';

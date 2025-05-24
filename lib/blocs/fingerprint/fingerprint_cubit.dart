@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_order/blocs/fingerprint/fingerprint_state.dart';
@@ -42,15 +43,15 @@ class FingerprintCubit extends Cubit<FingerprintState> {
       }
     } on PlatformException catch (e) {
       if (e.code == 'NotEnrolled') {
-        print("No biometrics enrolled.");
+        debugPrint("No biometrics enrolled.");
       } else if (e.code == 'LockedOut') {
-        print("Device locked due to too many failed attempts.");
+        debugPrint("Device locked due to too many failed attempts.");
       } else {
-        print("Unknown error: ${e.message}");
+        debugPrint("Unknown error: ${e.message}");
       }
       emit(FingerprintFailure());
     } catch (e) {
-      print("Unexpected error: $e");
+      debugPrint("Unexpected error: $e");
       emit(FingerprintFailure());
     }
   }

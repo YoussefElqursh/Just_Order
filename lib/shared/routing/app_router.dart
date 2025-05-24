@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:just_order/layouts/main_layout.dart';
 import 'package:just_order/models/cart_item_model.dart';
-import 'package:just_order/models/invoice_model.dart';
 import 'package:just_order/models/item_model.dart';
 import 'package:just_order/models/order_model.dart';
 import 'package:just_order/models/restaurant_model.dart';

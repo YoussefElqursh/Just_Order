@@ -3,7 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'contact_us_screen.dart';
 import 'faq_screen.dart';
-import 'report _issue_screen.dart';
+import 'report_issue_screen.dart';
 
 class HelpSupportScreen extends StatefulWidget {
   const HelpSupportScreen({super.key});
@@ -40,8 +40,8 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
         body: TabBarView(
           children: [
             FAQSection(selectedFilter: selectedFilter),
-            ContactUsScreen(),
-            ReportIssueScreen(),
+            const ContactUsScreen(),
+            const ReportIssueScreen(),
           ],
         ),
       ),
@@ -82,7 +82,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
       centerTitle: true,
       title: Text(
         loc.help_support,
-        style: TextStyle(
+        style: const TextStyle(
           color: Color(0xFF090909) /* Black */,
           fontSize: 14,
           fontFamily: 'Inter',

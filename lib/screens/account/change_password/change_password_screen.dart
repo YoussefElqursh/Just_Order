@@ -133,7 +133,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => AppSettingsScreen(),
+                        builder: (context) => const AppSettingsScreen(),
                       ),
                     );
                   },
@@ -155,9 +155,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             leadingWidth: 55.0,
           ),
           body: SingleChildScrollView(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
             scrollDirection: Axis.vertical,
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             child: Form(
               key: formKey,
               child: Column(
@@ -235,13 +235,14 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                           final LocalAuthentication auth = LocalAuthentication();
                           final List<BiometricType> availableBiometrics = await auth.getAvailableBiometrics();
                           if (availableBiometrics.isEmpty) {
-                            print("There is no biometric authentication enrolled");
+                            debugPrint("There is no biometric authentication enrolled");
                           }
                           if(Platform.isAndroid){
                             if (availableBiometrics.contains(BiometricType.face)) {
                               // TODO: implement face detection
                               updateUserPassword(user: user!, currentPassword: currentPasswordController.text, newPassword: newPasswordController.text, confirmedPassword: confirmPasswordController.text);
                             }else if(availableBiometrics.contains(BiometricType.fingerprint)){
+                              // ignore: use_build_context_synchronously
                               context.read<FingerprintCubit>().checkFingerprint();
                             }
                           }else if(Platform.isIOS){
@@ -249,19 +250,21 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                               try{
                                 bool authenticated = await auth.authenticate(
                                   localizedReason: 'Please authenticate to access the app',
-                                  options: AuthenticationOptions(
+                                  options: const AuthenticationOptions(
                                     biometricOnly: true, // Use only biometrics (Face ID or Touch ID)
                                     stickyAuth: true,
                                   ),
                                 );
-                                if(authenticated) updateUserPassword(user: user!, currentPassword: currentPasswordController.text, newPassword: newPasswordController.text, confirmedPassword: confirmPasswordController.text);
-                                else {
+                                if(authenticated) {
+                                  updateUserPassword(user: user!, currentPassword: currentPasswordController.text, newPassword: newPasswordController.text, confirmedPassword: confirmPasswordController.text);
+                                } else {
                                   showNotification(message: "Biometric authentication failed", errorMessage: true);
                                 }
                               }catch(e){
                                 showNotification(message: "Biometric authentication failed", errorMessage: true);
                               }
                             }else if(availableBiometrics.contains(BiometricType.fingerprint)){
+                              // ignore: use_build_context_synchronously
                               context.read<FingerprintCubit>().checkFingerprint();
                             }
                           }
@@ -384,6 +387,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
     // Network Connectivity Check
     if (!await isConnected()) {
+      // ignore: use_build_context_synchronously
       debugPrint(AppLocalizations.of(context)!.no_internet_connection);
       showNotification(message: "Some thing wrong with the connection", errorMessage: true);
       return;
@@ -402,6 +406,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           .get();
 
       if (existingUser.docs.isEmpty) {
+        // ignore: use_build_context_synchronously
         debugPrint(AppLocalizations.of(context)!.user_with_this_email_not_exists);
         showNotification(message: "Some went wrong , please try again", errorMessage: true);
         return;
@@ -424,7 +429,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           .get();
 
       if (result.docs.isEmpty) {
-        return null;
+        return;
       }
 
       final doc = result.docs.first;
@@ -437,10 +442,11 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       currentPasswordController.clear();
       newPasswordController.clear();
       confirmPasswordController.clear();
-
+      // ignore: use_build_context_synchronously
       debugPrint(AppLocalizations.of(context)!.user_updated_successfully);
       showNotification(message: "Password updated successfully");
     } catch (e) {
+      // ignore: use_build_context_synchronously
       debugPrint(AppLocalizations.of(context)!.user_update_failed);
     }
   }

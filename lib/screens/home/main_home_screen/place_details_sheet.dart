@@ -31,7 +31,7 @@ class PlaceDetailsSheet extends StatelessWidget {
             width: MediaQuery.sizeOf(context).width,
             clipBehavior: Clip.antiAlias,
             alignment: Alignment.center,
-            decoration: BoxDecoration(),
+            decoration: const BoxDecoration(),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -41,7 +41,7 @@ class PlaceDetailsSheet extends StatelessWidget {
                   width: 60,
                   height: 3,
                   decoration: ShapeDecoration(
-                    color: Color(0x4CAFAFAF),
+                    color: const Color(0x4CAFAFAF),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50),
                     ),
@@ -54,7 +54,7 @@ class PlaceDetailsSheet extends StatelessWidget {
           Container(
             width: MediaQuery.sizeOf(context).width,
             clipBehavior: Clip.antiAlias,
-            decoration: BoxDecoration(),
+            decoration: const BoxDecoration(),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -62,7 +62,7 @@ class PlaceDetailsSheet extends StatelessWidget {
               children: [
                 Text(
                   AppLocalizations.of(context)!.table_location,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 16,
                     fontFamily: 'Inter',
@@ -74,12 +74,12 @@ class PlaceDetailsSheet extends StatelessWidget {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.close,
                     color: Color(0x4CAFAFAF),
                     size: 28,
                   ),
-                  style: ButtonStyle(
+                  style: const ButtonStyle(
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
                 ),
@@ -87,7 +87,7 @@ class PlaceDetailsSheet extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          Container(
+          SizedBox(
             height: 50,
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -96,7 +96,7 @@ class PlaceDetailsSheet extends StatelessWidget {
               children: [
                 Text(
                   AppLocalizations.of(context)!.club_name,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Color(0xFFAFAFAF),
                     fontSize: 12,
                     fontFamily: 'Inter',
@@ -106,7 +106,7 @@ class PlaceDetailsSheet extends StatelessWidget {
                 const SizedBox(height: 8),
                 Text(
                   AppLocalizations.of(context)!.al_ahly_club,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 14,
                     fontFamily: 'Inter',
@@ -127,7 +127,7 @@ class PlaceDetailsSheet extends StatelessWidget {
               children: [
                 Text(
                   AppLocalizations.of(context)!.table_code,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Color(0xFFAFAFAF),
                     fontSize: 12,
                     fontFamily: 'Inter',
@@ -137,7 +137,7 @@ class PlaceDetailsSheet extends StatelessWidget {
                 const SizedBox(height: 8),
                 Text(
                   tableCode,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 14,
                     fontFamily: 'Inter',
@@ -163,14 +163,14 @@ class PlaceDetailsSheet extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
               clipBehavior: Clip.antiAlias,
               decoration: ShapeDecoration(
-                color: Color(0xFFE02C45),
+                color: const Color(0xFFE02C45),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(6)),
               ),
               child: Center(
                 child: Text(
                   AppLocalizations.of(context)!.change_table,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 14,
                     fontFamily: 'Inter',

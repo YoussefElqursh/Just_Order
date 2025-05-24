@@ -19,7 +19,7 @@ Widget buildOrderStateWidget({
     width: MediaQuery.sizeOf(context).width,
     decoration: ShapeDecoration(
       color: state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         side: BorderSide(
           width: 1,
           strokeAlign: BorderSide.strokeAlignCenter,
@@ -376,7 +376,7 @@ Widget buildOrderPendingStateWidget({
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 4,
                 ),
                 buildMaterialButton(
@@ -423,7 +423,7 @@ Widget buildOrderPreparingStateWidget({
     width: MediaQuery.sizeOf(context).width,
     decoration: ShapeDecoration(
       color: state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         side: BorderSide(
           width: 1,
           strokeAlign: BorderSide.strokeAlignCenter,
@@ -608,7 +608,7 @@ Widget buildOrderOnWayStateWidget({
       width: MediaQuery.sizeOf(context).width,
       decoration: ShapeDecoration(
         color: state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           side: BorderSide(
             width: 1,
             strokeAlign: BorderSide.strokeAlignCenter,
@@ -763,13 +763,13 @@ Widget buildOrderOnWayStateWidget({
                         spacing: 10,
                         children: [
                           Container(
-                            padding: EdgeInsets.all(1.0),
+                            padding: const EdgeInsets.all(1.0),
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(
+                                borderRadius: const BorderRadius.all(
                                   Radius.circular(8.0),
                                 ),
                                 border: Border.all(
-                                    color: Color(0x66AFAFAF),
+                                    color: const Color(0x66AFAFAF),
                                     style: BorderStyle.solid)),
                             child: QrImageView(
                               data: order.orderCode,
@@ -853,7 +853,7 @@ Widget buildOrderDeliveredStateWidget({
       width: MediaQuery.sizeOf(context).width,
       decoration: ShapeDecoration(
         color: state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           side: BorderSide(
             width: 1,
             strokeAlign: BorderSide.strokeAlignCenter,
@@ -1030,7 +1030,7 @@ Widget buildOrderDeclinedStateWidget({
       width: MediaQuery.sizeOf(context).width,
       decoration: ShapeDecoration(
         color: state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           side: BorderSide(
             width: 1,
             strokeAlign: BorderSide.strokeAlignCenter,
@@ -1207,7 +1207,7 @@ Widget buildOrderAutoDeclinedStateWidget({
       width: MediaQuery.sizeOf(context).width,
       decoration: ShapeDecoration(
         color: state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           side: BorderSide(
             width: 1,
             strokeAlign: BorderSide.strokeAlignCenter,

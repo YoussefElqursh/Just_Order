@@ -3,25 +3,27 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ContactUsScreen extends StatelessWidget {
+  const ContactUsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
           TextField(
             decoration: InputDecoration(
-              prefixIcon: Icon(Icons.search, color: Color(0xFFE02C45)),
+              prefixIcon: const Icon(Icons.search, color: Color(0xFFE02C45)),
               hintText: AppLocalizations.of(context)!.search,
               filled: true,
-              fillColor: Color(0xFFF4F4F4),
+              fillColor: const Color(0xFFF4F4F4),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
                 borderSide: BorderSide.none,
               ),
             ),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Expanded(
             child: ListView(
               children: [
@@ -30,7 +32,7 @@ class ContactUsScreen extends StatelessWidget {
                   title: AppLocalizations.of(context)!.customer_service,
                   url: "https://www.talabat.com/egypt",
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 8,
                 ),
                 ContactTile(
@@ -38,7 +40,7 @@ class ContactUsScreen extends StatelessWidget {
                   title: AppLocalizations.of(context)!.website,
                   url: "https://www.talabat.com/egypt",
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 8,
                 ),
                 ContactTile(
@@ -46,7 +48,7 @@ class ContactUsScreen extends StatelessWidget {
                   title: AppLocalizations.of(context)!.facebook,
                   url: "https://www.talabat.com/egypt",
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 8,
                 ),
                 ContactTile(
@@ -68,7 +70,7 @@ class ContactTile extends StatelessWidget {
   final String title;
   final String url;
 
-  ContactTile({
+  const ContactTile({super.key,
     required this.icon,
     required this.title,
     required this.url,
@@ -82,7 +84,7 @@ class ContactTile extends StatelessWidget {
         mode: LaunchMode.externalApplication,
       );
     } else {
-      print("Could not launch $url");
+      debugPrint("Could not launch $url");
     }
   }
 
@@ -92,7 +94,7 @@ class ContactTile extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       decoration: ShapeDecoration(
         shape: RoundedRectangleBorder(
-          side: BorderSide(
+          side: const BorderSide(
             width: 1,
             strokeAlign: BorderSide.strokeAlignCenter,
             color: Color(0x4CAFAFAF) /* Gray-30% */,
@@ -103,11 +105,11 @@ class ContactTile extends StatelessWidget {
       child: ListTile(
         leading: Icon(
           icon,
-          color: Color(0xFFE02C45),
+          color: const Color(0xFFE02C45),
         ),
         title: Text(
           title,
-          style: TextStyle(
+          style: const TextStyle(
             color: Color(0xFF090909) /* Black */,
             fontSize: 14,
             fontFamily: 'Inter',

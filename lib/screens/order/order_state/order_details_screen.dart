@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 import 'package:just_order/blocs/theming/theming_cubit.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/cart_item_model.dart';
-import 'package:just_order/models/invoice_model.dart';
 import 'package:just_order/models/order_model.dart';
 import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/repository/order_repository/order_repository.dart';
@@ -150,7 +149,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                             ),
                              Text(
                               AppLocalizations.of(context)!.pizza_pies_crepes,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Color(0xFF898888),
                                 fontSize: 10,
                                 fontFamily: 'Inter',
@@ -193,7 +192,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           children: [
                              Text(
                               AppLocalizations.of(context)!.order_iD,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Color(0xFF898888),
                                 fontSize: 12,
                                 fontFamily: 'Inter',
@@ -220,7 +219,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           children: [
                              Text(
                               AppLocalizations.of(context)!.date,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Color(0xFF898888),
                                 fontSize: 12,
                                 fontFamily: 'Inter',
@@ -248,7 +247,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           children: [
                              Text(
                               AppLocalizations.of(context)!.order_status,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Color(0xFF898888),
                                 fontSize: 12,
                                 fontFamily: 'Inter',
@@ -344,7 +343,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       ],
                     ),
                   ),
-                  Divider(
+                  const Divider(
                     color: Color(0xFFF4F4F4),
                   ),
                   Padding(

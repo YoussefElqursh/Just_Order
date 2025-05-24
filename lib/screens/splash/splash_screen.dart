@@ -102,8 +102,10 @@ class _SplashScreenState extends State<SplashScreen> {
             tableCode.isNotEmpty &&
             timestamp != null &&
             timestamp == validTime) {
+          // ignore: use_build_context_synchronously
           Navigator.of(context).pushReplacement(MainLayout.route());
         } else {
+          // ignore: use_build_context_synchronously
           Navigator.of(context).pushReplacement(SelectYourPlace.route());
         }
       } else {

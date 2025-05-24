@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:just_order/screens/about_app/help_support.dart';
+import 'package:just_order/screens/about_app/privacy_and_policy_screen.dart';
+import 'package:just_order/screens/about_app/terms_and_conditions_screen.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-import 'help_support.dart';
-import 'privacy & policy.dart';
-import 'terms & conditions.dart';
-
 class AboutApp extends StatefulWidget {
+  const AboutApp({super.key});
+
   @override
   State<AboutApp> createState() => _AboutAppState();
 }
@@ -58,7 +59,7 @@ class _AboutAppState extends State<AboutApp> {
         centerTitle: true,
         title: Text(
           AppLocalizations.of(context)!.about_app,
-          style: TextStyle(
+          style: const TextStyle(
             color: Color(0xFF090909) /* Black */,
             fontSize: 14,
             fontFamily: 'Inter',
@@ -80,7 +81,7 @@ class _AboutAppState extends State<AboutApp> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => TermsAndConditionsScreen(),
+                    builder: (context) => const TermsAndConditionsScreen(),
                   ),
                 );
               },
@@ -92,7 +93,7 @@ class _AboutAppState extends State<AboutApp> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => PrivacyPolicyScreen(),
+                    builder: (context) => const PrivacyPolicyScreen(),
                   ),
                 );
               },
@@ -104,18 +105,18 @@ class _AboutAppState extends State<AboutApp> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => HelpSupportScreen(),
+                    builder: (context) => const HelpSupportScreen(),
                   ),
                 );
               },
             ),
             _buildAppVersionTile(), // Non-clickable App Version
-            Spacer(), // Space before footer
+            const Spacer(), // Space before footer
             Align(
               alignment: Alignment.center,
               child: Text(
                 AppLocalizations.of(context)!.powered_by_just_order,
-                style: TextStyle(color: Color(0xFFE02C45), fontSize: 12),
+                style: const TextStyle(color: Color(0xFFE02C45), fontSize: 12),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -141,7 +142,7 @@ class _AboutAppState extends State<AboutApp> {
           clipBehavior: Clip.antiAlias,
           decoration: ShapeDecoration(
             shape: RoundedRectangleBorder(
-              side: BorderSide(
+              side: const BorderSide(
                 width: 1,
                 strokeAlign: BorderSide.strokeAlignCenter,
                 color: Color(0x4CAFAFAF) /* Gray-30% */,
@@ -185,7 +186,7 @@ class _AboutAppState extends State<AboutApp> {
       clipBehavior: Clip.antiAlias,
       decoration: ShapeDecoration(
         shape: RoundedRectangleBorder(
-          side: BorderSide(
+          side: const BorderSide(
             width: 1,
             strokeAlign: BorderSide.strokeAlignCenter,
             color: Color(0x4CAFAFAF) /* Gray-30% */,
@@ -203,7 +204,7 @@ class _AboutAppState extends State<AboutApp> {
           const SizedBox(width: 12),
           Text(
             AppLocalizations.of(context)!.app_version,
-            style: TextStyle(
+            style: const TextStyle(
               color: Color(0xFF090909) /* Black */,
               fontSize: 14,
               fontFamily: 'Inter',
@@ -213,7 +214,7 @@ class _AboutAppState extends State<AboutApp> {
           const Spacer(),
           Text(
             _appVersion,
-            style: TextStyle(
+            style: const TextStyle(
               color: Color(0xFFAFAFAF) /* Gray */,
               fontSize: 12,
               fontFamily: 'Inter',
