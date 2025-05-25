@@ -610,14 +610,18 @@ class _OrderScreenState extends State<OrderScreen> {
                                               .where(
                                                 (order) =>
                                                     order.status ==
-                                                    Status.delivered,
+                                                    Status.delivered||
+                                                        order.status ==
+                                                            Status.finalized,
                                               )
                                               .toList(),
                                           restaurantMap
                                         ]);
                                   },
                                   child: Text(
-                                    '${AppLocalizations.of(context)!.view_all} (${orders.where((order) => order.status == Status.delivered).length})',
+                                    '${AppLocalizations.of(context)!.view_all} (${orders.where((order) => order.status == Status.delivered ||
+                                        order.status ==
+                                            Status.finalized).length})',
                                     style: const TextStyle(
                                       color: Color(0xFFE02C45),
                                       fontSize: 10,
@@ -640,7 +644,9 @@ class _OrderScreenState extends State<OrderScreen> {
                                   if (orders
                                       .where(
                                         (order) =>
-                                            order.status == Status.delivered,
+                                            order.status == Status.delivered||
+                                                order.status ==
+                                                    Status.finalized,
                                       )
                                       .isEmpty) {
                                     return Padding(
