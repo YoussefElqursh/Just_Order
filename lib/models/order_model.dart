@@ -122,6 +122,7 @@ class Order {
       'serviceFee': serviceFee,
       'deliveryFee': deliveryFee,
       'subTotal': subTotal,
+      'processed': processed,
       'deliveredByRestaurant': deliveredByRestaurant
     };
   }
