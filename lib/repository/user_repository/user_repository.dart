@@ -57,26 +57,26 @@ class UserRepository {
   }
 
   Future<String> pushOrder(
-    order_model.Order order,
-    List<CartItem> cartItems,
-  ) async {
-    await firestore.collection('orders').doc(order.orderId).set(order.toMap());
+      order_model.Order order,
+      List<CartItem> cartItems,
+      ) async {
+    final orderRef = firestore.collection('orders').doc(order.orderId);
+
     for (CartItem cartItem in cartItems) {
-      String cartItemId = firestore
-          .collection('orders')
-          .doc(order.orderId)
-          .collection('cartItems')
-          .doc()
-          .id;
-      cartItem.cartItemId = cartItemId;
-      await firestore
-          .collection('orders')
-          .doc(order.orderId)
-          .collection('cartItems')
-          .doc(cartItem.cartItemId)
-          .set(cartItem.toMap());
+      cartItem.cartItemId = orderRef.collection('cartItems').doc().id;
     }
+
+    await firestore.runTransaction((transaction) async {
+      transaction.set(orderRef, order.toMap());
+
+      for (CartItem cartItem in cartItems) {
+        final cartItemRef =
+        orderRef.collection('cartItems').doc(cartItem.cartItemId);
+        transaction.set(cartItemRef, cartItem.toMap());
+      }
+    });
 
     return 'Order placed successfully with order id: ${order.orderId} and cart items: ${cartItems.length}';
   }
+
 }
