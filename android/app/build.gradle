@@ -53,12 +53,19 @@ android {
             keyAlias = 'androiddebugkey'
             keyPassword = '123456789'
         }
+        release{
+            storeFile = file('./my-release-key.jks')
+            storePassword = 'qwertyuiop'
+            keyAlias = 'justorder'
+            keyPassword = 'qwertyuiop'
+        }
     }
     buildTypes {
-        release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
+        debug {
             signingConfig = signingConfigs.debug
+        }
+        release {
+            signingConfig = signingConfigs.release
         }
     }
 }
