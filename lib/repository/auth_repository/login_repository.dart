@@ -7,6 +7,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:just_order/models/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../services/notification_service.dart';
+
 class LoginRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
@@ -33,6 +35,7 @@ class LoginRepository {
     final user = User.fromJson(doc.data() as Map<String, dynamic>);
 
     await user?.saveUserToPreferences(user);
+    await NotificationService.initialize(user!.email);
 
     return user;
   }
