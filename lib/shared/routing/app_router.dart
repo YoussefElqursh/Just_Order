@@ -4,35 +4,38 @@ import 'package:just_order/models/cart_item_model.dart';
 import 'package:just_order/models/item_model.dart';
 import 'package:just_order/models/order_model.dart';
 import 'package:just_order/models/restaurant_model.dart';
+import 'package:just_order/screens/QR/select_your_place_screen.dart';
 import 'package:just_order/screens/account/change_password/change_password_screen.dart';
+import 'package:just_order/screens/account/my_profile_screen/profile_screen.dart';
+import 'package:just_order/screens/cart/my_cart_screen.dart';
 import 'package:just_order/screens/forgot_password_screen/forgot_password_screen.dart';
+import 'package:just_order/screens/home/main_home_screen/home_screen.dart';
+import 'package:just_order/screens/home/meal_details_screen/meal_details_screen.dart';
+import 'package:just_order/screens/home/restaurant_screen/restaurant_screen.dart';
+import 'package:just_order/screens/login/login_screen.dart';
+import 'package:just_order/screens/order/order_confirmed_screen.dart';
 import 'package:just_order/screens/order/order_state/decline_order_screen.dart';
 import 'package:just_order/screens/order/order_state/delivered_order_screen.dart';
 import 'package:just_order/screens/order/order_state/on_way_order_screen.dart';
 import 'package:just_order/screens/order/order_state/order_details_screen.dart';
 import 'package:just_order/screens/order/order_state/pending_order_screen.dart';
 import 'package:just_order/screens/order/order_state/preparing_order_screen.dart';
+import 'package:just_order/screens/order/order_summary_screen.dart';
 import 'package:just_order/screens/order/orders/order_screen.dart';
+import 'package:just_order/screens/payment/enter_card_data_screen.dart';
+import 'package:just_order/screens/payment/pay_method_screen.dart';
 import 'package:just_order/screens/payment/payment_gateway_screen.dart';
 import 'package:just_order/screens/sign_up/sign_up_screen.dart';
 import 'package:just_order/screens/splash/splash_screen.dart';
-import 'package:just_order/screens/account/my_profile_screen/profile_screen.dart';
-import 'package:just_order/screens/QR/select_your_place_screen.dart';
-import 'package:just_order/screens/home/main_home_screen/home_screen.dart';
-import 'package:just_order/screens/home/restaurant_screen/restaurant_screen.dart';
-import 'package:just_order/screens/home/meal_details_screen/meal_details_screen.dart';
-import 'package:just_order/screens/payment/enter_card_data_screen.dart';
-import 'package:just_order/screens/cart/my_cart_screen.dart';
-import 'package:just_order/screens/payment/pay_method_screen.dart';
-import 'package:just_order/screens/order/order_summary_screen.dart';
-import 'package:just_order/screens/order/order_confirmed_screen.dart';
-import 'package:just_order/screens/login/login_screen.dart';
+import 'package:just_order/screens/home/popular_today_screen/popular_today_screen.dart';
 
 class AppRouter {
   static Route onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case 'SplashScreenRoute':
         return SplashScreen.route();
+      case 'PopularTodayScreenRoute':
+        return PopularTodayScreen.route();
       case 'SelectYourPlaceRoute':
         return SelectYourPlace.route();
       case 'HomeScreenRoute':
@@ -82,12 +85,12 @@ class AppRouter {
           final args = settings.arguments as Map<String, dynamic>;
           final String secretClient = args["clientSecret"];
           final Order order = args["order"];
-          final List<CartItem> cartItems=args["cartItems"];
+          final List<CartItem> cartItems = args["cartItems"];
           return PaymentGatewayScreen.route(
-              secretClient: secretClient,
-              order: order,
-              cartItems: cartItems,
-             );
+            secretClient: secretClient,
+            order: order,
+            cartItems: cartItems,
+          );
         }
         return _errorRoute();
       case 'OrderConfirmedScreenRoute':

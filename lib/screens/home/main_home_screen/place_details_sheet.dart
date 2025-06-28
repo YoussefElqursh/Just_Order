@@ -8,7 +8,7 @@ class PlaceDetailsSheet extends StatelessWidget {
     this.tableCode,
   });
 
-  final tableCode;
+  final String? tableCode;
 
   @override
   Widget build(BuildContext context) {
@@ -136,7 +136,7 @@ class PlaceDetailsSheet extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  tableCode,
+                  tableCode!,
                   style: const TextStyle(
                     color: Colors.black,
                     fontSize: 14,

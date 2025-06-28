@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -8,6 +9,7 @@ import 'package:just_order/models/item_model.dart';
 import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/repository/cart_provider.dart';
 import 'package:just_order/shared/function/functions.dart';
+import 'package:just_order/shared/style/colors.dart';
 import 'package:just_order/shared/widget/custom_check_box_button_widget.dart';
 import 'package:just_order/shared/widget/custom_radio_button_widget.dart';
 import 'package:provider/provider.dart';
@@ -126,17 +128,21 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                         alignment: Alignment.bottomRight,
                         clipBehavior: Clip.none,
                         children: [
-                          Container(
+                          CachedNetworkImage(
+                            imageUrl: item.imageUrl,
+                            fit: BoxFit.cover,
                             width: double.infinity,
                             height: 250,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                  item.imageUrl,
-                                ),
-                                fit: BoxFit.cover,
+                            placeholder: (context, url) => const Center(
+                              child: CircularProgressIndicator(
+                                color: AppColor.primaryColor,
                               ),
                             ),
+                            errorWidget: (context, url, error) =>
+                            const Icon(Icons.broken_image_rounded),
+                            memCacheWidth: (MediaQuery.of(context).size.width *
+                                MediaQuery.of(context).devicePixelRatio)
+                                .round(),
                           ),
                           // Positioned(
                           //   top: 250,

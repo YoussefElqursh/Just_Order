@@ -4,18 +4,24 @@ import 'dart:math';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:just_order/blocs/theming/theming_cubit.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
+import 'package:just_order/models/category_model.dart';
 import 'package:just_order/models/restaurant_model.dart';
+import 'package:just_order/models/user_model.dart';
+import 'package:just_order/repository/category_repository.dart';
 import 'package:just_order/repository/user_repository/user_repository.dart';
 import 'package:just_order/screens/home/main_home_screen/place_details_sheet.dart';
 import 'package:just_order/screens/home/main_home_screen/widgets/categories_widget.dart';
+import 'package:just_order/screens/home/main_home_screen/widgets/custom_search_delegate_widget.dart';
+import 'package:just_order/screens/home/main_home_screen/widgets/filter_widget.dart';
 import 'package:just_order/screens/home/main_home_screen/widgets/popular_today_widget.dart';
 import 'package:just_order/screens/home/main_home_screen/widgets/restaurants_widget.dart';
+import 'package:just_order/shared/style/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import '../../../models/user_model.dart';
+import 'package:shimmer/shimmer.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -38,6 +44,8 @@ class _HomeScreenState extends State<HomeScreen> {
   late User user;
   int _currentPage = 0;
   List<Restaurant> restaurants = [];
+  List<Categories?> categories = [];
+  bool isLoading = true; // Track loading state
 
   final List<String> adsImageList = [
     "assets/images/blackAdv.jpg",
@@ -58,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       tableCode = prefs.getString('code') ?? 'Unknown';
     });
-    _loadRestaurants();
+    _loadRestaurantsAndCategories();
   }
 
   Future<void> _userFromPreferences() async {
@@ -72,29 +80,132 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Future<void> _loadRestaurants() async {
-    final UserRepository userRepository = UserRepository();
-    final List<Restaurant> restaurants =
-        await userRepository.getRestaurants(tableCode);
+  Future<void> _loadRestaurantsAndCategories() async {
     setState(() {
-      this.restaurants = restaurants;
+      isLoading = true; // Set loading state to true
     });
+
+    try {
+      final UserRepository userRepository = UserRepository();
+      final List<Restaurant> restaurants =
+          await userRepository.getRestaurants(tableCode);
+      final CategoryRepository categoryRepository = CategoryRepository();
+      final List<Categories?> categories =
+          await categoryRepository.getCategories();
+
+      setState(() {
+        this.restaurants = restaurants;
+        this.categories = categories;
+      });
+    } catch (e) {
+      // Handle error (e.g., show a snackbar or log the error)\
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to load data: $e')),
+      );
+    } finally {
+      setState(() {
+        isLoading = false; // Reset loading state
+      });
+    }
+  }
+
+  Future<void> _refreshData() async {
+    await _loadRestaurantsAndCategories(); // Reload data
   }
 
   void openBottomSheet(BuildContext context) {
     showModalBottomSheet(
-        context: context,
-        builder: (_) {
-          return PlaceDetailsSheet(
-            tableCode: tableCode,
-          );
-        },
-        useSafeArea: true,
-        backgroundColor: Colors.white,
-        constraints: BoxConstraints(
-          maxHeight: 400,
-          maxWidth: MediaQuery.sizeOf(context).width,
-        ));
+      context: context,
+      builder: (_) {
+        return PlaceDetailsSheet(
+          tableCode: tableCode,
+        );
+      },
+      useSafeArea: true,
+      backgroundColor: Colors.white,
+      constraints: BoxConstraints(
+        maxHeight: 400,
+        maxWidth: MediaQuery.sizeOf(context).width,
+      ),
+    );
+  }
+
+  Widget _buildShimmerPlaceholder() {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey[300]!,
+      highlightColor: Colors.grey[100]!,
+      child: Column(
+        children: [
+          // Ads Placeholder
+          Container(
+            width: double.infinity,
+            height: 140,
+            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+          const SizedBox(height: 15),
+
+          // Categories Placeholder
+          SizedBox(
+            height: 50,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount: 5,
+              itemBuilder: (context, index) => Container(
+                width: 50,
+                height: 50,
+                margin: const EdgeInsets.symmetric(horizontal: 10),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              separatorBuilder: (context, index) => const SizedBox(width: 10),
+            ),
+          ),
+          const SizedBox(height: 20),
+
+          // Popular Today Placeholder
+          SizedBox(
+            height: 150,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount: 3,
+              itemBuilder: (context, index) => Container(
+                width: 150,
+                height: 200,
+                margin: const EdgeInsets.symmetric(horizontal: 10),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              separatorBuilder: (context, index) => const SizedBox(width: 10),
+            ),
+          ),
+          const SizedBox(height: 20),
+
+          // Restaurants Placeholder
+          ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: 4,
+            itemBuilder: (context, index) => Container(
+              margin: const EdgeInsets.symmetric(vertical: 5),
+              height: 50.h,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -175,276 +286,300 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            // actions: [
-            //   Padding(
-            //     padding: const EdgeInsets.only(right: 6.0, top: 10.0),
-            //     child: Container(
-            //       width: 36,
-            //       height: 36,
-            //       clipBehavior: Clip.antiAlias,
-            //       decoration: ShapeDecoration(
-            //         color: const Color(0xFFF4F4F4),
-            //         shape: RoundedRectangleBorder(
-            //           borderRadius: BorderRadius.circular(8),
-            //         ),
-            //       ),
-            //       child: IconButton(
-            //         onPressed: () {},
-            //         icon: const Icon(
-            //           Icons.search_outlined,
-            //           color: Colors.black,
-            //           size: 18,
-            //         ),
-            //         style: ButtonStyle(
-            //           shape: WidgetStatePropertyAll(
-            //             RoundedRectangleBorder(
-            //               borderRadius: BorderRadius.circular(8),
-            //             ),
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            //   Padding(
-            //     padding: const EdgeInsets.only(right: 20.0, top: 10.0),
-            //     child: Container(
-            //       width: 36,
-            //       height: 36,
-            //       clipBehavior: Clip.antiAlias,
-            //       decoration: ShapeDecoration(
-            //         color: const Color(0xFFF4F4F4),
-            //         shape: RoundedRectangleBorder(
-            //           borderRadius: BorderRadius.circular(8),
-            //         ),
-            //       ),
-            //       child: IconButton(
-            //         onPressed: () {},
-            //         icon: const Icon(
-            //           Icons.notifications,
-            //           color: Colors.black,
-            //           size: 18,
-            //         ),
-            //         style: ButtonStyle(
-            //           shape: WidgetStatePropertyAll(
-            //             RoundedRectangleBorder(
-            //               borderRadius: BorderRadius.circular(8),
-            //             ),
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ],
+            actions: [
+              Padding(
+                padding: const EdgeInsets.only(
+                  right: 20.0,
+                  top: 10.0,
+                ),
+                child: Container(
+                  width: 36,
+                  height: 36,
+                  clipBehavior: Clip.antiAlias,
+                  decoration: ShapeDecoration(
+                    color: const Color(0xFFF4F4F4),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: IconButton(
+                    onPressed: () {
+                      showSearch(
+                        context: context,
+                        delegate: CustomSearchDelegateWidget(),
+                      );
+                    },
+                    icon: const Icon(
+                      Icons.search_outlined,
+                      color: AppColor.primaryColor,
+                      size: 20,
+                    ),
+                    style: ButtonStyle(
+                      shape: WidgetStatePropertyAll(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-          body: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            physics: const BouncingScrollPhysics(),
-            child: SizedBox(
-              width: MediaQuery.sizeOf(context).width,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // ads Part
-                  CarouselSlider(
-                    items: adsImageList
-                        .map(
-                          (e) => Center(
-                            child: Container(
-                              width: MediaQuery.sizeOf(context).width,
-                              height: 150.0,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                                image: DecorationImage(
-                                  image: AssetImage(e),
-                                  fit: BoxFit.cover,
-                                ),
+          body: RefreshIndicator(
+            color: AppColor.primaryColor,
+            elevation: 0.0,
+            backgroundColor: Colors.transparent,
+            onRefresh: _refreshData, // Trigger data refresh
+            child: isLoading
+                ? _buildShimmerPlaceholder()
+                : SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    physics: const BouncingScrollPhysics(),
+                    child: SizedBox(
+                      width: MediaQuery.sizeOf(context).width,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // ads Part
+                          CarouselSlider(
+                            items: adsImageList
+                                .map(
+                                  (e) => Center(
+                                    child: Container(
+                                      width: MediaQuery.sizeOf(context).width,
+                                      height: 150.0,
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                        image: DecorationImage(
+                                          image: AssetImage(e),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                                .toList(),
+                            options: CarouselOptions(
+                                initialPage: 0,
+                                autoPlay: true,
+                                autoPlayInterval: const Duration(seconds: 5),
+                                enlargeCenterPage: true,
+                                enlargeFactor: 0.3,
+                                onPageChanged: (value, _) {
+                                  setState(() {
+                                    _currentPage = value;
+                                  });
+                                }),
+                          ),
+                          const SizedBox(height: 5.0),
+                          Container(
+                            width: MediaQuery.sizeOf(context).width,
+                            alignment: Alignment.center,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                for (int i = 0; i < adsImageList.length; i++)
+                                  Container(
+                                    margin: const EdgeInsets.all(5),
+                                    height: 8,
+                                    width: 8,
+                                    decoration: BoxDecoration(
+                                      color: i == _currentPage
+                                          ? const Color(0xFFE02C45)
+                                          : state.themeMode == ThemeMode.light
+                                              ? const Color(0x0CE02C45)
+                                              : const Color(0x5FE02C45),
+                                      shape: BoxShape.circle,
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 25.0),
+                          // All Categories
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 20.0),
+                            child: Text(
+                              AppLocalizations.of(context)!.all_restaurants,
+                              style: TextStyle(
+                                color: state.themeMode == ThemeMode.light
+                                    ? Colors.black
+                                    : Colors.white,
+                                fontSize: 14,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w600,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
+                          ),
+                          const SizedBox(height: 12.0),
+                          SizedBox(
+                            width: MediaQuery.sizeOf(context).width,
+                            height: 100.0,
+                            child: ListView.separated(
+                              itemBuilder: (context, index) =>
+                                  buildCategoriesWidget(
+                                categories[index]!,
+                                state,
+                              ),
+                              separatorBuilder: (context, index) =>
+                                  const SizedBox(width: 10.0),
+                              itemCount: categories.length,
+                              scrollDirection: Axis.horizontal,
+                              physics: const BouncingScrollPhysics(),
+                              shrinkWrap: true,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 20.0,
                               ),
                             ),
                           ),
-                        )
-                        .toList(),
-                    options: CarouselOptions(
-                        initialPage: 0,
-                        autoPlay: true,
-                        autoPlayInterval: const Duration(seconds: 5),
-                        enlargeCenterPage: true,
-                        enlargeFactor: 0.3,
-                        onPageChanged: (value, _) {
-                          setState(() {
-                            _currentPage = value;
-                          });
-                        }),
-                  ),
-                  const SizedBox(height: 5.0),
-                  Container(
-                    width: MediaQuery.sizeOf(context).width,
-                    alignment: Alignment.center,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        for (int i = 0; i < adsImageList.length; i++)
+                          const SizedBox(height: 25.0),
+                          // Popular Today
                           Container(
-                            margin: const EdgeInsets.all(5),
-                            height: 8,
-                            width: 8,
-                            decoration: BoxDecoration(
-                              color: i == _currentPage
-                                  ? const Color(0xFFE02C45)
-                                  : state.themeMode == ThemeMode.light
-                                      ? const Color(0x0CE02C45)
-                                      : const Color(0x5FE02C45),
-                              shape: BoxShape.circle,
+                            width: MediaQuery.sizeOf(context).width,
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 20.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  AppLocalizations.of(context)!.popular_today,
+                                  style: TextStyle(
+                                    color: state.themeMode == ThemeMode.light
+                                        ? Colors.black
+                                        : Colors.white,
+                                    fontSize: 14,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                                const Spacer(),
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pushNamed(
+                                        context, 'PopularTodayScreenRoute');
+                                  },
+                                  style: ButtonStyle(
+                                    overlayColor: WidgetStateProperty.all(
+                                        Colors.transparent),
+                                  ),
+                                  child: const Text(
+                                    'View All',
+                                    style: TextStyle(
+                                      color: Color(0xFFE02C45),
+                                      fontSize: 10,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 25.0),
-                  // All Restaurants
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Text(
-                      AppLocalizations.of(context)!.all_restaurants,
-                      style: TextStyle(
-                        color: state.themeMode == ThemeMode.light
-                            ? Colors.black
-                            : Colors.white,
-                        fontSize: 14,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w600,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                    ),
-                  ),
-                  const SizedBox(height: 12.0),
-                  SizedBox(
-                    width: MediaQuery.sizeOf(context).width,
-                    height: 100.0,
-                    child: ListView.separated(
-                      itemBuilder: (context, index) =>
-                          buildCategoriesWidget(restaurants[index], state),
-                      separatorBuilder: (context, index) =>
-                          const SizedBox(width: 10.0),
-                      itemCount: restaurants.length,
-                      scrollDirection: Axis.horizontal,
-                      physics: const BouncingScrollPhysics(),
-                      shrinkWrap: true,
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    ),
-                  ),
-                  // const SizedBox(height: 12.0),
-                  // SizedBox(
-                  //   width: MediaQuery.sizeOf(context).width,
-                  //   height: 31.0,
-                  //   child: ListView.separated(
-                  //     itemBuilder: (context, index) => buildHomeFilterWidget(
-                  //         filters[index], index,
-                  //         onPressed: () {}),
-                  //     separatorBuilder: (context, index) =>
-                  //         const SizedBox(width: 10.0),
-                  //     itemCount: 4,
-                  //     scrollDirection: Axis.horizontal,
-                  //     physics: const BouncingScrollPhysics(),
-                  //     shrinkWrap: true,
-                  //     padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  //   ),
-                  // ),
-                  const SizedBox(height: 25.0),
-                  // Popular Today
-                  Container(
-                    width: MediaQuery.sizeOf(context).width,
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          AppLocalizations.of(context)!.popular_today,
-                          style: TextStyle(
-                            color: state.themeMode == ThemeMode.light
-                                ? Colors.black
-                                : Colors.white,
-                            fontSize: 14,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w600,
+                          const SizedBox(height: 12.0),
+                          SizedBox(
+                            width: MediaQuery.sizeOf(context).width,
+                            height: 201.0,
+                            child: ListView.separated(
+                              itemBuilder: (context, index) =>
+                                  buildPopularTodayWidget(
+                                context: context,
+                                restaurant: restaurants[index],
+                                state: state,
+                                user: user,
+                              ),
+                              separatorBuilder: (context, index) =>
+                                  const SizedBox(width: 10.0),
+                              itemCount: min(restaurants.length, 5),
+                              scrollDirection: Axis.horizontal,
+                              physics: const BouncingScrollPhysics(),
+                              shrinkWrap: true,
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20.0),
+                            ),
                           ),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                        ),
-                        // const Spacer(),
-                        // TextButton(
-                        //   onPressed: () {},
-                        //   style: ButtonStyle(
-                        //     overlayColor:
-                        //         WidgetStateProperty.all(Colors.transparent),
-                        //   ),
-                        //   child: const Text(
-                        //     'View All',
-                        //     style: TextStyle(
-                        //       color: Color(0xFFE02C45),
-                        //       fontSize: 10,
-                        //       fontFamily: 'Inter',
-                        //       fontWeight: FontWeight.w500,
-                        //     ),
-                        //     overflow: TextOverflow.ellipsis,
-                        //     maxLines: 1,
-                        //   ),
-                        // ),
-                      ],
+                          const SizedBox(height: 25.0),
+                          // Restaurants
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 20.0),
+                            child: Text(
+                              AppLocalizations.of(context)!.all_restaurants,
+                              style: TextStyle(
+                                color: state.themeMode == ThemeMode.light
+                                    ? Colors.black
+                                    : Colors.white,
+                                fontSize: 14,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w600,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
+                          ),
+                          const SizedBox(height: 12.0),
+                          SizedBox(
+                            width: MediaQuery.sizeOf(context).width,
+                            height: 31.0,
+                            child: ListView.separated(
+                              itemBuilder: (context, index) =>
+                                  buildHomeFilterWidget(
+                                filters[index],
+                                index,
+                                onPressed: () {},
+                              ),
+                              separatorBuilder: (context, index) =>
+                                  const SizedBox(width: 10.0),
+                              itemCount: 4,
+                              scrollDirection: Axis.horizontal,
+                              physics: const BouncingScrollPhysics(),
+                              shrinkWrap: true,
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20.0),
+                            ),
+                          ),
+                          const SizedBox(height: 12.0),
+                          SizedBox(
+                            width: MediaQuery.sizeOf(context).width,
+                            child: ListView.separated(
+                              itemBuilder: (context, index) => RestaurantWidget(
+                                restaurant: restaurants[index],
+                                state: state,
+                                user: user,
+                              ),
+                              separatorBuilder: (context, index) =>
+                                  const Padding(
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 10.0,
+                                ),
+                                child: Divider(
+                                  height: 1,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              itemCount: restaurants.length,
+                              scrollDirection: Axis.vertical,
+                              physics: const BouncingScrollPhysics(),
+                              shrinkWrap: true,
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20.0),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  const SizedBox(height: 12.0),
-                  SizedBox(
-                    width: MediaQuery.sizeOf(context).width,
-                    height: 201.0,
-                    child: ListView.separated(
-                      itemBuilder: (context, index) => buildPopularTodayWidget(
-                        context: context,
-                        restaurant: restaurants[index],
-                        state: state,
-                        user: user,
-                      ),
-                      separatorBuilder: (context, index) =>
-                          const SizedBox(width: 10.0),
-                      itemCount: min(restaurants.length, 5),
-                      scrollDirection: Axis.horizontal,
-                      physics: const BouncingScrollPhysics(),
-                      shrinkWrap: true,
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    ),
-                  ),
-                  const SizedBox(height: 25.0),
-                  // Restaurants
-                  SizedBox(
-                    width: MediaQuery.sizeOf(context).width,
-                    child: ListView.separated(
-                      itemBuilder: (context, index) => RestaurantWidget(
-                        restaurant: restaurants[index],
-                        state: state,
-                        user: user,
-                      ),
-                      separatorBuilder: (context, index) => const Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: 10.0,
-                        ),
-                        child: Divider(
-                          height: 1,
-                          color: Colors.grey,
-                        ),
-                      ),
-                      itemCount: restaurants.length,
-                      scrollDirection: Axis.vertical,
-                      physics: const BouncingScrollPhysics(),
-                      shrinkWrap: true,
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    ),
-                  ),
-                ],
-              ),
-            ),
           ),
         );
       },

@@ -42,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     _loadAppVersion();
     Future.delayed(
-        const Duration(seconds: 5), () => _checkInternetConnection());
+        const Duration(seconds: 5), () => _checkInternetConnection(),);
   }
 
   Future<void> _loadAppVersion() async {

@@ -242,7 +242,8 @@ class _MyCartScreenState extends State<MyCartScreen> {
                         Visibility(
                           visible: isVisible,
                           child: ListTile(
-                            contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+                            contentPadding:
+                                const EdgeInsets.symmetric(horizontal: 5),
                             shape: ContinuousRectangleBorder(
                                 borderRadius: BorderRadius.circular(16)),
                             selected: true,
@@ -387,8 +388,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                               );
                             },
                             separatorBuilder: (context, index) => const Padding(
-                              padding:
-                                  EdgeInsets.symmetric(vertical: 15.0),
+                              padding: EdgeInsets.symmetric(vertical: 15.0),
                               child: Divider(
                                 height: 1,
                                 color: Color(0x4CC8C8C8),
@@ -646,7 +646,8 @@ class _MyCartScreenState extends State<MyCartScreen> {
                             ),
                             totalAmount: filteredItems.fold(
                                   0.0, // ignore: avoid_types_as_parameter_names
-                                  (summation, item) => summation + item.totalPrice,
+                                  (summation, item) =>
+                                      summation + item.totalPrice,
                                 ) +
                                 serviceFees +
                                 restaurant!.deliveryFee!,
@@ -658,10 +659,10 @@ class _MyCartScreenState extends State<MyCartScreen> {
                           );
                           String orderCode =
                               await order.generateUniqueOrderCode();
-                          String orderCodeForRestaurant = order.generateOrderCodeForRestaurant();
+                          String orderCodeForRestaurant =
+                              order.generateOrderCodeForRestaurant();
                           order.orderCode = orderCode;
                           order.orderCodeForRestaurant = orderCodeForRestaurant;
-
 
                           Navigator.pushNamed(
                             // ignore: use_build_context_synchronously

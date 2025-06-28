@@ -36,70 +36,106 @@ Widget buildOrderCartWidget({
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12.0),
         child: SizedBox(
+          height: 70,
           width: MediaQuery.sizeOf(context).width - 134,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                cartItem.item.name,
-                style: TextStyle(
-                  color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
-                  fontSize: 12,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w600,
-                ),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-              ),
-              const SizedBox(height: 5.0),
-              Text(
-                cartItem.extras!.keys.join(', '),
-                style: const TextStyle(
-                  color: Color(0xFFAFAFAF),
-                  fontSize: 10,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w400,
-                ),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-              ),
-              const SizedBox(height: 5.0),
-              Text(
-                cartItem.size?.keys.join(', ') ?? '',
-                style: const TextStyle(
-                  color: Color(0xFFAFAFAF),
-                  fontSize: 10,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w400,
-                ),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'EGP ${cartItem.totalPrice}',
+                    cartItem.item.name,
                     style: TextStyle(
-                      color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
-                      fontSize: 10,
+                      color: state.themeMode == ThemeMode.light
+                          ? Colors.black
+                          : Colors.white,
+                      fontSize: 12,
                       fontFamily: 'Inter',
                       fontWeight: FontWeight.w600,
                     ),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                   ),
-                  const Spacer(),
+                  const SizedBox(height: 5.0),
+                  Visibility(
+                    visible: cartItem.extras!.isNotEmpty,
+                    maintainSize: false, // Ensures no space is taken when not visible
+                    maintainAnimation: false,
+                    maintainState: false,
+                    child: Column(
+                      children: [
+                        Text(
+                          cartItem.extras!.keys.join(', '),
+                          style: const TextStyle(
+                            color: Color(0xFFAFAFAF),
+                            fontSize: 10,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w400,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                        const SizedBox(height: 5.0),
+                      ],
+                    ),
+                  ),
+                  Visibility(
+                    visible: cartItem.size!.isNotEmpty,
+                    maintainSize: false, // Ensures no space is taken when not visible
+                    maintainAnimation: false,
+                    maintainState: false,
+                    child: Column(
+                      children: [
+                        Text(
+                          cartItem.size?.keys.join(', ') ?? '',
+                          style: const TextStyle(
+                            color: Color(0xFFAFAFAF),
+                            fontSize: 10,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w400,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                        const SizedBox(height: 5.0),
+                      ],
+                    ),
+                  ),
+                  Text(
+                    'EGP ${cartItem.totalPrice}',
+                    style: TextStyle(
+                      color: state.themeMode == ThemeMode.light
+                          ? Colors.black
+                          : Colors.white,
+                      fontSize: 10,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w600,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  )
+                ],
+              ),
+              const Spacer(),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
                   Container(
                     width: 34,
                     height: 34,
                     clipBehavior: Clip.antiAlias,
                     decoration: ShapeDecoration(
-                      color: state.themeMode == ThemeMode.light ? const Color(0x0CE02C45) : const Color(0x5FE02C45),
+                      color: state.themeMode == ThemeMode.light
+                          ? const Color(0x0CE02C45)
+                          : const Color(0x5FE02C45),
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8)),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
                     ),
                     child: IconButton(
                       onPressed: onPressed1,
@@ -120,7 +156,9 @@ Widget buildOrderCartWidget({
                   const SizedBox(width: 10.0),
                   Text('$counter',
                       style: TextStyle(
-                        color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                        color: state.themeMode == ThemeMode.light
+                            ? Colors.black
+                            : Colors.white,
                         fontSize: 12,
                         fontFamily: 'Inter',
                         fontWeight: FontWeight.w500,
@@ -133,7 +171,9 @@ Widget buildOrderCartWidget({
                     height: 34,
                     clipBehavior: Clip.antiAlias,
                     decoration: ShapeDecoration(
-                      color: state.themeMode == ThemeMode.light ? const Color(0x0CE02C45) : const Color(0x5FE02C45),
+                      color: state.themeMode == ThemeMode.light
+                          ? const Color(0x0CE02C45)
+                          : const Color(0x5FE02C45),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8)),
                     ),
@@ -154,7 +194,7 @@ Widget buildOrderCartWidget({
                     ),
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),

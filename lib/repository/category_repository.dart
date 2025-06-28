@@ -19,6 +19,20 @@ class CategoryRepository {
     );
   }
 
+  Future<List<category_model.Categories?>> getCategories() async {
+
+    QuerySnapshot snapshot = await _firestore
+        .collection('categories').get();
+
+    List<category_model.Categories?> categories = [];
+
+    for (var doc in snapshot.docs) {
+      categories.add(category_model.Categories.fromJson(doc.data() as Map<String, dynamic>));
+    }
+
+    return categories;
+  }
+
   Future<category_model.Categories?> getCategoryById(String categoryId) async {
     final doc = await _firestore.collection('categories').doc(categoryId).get();
     if (doc.exists) {

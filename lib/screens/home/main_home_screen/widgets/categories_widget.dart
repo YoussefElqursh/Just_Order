@@ -1,8 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
-import 'package:just_order/models/restaurant_model.dart';
+import 'package:just_order/models/category_model.dart';
+import 'package:just_order/shared/style/colors.dart';
 
-Widget buildCategoriesWidget(Restaurant restaurant, ThemeState state) {
+Widget buildCategoriesWidget(Categories restaurant, ThemeState state) {
   return Stack(
     alignment: Alignment.topCenter,
     children: [
@@ -27,7 +29,7 @@ Widget buildCategoriesWidget(Restaurant restaurant, ThemeState state) {
                 alignment: Alignment.bottomCenter,
                 padding: const EdgeInsets.only(left: 5, bottom: 10, right: 5),
                 child: Text(
-                  restaurant.name,
+                  restaurant.categoryName,
                   style: TextStyle(
                     color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                     fontSize: 10,
@@ -46,14 +48,22 @@ Widget buildCategoriesWidget(Restaurant restaurant, ThemeState state) {
         width: 70,
         height: 70,
         decoration: ShapeDecoration(
-          image: DecorationImage(
-            image: NetworkImage(
-                restaurant.imageUrl ?? 'https://via.placeholder.com/150'),
-            fit: BoxFit.cover,
-          ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
+        ),
+        child: CachedNetworkImage(
+          imageUrl: restaurant.categoryImage,
+          fit: BoxFit.cover,
+          width: 70,
+          height: 70,
+          placeholder: (context, url) => const Center(
+            child: CircularProgressIndicator(
+              color: AppColor.primaryColor,
+            ),
+          ),
+          errorWidget: (context, url, error) =>
+          const Icon(Icons.broken_image_rounded),
         ),
       ),
     ],
