@@ -10,6 +10,7 @@ import 'package:just_order/models/user_model.dart';
 import 'package:just_order/repository/auth_repository/login_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../services/notification_service.dart';
 import 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
@@ -99,6 +100,7 @@ class LoginCubit extends Cubit<LoginState> {
 
         await FirebaseFirestore.instance.collection('users').add(user.toJson());
         await user.saveUserToPreferences(user);
+        await NotificationService.initialize(user!.email);
         emit(LoginSuccess(user));
       }
     } catch (e) {

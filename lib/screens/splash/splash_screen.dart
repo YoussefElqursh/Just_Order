@@ -16,6 +16,8 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../services/notification_service.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -108,6 +110,7 @@ class _SplashScreenState extends State<SplashScreen> {
           // ignore: use_build_context_synchronously
           Navigator.of(context).pushReplacement(SelectYourPlace.route());
         }
+        await NotificationService.initialize(user!.email);
       } else {
         // ignore: use_build_context_synchronously
         Navigator.of(context).pushReplacement(LoginScreen.route());
