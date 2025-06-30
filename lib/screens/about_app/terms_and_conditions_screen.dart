@@ -5,11 +5,11 @@ class TermsAndConditionsScreen extends StatefulWidget {
   const TermsAndConditionsScreen({super.key});
 
   @override
-  _TermsAndConditionsScreenState createState() =>
-      _TermsAndConditionsScreenState();
+  TermsAndConditionsScreenState createState() =>
+      TermsAndConditionsScreenState();
 }
 
-class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
+class TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
   late List<String> sections;
   late Map<String, String> sectionContent;
   Map<String, bool> expandedSections = {};

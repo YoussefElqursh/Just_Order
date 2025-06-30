@@ -5,10 +5,10 @@ class PrivacyPolicyScreen extends StatefulWidget {
   const PrivacyPolicyScreen({super.key});
 
   @override
-  _PrivacyPolicyScreenState createState() => _PrivacyPolicyScreenState();
+  PrivacyPolicyScreenState createState() => PrivacyPolicyScreenState();
 }
 
-class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
+class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
   late List<String> sections; // Declare the sections variable
   late Map<String, String>
       sectionContent; // Declare the sectionContent variable

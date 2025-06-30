@@ -24,7 +24,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final String? tableCode;
+  const HomeScreen({super.key, this.tableCode});
 
   static const String routeName = 'HomeScreenRoute';
 

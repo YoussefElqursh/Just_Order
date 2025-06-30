@@ -8,8 +8,6 @@ import 'package:just_order/blocs/theming/theming_cubit.dart';
 import 'package:just_order/justorder.dart';
 import 'package:just_order/repository/cart_provider.dart';
 import 'package:just_order/repository/order_provider.dart';
-import 'package:just_order/screens/splash/splash_screen.dart';
-import 'package:just_order/services/notification_service.dart';
 import 'package:just_order/shared/bloc_observer/bloc_observer.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,7 +16,7 @@ import 'firebase_options.dart';
 
 late final SharedPreferences prefs;
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  print("Handling a background message: ${message.messageId}");
+  debugPrint("Handling a background message: ${message.messageId}");
 }
 
 Future<void> main() async {

@@ -9,8 +9,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 // ignore: must_be_immutable
 class MainLayout extends StatefulWidget {
   int? pageNumber;
+  final String? tableCode;
 
-  MainLayout({super.key, this.pageNumber});
+  MainLayout({super.key, this.pageNumber, this.tableCode});
 
   static const String routeName = 'MainLayoutRoute';
 
@@ -28,14 +29,14 @@ class MainLayout extends StatefulWidget {
 class _MainLayoutState extends State<MainLayout> {
   int currentPage = 0;
 
-  final screens = [
-    const HomeScreen(),
-    const OrderScreen(),
-    const AccountScreen(),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final screens = [
+      HomeScreen( tableCode: widget.tableCode,),
+      const OrderScreen(),
+      const AccountScreen(),
+    ];
+
     return WillPopScope(
       onWillPop: () async {
         // Show a confirmation dialog or directly close the app

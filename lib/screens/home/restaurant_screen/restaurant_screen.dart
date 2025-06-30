@@ -149,7 +149,8 @@ class _RestaurantScreenState extends State<RestaurantScreen>
   Future<void> _addRestaurantToPrefs() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(
-      'last_restaurant_${widget.user.userId}',
+      // ignore: use_build_context_synchronously
+      AppLocalizations.of(context)!.restaurant_name,
       jsonEncode(
         widget.restaurant.toJson(),
       ),
@@ -283,13 +284,14 @@ class _RestaurantScreenState extends State<RestaurantScreen>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    Restaurant restaurant = widget.restaurant;
     final cartProvider = context.watch<CartProvider>();
     // ignore: unnecessary_null_comparison
-    final filteredCartItems = widget.restaurant != null
+    final filteredCartItems = restaurant != null
         ? cartProvider.items
             .where(
               (item) => item.cartItemId
-                  .endsWith('_${widget.restaurant.restaurantId}'),
+                  .endsWith('_${restaurant.restaurantId}'),
             )
             .toList()
         : cartProvider.items;
@@ -307,7 +309,7 @@ class _RestaurantScreenState extends State<RestaurantScreen>
               create: (_) => CategoryCubit(
                 CategoryRepository(),
               )..fetchCategoriesByIds(
-                  widget.restaurant.categoriesId,
+                  restaurant.categoriesId,
                 ),
               child: BlocConsumer<CategoryCubit, CategoryState>(
                 listener: (context, cState) {
@@ -374,12 +376,12 @@ class _RestaurantScreenState extends State<RestaurantScreen>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               _buildHeader(
-                                widget.restaurant,
+                                restaurant,
                                 state,
                               ),
                               const SizedBox(height: 20.0),
                               _buildRestaurantInfo(
-                                widget.restaurant,
+                                restaurant,
                                 state,
                                 context,
                               ),

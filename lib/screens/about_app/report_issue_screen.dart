@@ -4,25 +4,16 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:http/http.dart' as http;
-import 'package:image_picker/image_picker.dart';
 import 'package:just_order/shared/style/colors.dart';
-
-// abstract class MyButton extends StatelessWidget {
-//   const MyButton({super.key});
-//
-//
-//
-//
-// }
 
 class ReportIssueScreen extends StatefulWidget {
   const ReportIssueScreen({super.key});
 
   @override
-  _ReportIssueScreenState createState() => _ReportIssueScreenState();
+  ReportIssueScreenState createState() => ReportIssueScreenState();
 }
 
-class _ReportIssueScreenState extends State<ReportIssueScreen> {
+class ReportIssueScreenState extends State<ReportIssueScreen> {
   Future<void> sendRequest() async {
     final url =
         Uri.parse('https://report-problem.justorder-eg.com/report-problem');
@@ -60,22 +51,22 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
   TextEditingController searchController = TextEditingController();
   List<File> selectedImages = [];
 
-  final ImagePicker _picker = ImagePicker();
+  //final ImagePicker _picker = ImagePicker();
 
-  Future<void> _pickImage() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      setState(() {
-        selectedImages.add(File(pickedFile.path));
-      });
-    }
-  }
+  // Future<void> _pickImage() async {
+  //   final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+  //   if (pickedFile != null) {
+  //     setState(() {
+  //       selectedImages.add(File(pickedFile.path));
+  //     });
+  //   }
+  // }
 
-  void _removeImage(int index) {
-    setState(() {
-      selectedImages.removeAt(index);
-    });
-  }
+  // void _removeImage(int index) {
+  //   setState(() {
+  //     selectedImages.removeAt(index);
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {

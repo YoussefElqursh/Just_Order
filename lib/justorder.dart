@@ -12,6 +12,7 @@ import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/l10n/l10n.dart';
 import 'package:just_order/repository/auth_repository/login_repository.dart';
 import 'package:just_order/screens/splash/splash_screen.dart';
+import 'package:just_order/services/deep_link_listener.dart';
 import 'package:just_order/shared/routing/app_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -126,6 +127,7 @@ class _MyAppState extends State<MyApp> {
                     ),
                     onGenerateRoute: AppRouter.onGenerateRoute,
                     initialRoute: SplashScreen.routeName,
+                    home: const DeepLinkListener(child: SplashScreen()),
                   );
                 },
               );

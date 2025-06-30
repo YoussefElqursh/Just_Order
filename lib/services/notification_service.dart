@@ -1,8 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-
-import '../firebase_options.dart';
 
 class NotificationService {
   static final FirebaseMessaging _messaging = FirebaseMessaging.instance;
@@ -18,25 +16,25 @@ class NotificationService {
         sound: true,
       );
 
-      print('Permission granted: ${settings.authorizationStatus}');
+      debugPrint('Permission granted: ${settings.authorizationStatus}');
 
       String? token = await FirebaseMessaging.instance.getToken();
       if (token != null) {
         await _sendTokenToServer(email, token);
       }else{
         // Log the error
-        print("Token is null");
+        debugPrint("Token is null");
       }
 
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-        print('Received message while in foreground: ${message.notification?.title}');
+        debugPrint('Received message while in foreground: ${message.notification?.title}');
       });
 
       FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-        print('Message opened: ${message.notification?.body}');
+        debugPrint('Message opened: ${message.notification?.body}');
       });
     }catch(e){
-      print("Error while initialize notification service with error ${e.toString()}");
+      debugPrint("Error while initialize notification service with error ${e.toString()}");
     }
 
   }
@@ -57,9 +55,9 @@ class NotificationService {
         ),
       );
 
-      print('Server response: ${response.statusCode} ${response.data}');
+      debugPrint('Server response: ${response.statusCode} ${response.data}');
     } catch (e) {
-      print('Failed to send token: $e');
+      debugPrint('Failed to send token: $e');
     }
   }
 

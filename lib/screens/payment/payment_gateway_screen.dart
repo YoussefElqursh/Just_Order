@@ -32,6 +32,7 @@ class PaymentGatewayScreen extends StatefulWidget {
   }
 
   @override
+  // ignore: no_logic_in_create_state
   State<PaymentGatewayScreen> createState() => _PaymentGatewayScreen(
       secretClient: secretClient,
       order: order,
