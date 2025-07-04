@@ -30,7 +30,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="https" android:host="justorder-eg.com" android:pathPrefix="/TableCode" />
+                <data android:scheme="https" android:host="app-links.justorder-eg.com" android:pathPrefix="/TableCode" />
             </intent-filter>
 
             <!-- Deep Link -->
