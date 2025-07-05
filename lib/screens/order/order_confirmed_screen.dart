@@ -64,7 +64,7 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
     body['from'] = widget.order.userId;
     body['to'] = widget.order.restaurantId;
     body['topic'] = 'client_to_restaurant';
-    body['messageId'] = '1';
+    body['messageId'] = 1;
     body['locale'] = localeCode;
     body['orderId'] = widget.order.orderId;
     unawaited(DioHelperPayment.postData(url: 'https://notify.justorder-eg.com/events', data: body));
