@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -6,9 +8,11 @@ import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/layouts/main_layout.dart';
 import 'package:just_order/models/cart_item_model.dart';
 import 'package:just_order/models/order_model.dart';
+import 'package:just_order/network/dio_helper.dart';
 import 'package:just_order/repository/user_repository/user_repository.dart';
 import 'package:lottie/lottie.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OrderConfirmedScreen extends StatefulWidget {
   final Order order;
@@ -54,6 +58,16 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
 
   Future<void> _pushOrderToDatabase() async {
     await userRepository.pushOrder(widget.order, widget.cartItems);
+    final prefs = await SharedPreferences.getInstance();
+    final localeCode = prefs.getString('locale') ?? 'en';
+    Map<String, dynamic> body = {};
+    body['from'] = widget.order.userId;
+    body['to'] = widget.order.restaurantId;
+    body['topic'] = 'client_to_restaurant';
+    body['messageId'] = '1';
+    body['locale'] = localeCode;
+    body['orderId'] = widget.order.orderId;
+    unawaited(DioHelperPayment.postData(url: 'https://notify.justorder-eg.com/events', data: body));
   }
 
   Future<bool> _onWillPop() async {
