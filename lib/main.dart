@@ -8,6 +8,7 @@ import 'package:just_order/blocs/theming/theming_cubit.dart';
 import 'package:just_order/justorder.dart';
 import 'package:just_order/repository/cart_provider.dart';
 import 'package:just_order/repository/order_provider.dart';
+import 'package:just_order/services/deep_link_listener.dart';
 import 'package:just_order/shared/bloc_observer/bloc_observer.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -43,7 +44,7 @@ Future<void> main() async {
             ChangeNotifierProvider(create: (_) => CartProvider()),
             ChangeNotifierProvider(create: (_) => OrderProvider()),
           ],
-          child: const MyApp(),
+          child: const DeepLinkListener(child: MyApp()),
         ),
       ),
     ),

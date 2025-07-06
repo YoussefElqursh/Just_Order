@@ -2,8 +2,6 @@ import 'dart:developer';
 
 import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
-import 'package:just_order/layouts/main_layout.dart';
-import 'package:just_order/screens/QR/select_your_place_screen.dart';
 
 class DeepLinkListener extends StatefulWidget {
   const DeepLinkListener({super.key, required this.child});
@@ -17,32 +15,22 @@ class DeepLinkListener extends StatefulWidget {
 class _DeepLinkListenerState extends State<DeepLinkListener> {
   @override
   void initState() {
-
-    final appLinks = AppLinks(); // AppLinks is singleton
-
-// Subscribe to all events (initial link and further)
-    final sub = appLinks.uriLinkStream.listen(
-      (uri) {
-        log('URI: ${uri.toString()}');
-        if (uri.pathSegments.first == 'TableCode' && mounted) {
-          Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => const SelectYourPlace()));
-          final id = uri.pathSegments.lastOrNull;
-          if (id != null && int.tryParse(id) != null) {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => MainLayout(
-                  tableCode: id,
-                ),
-              ),
-            );
-          }
+    final appLinks = AppLinks();
+    appLinks.uriLinkStream.listen((uri) {
+      log('URI: ${uri.toString()}');
+      if (uri.pathSegments.isNotEmpty && uri.pathSegments.first == 'TableCode') {
+        final tableCode = uri.pathSegments.length > 1 ? uri.pathSegments[1] : null;
+        if (tableCode != null && mounted) {
+          Navigator.of(context).pushNamed(
+            'TableCodeRoute',
+            arguments: tableCode,
+          );
         }
-      },
-    );
-
+      }
+    });
     super.initState();
   }
+
 
   @override
   Widget build(BuildContext context) {

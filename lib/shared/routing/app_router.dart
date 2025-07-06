@@ -32,6 +32,14 @@ import 'package:just_order/screens/home/popular_today_screen/popular_today_scree
 class AppRouter {
   static Route onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case 'TableCodeRoute':
+        if (settings.arguments is String) {
+          final tableCode = settings.arguments as String;
+          return MaterialPageRoute(
+            builder: (_) => MainLayout(tableCode: tableCode),
+          );
+        }
+        return _errorRoute();
       case 'SplashScreenRoute':
         return SplashScreen.route();
       case 'PopularTodayScreenRoute':

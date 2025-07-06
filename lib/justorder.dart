@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:just_order/blocs/fingerprint/fingerprint_cubit.dart';
 import 'package:just_order/blocs/localization/language_cubit.dart';
@@ -15,8 +17,7 @@ import 'package:just_order/screens/splash/splash_screen.dart';
 import 'package:just_order/services/deep_link_listener.dart';
 import 'package:just_order/shared/routing/app_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
@@ -25,7 +26,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -44,7 +44,8 @@ class _MyAppState extends State<MyApp> {
             builder: (context, locale) {
               return BlocBuilder<ThemeCubit, ThemeState>(
                 builder: (context, state) {
-                  return MaterialApp(
+                  return DeepLinkListener(
+                      child: MaterialApp(
                     supportedLocales: L10n.all,
                     locale: locale,
                     // Locale from LanguageCubit
@@ -75,7 +76,8 @@ class _MyAppState extends State<MyApp> {
                         surfaceTintColor: Colors.black,
                         elevation: 0.5,
                       ),
-                      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+                      bottomNavigationBarTheme:
+                          const BottomNavigationBarThemeData(
                         selectedItemColor: Color(0xFFE02C45),
                         unselectedItemColor: Color(0xFF898888),
                         type: BottomNavigationBarType.fixed,
@@ -106,7 +108,8 @@ class _MyAppState extends State<MyApp> {
                         surfaceTintColor: Colors.white,
                         elevation: 0.5,
                       ),
-                      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+                      bottomNavigationBarTheme:
+                          const BottomNavigationBarThemeData(
                         selectedItemColor: Color(0xFFE02C45),
                         unselectedItemColor: Color(0xFF898888),
                         type: BottomNavigationBarType.fixed,
@@ -127,8 +130,7 @@ class _MyAppState extends State<MyApp> {
                     ),
                     onGenerateRoute: AppRouter.onGenerateRoute,
                     initialRoute: SplashScreen.routeName,
-                    home: const DeepLinkListener(child: SplashScreen()),
-                  );
+                  ));
                 },
               );
             },
@@ -138,6 +140,7 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+
 Future<Locale> getUserPreferredLocal() async {
   final prefs = await SharedPreferences.getInstance();
   final localeCode = prefs.getString('locale') ?? 'en';
