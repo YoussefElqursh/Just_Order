@@ -473,36 +473,38 @@ class _PayMethodScreenState extends State<PayMethodScreen> {
                   ),
                 ),
                 const Spacer(),
-                MaterialButton(
-                  onPressed: () {
-                    if (clicked1 || clicked2  == true){
-                      Navigator.pushNamed(
-                        context,
-                        'OrderSummaryScreenRoute',
-                        arguments: {
-                          'order': widget.order,
-                          'cartItems': widget.cartItems,
-                        },
-                      );
-                    }
-                  },
-                  height: 42,
-                  minWidth: MediaQuery.sizeOf(context).width,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  color: (clicked1 || clicked2  == true) ? const Color(0xFFE02C45) : Colors.grey,
-                  child:  Center(
-                    child: Text(
-                      AppLocalizations.of(context)!.continue_,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w600,
+                SafeArea(
+                  child: MaterialButton(
+                    onPressed: () {
+                      if (clicked1 || clicked2  == true){
+                        Navigator.pushNamed(
+                          context,
+                          'OrderSummaryScreenRoute',
+                          arguments: {
+                            'order': widget.order,
+                            'cartItems': widget.cartItems,
+                          },
+                        );
+                      }
+                    },
+                    height: 42,
+                    minWidth: MediaQuery.sizeOf(context).width,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    color: (clicked1 || clicked2  == true) ? const Color(0xFFE02C45) : Colors.grey,
+                    child:  Center(
+                      child: Text(
+                        AppLocalizations.of(context)!.continue_,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w600,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
                       ),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
                     ),
                   ),
                 ),

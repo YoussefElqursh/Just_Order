@@ -512,187 +512,189 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
               ),
             ),
           ),
-          bottomNavigationBar: Container(
-            color:
-                state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Divider(
-                  height: 1,
-                  color: Color(0x4CC8C8C8),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: SizedBox(
-                    width: MediaQuery.sizeOf(context).width,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(AppLocalizations.of(context)!.quantity_order,
-                                style: TextStyle(
-                                  color: state.themeMode == ThemeMode.light
-                                      ? Colors.black
-                                      : Colors.white,
-                                  fontSize: 14,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w600,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1),
-                            const Spacer(),
-                            Container(
-                              width: 34,
-                              height: 34,
-                              clipBehavior: Clip.antiAlias,
-                              decoration: ShapeDecoration(
-                                color: state.themeMode == ThemeMode.light
-                                    ? const Color(0x0CE02C45)
-                                    : const Color(0x5FE02C45),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8)),
-                              ),
-                              child: IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    if (counter > 1) counter--;
-                                    updateTotalPrice();
-                                  });
-                                },
-                                icon: const Icon(
-                                  Icons.remove,
-                                  color: Color(0xFFE02C45),
-                                  size: 18,
-                                ),
-                                style: ButtonStyle(
-                                  shape: WidgetStatePropertyAll(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 10.0),
-                            Text('$counter',
-                                style: TextStyle(
-                                  color: state.themeMode == ThemeMode.light
-                                      ? Colors.black
-                                      : Colors.white,
-                                  fontSize: 12,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1),
-                            const SizedBox(width: 10.0),
-                            Container(
-                              width: 34,
-                              height: 34,
-                              clipBehavior: Clip.antiAlias,
-                              decoration: ShapeDecoration(
-                                color: state.themeMode == ThemeMode.light
-                                    ? const Color(0x0CE02C45)
-                                    : const Color(0x5FE02C45),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8)),
-                              ),
-                              child: IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    counter++;
-                                    updateTotalPrice();
-                                  });
-                                },
-                                icon: const Icon(
-                                  Icons.add,
-                                  color: Color(0xFFE02C45),
-                                  size: 18,
-                                ),
-                                style: ButtonStyle(
-                                  shape: WidgetStatePropertyAll(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 20.0),
-                        MaterialButton(
-                          onPressed: _addToCart,
-                          height: 42,
-                          minWidth: MediaQuery.sizeOf(context).width,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                          color: const Color(0xFFE02C45),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          bottomNavigationBar: SafeArea(
+            child: Container(
+              color:
+                  state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Divider(
+                    height: 1,
+                    color: Color(0x4CC8C8C8),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: SizedBox(
+                      width: MediaQuery.sizeOf(context).width,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text(
-                                AppLocalizations.of(context)!.add_to_cart,
-                                style: TextStyle(
-                                  color: state.themeMode == ThemeMode.dark
-                                      ? Colors.black
-                                      : Colors.white,
-                                  fontSize: 14,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w600,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                              ),
+                              Text(AppLocalizations.of(context)!.quantity_order,
+                                  style: TextStyle(
+                                    color: state.themeMode == ThemeMode.light
+                                        ? Colors.black
+                                        : Colors.white,
+                                    fontSize: 14,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1),
                               const Spacer(),
-                              Text(
-                                '${AppLocalizations.of(context)!.plus_egp} ${totalPrice.toStringAsFixed(2)}',
-                                style: TextStyle(
-                                  color: state.themeMode == ThemeMode.dark
-                                      ? Colors.black
-                                      : Colors.white,
-                                  fontSize: 14,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w600,
+                              Container(
+                                width: 34,
+                                height: 34,
+                                clipBehavior: Clip.antiAlias,
+                                decoration: ShapeDecoration(
+                                  color: state.themeMode == ThemeMode.light
+                                      ? const Color(0x0CE02C45)
+                                      : const Color(0x5FE02C45),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8)),
                                 ),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
+                                child: IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      if (counter > 1) counter--;
+                                      updateTotalPrice();
+                                    });
+                                  },
+                                  icon: const Icon(
+                                    Icons.remove,
+                                    color: Color(0xFFE02C45),
+                                    size: 18,
+                                  ),
+                                  style: ButtonStyle(
+                                    shape: WidgetStatePropertyAll(
+                                      RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ),
-                              const SizedBox(width: 2),
-                              Text(
-                                AppLocalizations.of(context)!.egp_0_00,
-                                style: TextStyle(
-                                  color: state.themeMode == ThemeMode.dark
-                                      ? Colors.black
-                                      : Colors.white,
-                                  fontSize: 10,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w400,
-                                  decoration: TextDecoration.lineThrough,
-                                  decorationColor: Colors.white,
+                              const SizedBox(width: 10.0),
+                              Text('$counter',
+                                  style: TextStyle(
+                                    color: state.themeMode == ThemeMode.light
+                                        ? Colors.black
+                                        : Colors.white,
+                                    fontSize: 12,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1),
+                              const SizedBox(width: 10.0),
+                              Container(
+                                width: 34,
+                                height: 34,
+                                clipBehavior: Clip.antiAlias,
+                                decoration: ShapeDecoration(
+                                  color: state.themeMode == ThemeMode.light
+                                      ? const Color(0x0CE02C45)
+                                      : const Color(0x5FE02C45),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8)),
                                 ),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
+                                child: IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      counter++;
+                                      updateTotalPrice();
+                                    });
+                                  },
+                                  icon: const Icon(
+                                    Icons.add,
+                                    color: Color(0xFFE02C45),
+                                    size: 18,
+                                  ),
+                                  style: ButtonStyle(
+                                    shape: WidgetStatePropertyAll(
+                                      RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ),
                             ],
                           ),
-                        ),
-                      ],
+                          const SizedBox(height: 20.0),
+                          MaterialButton(
+                            onPressed: _addToCart,
+                            height: 42,
+                            minWidth: MediaQuery.sizeOf(context).width,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            color: const Color(0xFFE02C45),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  AppLocalizations.of(context)!.add_to_cart,
+                                  style: TextStyle(
+                                    color: state.themeMode == ThemeMode.dark
+                                        ? Colors.black
+                                        : Colors.white,
+                                    fontSize: 14,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                                const Spacer(),
+                                Text(
+                                  '${AppLocalizations.of(context)!.plus_egp} ${totalPrice.toStringAsFixed(2)}',
+                                  style: TextStyle(
+                                    color: state.themeMode == ThemeMode.dark
+                                        ? Colors.black
+                                        : Colors.white,
+                                    fontSize: 14,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                                const SizedBox(width: 2),
+                                Text(
+                                  AppLocalizations.of(context)!.egp_0_00,
+                                  style: TextStyle(
+                                    color: state.themeMode == ThemeMode.dark
+                                        ? Colors.black
+                                        : Colors.white,
+                                    fontSize: 10,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w400,
+                                    decoration: TextDecoration.lineThrough,
+                                    decorationColor: Colors.white,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );

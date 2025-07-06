@@ -584,119 +584,121 @@ class _MyCartScreenState extends State<MyCartScreen> {
               ),
             ),
           ),
-          bottomNavigationBar: Container(
-            color:
-                state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.only(bottom: 12.0),
-                    child: Divider(
-                      height: 1,
-                      color: Color(0x7FAFAFAF),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: MaterialButton(
-                      onPressed: () async {
-                        if (filteredItems.isEmpty) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                AppLocalizations.of(context)!
-                                    .your_cart_is_empty,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                              ),
-                              backgroundColor: const Color(0xFFE02C45),
-                            ),
-                          );
-                        } else {
-                          final order = order_model.Order(
-                            orderId: FirebaseFirestore.instance
-                                .collection('orders')
-                                .doc()
-                                .id,
-                            userId: user?.userId ?? 'userId',
-                            clubId: restaurant?.clubId ?? 'clubId',
-                            restaurantId:
-                                restaurant?.restaurantId ?? 'restaurantId',
-                            orderCode: 'temp',
-                            status: Status.pending,
-                            paymentType: PaymentType.cash,
-                            serviceFee: serviceFees,
-                            deliveryFee: (restaurant!.deliveryFee)!,
-                            orderTimeOut: restaurant?.orderTimeOut ?? 0,
-                            createdAt: DateTime.now(),
-                            subTotal: filteredItems.fold(
-                              0.0, // ignore: avoid_types_as_parameter_names
-                              (summation, item) => summation + item.totalPrice,
-                            ),
-                            totalAmount: filteredItems.fold(
-                                  0.0, // ignore: avoid_types_as_parameter_names
-                                  (summation, item) =>
-                                      summation + item.totalPrice,
-                                ) +
-                                serviceFees +
-                                restaurant!.deliveryFee!,
-                            orderCodeForRestaurant: 'temp',
-                            orderTable: tableCode,
-                            processed: false,
-                            addedToInvoice: false,
-                            deliveredByRestaurant: restaurant!.hasOwnDelivery,
-                          );
-                          String orderCode =
-                              await order.generateUniqueOrderCode();
-                          String orderCodeForRestaurant =
-                              order.generateOrderCodeForRestaurant();
-                          order.orderCode = orderCode;
-                          order.orderCodeForRestaurant = orderCodeForRestaurant;
-
-                          Navigator.pushNamed(
-                            // ignore: use_build_context_synchronously
-                            context,
-                            'PayMethodScreenRoute',
-                            arguments: {
-                              'order': order,
-                              'cartItems': filteredItems,
-                            },
-                          );
-                        }
-                      },
-                      height: 42,
-                      minWidth: MediaQuery.sizeOf(context).width,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6),
+          bottomNavigationBar: SafeArea(
+            child: Container(
+              color:
+                  state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(bottom: 12.0),
+                      child: Divider(
+                        height: 1,
+                        color: Color(0x7FAFAFAF),
                       ),
-                      color: const Color(0xFFE02C45),
-                      child: Center(
-                        child: Text(
-                          AppLocalizations.of(context)!.checkout,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w600,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: MaterialButton(
+                        onPressed: () async {
+                          if (filteredItems.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  AppLocalizations.of(context)!
+                                      .your_cart_is_empty,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                                backgroundColor: const Color(0xFFE02C45),
+                              ),
+                            );
+                          } else {
+                            final order = order_model.Order(
+                              orderId: FirebaseFirestore.instance
+                                  .collection('orders')
+                                  .doc()
+                                  .id,
+                              userId: user?.userId ?? 'userId',
+                              clubId: restaurant?.clubId ?? 'clubId',
+                              restaurantId:
+                                  restaurant?.restaurantId ?? 'restaurantId',
+                              orderCode: 'temp',
+                              status: Status.pending,
+                              paymentType: PaymentType.cash,
+                              serviceFee: serviceFees,
+                              deliveryFee: (restaurant!.deliveryFee)!,
+                              orderTimeOut: restaurant?.orderTimeOut ?? 0,
+                              createdAt: DateTime.now(),
+                              subTotal: filteredItems.fold(
+                                0.0, // ignore: avoid_types_as_parameter_names
+                                (summation, item) => summation + item.totalPrice,
+                              ),
+                              totalAmount: filteredItems.fold(
+                                    0.0, // ignore: avoid_types_as_parameter_names
+                                    (summation, item) =>
+                                        summation + item.totalPrice,
+                                  ) +
+                                  serviceFees +
+                                  restaurant!.deliveryFee!,
+                              orderCodeForRestaurant: 'temp',
+                              orderTable: tableCode,
+                              processed: false,
+                              addedToInvoice: false,
+                              deliveredByRestaurant: restaurant!.hasOwnDelivery,
+                            );
+                            String orderCode =
+                                await order.generateUniqueOrderCode();
+                            String orderCodeForRestaurant =
+                                order.generateOrderCodeForRestaurant();
+                            order.orderCode = orderCode;
+                            order.orderCodeForRestaurant = orderCodeForRestaurant;
+            
+                            Navigator.pushNamed(
+                              // ignore: use_build_context_synchronously
+                              context,
+                              'PayMethodScreenRoute',
+                              arguments: {
+                                'order': order,
+                                'cartItems': filteredItems,
+                              },
+                            );
+                          }
+                        },
+                        height: 42,
+                        minWidth: MediaQuery.sizeOf(context).width,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        color: const Color(0xFFE02C45),
+                        child: Center(
+                          child: Text(
+                            AppLocalizations.of(context)!.checkout,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w600,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
                           ),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
