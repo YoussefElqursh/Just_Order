@@ -337,6 +337,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 label: AppLocalizations.of(context)!.email,
                 hint: 'example@email.com',
                 controller: _emailController,
+                keyboardType: TextInputType.emailAddress,
                 themeDark: isDark,
                 validator: (value) => value == null || !value.contains('@')
                     ? AppLocalizations.of(context)!.please_enter_valid_email

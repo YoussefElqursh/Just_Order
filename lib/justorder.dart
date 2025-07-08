@@ -36,7 +36,10 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (context) => SignUpCubit()),
       ],
       child: ScreenUtilInit(
-        designSize: const Size(360, 690),
+        designSize: const Size(
+          360,
+          690,
+        ),
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (BuildContext context, child) {
@@ -45,92 +48,94 @@ class _MyAppState extends State<MyApp> {
               return BlocBuilder<ThemeCubit, ThemeState>(
                 builder: (context, state) {
                   return DeepLinkListener(
-                      child: MaterialApp(
-                    supportedLocales: L10n.all,
-                    locale: locale,
-                    // Locale from LanguageCubit
-                    localeResolutionCallback: (locale, supportedLocales) {
-                      if (locale != null && supportedLocales.contains(locale)) {
-                        return locale;
-                      }
-                      return const Locale('en'); // Default fallback
-                    },
-                    localizationsDelegates: const [
-                      AppLocalizations.delegate,
-                      GlobalMaterialLocalizations.delegate,
-                      GlobalWidgetsLocalizations.delegate,
-                      GlobalCupertinoLocalizations.delegate,
-                    ],
-                    debugShowCheckedModeBanner: false,
-                    title: 'Just Order',
-                    themeMode: state.themeMode,
-                    darkTheme: ThemeData(
-                      useMaterial3: true,
-                      brightness: Brightness.dark,
-                      scaffoldBackgroundColor: Colors.black,
-                      primaryColor: const Color(0xFFE02C45),
-                      indicatorColor: const Color(0xFFE02C45),
-                      appBarTheme: const AppBarTheme(
-                        color: Colors.black,
-                        foregroundColor: Colors.black,
-                        surfaceTintColor: Colors.black,
-                        elevation: 0.5,
-                      ),
-                      bottomNavigationBarTheme:
-                          const BottomNavigationBarThemeData(
-                        selectedItemColor: Color(0xFFE02C45),
-                        unselectedItemColor: Color(0xFF898888),
-                        type: BottomNavigationBarType.fixed,
-                        backgroundColor: Colors.black,
-                        selectedLabelStyle: TextStyle(
-                          color: Color(0xFFE02C45),
-                          fontSize: 12,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w600,
+                    child: MaterialApp(
+                      supportedLocales: L10n.all,
+                      locale: locale,
+                      // Locale from LanguageCubit
+                      localeResolutionCallback: (locale, supportedLocales) {
+                        if (locale != null &&
+                            supportedLocales.contains(locale)) {
+                          return locale;
+                        }
+                        return const Locale('en'); // Default fallback
+                      },
+                      localizationsDelegates: const [
+                        AppLocalizations.delegate,
+                        GlobalMaterialLocalizations.delegate,
+                        GlobalWidgetsLocalizations.delegate,
+                        GlobalCupertinoLocalizations.delegate,
+                      ],
+                      debugShowCheckedModeBanner: false,
+                      title: 'Just Order',
+                      themeMode: state.themeMode,
+                      darkTheme: ThemeData(
+                        useMaterial3: true,
+                        brightness: Brightness.dark,
+                        scaffoldBackgroundColor: Colors.black,
+                        primaryColor: const Color(0xFFE02C45),
+                        indicatorColor: const Color(0xFFE02C45),
+                        appBarTheme: const AppBarTheme(
+                          color: Colors.black,
+                          foregroundColor: Colors.black,
+                          surfaceTintColor: Colors.black,
+                          elevation: 0.5,
                         ),
-                        unselectedLabelStyle: TextStyle(
-                          color: Color(0xFF898888),
-                          fontSize: 12,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w600,
+                        bottomNavigationBarTheme:
+                            const BottomNavigationBarThemeData(
+                          selectedItemColor: Color(0xFFE02C45),
+                          unselectedItemColor: Color(0xFF898888),
+                          type: BottomNavigationBarType.fixed,
+                          backgroundColor: Colors.black,
+                          selectedLabelStyle: TextStyle(
+                            color: Color(0xFFE02C45),
+                            fontSize: 12,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w600,
+                          ),
+                          unselectedLabelStyle: TextStyle(
+                            color: Color(0xFF898888),
+                            fontSize: 12,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
+                      theme: ThemeData(
+                        useMaterial3: true,
+                        brightness: Brightness.light,
+                        scaffoldBackgroundColor: Colors.white,
+                        primaryColor: const Color(0xFFE02C45),
+                        indicatorColor: const Color(0xFFE02C45),
+                        appBarTheme: const AppBarTheme(
+                          color: Colors.white,
+                          foregroundColor: Colors.white,
+                          surfaceTintColor: Colors.white,
+                          elevation: 0.5,
+                        ),
+                        bottomNavigationBarTheme:
+                            const BottomNavigationBarThemeData(
+                          selectedItemColor: Color(0xFFE02C45),
+                          unselectedItemColor: Color(0xFF898888),
+                          type: BottomNavigationBarType.fixed,
+                          backgroundColor: Colors.white,
+                          selectedLabelStyle: TextStyle(
+                            color: Color(0xFFE02C45),
+                            fontSize: 12,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w600,
+                          ),
+                          unselectedLabelStyle: TextStyle(
+                            color: Color(0xFF898888),
+                            fontSize: 12,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                      onGenerateRoute: AppRouter.onGenerateRoute,
+                      initialRoute: SplashScreen.routeName,
                     ),
-                    theme: ThemeData(
-                      useMaterial3: true,
-                      brightness: Brightness.light,
-                      scaffoldBackgroundColor: Colors.white,
-                      primaryColor: const Color(0xFFE02C45),
-                      indicatorColor: const Color(0xFFE02C45),
-                      appBarTheme: const AppBarTheme(
-                        color: Colors.white,
-                        foregroundColor: Colors.white,
-                        surfaceTintColor: Colors.white,
-                        elevation: 0.5,
-                      ),
-                      bottomNavigationBarTheme:
-                          const BottomNavigationBarThemeData(
-                        selectedItemColor: Color(0xFFE02C45),
-                        unselectedItemColor: Color(0xFF898888),
-                        type: BottomNavigationBarType.fixed,
-                        backgroundColor: Colors.white,
-                        selectedLabelStyle: TextStyle(
-                          color: Color(0xFFE02C45),
-                          fontSize: 12,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w600,
-                        ),
-                        unselectedLabelStyle: TextStyle(
-                          color: Color(0xFF898888),
-                          fontSize: 12,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                    onGenerateRoute: AppRouter.onGenerateRoute,
-                    initialRoute: SplashScreen.routeName,
-                  ));
+                  );
                 },
               );
             },

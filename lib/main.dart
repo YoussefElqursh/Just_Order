@@ -12,10 +12,11 @@ import 'package:just_order/services/deep_link_listener.dart';
 import 'package:just_order/shared/bloc_observer/bloc_observer.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import 'firebase_options.dart';
 
-
 late final SharedPreferences prefs;
+
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   debugPrint("Handling a background message: ${message.messageId}");
 }
@@ -27,14 +28,21 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  FirebaseMessaging.onBackgroundMessage(
+    _firebaseMessagingBackgroundHandler,
+  );
   Bloc.observer = MyBlocObserver();
-  await dotenv.load(fileName: "assets/.env");
+  await dotenv.load(
+    fileName: "assets/.env",
+  );
   final themeCubit = ThemeCubit();
   await themeCubit.loadTheme(); // Load saved theme before running the app
   runApp(
     EasyLocalization(
-      supportedLocales: const [Locale('en'), Locale('ar')],
+      supportedLocales: const [
+        Locale('en'),
+        Locale('ar'),
+      ],
       path: 'assets/translations',
       fallbackLocale: const Locale('en'),
       child: BlocProvider(
@@ -44,10 +52,11 @@ Future<void> main() async {
             ChangeNotifierProvider(create: (_) => CartProvider()),
             ChangeNotifierProvider(create: (_) => OrderProvider()),
           ],
-          child: const DeepLinkListener(child: MyApp()),
+          child: const DeepLinkListener(
+            child: MyApp(),
+          ),
         ),
       ),
     ),
   );
 }
-

@@ -4,23 +4,24 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:just_order/models/cart_item_model.dart';
 import 'package:just_order/models/order_model.dart';
 
-
 class PaymentGatewayScreen extends StatefulWidget {
   static const String routeName = 'PaymentGatewayRoute';
   final String secretClient;
   final Order order;
   final List<CartItem> cartItems;
 
-  const PaymentGatewayScreen(
-      {super.key,
-      required this.secretClient,
-      required this.order,
-      required this.cartItems,});
+  const PaymentGatewayScreen({
+    super.key,
+    required this.secretClient,
+    required this.order,
+    required this.cartItems,
+  });
 
-  static Route route(
-      {required String secretClient,
-      required Order order,
-      required List<CartItem> cartItems,}) {
+  static Route route({
+    required String secretClient,
+    required Order order,
+    required List<CartItem> cartItems,
+  }) {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
       builder: (context) => PaymentGatewayScreen(
@@ -34,9 +35,10 @@ class PaymentGatewayScreen extends StatefulWidget {
   @override
   // ignore: no_logic_in_create_state
   State<PaymentGatewayScreen> createState() => _PaymentGatewayScreen(
-      secretClient: secretClient,
-      order: order,
-      cartItems: cartItems);
+        secretClient: secretClient,
+        order: order,
+        cartItems: cartItems,
+      );
 }
 
 class _PaymentGatewayScreen extends State<PaymentGatewayScreen> {
@@ -72,7 +74,8 @@ class _PaymentGatewayScreen extends State<PaymentGatewayScreen> {
           controller.loadUrl(
             urlRequest: URLRequest(
               url: WebUri(
-                  'https://accept.paymob.com/unifiedcheckout/?publicKey=$publicKey&clientSecret=$secretClient'),
+                'https://accept.paymob.com/unifiedcheckout/?publicKey=$publicKey&clientSecret=$secretClient',
+              ),
             ),
           );
         },

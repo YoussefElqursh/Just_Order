@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:just_order/blocs/theming/theming_cubit.dart';
@@ -14,7 +15,6 @@ import 'package:just_order/screens/login/login_screen.dart';
 import 'package:just_order/shared/function/functions.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../services/notification_service.dart';
 
@@ -44,7 +44,9 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     _loadAppVersion();
     Future.delayed(
-        const Duration(seconds: 5), () => _checkInternetConnection(),);
+      const Duration(seconds: 5),
+      () => _checkInternetConnection(),
+    );
   }
 
   Future<void> _loadAppVersion() async {
@@ -67,9 +69,10 @@ class _SplashScreenState extends State<SplashScreen> {
     if (!_dialogShown) {
       showDialog(
         context: context,
-        builder: (context) =>  AlertDialog(
+        builder: (context) => AlertDialog(
           title: Text(AppLocalizations.of(context)!.no_internet_connection),
-          content: Text(AppLocalizations.of(context)!.please_check_your_internet_connection_and_try_again),
+          content: Text(AppLocalizations.of(context)!
+              .please_check_your_internet_connection_and_try_again),
         ),
       );
     }
@@ -105,19 +108,27 @@ class _SplashScreenState extends State<SplashScreen> {
             timestamp != null &&
             timestamp == validTime) {
           // ignore: use_build_context_synchronously
-          Navigator.of(context).pushReplacement(MainLayout.route());
+          Navigator.of(context).pushReplacement(
+            MainLayout.route(),
+          );
         } else {
           // ignore: use_build_context_synchronously
-          Navigator.of(context).pushReplacement(SelectYourPlace.route());
+          Navigator.of(context).pushReplacement(
+            SelectYourPlace.route(),
+          );
         }
         await NotificationService.initialize(user!.email);
       } else {
         // ignore: use_build_context_synchronously
-        Navigator.of(context).pushReplacement(LoginScreen.route());
+        Navigator.of(context).pushReplacement(
+          LoginScreen.route(),
+        );
       }
     } else {
       // ignore: use_build_context_synchronously
-      Navigator.of(context).pushReplacement(LoginScreen.route());
+      Navigator.of(context).pushReplacement(
+        LoginScreen.route(),
+      );
     }
   }
 
@@ -134,7 +145,9 @@ class _SplashScreenState extends State<SplashScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(height: MediaQuery.sizeOf(context).height * 0.35),
+                SizedBox(
+                  height: MediaQuery.sizeOf(context).height * 0.35,
+                ),
                 setPhoto(
                   kind: 1,
                   path: 'assets/images/logo.svg',
@@ -146,21 +159,29 @@ class _SplashScreenState extends State<SplashScreen> {
                   'JUST ORDER',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                    color: state.themeMode == ThemeMode.light
+                        ? Colors.black
+                        : Colors.white,
                     fontSize: 16,
                     fontFamily: 'IBM Plex Sans',
                     fontWeight: FontWeight.w600,
                     letterSpacing: 3.20,
                   ),
                 ),
-                SizedBox(height: MediaQuery.sizeOf(context).height * 0.35),
+                SizedBox(
+                  height: MediaQuery.sizeOf(context).height * 0.35,
+                ),
                 const CircularProgressIndicator(
                   color: Color(0xFFe02c45),
                 ),
-                SizedBox(height: MediaQuery.sizeOf(context).height * 0.04),
+                SizedBox(
+                  height: MediaQuery.sizeOf(context).height * 0.04,
+                ),
                 Text(
                   _appVersion,
-                  style: TextStyle(fontSize: 12.0.sp),
+                  style: TextStyle(
+                    fontSize: 12.0.sp,
+                  ),
                 )
               ],
             ),

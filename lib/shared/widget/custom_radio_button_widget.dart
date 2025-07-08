@@ -27,7 +27,9 @@ Widget customRadioButtonWidget({
             Text(
               label,
               style: TextStyle(
-                color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                color: state.themeMode == ThemeMode.light
+                    ? Colors.black
+                    : Colors.white,
                 fontSize: 12,
                 fontFamily: 'Inter',
                 fontWeight: FontWeight.w400,
@@ -52,10 +54,11 @@ Widget customRadioButtonWidget({
                   : null,
             ),
             Radio(
-                value: value,
-                activeColor: const Color(0xFFE02C45),
-                groupValue: groupName,
-                onChanged: onChanged),
+              value: value,
+              activeColor: const Color(0xFFE02C45),
+              groupValue: groupName,
+              onChanged: onChanged,
+            ),
           ],
         ),
         const SizedBox(height: 10.0),

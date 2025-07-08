@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:just_order/blocs/theming/theming_cubit.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/layouts/main_layout.dart';
@@ -9,7 +10,6 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_scanner_overlay/qr_scanner_overlay.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SelectYourPlace extends StatefulWidget {
   const SelectYourPlace({super.key});
@@ -60,9 +60,13 @@ class _SelectYourPlaceState extends State<SelectYourPlace>
       case AppLifecycleState.paused:
         return;
       case AppLifecycleState.resumed:
-        unawaited(cameraController.start());
+        unawaited(
+          cameraController.start(),
+        );
       case AppLifecycleState.inactive:
-        unawaited(cameraController.stop());
+        unawaited(
+          cameraController.stop(),
+        );
     }
   }
 
@@ -102,35 +106,43 @@ class _SelectYourPlaceState extends State<SelectYourPlace>
           canPop: false,
           child: Scaffold(
             appBar: AppBar(
-              leading: isRoot? null : Padding(
-                padding:
-                const EdgeInsets.only(left: 20.0, top: 10.0, bottom: 10.0),
-                child: Container(
-                  width: 34,
-                  height: 34,
-                  clipBehavior: Clip.antiAlias,
-                  decoration: ShapeDecoration(
-                    color: const Color(0xFFF4F4F4),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)),
-                  ),
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: const Icon(
-                      Icons.arrow_back,
-                      color: Colors.black,
-                      size: 18,
+              leading: isRoot
+                  ? null
+                  : Padding(
+                      padding: const EdgeInsets.only(
+                        left: 20.0,
+                        top: 10.0,
+                        bottom: 10.0,
+                      ),
+                      child: Container(
+                        width: 34,
+                        height: 34,
+                        clipBehavior: Clip.antiAlias,
+                        decoration: ShapeDecoration(
+                          color: const Color(0xFFF4F4F4),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        child: IconButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          icon: const Icon(
+                            Icons.arrow_back,
+                            color: Colors.black,
+                            size: 18,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ),
               centerTitle: true,
               title: Text(
                 AppLocalizations.of(context)!.scan_order,
                 style: TextStyle(
-                  color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                  color: state.themeMode == ThemeMode.light
+                      ? Colors.black
+                      : Colors.white,
                   fontSize: 14,
                   fontFamily: 'Inter',
                   fontWeight: FontWeight.w600,
@@ -157,7 +169,9 @@ class _SelectYourPlaceState extends State<SelectYourPlace>
                         padding: const EdgeInsets.all(20),
                         clipBehavior: Clip.antiAlias,
                         decoration: ShapeDecoration(
-                          color: state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
+                          color: state.themeMode == ThemeMode.dark
+                              ? Colors.black
+                              : Colors.white,
                           shape: RoundedRectangleBorder(
                             side: const BorderSide(
                               width: 1,
@@ -172,9 +186,12 @@ class _SelectYourPlaceState extends State<SelectYourPlace>
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                              AppLocalizations.of(context)!.scan_qr_code_of_the_table,
+                              AppLocalizations.of(context)!
+                                  .scan_qr_code_of_the_table,
                               style: TextStyle(
-                                color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                                color: state.themeMode == ThemeMode.light
+                                    ? Colors.black
+                                    : Colors.white,
                                 fontSize: 14,
                                 fontFamily: 'Inter',
                                 fontWeight: FontWeight.w600,
@@ -183,10 +200,10 @@ class _SelectYourPlaceState extends State<SelectYourPlace>
                               maxLines: 1,
                             ),
                             SizedBox(
-                                height: _hasPermission
-                                    ? null
-                                    : MediaQuery.sizeOf(context).height *
-                                        0.0325),
+                              height: _hasPermission
+                                  ? null
+                                  : MediaQuery.sizeOf(context).height * 0.0325,
+                            ),
                             _hasPermission
                                 ? Expanded(
                                     child: Stack(
@@ -196,8 +213,9 @@ class _SelectYourPlaceState extends State<SelectYourPlace>
                                           onDetect: (barcode) async {
                                             if (!isScanCompleted) {
                                               isScanCompleted = true;
-                                              String code =
-                                                  barcode.barcodes.firstOrNull?.rawValue ?? "---";
+                                              String code = barcode.barcodes
+                                                      .firstOrNull?.rawValue ??
+                                                  "---";
                                               Navigator.pushReplacement(
                                                 // ignore: use_build_context_synchronously
                                                 context,
@@ -206,9 +224,13 @@ class _SelectYourPlaceState extends State<SelectYourPlace>
                                                     final currentDate =
                                                         DateTime.now().day;
                                                     prefs.setString(
-                                                        'code', code);
-                                                    prefs.setInt('timestamp',
-                                                        currentDate);
+                                                      'code',
+                                                      code,
+                                                    );
+                                                    prefs.setInt(
+                                                      'timestamp',
+                                                      currentDate,
+                                                    );
                                                     return MainLayout();
                                                   },
                                                 ),
@@ -217,8 +239,14 @@ class _SelectYourPlaceState extends State<SelectYourPlace>
                                           },
                                         ),
                                         QRScannerOverlay(
-                                          overlayColor: state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
-                                          borderColor: state.themeMode == ThemeMode.light ? Colors.black : const Color(0xFFE02C45),
+                                          overlayColor:
+                                              state.themeMode == ThemeMode.dark
+                                                  ? Colors.black
+                                                  : Colors.white,
+                                          borderColor:
+                                              state.themeMode == ThemeMode.light
+                                                  ? Colors.black
+                                                  : const Color(0xFFE02C45),
                                           borderRadius: 10,
                                           borderStrokeWidth: 3,
                                           scanAreaWidth: 190,
@@ -233,11 +261,13 @@ class _SelectYourPlaceState extends State<SelectYourPlace>
                                           MainAxisAlignment.center,
                                       children: [
                                         SizedBox(
-                                            height: MediaQuery.sizeOf(context)
-                                                    .height *
-                                                0.3),
+                                          height: MediaQuery.sizeOf(context)
+                                                  .height *
+                                              0.3,
+                                        ),
                                         Text(
-                                          AppLocalizations.of(context)!.camera_permission_is_required_to_scan_qr_codes,
+                                          AppLocalizations.of(context)!
+                                              .camera_permission_is_required_to_scan_qr_codes,
                                           textAlign: TextAlign.center,
                                         ),
                                         const SizedBox(height: 25),
@@ -254,9 +284,13 @@ class _SelectYourPlaceState extends State<SelectYourPlace>
                                           ),
                                           child: Center(
                                             child: Text(
-                                              AppLocalizations.of(context)!.open_settings,
+                                              AppLocalizations.of(context)!
+                                                  .open_settings,
                                               style: TextStyle(
-                                                color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                                                color: state.themeMode ==
+                                                        ThemeMode.light
+                                                    ? Colors.black
+                                                    : Colors.white,
                                                 fontSize: 14,
                                                 fontFamily: 'Inter',
                                                 fontWeight: FontWeight.w600,

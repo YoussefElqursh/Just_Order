@@ -11,6 +11,7 @@ import 'package:just_order/screens/cart/my_cart_screen.dart';
 import 'package:just_order/screens/forgot_password_screen/forgot_password_screen.dart';
 import 'package:just_order/screens/home/main_home_screen/home_screen.dart';
 import 'package:just_order/screens/home/meal_details_screen/meal_details_screen.dart';
+import 'package:just_order/screens/home/popular_today_screen/popular_today_screen.dart';
 import 'package:just_order/screens/home/restaurant_screen/restaurant_screen.dart';
 import 'package:just_order/screens/login/login_screen.dart';
 import 'package:just_order/screens/order/order_confirmed_screen.dart';
@@ -27,7 +28,6 @@ import 'package:just_order/screens/payment/pay_method_screen.dart';
 import 'package:just_order/screens/payment/payment_gateway_screen.dart';
 import 'package:just_order/screens/sign_up/sign_up_screen.dart';
 import 'package:just_order/screens/splash/splash_screen.dart';
-import 'package:just_order/screens/home/popular_today_screen/popular_today_screen.dart';
 
 class AppRouter {
   static Route onGenerateRoute(RouteSettings settings) {
@@ -36,7 +36,9 @@ class AppRouter {
         if (settings.arguments is String) {
           final tableCode = settings.arguments as String;
           return MaterialPageRoute(
-            builder: (_) => MainLayout(tableCode: tableCode),
+            builder: (_) => MainLayout(
+              tableCode: tableCode,
+            ),
           );
         }
         return _errorRoute();
@@ -53,7 +55,10 @@ class AppRouter {
       case 'RestaurantScreenRoute':
         if (settings.arguments is RestaurantScreenArguments) {
           final args = settings.arguments as RestaurantScreenArguments;
-          return RestaurantScreen.route(args.restaurant, args.user);
+          return RestaurantScreen.route(
+            args.restaurant,
+            args.user,
+          );
         }
         return _errorRoute();
       case 'MealDetailsScreenRoute':
@@ -120,7 +125,9 @@ class AppRouter {
           final orders = args[0] as List<Order>;
           final restaurantMap = args[1] as Map<String, Restaurant>;
           return PendingOrderScreen.route(
-              orders: orders, restaurantMap: restaurantMap);
+            orders: orders,
+            restaurantMap: restaurantMap,
+          );
         }
         return _errorRoute();
       case 'PreparingOrderScreenRoute':
@@ -129,7 +136,9 @@ class AppRouter {
           final orders = args[0] as List<Order>;
           final restaurantMap = args[1] as Map<String, Restaurant>;
           return PreparingOrderScreen.route(
-              orders: orders, restaurantMap: restaurantMap);
+            orders: orders,
+            restaurantMap: restaurantMap,
+          );
         }
         return _errorRoute();
       case 'OnWayOrderScreenRoute':
@@ -138,7 +147,9 @@ class AppRouter {
           final orders = args[0] as List<Order>;
           final restaurantMap = args[1] as Map<String, Restaurant>;
           return OnWayOrderScreen.route(
-              orders: orders, restaurantMap: restaurantMap);
+            orders: orders,
+            restaurantMap: restaurantMap,
+          );
         }
         return _errorRoute();
       case 'DeliveredOrderScreenRoute':
@@ -147,7 +158,9 @@ class AppRouter {
           final orders = args[0] as List<Order>;
           final restaurantMap = args[1] as Map<String, Restaurant>;
           return DeliveredOrderScreen.route(
-              orders: orders, restaurantMap: restaurantMap);
+            orders: orders,
+            restaurantMap: restaurantMap,
+          );
         }
         return _errorRoute();
       case 'DeclineOrderScreenRoute':
@@ -156,7 +169,9 @@ class AppRouter {
           final orders = args[0] as List<Order>;
           final restaurantMap = args[1] as Map<String, Restaurant>;
           return DeclineOrderScreen.route(
-              orders: orders, restaurantMap: restaurantMap);
+            orders: orders,
+            restaurantMap: restaurantMap,
+          );
         }
         return _errorRoute();
       case 'OrderDetailsScreenRoute':
@@ -164,7 +179,10 @@ class AppRouter {
           final args = settings.arguments as List<dynamic>;
           final order = args[0] as Order;
           final restaurant = args[1] as Restaurant;
-          return OrderDetailsScreen.route(order: order, restaurant: restaurant);
+          return OrderDetailsScreen.route(
+            order: order,
+            restaurant: restaurant,
+          );
         }
         return _errorRoute();
       case 'LoginScreenRoute':

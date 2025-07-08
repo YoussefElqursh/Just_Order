@@ -17,8 +17,14 @@ class AppThemes {
       elevation: 0.5,
     ),
     textTheme: const TextTheme(
-      bodyLarge: TextStyle(color: Colors.black, fontSize: 16),
-      bodyMedium: TextStyle(color: Colors.black54, fontSize: 14),
+      bodyLarge: TextStyle(
+        color: Colors.black,
+        fontSize: 16,
+      ),
+      bodyMedium: TextStyle(
+        color: Colors.black54,
+        fontSize: 14,
+      ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
@@ -47,8 +53,14 @@ class AppThemes {
       elevation: 0.5,
     ),
     textTheme: const TextTheme(
-      bodyLarge: TextStyle(color: Colors.white, fontSize: 16),
-      bodyMedium: TextStyle(color: Colors.white70, fontSize: 14),
+      bodyLarge: TextStyle(
+        color: Colors.white,
+        fontSize: 16,
+      ),
+      bodyMedium: TextStyle(
+        color: Colors.white70,
+        fontSize: 14,
+      ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(

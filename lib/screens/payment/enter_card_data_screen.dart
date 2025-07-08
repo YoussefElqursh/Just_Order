@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:just_order/blocs/theming/theming_cubit.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/shared/function/functions.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EnterCardDataScreen extends StatefulWidget {
   const EnterCardDataScreen({super.key});
@@ -34,7 +34,9 @@ class _EnterCardDataScreenState extends State<EnterCardDataScreen> {
             title: Text(
               AppLocalizations.of(context)!.add_card,
               style: TextStyle(
-                color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                color: state.themeMode == ThemeMode.light
+                    ? Colors.black
+                    : Colors.white,
                 fontSize: 14,
                 fontFamily: 'Inter',
                 fontWeight: FontWeight.w600,
@@ -105,20 +107,23 @@ class _EnterCardDataScreenState extends State<EnterCardDataScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           setPhoto(
-                              kind: 1,
-                              path: 'assets/images/Meeza.svg',
-                              height: 20.0,
-                              width: 50.0),
+                            kind: 1,
+                            path: 'assets/images/Meeza.svg',
+                            height: 20.0,
+                            width: 50.0,
+                          ),
                           setPhoto(
-                              kind: 1,
-                              path: 'assets/images/Visa.svg',
-                              height: 20.0,
-                              width: 50.0),
+                            kind: 1,
+                            path: 'assets/images/Visa.svg',
+                            height: 20.0,
+                            width: 50.0,
+                          ),
                           setPhoto(
-                              kind: 1,
-                              path: 'assets/images/Mastercard.svg',
-                              height: 20.0,
-                              width: 50.0),
+                            kind: 1,
+                            path: 'assets/images/Mastercard.svg',
+                            height: 20.0,
+                            width: 50.0,
+                          ),
                         ],
                       ),
                     ),
@@ -130,7 +135,9 @@ class _EnterCardDataScreenState extends State<EnterCardDataScreen> {
                         Text(
                           AppLocalizations.of(context)!.cardholder_name,
                           style: TextStyle(
-                            color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                            color: state.themeMode == ThemeMode.light
+                                ? Colors.black
+                                : Colors.white,
                             fontSize: 10,
                             fontFamily: 'Inter',
                             fontWeight: FontWeight.w500,
@@ -163,16 +170,18 @@ class _EnterCardDataScreenState extends State<EnterCardDataScreen> {
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(6),
                               borderSide: const BorderSide(
-                                  color: Color(0x4CAFAFAF),
-                                  strokeAlign: BorderSide.strokeAlignCenter,
-                                  width: 1.5),
+                                color: Color(0x4CAFAFAF),
+                                strokeAlign: BorderSide.strokeAlignCenter,
+                                width: 1.5,
+                              ),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(6),
                               borderSide: const BorderSide(
-                                  color: Color(0x4CAFAFAF),
-                                  strokeAlign: BorderSide.strokeAlignCenter,
-                                  width: 1.5),
+                                color: Color(0x4CAFAFAF),
+                                strokeAlign: BorderSide.strokeAlignCenter,
+                                width: 1.5,
+                              ),
                             ),
                           ),
                         ),
@@ -183,7 +192,7 @@ class _EnterCardDataScreenState extends State<EnterCardDataScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                         Text(
+                        Text(
                           AppLocalizations.of(context)!.card_number,
                           style: const TextStyle(
                             color: Colors.black,
@@ -219,16 +228,18 @@ class _EnterCardDataScreenState extends State<EnterCardDataScreen> {
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(6),
                               borderSide: const BorderSide(
-                                  color: Color(0x4CAFAFAF),
-                                  strokeAlign: BorderSide.strokeAlignCenter,
-                                  width: 1.5),
+                                color: Color(0x4CAFAFAF),
+                                strokeAlign: BorderSide.strokeAlignCenter,
+                                width: 1.5,
+                              ),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(6),
                               borderSide: const BorderSide(
-                                  color: Color(0x4CAFAFAF),
-                                  strokeAlign: BorderSide.strokeAlignCenter,
-                                  width: 1.5),
+                                color: Color(0x4CAFAFAF),
+                                strokeAlign: BorderSide.strokeAlignCenter,
+                                width: 1.5,
+                              ),
                             ),
                           ),
                         ),
@@ -244,7 +255,7 @@ class _EnterCardDataScreenState extends State<EnterCardDataScreen> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                               Text(
+                              Text(
                                 AppLocalizations.of(context)!.expiration,
                                 style: const TextStyle(
                                   color: Colors.black,
@@ -285,18 +296,18 @@ class _EnterCardDataScreenState extends State<EnterCardDataScreen> {
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(6),
                                     borderSide: const BorderSide(
-                                        color: Color(0x4CAFAFAF),
-                                        strokeAlign:
-                                            BorderSide.strokeAlignCenter,
-                                        width: 1.5),
+                                      color: Color(0x4CAFAFAF),
+                                      strokeAlign: BorderSide.strokeAlignCenter,
+                                      width: 1.5,
+                                    ),
                                   ),
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(6),
                                     borderSide: const BorderSide(
-                                        color: Color(0x4CAFAFAF),
-                                        strokeAlign:
-                                            BorderSide.strokeAlignCenter,
-                                        width: 1.5),
+                                      color: Color(0x4CAFAFAF),
+                                      strokeAlign: BorderSide.strokeAlignCenter,
+                                      width: 1.5,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -307,8 +318,8 @@ class _EnterCardDataScreenState extends State<EnterCardDataScreen> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                               Text(
-                                 AppLocalizations.of(context)!.security_code,
+                              Text(
+                                AppLocalizations.of(context)!.security_code,
                                 style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 10,
@@ -348,18 +359,18 @@ class _EnterCardDataScreenState extends State<EnterCardDataScreen> {
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(6),
                                     borderSide: const BorderSide(
-                                        color: Color(0x4CAFAFAF),
-                                        strokeAlign:
-                                            BorderSide.strokeAlignCenter,
-                                        width: 1.5),
+                                      color: Color(0x4CAFAFAF),
+                                      strokeAlign: BorderSide.strokeAlignCenter,
+                                      width: 1.5,
+                                    ),
                                   ),
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(6),
                                     borderSide: const BorderSide(
-                                        color: Color(0x4CAFAFAF),
-                                        strokeAlign:
-                                            BorderSide.strokeAlignCenter,
-                                        width: 1.5),
+                                      color: Color(0x4CAFAFAF),
+                                      strokeAlign: BorderSide.strokeAlignCenter,
+                                      width: 1.5,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -384,8 +395,8 @@ class _EnterCardDataScreenState extends State<EnterCardDataScreen> {
                             });
                           },
                         ),
-                         Text(
-                            AppLocalizations.of(context)!.card_saving,
+                        Text(
+                          AppLocalizations.of(context)!.card_saving,
                           style: const TextStyle(
                             color: Color(0xFF898888),
                             fontSize: 10,
@@ -408,16 +419,18 @@ class _EnterCardDataScreenState extends State<EnterCardDataScreen> {
                         borderRadius: BorderRadius.circular(6),
                       ),
                       color: const Color(0xFFE02C45),
-                      child:  Center(
-                        child: Text(AppLocalizations.of(context)!.continue_,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w600,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1),
+                      child: Center(
+                        child: Text(
+                          AppLocalizations.of(context)!.continue_,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w600,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
                       ),
                     ),
                   ],

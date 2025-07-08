@@ -6,9 +6,8 @@ import 'package:just_order/blocs/sign_up_cubit/sign_up_cubit.dart';
 import 'package:just_order/blocs/theming/theming_cubit.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/screens/login/login_screen.dart';
+import 'package:just_order/shared/function/functions.dart';
 import 'package:just_order/shared/style/colors.dart';
-
-import '../../shared/function/functions.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});

@@ -25,7 +25,9 @@ Widget customCheckBoxButtonWidget({
             Text(
               label,
               style: TextStyle(
-                color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                color: state.themeMode == ThemeMode.light
+                    ? Colors.black
+                    : Colors.white,
                 fontSize: 12,
                 fontFamily: 'Inter',
                 fontWeight: FontWeight.w400,
@@ -52,8 +54,13 @@ Widget customCheckBoxButtonWidget({
             Checkbox(
               value: value,
               activeColor: const Color(0xFFE02C45),
-              checkColor: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
-              side: const BorderSide(color: Color(0xFF898888), width: 1.5),
+              checkColor: state.themeMode == ThemeMode.light
+                  ? Colors.black
+                  : Colors.white,
+              side: const BorderSide(
+                color: Color(0xFF898888),
+                width: 1.5,
+              ),
               onChanged: onChanged,
             ),
           ],
