@@ -77,7 +77,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
   void _addToCart() async {
     final prefs = await SharedPreferences.getInstance();
     final restaurantString =
-    // ignore: use_build_context_synchronously
+        // ignore: use_build_context_synchronously
         prefs.getString(AppLocalizations.of(context)!.restaurant_name);
     Restaurant? restaurant;
     if (restaurantString != null) {
@@ -139,51 +139,61 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                               ),
                             ),
                             errorWidget: (context, url, error) =>
-                            const Icon(Icons.broken_image_rounded),
+                                const Icon(Icons.broken_image_rounded),
                             memCacheWidth: (MediaQuery.of(context).size.width *
-                                MediaQuery.of(context).devicePixelRatio)
+                                    MediaQuery.of(context).devicePixelRatio)
                                 .round(),
                           ),
-                          // Positioned(
-                          //   top: 250,
-                          //   right: 20,
-                          //   child: Container(
-                          //     width: 60,
-                          //     height: 30,
-                          //     padding: const EdgeInsets.symmetric(
-                          //         horizontal: 6, vertical: 4),
-                          //     clipBehavior: Clip.antiAlias,
-                          //     decoration: const ShapeDecoration(
-                          //       color: Color(0xFFE02C45),
-                          //       shape: RoundedRectangleBorder(
-                          //         borderRadius: BorderRadius.only(
-                          //           bottomLeft: Radius.circular(8),
-                          //           bottomRight: Radius.circular(8),
-                          //         ),
-                          //       ),
-                          //     ),
-                          //     child: const Center(
-                          //       child: Text(
-                          //         '0% Off',
-                          //         style: TextStyle(
-                          //           color: Colors.white,
-                          //           fontSize: 10,
-                          //           fontFamily: 'Inter',
-                          //           fontWeight: FontWeight.w600,
-                          //         ),
-                          //         overflow: TextOverflow.ellipsis,
-                          //         maxLines: 1,
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
+                          Visibility(
+                            visible: item.discount > 0,
+                            maintainSize: false,
+                            // Ensures no space is taken when not visible
+                            maintainAnimation: false,
+                            maintainState: false,
+                            child: Positioned(
+                              top: 250,
+                              right: 20,
+                              child: Container(
+                                width: 60,
+                                height: 30,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 6, vertical: 4),
+                                clipBehavior: Clip.antiAlias,
+                                decoration: const ShapeDecoration(
+                                  color: Color(0xFFE02C45),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(8),
+                                      bottomRight: Radius.circular(8),
+                                    ),
+                                  ),
+                                ),
+                                child: const Center(
+                                  child: Text(
+                                    '0% Off',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 10,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                       SizedBox(
                         width: MediaQuery.sizeOf(context).width,
                         child: Padding(
                           padding: const EdgeInsets.only(
-                              top: 50.0, left: 20.0, right: 20.0),
+                            top: 50.0,
+                            left: 20.0,
+                            right: 20.0,
+                          ),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -514,8 +524,9 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
           ),
           bottomNavigationBar: SafeArea(
             child: Container(
-              color:
-                  state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
+              color: state.themeMode == ThemeMode.dark
+                  ? Colors.black
+                  : Colors.white,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.start,

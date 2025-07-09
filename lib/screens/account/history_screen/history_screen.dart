@@ -86,6 +86,23 @@ class _HistoryScreenState extends State<HistoryScreen> {
     }).toList();
   }
 
+  List<Order> getFilteredTimeOrders(List<Order> orders) {
+    final filtered = orders.where((order) {
+      return [
+        Status.delivered,
+        Status.declined,
+        Status.cancelled,
+        Status.autoDeclined,
+        Status.finalized
+      ].contains(order.status);
+    }).toList();
+
+    // Sort by deliveredAt or other relevant datetime field
+    filtered.sort((a, b) => (b.deliveredDateTime ?? b.createdAt).compareTo(a.deliveredDateTime!)); // Descending order
+
+    return filtered;
+  }
+
   @override
   Widget build(BuildContext context) {
     return _isLoading
@@ -102,7 +119,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
               orderProvider,
               child,
             ) {
-              final orders = getFilteredOrders(orderProvider.orders);
+              final orders = getFilteredTimeOrders(orderProvider.orders);
 
               return BlocBuilder<ThemeCubit, ThemeState>(
                 builder: (
@@ -189,6 +206,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             ),
                           )
                         : ListView.separated(
+                            shrinkWrap: true,
                             itemBuilder: (context, index) {
                               final order = orders[index];
                               final restaurant =

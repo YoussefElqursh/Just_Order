@@ -542,7 +542,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               separatorBuilder: (context, index) =>
                                   const SizedBox(width: 10.0),
-                              itemCount: 4,
+                              itemCount: filters.length,
                               scrollDirection: Axis.horizontal,
                               physics: const BouncingScrollPhysics(),
                               shrinkWrap: true,

@@ -1,9 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/models/user_model.dart';
 import 'package:just_order/screens/home/restaurant_screen/restaurant_screen.dart';
+import 'package:just_order/shared/style/colors.dart';
 
 class RestaurantWidget extends StatefulWidget {
   final Restaurant restaurant;
@@ -61,11 +63,14 @@ class _RestaurantWidgetState extends State<RestaurantWidget> {
     };
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, 'RestaurantScreenRoute',
+        Navigator.pushNamed(
+          context,
+          'RestaurantScreenRoute',
           arguments: RestaurantScreenArguments(
             restaurant: widget.restaurant,
             user: widget.user,
-          ),);
+          ),
+        );
       },
       child: Row(
         children: [
@@ -73,13 +78,6 @@ class _RestaurantWidgetState extends State<RestaurantWidget> {
             width: 90,
             height: 90,
             decoration: ShapeDecoration(
-              image: DecorationImage(
-                image: NetworkImage(
-                  widget.restaurant.imageUrl ??
-                      'https://via.placeholder.com/150',
-                ),
-                fit: BoxFit.cover,
-              ),
               shape: RoundedRectangleBorder(
                 side: const BorderSide(
                   width: 1.50,
@@ -89,22 +87,34 @@ class _RestaurantWidgetState extends State<RestaurantWidget> {
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
+            child: CachedNetworkImage(
+              imageUrl: widget.restaurant.imageUrl!,
+              fit: BoxFit.cover,
+              width: double.infinity,
+              height: 90,
+              placeholder: (context, url) => const Center(
+                child: CircularProgressIndicator(
+                  color: AppColor.primaryColor,
+                ),
+              ),
+              errorWidget: (context, url, error) =>
+              const Icon(Icons.broken_image_rounded),
+              memCacheWidth: (MediaQuery.of(context).size.width *
+                  MediaQuery.of(context).devicePixelRatio)
+                  .round(),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(12.0),
             child: SizedBox(
-              width: MediaQuery
-                  .sizeOf(context)
-                  .width - 155,
+              width: MediaQuery.sizeOf(context).width - 155,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    width: MediaQuery
-                        .sizeOf(context)
-                        .width - 160,
+                    width: MediaQuery.sizeOf(context).width - 160,
                     height: 27.0,
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -130,21 +140,22 @@ class _RestaurantWidgetState extends State<RestaurantWidget> {
                             });
                             !isFavorite
                                 ? removeFavouriteRestaurant(
-                              widget.user.userId,
-                              widget.restaurant.restaurantId,
-                            )
+                                    widget.user.userId,
+                                    widget.restaurant.restaurantId,
+                                  )
                                 : addFavouriteRestaurant(
-                              widget.user.userId,
-                              favouriteRestaurant,
-                            );
+                                    widget.user.userId,
+                                    favouriteRestaurant,
+                                  );
                           },
                           icon: Icon(
-                            !isFavorite ? Icons.favorite_border : Icons
-                                .favorite,
+                            !isFavorite
+                                ? Icons.favorite_border
+                                : Icons.favorite,
                             color: !isFavorite
                                 ? widget.state.themeMode == ThemeMode.light
-                                ? Colors.black
-                                : Colors.white
+                                    ? Colors.black
+                                    : Colors.white
                                 : const Color(0xFFE02C45),
                             size: 15,
                           ),
@@ -281,11 +292,12 @@ class _RestaurantWidgetState extends State<RestaurantWidget> {
       ),
     );
   }
+
   void addFavouriteRestaurant(
       String userId, Map<String, dynamic> restaurantData) async {
     try {
       DocumentReference userDocRef =
-      FirebaseFirestore.instance.collection('users').doc(userId);
+          FirebaseFirestore.instance.collection('users').doc(userId);
 
       await userDocRef
           .collection('favouriteRestaurant')
@@ -298,7 +310,8 @@ class _RestaurantWidgetState extends State<RestaurantWidget> {
     }
   }
 
-  Future<void> removeFavouriteRestaurant(String userId, String restaurantId) async {
+  Future<void> removeFavouriteRestaurant(
+      String userId, String restaurantId) async {
     try {
       DocumentReference restaurantDocRef = FirebaseFirestore.instance
           .collection('users')

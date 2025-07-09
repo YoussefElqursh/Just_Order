@@ -1,8 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/order_model.dart';
 import 'package:just_order/models/restaurant_model.dart';
+import 'package:just_order/shared/style/colors.dart';
 import 'package:just_order/shared/widget/common_button.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -65,11 +67,6 @@ Widget buildOrderStateWidget({
                       width: 40,
                       height: 40,
                       decoration: ShapeDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(restaurant.imageUrl ??
-                              'https://via.placeholder.com/150*150'),
-                          fit: BoxFit.cover,
-                        ),
                         shape: RoundedRectangleBorder(
                           side: const BorderSide(
                             width: 1,
@@ -78,6 +75,22 @@ Widget buildOrderStateWidget({
                           ),
                           borderRadius: BorderRadius.circular(6),
                         ),
+                      ),
+                      child: CachedNetworkImage(
+                        imageUrl: restaurant.imageUrl!,
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                        height: 40,
+                        placeholder: (context, url) => const Center(
+                          child: CircularProgressIndicator(
+                            color: AppColor.primaryColor,
+                          ),
+                        ),
+                        errorWidget: (context, url, error) =>
+                        const Icon(Icons.broken_image_rounded),
+                        memCacheWidth: (MediaQuery.of(context).size.width *
+                            MediaQuery.of(context).devicePixelRatio)
+                            .round(),
                       ),
                     ),
                     const SizedBox(width: 10),
@@ -264,11 +277,6 @@ Widget buildOrderPendingStateWidget({
                       width: 40,
                       height: 40,
                       decoration: ShapeDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(restaurant.imageUrl ??
-                              'https://via.placeholder.com/150'),
-                          fit: BoxFit.cover,
-                        ),
                         shape: RoundedRectangleBorder(
                           side: const BorderSide(
                             width: 1,
@@ -277,6 +285,22 @@ Widget buildOrderPendingStateWidget({
                           ),
                           borderRadius: BorderRadius.circular(6),
                         ),
+                      ),
+                      child: CachedNetworkImage(
+                        imageUrl: restaurant.imageUrl!,
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                        height: 40,
+                        placeholder: (context, url) => const Center(
+                          child: CircularProgressIndicator(
+                            color: AppColor.primaryColor,
+                          ),
+                        ),
+                        errorWidget: (context, url, error) =>
+                        const Icon(Icons.broken_image_rounded),
+                        memCacheWidth: (MediaQuery.of(context).size.width *
+                            MediaQuery.of(context).devicePixelRatio)
+                            .round(),
                       ),
                     ),
                     const SizedBox(width: 10),
@@ -469,11 +493,6 @@ Widget buildOrderPreparingStateWidget({
                       width: 40,
                       height: 40,
                       decoration: ShapeDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(restaurant.imageUrl ??
-                              'https://via.placeholder.com/150'),
-                          fit: BoxFit.cover,
-                        ),
                         shape: RoundedRectangleBorder(
                           side: const BorderSide(
                             width: 1,
@@ -482,6 +501,22 @@ Widget buildOrderPreparingStateWidget({
                           ),
                           borderRadius: BorderRadius.circular(6),
                         ),
+                      ),
+                      child: CachedNetworkImage(
+                        imageUrl: restaurant.imageUrl!,
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                        height: 40,
+                        placeholder: (context, url) => const Center(
+                          child: CircularProgressIndicator(
+                            color: AppColor.primaryColor,
+                          ),
+                        ),
+                        errorWidget: (context, url, error) =>
+                        const Icon(Icons.broken_image_rounded),
+                        memCacheWidth: (MediaQuery.of(context).size.width *
+                            MediaQuery.of(context).devicePixelRatio)
+                            .round(),
                       ),
                     ),
                     const SizedBox(width: 10),
@@ -637,11 +672,6 @@ Widget buildOrderOnWayStateWidget({
                         width: 40,
                         height: 40,
                         decoration: ShapeDecoration(
-                          image: DecorationImage(
-                            image: NetworkImage(restaurant.imageUrl ??
-                                'https://via.placeholder.com/150'),
-                            fit: BoxFit.cover,
-                          ),
                           shape: RoundedRectangleBorder(
                             side: const BorderSide(
                               width: 1,
@@ -650,6 +680,22 @@ Widget buildOrderOnWayStateWidget({
                             ),
                             borderRadius: BorderRadius.circular(6),
                           ),
+                        ),
+                        child: CachedNetworkImage(
+                          imageUrl: restaurant.imageUrl!,
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                          height: 40,
+                          placeholder: (context, url) => const Center(
+                            child: CircularProgressIndicator(
+                              color: AppColor.primaryColor,
+                            ),
+                          ),
+                          errorWidget: (context, url, error) =>
+                          const Icon(Icons.broken_image_rounded),
+                          memCacheWidth: (MediaQuery.of(context).size.width *
+                              MediaQuery.of(context).devicePixelRatio)
+                              .round(),
                         ),
                       ),
                       const SizedBox(width: 10),
@@ -881,13 +927,6 @@ Widget buildOrderDeliveredStateWidget({
                         width: 40,
                         height: 40,
                         decoration: ShapeDecoration(
-                          image: DecorationImage(
-                            image: NetworkImage(
-                              restaurant.imageUrl ??
-                                  'https://via.placeholder.com/150',
-                            ),
-                            fit: BoxFit.cover,
-                          ),
                           shape: RoundedRectangleBorder(
                             side: const BorderSide(
                               width: 1,
@@ -896,6 +935,22 @@ Widget buildOrderDeliveredStateWidget({
                             ),
                             borderRadius: BorderRadius.circular(6),
                           ),
+                        ),
+                        child: CachedNetworkImage(
+                          imageUrl: restaurant.imageUrl!,
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                          height: 40,
+                          placeholder: (context, url) => const Center(
+                            child: CircularProgressIndicator(
+                              color: AppColor.primaryColor,
+                            ),
+                          ),
+                          errorWidget: (context, url, error) =>
+                          const Icon(Icons.broken_image_rounded),
+                          memCacheWidth: (MediaQuery.of(context).size.width *
+                              MediaQuery.of(context).devicePixelRatio)
+                              .round(),
                         ),
                       ),
                       const SizedBox(width: 10),
@@ -1058,11 +1113,6 @@ Widget buildOrderDeclinedStateWidget({
                         width: 40,
                         height: 40,
                         decoration: ShapeDecoration(
-                          image: DecorationImage(
-                            image: NetworkImage(restaurant.imageUrl ??
-                                'https://via.placeholder.com/150'),
-                            fit: BoxFit.cover,
-                          ),
                           shape: RoundedRectangleBorder(
                             side: const BorderSide(
                               width: 1,
@@ -1071,6 +1121,22 @@ Widget buildOrderDeclinedStateWidget({
                             ),
                             borderRadius: BorderRadius.circular(6),
                           ),
+                        ),
+                        child: CachedNetworkImage(
+                          imageUrl: restaurant.imageUrl!,
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                          height: 40,
+                          placeholder: (context, url) => const Center(
+                            child: CircularProgressIndicator(
+                              color: AppColor.primaryColor,
+                            ),
+                          ),
+                          errorWidget: (context, url, error) =>
+                          const Icon(Icons.broken_image_rounded),
+                          memCacheWidth: (MediaQuery.of(context).size.width *
+                              MediaQuery.of(context).devicePixelRatio)
+                              .round(),
                         ),
                       ),
                       const SizedBox(width: 10),
@@ -1235,11 +1301,6 @@ Widget buildOrderAutoDeclinedStateWidget({
                         width: 40,
                         height: 40,
                         decoration: ShapeDecoration(
-                          image: DecorationImage(
-                            image: NetworkImage(restaurant.imageUrl ??
-                                'https://via.placeholder.com/150'),
-                            fit: BoxFit.cover,
-                          ),
                           shape: RoundedRectangleBorder(
                             side: const BorderSide(
                               width: 1,
@@ -1248,6 +1309,22 @@ Widget buildOrderAutoDeclinedStateWidget({
                             ),
                             borderRadius: BorderRadius.circular(6),
                           ),
+                        ),
+                        child: CachedNetworkImage(
+                          imageUrl: restaurant.imageUrl!,
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                          height: 40,
+                          placeholder: (context, url) => const Center(
+                            child: CircularProgressIndicator(
+                              color: AppColor.primaryColor,
+                            ),
+                          ),
+                          errorWidget: (context, url, error) =>
+                          const Icon(Icons.broken_image_rounded),
+                          memCacheWidth: (MediaQuery.of(context).size.width *
+                              MediaQuery.of(context).devicePixelRatio)
+                              .round(),
                         ),
                       ),
                       const SizedBox(width: 10),

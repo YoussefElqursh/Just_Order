@@ -55,8 +55,8 @@ Widget customCheckBoxButtonWidget({
               value: value,
               activeColor: const Color(0xFFE02C45),
               checkColor: state.themeMode == ThemeMode.light
-                  ? Colors.black
-                  : Colors.white,
+                  ? Colors.white
+                  : Colors.black,
               side: const BorderSide(
                 color: Color(0xFF898888),
                 width: 1.5,

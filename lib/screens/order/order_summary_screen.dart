@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dartz/dartz.dart' as fp;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,6 +11,7 @@ import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/repository/payment_repository/payment_repository.dart';
 import 'package:just_order/screens/order/order_confirmed_screen.dart';
 import 'package:just_order/screens/order/widgets/order_components_widget.dart';
+import 'package:just_order/shared/style/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OrderSummaryScreen extends StatefulWidget {
@@ -45,6 +47,8 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
   Restaurant? restaurant;
   final PaymentRepository _paymentRepository = PaymentRepository();
 
+  final TextEditingController _deliveryTipController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -54,7 +58,7 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
   Future<void> _loadRestaurant() async {
     final prefs = await SharedPreferences.getInstance();
     final restaurantString =
-    // ignore: use_build_context_synchronously
+        // ignore: use_build_context_synchronously
         prefs.getString(AppLocalizations.of(context)!.restaurant_name);
     if (restaurantString != null) {
       setState(() {
@@ -145,13 +149,6 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                                 width: 50,
                                 height: 50,
                                 decoration: ShapeDecoration(
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                      restaurant?.imageUrl ??
-                                          'https://via.placeholder.com/150*150',
-                                    ),
-                                    fit: BoxFit.fill,
-                                  ),
                                   shape: RoundedRectangleBorder(
                                     side: const BorderSide(
                                       width: 1,
@@ -160,6 +157,34 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                                     ),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
+                                ),
+                                child: CachedNetworkImage(
+                                  imageUrl: restaurant?.imageUrl ?? '',
+                                  fit: BoxFit.cover,
+                                  width: double.infinity,
+                                  height: 50,
+                                  placeholder: (
+                                    context,
+                                    url,
+                                  ) =>
+                                      const Center(
+                                    child: CircularProgressIndicator(
+                                      color: AppColor.primaryColor,
+                                    ),
+                                  ),
+                                  errorWidget: (
+                                    context,
+                                    url,
+                                    error,
+                                  ) =>
+                                      const Icon(
+                                    Icons.broken_image_rounded,
+                                  ),
+                                  memCacheWidth:
+                                      (MediaQuery.of(context).size.width *
+                                              MediaQuery.of(context)
+                                                  .devicePixelRatio)
+                                          .round(),
                                 ),
                               ),
                               Padding(
@@ -251,6 +276,7 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                                 buildOrderComponentsWidget(
                               widget.cartItems[index],
                               state,
+                              context,
                             ),
                             separatorBuilder: (context, index) =>
                                 const SizedBox(height: 16.0),
@@ -437,6 +463,38 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                           ),
                           const SizedBox(height: 12),
                           Row(
+                            children: [
+                              Text(
+                                'Delivery Tip',
+                                style: TextStyle(
+                                  color: state.themeMode == ThemeMode.light
+                                      ? Colors.black
+                                      : Colors.white,
+                                  fontSize: 14,
+                                  fontFamily: 'Inter',
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              ),
+                              const Spacer(),
+                              SizedBox(
+                                width: 70,
+                                height: 46,
+                                child: _buildLabeledTextField(
+                                  hint: '0.00',
+                                  controller: _deliveryTipController,
+                                  keyboardType: TextInputType.number,
+                                  themeMode: state.themeMode,
+                                  themeDark: state.themeMode == ThemeMode.light
+                                      ? false
+                                      : true,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 12),
+                          Row(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -551,4 +609,70 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
       },
     );
   }
+}
+
+Widget _buildLabeledTextField({
+  required String hint,
+  required TextEditingController controller,
+  required ThemeMode themeMode,
+  required bool themeDark,
+  TextInputType? keyboardType,
+  bool obscureText = false,
+  Widget? suffixIcon,
+  String? Function(String?)? validator,
+}) {
+  final textColor = themeMode == ThemeMode.light ? Colors.black : Colors.white;
+
+  final inputStyle = TextStyle(
+    color: textColor,
+    fontSize: 12,
+    fontFamily: 'Inter',
+    fontWeight: FontWeight.w500,
+  );
+
+  return TextFormField(
+    controller: controller,
+    keyboardType: keyboardType,
+    obscureText: obscureText,
+    validator: validator,
+    style: inputStyle,
+    decoration: InputDecoration(
+      constraints: const BoxConstraints(
+        maxHeight: 42,
+      ),
+      hintText: hint,
+      hintStyle: const TextStyle(
+        color: Color(0xFFCCCCCC) /* Gray-Smoke */,
+        fontSize: 12,
+        fontFamily: 'Inter',
+        fontWeight: FontWeight.w500,
+      ),
+      suffixIcon: suffixIcon,
+      border: OutlineInputBorder(
+        borderSide: const BorderSide(
+          width: 1,
+          color: Color(0x4CAFAFAF),
+        ),
+        borderRadius: BorderRadius.circular(6),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: const BorderSide(
+          width: 1,
+          color: Color(0xFFE02C45),
+        ),
+        borderRadius: BorderRadius.circular(6),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderSide: const BorderSide(
+          width: 1,
+          color: Color(0x4CAFAFAF),
+        ),
+        borderRadius: BorderRadius.circular(6),
+      ),
+      contentPadding: const EdgeInsets.symmetric(
+        horizontal: 12,
+        vertical: 10,
+      ),
+    ),
+  );
 }

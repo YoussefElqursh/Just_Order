@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:just_order/blocs/theming/theming_cubit.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
@@ -7,24 +9,30 @@ import 'package:just_order/models/cart_item_model.dart';
 import 'package:just_order/models/order_model.dart';
 import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/repository/order_repository/order_repository.dart';
+import 'package:just_order/shared/style/colors.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import '../widgets/order_components_widget.dart';
 
 class OrderDetailsScreen extends StatefulWidget {
   final Order order;
   final Restaurant restaurant;
 
-  const OrderDetailsScreen(
-      {super.key, required this.order, required this.restaurant});
+  const OrderDetailsScreen({
+    super.key,
+    required this.order,
+    required this.restaurant,
+  });
 
   static const String routeName = 'OrderDetailsScreenRoute';
 
   static Route route({required Order order, required Restaurant restaurant}) {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
-      builder: (context) =>
-          OrderDetailsScreen(order: order, restaurant: restaurant),
+      builder: (context) => OrderDetailsScreen(
+        order: order,
+        restaurant: restaurant,
+      ),
     );
   }
 
@@ -50,7 +58,6 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeCubit, ThemeState>(
@@ -70,8 +77,11 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
               ),
             ),
             leading: Padding(
-              padding:
-                  const EdgeInsets.only(left: 20.0, top: 10.0, bottom: 10.0),
+              padding: const EdgeInsets.only(
+                left: 20.0,
+                top: 10.0,
+                bottom: 10.0,
+              ),
               child: Container(
                 width: 34,
                 height: 34,
@@ -79,7 +89,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 decoration: ShapeDecoration(
                   color: const Color(0xFFF4F4F4),
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8)),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                 ),
                 child: IconButton(
                   onPressed: () {
@@ -113,11 +124,6 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           width: 50,
                           height: 50,
                           decoration: ShapeDecoration(
-                            image: DecorationImage(
-                              image: NetworkImage(widget.restaurant.imageUrl ??
-                                  'https://via.placeholder.com/150'),
-                              fit: BoxFit.cover,
-                            ),
                             shape: RoundedRectangleBorder(
                               side: const BorderSide(
                                 width: 1,
@@ -126,6 +132,22 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                               ),
                               borderRadius: BorderRadius.circular(10),
                             ),
+                          ),
+                          child: CachedNetworkImage(
+                            imageUrl: widget.restaurant.imageUrl!,
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                            height: 50,
+                            placeholder: (context, url) => const Center(
+                              child: CircularProgressIndicator(
+                                color: AppColor.primaryColor,
+                              ),
+                            ),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.broken_image_rounded),
+                            memCacheWidth: (MediaQuery.of(context).size.width *
+                                    MediaQuery.of(context).devicePixelRatio)
+                                .round(),
                           ),
                         ),
                         const SizedBox(width: 12),
@@ -147,7 +169,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                             const SizedBox(
                               height: 5,
                             ),
-                             Text(
+                            Text(
                               AppLocalizations.of(context)!.pizza_pies_crepes,
                               style: const TextStyle(
                                 color: Color(0xFF898888),
@@ -190,7 +212,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                             Text(
+                            Text(
                               AppLocalizations.of(context)!.order_iD,
                               style: const TextStyle(
                                 color: Color(0xFF898888),
@@ -217,7 +239,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                             Text(
+                            Text(
                               AppLocalizations.of(context)!.date,
                               style: const TextStyle(
                                 color: Color(0xFF898888),
@@ -245,7 +267,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                             Text(
+                            Text(
                               AppLocalizations.of(context)!.order_status,
                               style: const TextStyle(
                                 color: Color(0xFF898888),
@@ -397,7 +419,11 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       width: MediaQuery.sizeOf(context).width,
                       child: ListView.separated(
                         itemBuilder: (context, index) =>
-                            buildOrderComponentsWidget(cartItems[index], state),
+                            buildOrderComponentsWidget(
+                          cartItems[index],
+                          state,
+                          context,
+                        ),
                         separatorBuilder: (context, index) =>
                             const SizedBox(height: 16.0),
                         itemCount: cartItems.length,

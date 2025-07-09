@@ -1,8 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/models/user_model.dart';
 import 'package:just_order/screens/home/restaurant_screen/restaurant_screen.dart';
+import 'package:just_order/shared/style/colors.dart';
 
 Widget buildPopularTodayWidget({
   required BuildContext context,
@@ -26,12 +28,8 @@ Widget buildPopularTodayWidget({
             Container(
               width: 155,
               height: 120,
-              decoration: ShapeDecoration(
-                image: DecorationImage(
-                  image: NetworkImage(restaurant.imageUrl!),
-                  fit: BoxFit.cover,
-                ),
-                shape: const RoundedRectangleBorder(
+              decoration: const ShapeDecoration(
+                shape: RoundedRectangleBorder(
                   side: BorderSide(
                     width: 1.50,
                     strokeAlign: BorderSide.strokeAlignCenter,
@@ -42,6 +40,22 @@ Widget buildPopularTodayWidget({
                     topRight: Radius.circular(10),
                   ),
                 ),
+              ),
+              child: CachedNetworkImage(
+                imageUrl: restaurant.imageUrl!,
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height: 120,
+                placeholder: (context, url) => const Center(
+                  child: CircularProgressIndicator(
+                    color: AppColor.primaryColor,
+                  ),
+                ),
+                errorWidget: (context, url, error) =>
+                const Icon(Icons.broken_image_rounded),
+                memCacheWidth: (MediaQuery.of(context).size.width *
+                    MediaQuery.of(context).devicePixelRatio)
+                    .round(),
               ),
             ),
             // Padding(
@@ -184,10 +198,6 @@ Widget buildPopularTodayScreen({
             width: MediaQuery.sizeOf(context).width,
             height: 120,
             decoration: ShapeDecoration(
-              image: DecorationImage(
-                image: NetworkImage(restaurant.imageUrl!),
-                fit: BoxFit.cover,
-              ),
               shape: const RoundedRectangleBorder(
                 side: BorderSide(
                   width: 1.50,
@@ -199,6 +209,22 @@ Widget buildPopularTodayScreen({
                   topRight: Radius.circular(10),
                 ),
               ),
+            ),
+            child: CachedNetworkImage(
+              imageUrl: restaurant.imageUrl!,
+              fit: BoxFit.cover,
+              width: double.infinity,
+              height: 120,
+              placeholder: (context, url) => const Center(
+                child: CircularProgressIndicator(
+                  color: AppColor.primaryColor,
+                ),
+              ),
+              errorWidget: (context, url, error) =>
+              const Icon(Icons.broken_image_rounded),
+              memCacheWidth: (MediaQuery.of(context).size.width *
+                  MediaQuery.of(context).devicePixelRatio)
+                  .round(),
             ),
           ),
           SizedBox(

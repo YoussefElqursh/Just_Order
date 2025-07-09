@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,6 +15,7 @@ import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/models/user_model.dart';
 import 'package:just_order/repository/cart_provider.dart';
 import 'package:just_order/screens/cart/widgets/order_cart_widget.dart';
+import 'package:just_order/shared/style/colors.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -113,8 +115,11 @@ class _MyCartScreenState extends State<MyCartScreen> {
               maxLines: 1,
             ),
             leading: Padding(
-              padding:
-                  const EdgeInsets.only(left: 20.0, top: 10.0, bottom: 10.0),
+              padding: const EdgeInsets.only(
+                left: 20.0,
+                top: 10.0,
+                bottom: 10.0,
+              ),
               child: Container(
                 width: 34,
                 height: 34,
@@ -122,7 +127,8 @@ class _MyCartScreenState extends State<MyCartScreen> {
                 decoration: ShapeDecoration(
                   color: const Color(0xFFF4F4F4),
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8)),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                 ),
                 child: IconButton(
                   onPressed: () {
@@ -172,13 +178,6 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                 width: 50,
                                 height: 50,
                                 decoration: ShapeDecoration(
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                      restaurant?.imageUrl ??
-                                          'https://via.placeholder.com/150*150',
-                                    ),
-                                    fit: BoxFit.fill,
-                                  ),
                                   shape: RoundedRectangleBorder(
                                     side: const BorderSide(
                                       width: 1,
@@ -187,6 +186,28 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                     ),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
+                                ),
+                                child: CachedNetworkImage(
+                                  imageUrl: restaurant?.imageUrl ?? '',
+                                  fit: BoxFit.cover,
+                                  width: double.infinity,
+                                  height: 250,
+                                  placeholder: (context, url) => const Center(
+                                    child: CircularProgressIndicator(
+                                      color: AppColor.primaryColor,
+                                    ),
+                                  ),
+                                  errorWidget: (
+                                    context,
+                                    url,
+                                    error,
+                                  ) =>
+                                      const Icon(Icons.broken_image_rounded),
+                                  memCacheWidth:
+                                      (MediaQuery.of(context).size.width *
+                                              MediaQuery.of(context)
+                                                  .devicePixelRatio)
+                                          .round(),
                                 ),
                               ),
                               Padding(
@@ -586,8 +607,9 @@ class _MyCartScreenState extends State<MyCartScreen> {
           ),
           bottomNavigationBar: SafeArea(
             child: Container(
-              color:
-                  state.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
+              color: state.themeMode == ThemeMode.dark
+                  ? Colors.black
+                  : Colors.white,
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 12.0),
                 child: Column(
@@ -643,7 +665,8 @@ class _MyCartScreenState extends State<MyCartScreen> {
                               createdAt: DateTime.now(),
                               subTotal: filteredItems.fold(
                                 0.0, // ignore: avoid_types_as_parameter_names
-                                (summation, item) => summation + item.totalPrice,
+                                (summation, item) =>
+                                    summation + item.totalPrice,
                               ),
                               totalAmount: filteredItems.fold(
                                     0.0, // ignore: avoid_types_as_parameter_names
@@ -663,8 +686,9 @@ class _MyCartScreenState extends State<MyCartScreen> {
                             String orderCodeForRestaurant =
                                 order.generateOrderCodeForRestaurant();
                             order.orderCode = orderCode;
-                            order.orderCodeForRestaurant = orderCodeForRestaurant;
-            
+                            order.orderCodeForRestaurant =
+                                orderCodeForRestaurant;
+
                             Navigator.pushNamed(
                               // ignore: use_build_context_synchronously
                               context,

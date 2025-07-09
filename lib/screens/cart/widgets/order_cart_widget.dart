@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/cart_item_model.dart';
+import 'package:just_order/shared/style/colors.dart';
 
 Widget buildOrderCartWidget({
   required BuildContext context,
@@ -19,10 +21,6 @@ Widget buildOrderCartWidget({
         width: 70,
         height: 70,
         decoration: ShapeDecoration(
-          image: DecorationImage(
-            image: NetworkImage(cartItem.item.imageUrl),
-            fit: BoxFit.cover,
-          ),
           shape: RoundedRectangleBorder(
             side: const BorderSide(
               width: 1,
@@ -31,6 +29,22 @@ Widget buildOrderCartWidget({
             ),
             borderRadius: BorderRadius.circular(10),
           ),
+        ),
+        child: CachedNetworkImage(
+          imageUrl: cartItem.item.imageUrl,
+          fit: BoxFit.cover,
+          width: double.infinity,
+          height: 70,
+          placeholder: (context, url) => const Center(
+            child: CircularProgressIndicator(
+              color: AppColor.primaryColor,
+            ),
+          ),
+          errorWidget: (context, url, error) =>
+          const Icon(Icons.broken_image_rounded),
+          memCacheWidth: (MediaQuery.of(context).size.width *
+              MediaQuery.of(context).devicePixelRatio)
+              .round(),
         ),
       ),
       Padding(
@@ -83,7 +97,7 @@ Widget buildOrderCartWidget({
                     ),
                   ),
                   Visibility(
-                    visible: cartItem.size!.isNotEmpty,
+                    visible: cartItem.size != null && cartItem.size!.isNotEmpty,
                     maintainSize: false, // Ensures no space is taken when not visible
                     maintainAnimation: false,
                     maintainState: false,
