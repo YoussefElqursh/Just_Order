@@ -62,7 +62,7 @@ class _PopularTodayScreenState extends State<PopularTodayScreen> {
     try {
       final UserRepository userRepository = UserRepository();
       final List<Restaurant> restaurants =
-      await userRepository.getRestaurants(tableCode);
+          await userRepository.getRestaurants(tableCode);
 
       setState(() {
         this.restaurants = restaurants;
@@ -86,7 +86,9 @@ class _PopularTodayScreenState extends State<PopularTodayScreen> {
             title: Text(
               "Popular Today",
               style: TextStyle(
-                color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                color: state.themeMode == ThemeMode.light
+                    ? Colors.black
+                    : Colors.white,
                 fontSize: 14,
                 fontFamily: 'Inter',
                 fontWeight: FontWeight.w600,
@@ -95,7 +97,8 @@ class _PopularTodayScreenState extends State<PopularTodayScreen> {
               maxLines: 1,
             ),
             leading: Padding(
-              padding: const EdgeInsets.only(left: 20.0, top: 10.0, bottom: 10.0),
+              padding:
+                  const EdgeInsets.only(left: 20.0, top: 10.0, bottom: 10.0),
               child: Container(
                 width: 34,
                 height: 34,
@@ -119,21 +122,19 @@ class _PopularTodayScreenState extends State<PopularTodayScreen> {
             ),
           ),
           body: ListView.separated(
-            itemBuilder: (context, index) =>
-                buildPopularTodayScreen(
-                  context: context,
-                  restaurant: restaurants[index],
-                  state: state,
-                  user: user,
-                ),
-            separatorBuilder: (context, index) =>
-            const SizedBox(height: 25.0),
+            itemBuilder: (context, index) => buildPopularTodayScreen(
+              context: context,
+              restaurant: restaurants[index],
+              state: state,
+              user: user,
+            ),
+            separatorBuilder: (context, index) => const SizedBox(height: 25.0),
             itemCount: min(restaurants.length, 5),
             scrollDirection: Axis.vertical,
             physics: const BouncingScrollPhysics(),
             shrinkWrap: true,
-            padding:
-            const EdgeInsets.symmetric(horizontal: 20.0).copyWith(top: 10.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0)
+                .copyWith(top: 10.0),
           ),
         );
       },

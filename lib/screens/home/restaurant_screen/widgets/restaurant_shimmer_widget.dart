@@ -103,7 +103,7 @@ class RestaurantShimmer extends StatelessWidget {
                 child: Row(
                   children: List.generate(
                     5,
-                        (index) => const Padding(
+                    (index) => const Padding(
                       padding: EdgeInsets.only(right: 16),
                       child: ShimmerLoading.rectangular(
                         height: 30,

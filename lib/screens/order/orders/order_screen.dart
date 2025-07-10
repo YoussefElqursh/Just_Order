@@ -96,22 +96,27 @@ class _OrderScreenState extends State<OrderScreen> {
             ),
             actions: [
               Padding(
-                padding:
-                    const EdgeInsets.only(right: 20.0, top: 10.0, bottom: 10.0,),
+                padding: const EdgeInsets.only(
+                  right: 20.0,
+                  top: 10.0,
+                  bottom: 10.0,
+                ),
                 child: Badge(
                   label: const Text('${12}'),
                   alignment: AlignmentDirectional.topEnd,
                   backgroundColor: const Color(0xFFE02C45),
                   textColor: Colors.white,
                   isLabelVisible: true,
-                  smallSize: 7,                  child: Container(
+                  smallSize: 7,
+                  child: Container(
                     width: 36,
                     height: 36,
                     clipBehavior: Clip.antiAlias,
                     decoration: ShapeDecoration(
                       color: const Color(0xFFF4F4F4),
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
                     ),
                     child: IconButton(
                       onPressed: () {},
@@ -617,18 +622,16 @@ class _OrderScreenState extends State<OrderScreen> {
                                               .where(
                                                 (order) =>
                                                     order.status ==
-                                                    Status.delivered||
-                                                        order.status ==
-                                                            Status.finalized,
+                                                        Status.delivered ||
+                                                    order.status ==
+                                                        Status.finalized,
                                               )
                                               .toList(),
                                           restaurantMap
                                         ]);
                                   },
                                   child: Text(
-                                    '${AppLocalizations.of(context)!.view_all} (${orders.where((order) => order.status == Status.delivered ||
-                                        order.status ==
-                                            Status.finalized).length})',
+                                    '${AppLocalizations.of(context)!.view_all} (${orders.where((order) => order.status == Status.delivered || order.status == Status.finalized).length})',
                                     style: const TextStyle(
                                       color: Color(0xFFE02C45),
                                       fontSize: 10,
@@ -651,9 +654,8 @@ class _OrderScreenState extends State<OrderScreen> {
                                   if (orders
                                       .where(
                                         (order) =>
-                                            order.status == Status.delivered||
-                                                order.status ==
-                                                    Status.finalized,
+                                            order.status == Status.delivered ||
+                                            order.status == Status.finalized,
                                       )
                                       .isEmpty) {
                                     return Padding(
@@ -695,8 +697,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                     );
                                   } else {
                                     return ListView.separated(
-                                      itemBuilder: (context, index)
-                                      {
+                                      itemBuilder: (context, index) {
                                         return buildOrderDeliveredStateWidget(
                                           context: context,
                                           order: orders

@@ -1,6 +1,6 @@
-import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeCubit extends Cubit<ThemeState> {
@@ -18,7 +18,7 @@ class ThemeCubit extends Cubit<ThemeState> {
   // Toggle theme and persist the change
   Future<void> toggleTheme() async {
     final newTheme =
-    state.themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
+        state.themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
     emit(state.copyWith(themeMode: newTheme));
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt(_themeKey, newTheme.index);

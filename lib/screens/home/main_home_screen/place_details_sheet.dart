@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:just_order/screens/QR/select_your_place_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:just_order/screens/QR/select_your_place_screen.dart';
 
 class PlaceDetailsSheet extends StatelessWidget {
   const PlaceDetailsSheet({

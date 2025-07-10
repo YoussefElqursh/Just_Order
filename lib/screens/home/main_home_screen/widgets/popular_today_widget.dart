@@ -14,11 +14,14 @@ Widget buildPopularTodayWidget({
 }) {
   return GestureDetector(
     onTap: () {
-      Navigator.pushNamed(context, 'RestaurantScreenRoute',
+      Navigator.pushNamed(
+        context,
+        'RestaurantScreenRoute',
         arguments: RestaurantScreenArguments(
           restaurant: restaurant,
           user: user,
-        ),);
+        ),
+      );
     },
     child: Column(
       children: [
@@ -52,9 +55,9 @@ Widget buildPopularTodayWidget({
                   ),
                 ),
                 errorWidget: (context, url, error) =>
-                const Icon(Icons.broken_image_rounded),
+                    const Icon(Icons.broken_image_rounded),
                 memCacheWidth: (MediaQuery.of(context).size.width *
-                    MediaQuery.of(context).devicePixelRatio)
+                        MediaQuery.of(context).devicePixelRatio)
                     .round(),
               ),
             ),
@@ -97,7 +100,9 @@ Widget buildPopularTodayWidget({
                 Text(
                   restaurant.name,
                   style: TextStyle(
-                    color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                    color: state.themeMode == ThemeMode.light
+                        ? Colors.black
+                        : Colors.white,
                     fontSize: 12,
                     fontFamily: 'Inter',
                     fontWeight: FontWeight.w600,
@@ -109,7 +114,9 @@ Widget buildPopularTodayWidget({
                 Text(
                   'Sandwiches, Fast Food',
                   style: TextStyle(
-                    color: state.themeMode == ThemeMode.light ? const Color(0xFFAFAFAF) : Colors.white,
+                    color: state.themeMode == ThemeMode.light
+                        ? const Color(0xFFAFAFAF)
+                        : Colors.white,
                     fontSize: 10,
                     fontFamily: 'Inter',
                     fontWeight: FontWeight.w400,
@@ -131,7 +138,9 @@ Widget buildPopularTodayWidget({
                           TextSpan(
                             text: '4.3',
                             style: TextStyle(
-                              color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                              color: state.themeMode == ThemeMode.light
+                                  ? Colors.black
+                                  : Colors.white,
                               fontSize: 10,
                               fontFamily: 'Inter',
                               fontWeight: FontWeight.w500,
@@ -170,11 +179,14 @@ Widget buildPopularTodayScreen({
 }) {
   return GestureDetector(
     onTap: () {
-      Navigator.pushNamed(context, 'RestaurantScreenRoute',
+      Navigator.pushNamed(
+        context,
+        'RestaurantScreenRoute',
         arguments: RestaurantScreenArguments(
           restaurant: restaurant,
           user: user,
-        ),);
+        ),
+      );
     },
     child: Container(
       width: MediaQuery.sizeOf(context).width,
@@ -188,7 +200,6 @@ Widget buildPopularTodayScreen({
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(10),
             topRight: Radius.circular(10),
-
           ),
         ),
       ),
@@ -221,9 +232,9 @@ Widget buildPopularTodayScreen({
                 ),
               ),
               errorWidget: (context, url, error) =>
-              const Icon(Icons.broken_image_rounded),
+                  const Icon(Icons.broken_image_rounded),
               memCacheWidth: (MediaQuery.of(context).size.width *
-                  MediaQuery.of(context).devicePixelRatio)
+                      MediaQuery.of(context).devicePixelRatio)
                   .round(),
             ),
           ),
@@ -239,7 +250,9 @@ Widget buildPopularTodayScreen({
                   Text(
                     restaurant.name,
                     style: TextStyle(
-                      color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                      color: state.themeMode == ThemeMode.light
+                          ? Colors.black
+                          : Colors.white,
                       fontSize: 12,
                       fontFamily: 'Inter',
                       fontWeight: FontWeight.w600,
@@ -251,7 +264,9 @@ Widget buildPopularTodayScreen({
                   Text(
                     'Sandwiches, Fast Food',
                     style: TextStyle(
-                      color: state.themeMode == ThemeMode.light ? const Color(0xFFAFAFAF) : Colors.white,
+                      color: state.themeMode == ThemeMode.light
+                          ? const Color(0xFFAFAFAF)
+                          : Colors.white,
                       fontSize: 10,
                       fontFamily: 'Inter',
                       fontWeight: FontWeight.w400,
@@ -273,7 +288,9 @@ Widget buildPopularTodayScreen({
                             TextSpan(
                               text: '4.3',
                               style: TextStyle(
-                                color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                                color: state.themeMode == ThemeMode.light
+                                    ? Colors.black
+                                    : Colors.white,
                                 fontSize: 10,
                                 fontFamily: 'Inter',
                                 fontWeight: FontWeight.w500,

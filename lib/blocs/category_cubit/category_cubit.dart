@@ -6,7 +6,9 @@ import 'category_state.dart';
 
 class CategoryCubit extends Cubit<CategoryState> {
   final CategoryRepository _categoryRepository;
-  CategoryCubit(this._categoryRepository) : super(const CategoryState.initial());
+
+  CategoryCubit(this._categoryRepository)
+      : super(const CategoryState.initial());
 
   void listenToCategories() {
     _categoryRepository.getCategoriesStream().listen((categories) {
@@ -49,14 +51,13 @@ class CategoryCubit extends Cubit<CategoryState> {
     }
   }
 
-
   Future<void> updateCategory(Categories category) async {
     emit(const CategoryState.loading());
     try {
       await _categoryRepository.updateCategory(category);
 
       // Fetch updated clubs after updating
-      final categories =  _categoryRepository.getCategoriesStream();
+      final categories = _categoryRepository.getCategoriesStream();
 
       if (!isClosed) {
         emit(CategoryState.success(

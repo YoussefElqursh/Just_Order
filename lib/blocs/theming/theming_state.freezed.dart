@@ -30,6 +30,7 @@ abstract class $ThemeStateCopyWith<$Res> {
   factory $ThemeStateCopyWith(
           ThemeState value, $Res Function(ThemeState) then) =
       _$ThemeStateCopyWithImpl<$Res, ThemeState>;
+
   @useResult
   $Res call({ThemeMode themeMode});
 }
@@ -41,6 +42,7 @@ class _$ThemeStateCopyWithImpl<$Res, $Val extends ThemeState>
 
   // ignore: unused_field
   final $Val _value;
+
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -66,6 +68,7 @@ abstract class _$$ThemeStateImplCopyWith<$Res>
   factory _$$ThemeStateImplCopyWith(
           _$ThemeStateImpl value, $Res Function(_$ThemeStateImpl) then) =
       __$$ThemeStateImplCopyWithImpl<$Res>;
+
   @override
   @useResult
   $Res call({ThemeMode themeMode});

@@ -56,14 +56,16 @@ class TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
           "${AppLocalizations.of(context)!.returns_and_refunds}\n\n${AppLocalizations.of(context)!.if_your_order_arrives_late_incorrect_or_damaged_please_contact_just_on_time_customer_support_immediately}\n\n${AppLocalizations.of(context)!.just_on_time_will_use_reasonable_efforts_to_resolve_any_order_issues}",
       AppLocalizations.of(context)!.intellectual_property:
           "${AppLocalizations.of(context)!.the_app_and_all_of_its_content_including_but_not_limited_to_text_graphics_logos_images_and_software_are_protected_by_copyright_trademark_and_other_intellectual_property_laws}\n\n${AppLocalizations.of(context)!.you_may_not_use_reproduce_distribute_modify_or_create_derivative_works_of_any_of_the_apps_content_without_our_prior_written_consent}\n\n${AppLocalizations.of(context)!.just_on_time_respects_the_intellectual_property_rights_of_others}\n${AppLocalizations.of(context)!.if_you_believe_that_your_intellectual_property_rights_have_been_infringed_please_contact_us}",
-      AppLocalizations.of(context)!.data_privacy_and_security:
-          AppLocalizations.of(context)!.please_refer_to_our_separate_data_privacy_policy_for_information_on_how_we_collect_use_and_protect_your_personal_data,
+      AppLocalizations.of(context)!.data_privacy_and_security: AppLocalizations
+              .of(context)!
+          .please_refer_to_our_separate_data_privacy_policy_for_information_on_how_we_collect_use_and_protect_your_personal_data,
       AppLocalizations.of(context)!.disclaimer_of_warranties:
           "${AppLocalizations.of(context)!.the_app_and_all_services_provided_by_just_on_time_are_provided_as_is_and_as_available_without_warranty_of_any_kind_express_or_implied}\n\n${AppLocalizations.of(context)!.just_on_time_does_not_warrant_that_the_app_will_be_uninterrupted_or_error_free_that_defects_will_be_corrected_or_that_the_app_or_the_server_that_makes_it_available_are_free_of_viruses_or_other_harmful_components}\n\n${AppLocalizations.of(context)!.just_on_time_disclaims_any_liability_for_the_services_provided_by_third_parties_including_but_not_limited_to_restaurants_and_delivery_drivers}",
       AppLocalizations.of(context)!.limitation_of_liability:
           "${AppLocalizations.of(context)!.in_no_event_shall_just_on_time_be_liable_for_any_indirect_incidental_special_consequential_or_punitive_damages}\n\n${AppLocalizations.of(context)!.this_includes_without_limitation_loss_of_profits_data_use_goodwill_or_other_intangible_losses_resulting_from_i_the_use_of_or_the_inability_to_use_the_app_ii_the_cost_of_procurement_of_substitute_goods_or_services_or_iii_unauthorized_access_to_or_alteration_of_your_transmissions_or_data}\n\n${AppLocalizations.of(context)!.this_limitation_of_liability_shall_apply_to_the_fullest_extent_permitted_by_applicable_law}",
-      AppLocalizations.of(context)!.indemnification:
-          AppLocalizations.of(context)!.you_agree_to_indemnify_and_hold_harmless_just_on_time_and_its_affiliates_officers_directors_employees_agents_and_licensors_from_any_and_all_claims_losses_damages_liabilities_costs_and_expenses_arising_out_of_or_related_to_your_use_of_the_app_your_violation_of_these_terms_or_your_infringement_of_any_third_party_rights,
+      AppLocalizations.of(context)!.indemnification: AppLocalizations.of(
+              context)!
+          .you_agree_to_indemnify_and_hold_harmless_just_on_time_and_its_affiliates_officers_directors_employees_agents_and_licensors_from_any_and_all_claims_losses_damages_liabilities_costs_and_expenses_arising_out_of_or_related_to_your_use_of_the_app_your_violation_of_these_terms_or_your_infringement_of_any_third_party_rights,
       AppLocalizations.of(context)!.governing_law_and_jurisdiction:
           "${AppLocalizations.of(context)!.these_terms_shall_be_governed_by_and_construed_in_accordance_with_the_laws_of_the_arab_republic_of_egypt_without_giving_effect_to_any_principles_of_conflicts_of_law}\n\n${AppLocalizations.of(context)!.any_dispute_arising_out_of_or_relating_to_these_terms_shall_be_subject_to_the_exclusive_jurisdiction_of_the_courts_of_the_arab_republic_of_egypt}",
       AppLocalizations.of(context)!.dispute_resolution:
@@ -125,7 +127,8 @@ class TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
       ),
       body: SingleChildScrollView(
         // Makes the entire page scrollable
-        child: Container( // Set the body background color to white
+        child: Container(
+          // Set the body background color to white
           padding: const EdgeInsets.all(20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -189,7 +192,9 @@ class TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
                 child: Container(
                   padding: const EdgeInsets.all(6.0),
                   decoration: BoxDecoration(
-                    color: isExpanded ? const Color(0x0DE02C45) : const Color(0xFFF4F4F4),
+                    color: isExpanded
+                        ? const Color(0x0DE02C45)
+                        : const Color(0xFFF4F4F4),
                     // Background color
                     border: Border.all(
                       color: const Color(0xFFF4F4F4),

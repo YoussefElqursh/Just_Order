@@ -87,9 +87,9 @@ Widget buildOrderStateWidget({
                           ),
                         ),
                         errorWidget: (context, url, error) =>
-                        const Icon(Icons.broken_image_rounded),
+                            const Icon(Icons.broken_image_rounded),
                         memCacheWidth: (MediaQuery.of(context).size.width *
-                            MediaQuery.of(context).devicePixelRatio)
+                                MediaQuery.of(context).devicePixelRatio)
                             .round(),
                       ),
                     ),
@@ -297,9 +297,9 @@ Widget buildOrderPendingStateWidget({
                           ),
                         ),
                         errorWidget: (context, url, error) =>
-                        const Icon(Icons.broken_image_rounded),
+                            const Icon(Icons.broken_image_rounded),
                         memCacheWidth: (MediaQuery.of(context).size.width *
-                            MediaQuery.of(context).devicePixelRatio)
+                                MediaQuery.of(context).devicePixelRatio)
                             .round(),
                       ),
                     ),
@@ -513,9 +513,9 @@ Widget buildOrderPreparingStateWidget({
                           ),
                         ),
                         errorWidget: (context, url, error) =>
-                        const Icon(Icons.broken_image_rounded),
+                            const Icon(Icons.broken_image_rounded),
                         memCacheWidth: (MediaQuery.of(context).size.width *
-                            MediaQuery.of(context).devicePixelRatio)
+                                MediaQuery.of(context).devicePixelRatio)
                             .round(),
                       ),
                     ),
@@ -692,9 +692,9 @@ Widget buildOrderOnWayStateWidget({
                             ),
                           ),
                           errorWidget: (context, url, error) =>
-                          const Icon(Icons.broken_image_rounded),
+                              const Icon(Icons.broken_image_rounded),
                           memCacheWidth: (MediaQuery.of(context).size.width *
-                              MediaQuery.of(context).devicePixelRatio)
+                                  MediaQuery.of(context).devicePixelRatio)
                               .round(),
                         ),
                       ),
@@ -947,9 +947,9 @@ Widget buildOrderDeliveredStateWidget({
                             ),
                           ),
                           errorWidget: (context, url, error) =>
-                          const Icon(Icons.broken_image_rounded),
+                              const Icon(Icons.broken_image_rounded),
                           memCacheWidth: (MediaQuery.of(context).size.width *
-                              MediaQuery.of(context).devicePixelRatio)
+                                  MediaQuery.of(context).devicePixelRatio)
                               .round(),
                         ),
                       ),
@@ -1133,9 +1133,9 @@ Widget buildOrderDeclinedStateWidget({
                             ),
                           ),
                           errorWidget: (context, url, error) =>
-                          const Icon(Icons.broken_image_rounded),
+                              const Icon(Icons.broken_image_rounded),
                           memCacheWidth: (MediaQuery.of(context).size.width *
-                              MediaQuery.of(context).devicePixelRatio)
+                                  MediaQuery.of(context).devicePixelRatio)
                               .round(),
                         ),
                       ),
@@ -1321,9 +1321,9 @@ Widget buildOrderAutoDeclinedStateWidget({
                             ),
                           ),
                           errorWidget: (context, url, error) =>
-                          const Icon(Icons.broken_image_rounded),
+                              const Icon(Icons.broken_image_rounded),
                           memCacheWidth: (MediaQuery.of(context).size.width *
-                              MediaQuery.of(context).devicePixelRatio)
+                                  MediaQuery.of(context).devicePixelRatio)
                               .round(),
                         ),
                       ),

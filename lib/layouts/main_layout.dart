@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:just_order/screens/account/main_account_screen/account_screen.dart';
 import 'package:just_order/screens/home/main_home_screen/home_screen.dart';
 import 'package:just_order/screens/order/orders/order_screen.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // ignore: must_be_immutable
 class MainLayout extends StatefulWidget {
@@ -32,7 +32,9 @@ class _MainLayoutState extends State<MainLayout> {
   @override
   Widget build(BuildContext context) {
     final screens = [
-      HomeScreen( tableCode: widget.tableCode,),
+      HomeScreen(
+        tableCode: widget.tableCode,
+      ),
       const OrderScreen(),
       const AccountScreen(),
     ];

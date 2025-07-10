@@ -34,6 +34,7 @@ class LoginCubit extends Cubit<LoginState> {
 
   IconData suffixIcon = Icons.visibility_outlined;
   bool isPassword = true;
+
   void changePasswordState() {
     isPassword = !isPassword;
     suffixIcon =
@@ -64,7 +65,6 @@ class LoginCubit extends Cubit<LoginState> {
         return;
       }
 
-
       // Retrieve user details from Google account
       final String email = googleUser.email; // Email address
       final QuerySnapshot result = await FirebaseFirestore.instance
@@ -82,7 +82,8 @@ class LoginCubit extends Cubit<LoginState> {
         // User not found, sign up the user (create a new Firestore document)
 
         final String googleId = googleUser.id; // Unique ID from Google
-        final String name = googleUser.displayName ?? "No Name Provided"; // Name
+        final String name =
+            googleUser.displayName ?? "No Name Provided"; // Name
 
         final user = User(
           userId: googleId,
@@ -108,7 +109,7 @@ class LoginCubit extends Cubit<LoginState> {
     }
   }
 
-  String digestPassword(String password){
+  String digestPassword(String password) {
     final bytes = utf8.encode(password);
     final digest = sha256.convert(bytes);
     final hashedPassword = digest.toString();

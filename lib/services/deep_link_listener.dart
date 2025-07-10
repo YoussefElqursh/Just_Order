@@ -18,8 +18,10 @@ class _DeepLinkListenerState extends State<DeepLinkListener> {
     final appLinks = AppLinks();
     appLinks.uriLinkStream.listen((uri) {
       log('URI: ${uri.toString()}');
-      if (uri.pathSegments.isNotEmpty && uri.pathSegments.first == 'TableCode') {
-        final tableCode = uri.pathSegments.length > 1 ? uri.pathSegments[1] : null;
+      if (uri.pathSegments.isNotEmpty &&
+          uri.pathSegments.first == 'TableCode') {
+        final tableCode =
+            uri.pathSegments.length > 1 ? uri.pathSegments[1] : null;
         if (tableCode != null && mounted) {
           Navigator.of(context).pushNamed(
             'TableCodeRoute',
@@ -30,7 +32,6 @@ class _DeepLinkListenerState extends State<DeepLinkListener> {
     });
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {

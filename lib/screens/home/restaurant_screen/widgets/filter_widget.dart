@@ -49,31 +49,31 @@ class FilterWidgetState extends State<FilterWidget> {
           Expanded(
             child: widget.items.isNotEmpty
                 ? ListView.separated(
-              physics: const BouncingScrollPhysics(),
-              itemBuilder: (context, index) => buildMealWidget(
-                context: context,
-                item: widget.items[index],
-                state: widget.state,
-              ),
-              separatorBuilder: (context, index) => const Padding(
-                padding: EdgeInsets.symmetric(vertical: 10.0),
-                child: Divider(
-                  height: 1,
-                  color: Colors.grey,
-                ),
-              ),
-              itemCount: widget.items.length,
-            )
+                    physics: const BouncingScrollPhysics(),
+                    itemBuilder: (context, index) => buildMealWidget(
+                      context: context,
+                      item: widget.items[index],
+                      state: widget.state,
+                    ),
+                    separatorBuilder: (context, index) => const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10.0),
+                      child: Divider(
+                        height: 1,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    itemCount: widget.items.length,
+                  )
                 : Center(
-              child: Text(
-                'No Meals',
-                style: TextStyle(
-                  color: widget.state.themeMode == ThemeMode.light
-                      ? Colors.black
-                      : Colors.white,
-                ),
-              ),
-            ),
+                    child: Text(
+                      'No Meals',
+                      style: TextStyle(
+                        color: widget.state.themeMode == ThemeMode.light
+                            ? Colors.black
+                            : Colors.white,
+                      ),
+                    ),
+                  ),
           ),
         ],
       ),

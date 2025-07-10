@@ -67,7 +67,8 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
     body['messageId'] = 1;
     body['locale'] = localeCode;
     body['orderId'] = widget.order.orderId;
-    unawaited(DioHelperPayment.postData(url: 'https://notify.justorder-eg.com/events', data: body));
+    unawaited(DioHelperPayment.postData(
+        url: 'https://notify.justorder-eg.com/events', data: body));
   }
 
   Future<bool> _onWillPop() async {

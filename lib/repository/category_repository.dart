@@ -20,14 +20,13 @@ class CategoryRepository {
   }
 
   Future<List<category_model.Categories?>> getCategories() async {
-
-    QuerySnapshot snapshot = await _firestore
-        .collection('categories').get();
+    QuerySnapshot snapshot = await _firestore.collection('categories').get();
 
     List<category_model.Categories?> categories = [];
 
     for (var doc in snapshot.docs) {
-      categories.add(category_model.Categories.fromJson(doc.data() as Map<String, dynamic>));
+      categories.add(category_model.Categories.fromJson(
+          doc.data() as Map<String, dynamic>));
     }
 
     return categories;
@@ -42,20 +41,20 @@ class CategoryRepository {
   }
 
   Future<void> addCategoryToFirestore(
-      category_model.Categories category,
-      String restaurantId,
-      ) async {
+    category_model.Categories category,
+    String restaurantId,
+  ) async {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
     WriteBatch batch = firestore.batch();
 
     try {
       // Reference to category document
       DocumentReference categoryRef =
-      firestore.collection('categories').doc(category.categoryId);
+          firestore.collection('categories').doc(category.categoryId);
 
       // Reference to restaurant document
       DocumentReference restaurantRef =
-      firestore.collection('restaurants').doc(restaurantId);
+          firestore.collection('restaurants').doc(restaurantId);
 
       // Add category to "categories" collection
       batch.set(categoryRef, category.toJson());
@@ -74,8 +73,6 @@ class CategoryRepository {
       rethrow; // Ensure the error is propagated to Cubit
     }
   }
-
-
 
   Future<void> updateCategory(
     category_model.Categories category,

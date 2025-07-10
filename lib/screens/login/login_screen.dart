@@ -419,8 +419,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             Navigator.pushAndRemoveUntil(
                               // ignore: use_build_context_synchronously
                               context,
-                              MaterialPageRoute(builder: (context) => const SelectYourPlace()),
-                                  (route) => false, // Remove all previous routes
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const SelectYourPlace()),
+                              (route) => false, // Remove all previous routes
                             );
                           } else {
                             _showSnackBar(

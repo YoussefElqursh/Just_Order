@@ -34,9 +34,7 @@ Widget accountFunctionWidget({
               borderRadius: BorderRadius.circular(8),
             ),
           ),
-          child: Center(
-            child: icon
-          ),
+          child: Center(child: icon),
         ),
         const SizedBox(
           width: 12.0,
@@ -44,7 +42,9 @@ Widget accountFunctionWidget({
         Text(
           label,
           style: TextStyle(
-            color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+            color: state.themeMode == ThemeMode.light
+                ? Colors.black
+                : Colors.white,
             fontFamily: 'Inter',
             fontWeight: FontWeight.w500,
           ),
@@ -52,11 +52,15 @@ Widget accountFunctionWidget({
           maxLines: 1,
         ),
         const Spacer(),
-        isText ? Text(text!) : Icon(
-          Icons.arrow_forward_ios,
-          color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
-          size: 18,
-        ),
+        isText
+            ? Text(text!)
+            : Icon(
+                Icons.arrow_forward_ios,
+                color: state.themeMode == ThemeMode.light
+                    ? Colors.black
+                    : Colors.white,
+                size: 18,
+              ),
       ],
     ),
   );

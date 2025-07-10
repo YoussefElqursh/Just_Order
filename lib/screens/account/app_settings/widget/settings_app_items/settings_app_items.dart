@@ -2,7 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 
 class SettingsAppItems extends StatelessWidget {
-  const SettingsAppItems({super.key, required this.icon, required this.title, required this.training, this.onTap, required this.state});
+  const SettingsAppItems(
+      {super.key,
+      required this.icon,
+      required this.title,
+      required this.training,
+      this.onTap,
+      required this.state});
+
   final IconData icon;
   final String title;
   final Widget training;
@@ -13,7 +20,11 @@ class SettingsAppItems extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: onTap,
-      leading: Icon(icon, size: 20, color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,),
+      leading: Icon(
+        icon,
+        size: 20,
+        color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+      ),
       title: Text(title),
       titleTextStyle: TextStyle(
         color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
@@ -21,7 +32,9 @@ class SettingsAppItems extends StatelessWidget {
         fontFamily: 'Montserrat',
         fontWeight: FontWeight.w500,
       ),
-      shape: const Border(bottom: BorderSide(color: Color(0xFFE9ECEF), width: 1),),
+      shape: const Border(
+        bottom: BorderSide(color: Color(0xFFE9ECEF), width: 1),
+      ),
       trailing: training,
     );
   }

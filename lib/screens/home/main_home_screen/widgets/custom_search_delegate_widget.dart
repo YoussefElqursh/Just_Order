@@ -52,8 +52,7 @@ class CustomSearchDelegateWidget extends SearchDelegate {
             onPressed: () {
               if (query.isEmpty) {
                 close(context, null);
-              }
-              else {
+              } else {
                 query = '';
               }
             },

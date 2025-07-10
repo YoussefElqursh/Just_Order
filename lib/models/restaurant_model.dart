@@ -13,34 +13,32 @@ class Restaurant {
   int orderTimeOut;
   bool hasOwnDelivery;
 
-  Restaurant({
-    required this.restaurantId,
-    required this.name,
-    required this.managerId,
-    required this.clubId,
-    this.imageUrl,
-    this.location,
-    required this.itemIds,
-    required this.categoriesId,
-    this.deliveryFee,
-    required this.orderTimeOut,
-    required this.hasOwnDelivery
-  });
+  Restaurant(
+      {required this.restaurantId,
+      required this.name,
+      required this.managerId,
+      required this.clubId,
+      this.imageUrl,
+      this.location,
+      required this.itemIds,
+      required this.categoriesId,
+      this.deliveryFee,
+      required this.orderTimeOut,
+      required this.hasOwnDelivery});
 
   static Restaurant fromMap(Map<String, dynamic> data) {
     return Restaurant(
-      restaurantId: data['restaurantId'],
-      name: data['name'],
-      managerId: data['managerId'],
-      clubId: data['clubId'],
-      imageUrl: data['imageUrl'],
-      location: data['location'],
-      itemIds: List<String>.from(data['itemIds']),
-      categoriesId: List<String>.from(data['categoriesId']),
-      deliveryFee: (data['deliveryFee'] as num?)?.toDouble(),
-      orderTimeOut: (data['orderTimeOut'] as num).toInt(),
-      hasOwnDelivery: (data['hasOwnDelivery']) as bool
-    );
+        restaurantId: data['restaurantId'],
+        name: data['name'],
+        managerId: data['managerId'],
+        clubId: data['clubId'],
+        imageUrl: data['imageUrl'],
+        location: data['location'],
+        itemIds: List<String>.from(data['itemIds']),
+        categoriesId: List<String>.from(data['categoriesId']),
+        deliveryFee: (data['deliveryFee'] as num?)?.toDouble(),
+        orderTimeOut: (data['orderTimeOut'] as num).toInt(),
+        hasOwnDelivery: (data['hasOwnDelivery']) as bool);
   }
 
   Map<String, dynamic> toJson() {
@@ -65,14 +63,13 @@ class Restaurant {
 
   static empty() {
     return Restaurant(
-      restaurantId: '',
-      name: '',
-      managerId: '',
-      clubId: '',
-      itemIds: [],
-      categoriesId: [],
-      orderTimeOut: 0,
-      hasOwnDelivery: false
-    );
+        restaurantId: '',
+        name: '',
+        managerId: '',
+        clubId: '',
+        itemIds: [],
+        categoriesId: [],
+        orderTimeOut: 0,
+        hasOwnDelivery: false);
   }
 }

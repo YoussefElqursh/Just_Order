@@ -25,6 +25,7 @@ import 'package:shimmer/shimmer.dart';
 
 class HomeScreen extends StatefulWidget {
   final String? tableCode;
+
   const HomeScreen({super.key, this.tableCode});
 
   static const String routeName = 'HomeScreenRoute';
@@ -331,7 +332,8 @@ class _HomeScreenState extends State<HomeScreen> {
             color: AppColor.primaryColor,
             elevation: 0.0,
             backgroundColor: Colors.transparent,
-            onRefresh: _refreshData, // Trigger data refresh
+            onRefresh: _refreshData,
+            // Trigger data refresh
             child: isLoading
                 ? _buildShimmerPlaceholder()
                 : SingleChildScrollView(

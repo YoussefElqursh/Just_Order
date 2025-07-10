@@ -218,7 +218,9 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                 child: Container(
                   padding: const EdgeInsets.all(6.0),
                   decoration: BoxDecoration(
-                    color: isExpanded ? const Color(0x0DE02C45) : const Color(0xFFF4F4F4),
+                    color: isExpanded
+                        ? const Color(0x0DE02C45)
+                        : const Color(0xFFF4F4F4),
                     // Background color
                     border: Border.all(
                       color: const Color(0xFFF4F4F4),

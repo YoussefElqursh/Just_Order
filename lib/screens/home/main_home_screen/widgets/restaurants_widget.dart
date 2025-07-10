@@ -98,9 +98,9 @@ class _RestaurantWidgetState extends State<RestaurantWidget> {
                 ),
               ),
               errorWidget: (context, url, error) =>
-              const Icon(Icons.broken_image_rounded),
+                  const Icon(Icons.broken_image_rounded),
               memCacheWidth: (MediaQuery.of(context).size.width *
-                  MediaQuery.of(context).devicePixelRatio)
+                      MediaQuery.of(context).devicePixelRatio)
                   .round(),
             ),
           ),

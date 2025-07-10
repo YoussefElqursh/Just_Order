@@ -55,6 +55,4 @@ class FingerprintCubit extends Cubit<FingerprintState> {
       emit(FingerprintFailure());
     }
   }
-
-
 }

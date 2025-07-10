@@ -6,8 +6,7 @@ import 'package:just_order/models/order_model.dart' as order_model;
 import 'order_repository/order_repository.dart';
 
 class OrderProvider with ChangeNotifier {
-  final OrderRepository _orderSummaryRepository =
-  OrderRepository();
+  final OrderRepository _orderSummaryRepository = OrderRepository();
   List<order_model.Order> _orders = [];
 
   List<order_model.Order> get orders => _orders;

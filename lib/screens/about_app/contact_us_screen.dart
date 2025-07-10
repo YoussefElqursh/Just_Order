@@ -70,7 +70,8 @@ class ContactTile extends StatelessWidget {
   final String title;
   final String url;
 
-  const ContactTile({super.key,
+  const ContactTile({
+    super.key,
     required this.icon,
     required this.title,
     required this.url,

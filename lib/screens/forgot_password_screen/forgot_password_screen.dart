@@ -1,7 +1,8 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart' as http;
 import 'package:just_order/blocs/theming/theming_cubit.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 
@@ -57,7 +58,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeCubit, ThemeState>(
@@ -69,16 +69,24 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             elevation: 0,
             leading: Padding(
               padding: const EdgeInsets.only(
-                left: 20.0, top: 10.0, bottom: 10.0,),
+                left: 20.0,
+                top: 10.0,
+                bottom: 10.0,
+              ),
               child: Container(
                 decoration: BoxDecoration(
                   color: const Color(0xFFF4F4F4),
                   // Background color for the container
                   borderRadius: BorderRadius.circular(
-                    7,), // Rounded corners for the container
+                    7,
+                  ), // Rounded corners for the container
                 ),
                 child: IconButton(
-                  icon: const Icon(Icons.arrow_back, color: Colors.black, size: 18.0,),
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: Colors.black,
+                    size: 18.0,
+                  ),
                   // Arrow icon color
                   onPressed: () {
                     Navigator.pop(context);
@@ -148,14 +156,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       ),
                       decoration: InputDecoration(
                         constraints: BoxConstraints(
-                          maxWidth: MediaQuery
-                              .sizeOf(context)
-                              .width,
+                          maxWidth: MediaQuery.sizeOf(context).width,
                           maxHeight: 42,
                           minHeight: 42,
-                          minWidth: MediaQuery
-                              .sizeOf(context)
-                              .width,
+                          minWidth: MediaQuery.sizeOf(context).width,
                         ),
                         hintText: 'yourname@example.com',
                         hintStyle: const TextStyle(

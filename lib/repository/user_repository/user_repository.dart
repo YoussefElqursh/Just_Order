@@ -57,9 +57,9 @@ class UserRepository {
   }
 
   Future<String> pushOrder(
-      order_model.Order order,
-      List<CartItem> cartItems,
-      ) async {
+    order_model.Order order,
+    List<CartItem> cartItems,
+  ) async {
     final orderRef = firestore.collection('orders').doc(order.orderId);
 
     for (CartItem cartItem in cartItems) {
@@ -71,12 +71,11 @@ class UserRepository {
 
       for (CartItem cartItem in cartItems) {
         final cartItemRef =
-        orderRef.collection('cartItems').doc(cartItem.cartItemId);
+            orderRef.collection('cartItems').doc(cartItem.cartItemId);
         transaction.set(cartItemRef, cartItem.toMap());
       }
     });
 
     return 'Order placed successfully with order id: ${order.orderId} and cart items: ${cartItems.length}';
   }
-
 }

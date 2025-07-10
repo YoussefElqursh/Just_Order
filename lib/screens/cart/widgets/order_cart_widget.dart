@@ -41,9 +41,9 @@ Widget buildOrderCartWidget({
             ),
           ),
           errorWidget: (context, url, error) =>
-          const Icon(Icons.broken_image_rounded),
+              const Icon(Icons.broken_image_rounded),
           memCacheWidth: (MediaQuery.of(context).size.width *
-              MediaQuery.of(context).devicePixelRatio)
+                  MediaQuery.of(context).devicePixelRatio)
               .round(),
         ),
       ),
@@ -76,7 +76,8 @@ Widget buildOrderCartWidget({
                   const SizedBox(height: 5.0),
                   Visibility(
                     visible: cartItem.extras!.isNotEmpty,
-                    maintainSize: false, // Ensures no space is taken when not visible
+                    maintainSize: false,
+                    // Ensures no space is taken when not visible
                     maintainAnimation: false,
                     maintainState: false,
                     child: Column(
@@ -98,7 +99,8 @@ Widget buildOrderCartWidget({
                   ),
                   Visibility(
                     visible: cartItem.size != null && cartItem.size!.isNotEmpty,
-                    maintainSize: false, // Ensures no space is taken when not visible
+                    maintainSize: false,
+                    // Ensures no space is taken when not visible
                     maintainAnimation: false,
                     maintainState: false,
                     child: Column(

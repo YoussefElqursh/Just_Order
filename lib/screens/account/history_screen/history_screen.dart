@@ -98,7 +98,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
     }).toList();
 
     // Sort by deliveredAt or other relevant datetime field
-    filtered.sort((a, b) => (b.deliveredDateTime ?? b.createdAt).compareTo(a.deliveredDateTime!)); // Descending order
+    filtered.sort((a, b) => (b.deliveredDateTime ?? b.createdAt)
+        .compareTo(a.deliveredDateTime!)); // Descending order
 
     return filtered;
   }

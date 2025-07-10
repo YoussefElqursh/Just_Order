@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:just_order/blocs/fingerprint/fingerprint_cubit.dart';
 import 'package:just_order/blocs/fingerprint/fingerprint_state.dart';
 import 'package:just_order/blocs/theming/theming_cubit.dart';
@@ -13,7 +14,6 @@ import 'package:just_order/screens/account/app_settings/app_settings_screen.dart
 import 'package:just_order/shared/function/connectivity_plus.dart';
 import 'package:just_order/shared/function/validations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -135,7 +135,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             actions: [
               Padding(
                 padding:
-                const EdgeInsets.only(right: 20.0, top: 10.0, bottom: 10.0),
+                    const EdgeInsets.only(right: 20.0, top: 10.0, bottom: 10.0),
                 child: Container(
                   width: 34,
                   height: 34,
@@ -154,7 +154,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       );
                     },
-                    icon: Image.asset('assets/icons/unselected_settings.png', height: 18.0, width: 18.0,),
+                    icon: Image.asset(
+                      'assets/icons/unselected_settings.png',
+                      height: 18.0,
+                      width: 18.0,
+                    ),
                     style: ButtonStyle(
                       shape: WidgetStatePropertyAll(
                         RoundedRectangleBorder(
@@ -216,8 +220,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       if (state is FingerprintSuccess) {
                         if (!hasProfileChanged()) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                             SnackBar(
-                                content: Text(AppLocalizations.of(context)!.no_changes_to_save)),
+                            SnackBar(
+                                content: Text(AppLocalizations.of(context)!
+                                    .no_changes_to_save)),
                           );
                           toggleEditing();
                         } else {
@@ -229,17 +234,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               phoneNumber: phoneController.text,
                             );
                             ScaffoldMessenger.of(context).showSnackBar(
-                               SnackBar(
-                                  content:
-                                      Text(AppLocalizations.of(context)!.profile_updated_successfully)),
+                              SnackBar(
+                                  content: Text(AppLocalizations.of(context)!
+                                      .profile_updated_successfully)),
                             );
                             toggleEditing();
                           }
                         }
                       } else if (state is FingerprintFailure) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                           SnackBar(
-                              content: Text(AppLocalizations.of(context)!.authentication_failed)),
+                          SnackBar(
+                              content: Text(AppLocalizations.of(context)!
+                                  .authentication_failed)),
                         );
                       }
                     },
@@ -261,7 +267,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             tapTargetSize: MaterialTapTargetSize.shrinkWrap),
                         child: Text(
-                          isEditing ? AppLocalizations.of(context)!.save_profile : AppLocalizations.of(context)!.edit_profile,
+                          isEditing
+                              ? AppLocalizations.of(context)!.save_profile
+                              : AppLocalizations.of(context)!.edit_profile,
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 10,
@@ -282,7 +290,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     hintText: '${user?.firstName} ${user?.lastName}',
                     validator: (value) {
                       if (value == null || value.isEmpty || value.length < 3) {
-                        return AppLocalizations.of(context)!.please_enter_valid_name;
+                        return AppLocalizations.of(context)!
+                            .please_enter_valid_name;
                       }
                       return null;
                     },
@@ -308,10 +317,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       if (value == null ||
                           value.isEmpty ||
                           value.startsWith('01') == false) {
-                        return AppLocalizations.of(context)!.please_enter_a_valid_phone_number;
+                        return AppLocalizations.of(context)!
+                            .please_enter_a_valid_phone_number;
                       }
                       if (!RegExp(r'^\d{11}$').hasMatch(value)) {
-                        return AppLocalizations.of(context)!.please_enter_a_valid_11_digit_phone_number;
+                        return AppLocalizations.of(context)!
+                            .please_enter_a_valid_11_digit_phone_number;
                       }
                       return null;
                     },
@@ -437,7 +448,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
       if (existingUser.docs.isEmpty) {
         // ignore: use_build_context_synchronously
-        debugPrint(AppLocalizations.of(context)!.user_with_this_email_not_exists);
+        debugPrint(
+            AppLocalizations.of(context)!.user_with_this_email_not_exists);
         return;
       }
 

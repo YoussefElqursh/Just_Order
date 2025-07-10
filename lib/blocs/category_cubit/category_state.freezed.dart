@@ -25,6 +25,7 @@ mixin _$CategoryState {
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
+
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
@@ -44,6 +45,7 @@ mixin _$CategoryState {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
+
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
@@ -53,6 +55,7 @@ mixin _$CategoryState {
     required TResult Function(_Error value) error,
   }) =>
       throw _privateConstructorUsedError;
+
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
@@ -86,9 +89,9 @@ class _$CategoryStateCopyWithImpl<$Res, $Val extends CategoryState>
     implements $CategoryStateCopyWith<$Res> {
   _$CategoryStateCopyWithImpl(this._value, this._then);
 
-  // ignore: unused_field
+// ignore: unused_field
   final $Val _value;
-  // ignore: unused_field
+// ignore: unused_field
   final $Res Function($Val) _then;
 
   /// Create a copy of CategoryState
@@ -383,7 +386,7 @@ class _$SucessImpl implements _Sucess {
   @override
   List<Categories?> get category {
     if (_category is EqualUnmodifiableListView) return _category;
-    // ignore: implicit_dynamic_type
+// ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_category);
   }
 

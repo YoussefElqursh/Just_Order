@@ -1,7 +1,9 @@
-import 'enums/user_type.dart';
 import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'enums/user_type.dart';
 
 class User {
   String userId;
@@ -50,8 +52,12 @@ class User {
       emailVerified: map['emailVerified'] as bool,
       loginWithGoogle: map["loginWithGoogle"] as bool,
       phoneNumberVerified: map['phoneNumberVerified'] as bool,
-      createdAt: map['createdAt'] != null ? _parseDate(map['createdAt']): DateTime.now(),
-      updatedAt: map['updatedAt'] != null ? _parseDate(map['updatedAt']): DateTime.now(),
+      createdAt: map['createdAt'] != null
+          ? _parseDate(map['createdAt'])
+          : DateTime.now(),
+      updatedAt: map['updatedAt'] != null
+          ? _parseDate(map['updatedAt'])
+          : DateTime.now(),
     ));
   }
 
@@ -101,7 +107,7 @@ class User {
       loginWithGoogle: json['loginWithGoogle'],
       createdAt: json['createdAt'] is Timestamp
           ? (json['createdAt'] as Timestamp).toDate()
-          : DateTime.parse(json['createdAt'])  ,
+          : DateTime.parse(json['createdAt']),
       updatedAt: json['updatedAt'] != null
           ? json['updatedAt'] is Timestamp
               ? (json['updatedAt'] as Timestamp).toDate()
@@ -109,17 +115,15 @@ class User {
           : null,
     );
   }
-  
-  static DateTime _parseDate(Object timeStamp){
-    if(timeStamp.runtimeType == DateTime) {
+
+  static DateTime _parseDate(Object timeStamp) {
+    if (timeStamp.runtimeType == DateTime) {
       return timeStamp as DateTime;
-    } else if(timeStamp.runtimeType == String){
+    } else if (timeStamp.runtimeType == String) {
       return DateTime.parse(timeStamp as String);
-    }else{
+    } else {
       // We can throw Exception here but for now we will add current timestamp
       return Timestamp.now().toDate();
     }
   }
-  
-  
 }

@@ -7,6 +7,7 @@ import 'package:elegant_notification/elegant_notification.dart';
 import 'package:elegant_notification/resources/arrays.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:just_order/blocs/fingerprint/fingerprint_cubit.dart';
 import 'package:just_order/blocs/fingerprint/fingerprint_state.dart';
 import 'package:just_order/blocs/theming/theming_cubit.dart';
@@ -16,7 +17,6 @@ import 'package:just_order/screens/account/app_settings/app_settings_screen.dart
 import 'package:just_order/shared/function/connectivity_plus.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../shared/function/validations.dart';
 
@@ -68,29 +68,40 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     }
   }
 
-
-  void showNotification({required String message, bool errorMessage = false}){
+  void showNotification({required String message, bool errorMessage = false}) {
     Size size = MediaQuery.of(context).size;
     double fontSize = 14;
     int maxLines = 5;
     double lineHeightSpacing = 1.5;
     Color backgroundColor = const Color.fromRGBO(220, 38, 38, 1);
-    if(errorMessage){
+    if (errorMessage) {
       ElegantNotification.error(
         width: size.width * 0.95,
         height: fontSize * maxLines * lineHeightSpacing,
         position: Alignment.topCenter,
         animation: AnimationType.fromTop,
-        title: Text('Error',style: TextStyle(color: Colors.white,fontSize: 1.5 * fontSize),),
-        description: Text(message, style: TextStyle(color: Colors.white,fontSize: fontSize),),
+        title: Text(
+          'Error',
+          style: TextStyle(color: Colors.white, fontSize: 1.5 * fontSize),
+        ),
+        description: Text(
+          message,
+          style: TextStyle(color: Colors.white, fontSize: fontSize),
+        ),
         background: backgroundColor,
       ).show(context);
-    }else{
+    } else {
       ElegantNotification.success(
         height: fontSize * maxLines * lineHeightSpacing,
         width: size.width * 0.95,
-        title: Text('Successful', style: TextStyle(color: Colors.white,fontSize: 1.5 * fontSize),),
-        description:  Text(message, style: TextStyle(color: Colors.white,fontSize: fontSize),),
+        title: Text(
+          'Successful',
+          style: TextStyle(color: Colors.white, fontSize: 1.5 * fontSize),
+        ),
+        description: Text(
+          message,
+          style: TextStyle(color: Colors.white, fontSize: fontSize),
+        ),
         background: Colors.green,
         animation: AnimationType.fromTop,
         position: Alignment.topCenter,
@@ -108,7 +119,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             title: Text(
               AppLocalizations.of(context)!.change_password,
               style: TextStyle(
-                color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                color: state.themeMode == ThemeMode.light
+                    ? Colors.black
+                    : Colors.white,
                 fontSize: 14,
                 fontFamily: 'Inter',
                 fontWeight: FontWeight.w600,
@@ -166,18 +179,18 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 children: [
                   const SizedBox(height: 20.0),
                   buildInputField(
-                    label: AppLocalizations.of(context)!.current_password,
-                    controller: currentPasswordController,
-                    hintText: AppLocalizations.of(context)!.current_password,
-                    isEnabled: true,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return AppLocalizations.of(context)!.please_enter_a_valid_password;
-                      }
-                      return null;
-                    },
-                    state: state
-                  ),
+                      label: AppLocalizations.of(context)!.current_password,
+                      controller: currentPasswordController,
+                      hintText: AppLocalizations.of(context)!.current_password,
+                      isEnabled: true,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return AppLocalizations.of(context)!
+                              .please_enter_a_valid_password;
+                        }
+                        return null;
+                      },
+                      state: state),
                   const SizedBox(height: 20.0),
                   buildInputField(
                     label: AppLocalizations.of(context)!.new_password,
@@ -187,13 +200,16 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     keyboardType: TextInputType.text,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return AppLocalizations.of(context)!.please_enter_a_valid_password;
+                        return AppLocalizations.of(context)!
+                            .please_enter_a_valid_password;
                       }
                       if (value == currentPasswordController.text) {
-                        return AppLocalizations.of(context)!.new_password_cannot_be_the_same_as_current_password;
+                        return AppLocalizations.of(context)!
+                            .new_password_cannot_be_the_same_as_current_password;
                       }
                       return null;
-                    }, state: state,
+                    },
+                    state: state,
                   ),
                   const SizedBox(height: 20.0),
                   buildInputField(
@@ -206,10 +222,12 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       if (value == null ||
                           value.isEmpty ||
                           value != newPasswordController.text) {
-                        return AppLocalizations.of(context)!.please_enter_a_confirm_password_as_new_password;
+                        return AppLocalizations.of(context)!
+                            .please_enter_a_confirm_password_as_new_password;
                       }
                       return null;
-                    }, state: state,
+                    },
+                    state: state,
                   ),
                   const SizedBox(height: 20.0),
                   BlocConsumer<FingerprintCubit, FingerprintState>(
@@ -220,52 +238,84 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                               user: user!,
                               currentPassword: currentPasswordController.text,
                               newPassword: newPasswordController.text,
-                              confirmedPassword: confirmPasswordController.text);
+                              confirmedPassword:
+                                  confirmPasswordController.text);
                         }
                       } else if (state is FingerprintFailure) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                           SnackBar(
-                              content: Text(AppLocalizations.of(context)!.authentication_failed)),
+                          SnackBar(
+                              content: Text(AppLocalizations.of(context)!
+                                  .authentication_failed)),
                         );
                       }
                     },
                     builder: (context, state) {
                       return ElevatedButton(
                         onPressed: () async {
-                          final LocalAuthentication auth = LocalAuthentication();
-                          final List<BiometricType> availableBiometrics = await auth.getAvailableBiometrics();
+                          final LocalAuthentication auth =
+                              LocalAuthentication();
+                          final List<BiometricType> availableBiometrics =
+                              await auth.getAvailableBiometrics();
                           if (availableBiometrics.isEmpty) {
-                            debugPrint("There is no biometric authentication enrolled");
+                            debugPrint(
+                                "There is no biometric authentication enrolled");
                           }
-                          if(Platform.isAndroid){
-                            if (availableBiometrics.contains(BiometricType.face)) {
+                          if (Platform.isAndroid) {
+                            if (availableBiometrics
+                                .contains(BiometricType.face)) {
                               // TODO: implement face detection
-                              updateUserPassword(user: user!, currentPassword: currentPasswordController.text, newPassword: newPasswordController.text, confirmedPassword: confirmPasswordController.text);
-                            }else if(availableBiometrics.contains(BiometricType.fingerprint)){
+                              updateUserPassword(
+                                  user: user!,
+                                  currentPassword:
+                                      currentPasswordController.text,
+                                  newPassword: newPasswordController.text,
+                                  confirmedPassword:
+                                      confirmPasswordController.text);
+                            } else if (availableBiometrics
+                                .contains(BiometricType.fingerprint)) {
                               // ignore: use_build_context_synchronously
-                              context.read<FingerprintCubit>().checkFingerprint();
+                              context
+                                  .read<FingerprintCubit>()
+                                  .checkFingerprint();
                             }
-                          }else if(Platform.isIOS){
-                            if (availableBiometrics.contains(BiometricType.face)) {
-                              try{
+                          } else if (Platform.isIOS) {
+                            if (availableBiometrics
+                                .contains(BiometricType.face)) {
+                              try {
                                 bool authenticated = await auth.authenticate(
-                                  localizedReason: 'Please authenticate to access the app',
+                                  localizedReason:
+                                      'Please authenticate to access the app',
                                   options: const AuthenticationOptions(
-                                    biometricOnly: true, // Use only biometrics (Face ID or Touch ID)
+                                    biometricOnly: true,
+                                    // Use only biometrics (Face ID or Touch ID)
                                     stickyAuth: true,
                                   ),
                                 );
-                                if(authenticated) {
-                                  updateUserPassword(user: user!, currentPassword: currentPasswordController.text, newPassword: newPasswordController.text, confirmedPassword: confirmPasswordController.text);
+                                if (authenticated) {
+                                  updateUserPassword(
+                                      user: user!,
+                                      currentPassword:
+                                          currentPasswordController.text,
+                                      newPassword: newPasswordController.text,
+                                      confirmedPassword:
+                                          confirmPasswordController.text);
                                 } else {
-                                  showNotification(message: "Biometric authentication failed", errorMessage: true);
+                                  showNotification(
+                                      message:
+                                          "Biometric authentication failed",
+                                      errorMessage: true);
                                 }
-                              }catch(e){
-                                showNotification(message: "Biometric authentication failed", errorMessage: true);
+                              } catch (e) {
+                                showNotification(
+                                    message: "Biometric authentication failed",
+                                    errorMessage: true);
                               }
-                            }else if(availableBiometrics.contains(BiometricType.fingerprint)){
+                            } else if (availableBiometrics
+                                .contains(BiometricType.fingerprint)) {
                               // ignore: use_build_context_synchronously
-                              context.read<FingerprintCubit>().checkFingerprint();
+                              context
+                                  .read<FingerprintCubit>()
+                                  .checkFingerprint();
                             }
                           }
                         },
@@ -316,7 +366,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         Text(
           label,
           style: TextStyle(
-            color: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+            color: state.themeMode == ThemeMode.light
+                ? Colors.black
+                : Colors.white,
             fontSize: 10,
             fontWeight: FontWeight.w500,
           ),
@@ -326,9 +378,14 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           controller: controller,
           keyboardType: keyboardType,
           validator: validator,
-          cursorColor: state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+          cursorColor:
+              state.themeMode == ThemeMode.light ? Colors.black : Colors.white,
           style: TextStyle(
-            color: isEnabled ? state.themeMode == ThemeMode.light ? Colors.black : Colors.white : const Color(0xFFCCCCCC),
+            color: isEnabled
+                ? state.themeMode == ThemeMode.light
+                    ? Colors.black
+                    : Colors.white
+                : const Color(0xFFCCCCCC),
             fontSize: 12,
             fontWeight: FontWeight.w500,
           ),
@@ -370,18 +427,23 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     // Input Validation
     if (!InputValidator.isValidPassword(currentPassword)) {
       debugPrint('Invalid Password');
-      showNotification(message: "Current password doesn't meet minimum needed length", errorMessage: true);
+      showNotification(
+          message: "Current password doesn't meet minimum needed length",
+          errorMessage: true);
       return;
     }
     if (!InputValidator.isValidName(newPassword)) {
       debugPrint('Invalid Password');
-      showNotification(message: "New password doesn't meet minimum needed length", errorMessage: true);
+      showNotification(
+          message: "New password doesn't meet minimum needed length",
+          errorMessage: true);
       return;
     }
 
     if (newPassword != confirmedPassword) {
       debugPrint('Invalid Password');
-      showNotification(message: "The password doesn't miss match", errorMessage: true);
+      showNotification(
+          message: "The password doesn't miss match", errorMessage: true);
       return;
     }
 
@@ -389,7 +451,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     if (!await isConnected()) {
       // ignore: use_build_context_synchronously
       debugPrint(AppLocalizations.of(context)!.no_internet_connection);
-      showNotification(message: "Some thing wrong with the connection", errorMessage: true);
+      showNotification(
+          message: "Some thing wrong with the connection", errorMessage: true);
       return;
     }
 
@@ -407,8 +470,10 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
       if (existingUser.docs.isEmpty) {
         // ignore: use_build_context_synchronously
-        debugPrint(AppLocalizations.of(context)!.user_with_this_email_not_exists);
-        showNotification(message: "Some went wrong , please try again", errorMessage: true);
+        debugPrint(
+            AppLocalizations.of(context)!.user_with_this_email_not_exists);
+        showNotification(
+            message: "Some went wrong , please try again", errorMessage: true);
         return;
       }
 

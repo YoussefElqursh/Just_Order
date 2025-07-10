@@ -7,10 +7,10 @@ class DioHelperPayment {
   // to get data from url
   static Future<Response> getData(
       {required String url,
-        Map<String, dynamic>? query,
-        Map<String, dynamic> headers = const {
-          'Content-Type': 'application/json'
-        }}) async {
+      Map<String, dynamic>? query,
+      Map<String, dynamic> headers = const {
+        'Content-Type': 'application/json'
+      }}) async {
     dio = Dio(
       BaseOptions(
         baseUrl: PaymentGatewayConstants.baseUrl,
@@ -24,9 +24,9 @@ class DioHelperPayment {
   // post data
   static Future<Response> postData(
       {required String url,
-        required Map<String, dynamic>? data,
-        Map<String, dynamic> headers = const {'Content-Type': 'application/json'},
-        Map<String, dynamic>? query}) async {
+      required Map<String, dynamic>? data,
+      Map<String, dynamic> headers = const {'Content-Type': 'application/json'},
+      Map<String, dynamic>? query}) async {
     dio = Dio(
       BaseOptions(
         baseUrl: PaymentGatewayConstants.baseUrl,

@@ -21,4 +21,3 @@ class AppColor {
   static Color textFieldHintColor = const Color(0xFFCCCCCC);
   static Color dividerColor = const Color(0xFFAFAFAF);
 }
-

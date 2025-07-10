@@ -290,8 +290,7 @@ class _RestaurantScreenState extends State<RestaurantScreen>
     final filteredCartItems = restaurant != null
         ? cartProvider.items
             .where(
-              (item) => item.cartItemId
-                  .endsWith('_${restaurant.restaurantId}'),
+              (item) => item.cartItemId.endsWith('_${restaurant.restaurantId}'),
             )
             .toList()
         : cartProvider.items;

@@ -7,7 +7,7 @@ import 'package:just_order/models/restaurant_model.dart';
 class OrderRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<List<order_model.Order>> getOrders(String userId) async{
+  Future<List<order_model.Order>> getOrders(String userId) async {
     return await _firestore
         .collection('orders')
         .where('userId', isEqualTo: userId)
@@ -52,7 +52,6 @@ class OrderRepository {
       return [];
     }
   }
-
 
   Future<void> updateOrderStatus(String orderId, String status) async {
     await _firestore
