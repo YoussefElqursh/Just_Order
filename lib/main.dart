@@ -18,43 +18,45 @@ import 'firebase_options.dart';
 late final SharedPreferences prefs;
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  debugPrint("Handling a background message: ${message.messageId}");
+  debugPrint('🔔 Background message: ${message.messageId}');
 }
 
 Future<void> main() async {
+  await _initializeApp();
+  final themeCubit = ThemeCubit();
+  await themeCubit.loadTheme();
+
+  runApp(
+    _buildApp(themeCubit),
+  );
+}
+
+/// Initializes all required services and plugins
+Future<void> _initializeApp() async {
   WidgetsFlutterBinding.ensureInitialized();
   prefs = await SharedPreferences.getInstance();
   await EasyLocalization.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  FirebaseMessaging.onBackgroundMessage(
-    _firebaseMessagingBackgroundHandler,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await dotenv.load(fileName: 'assets/.env');
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   Bloc.observer = MyBlocObserver();
-  await dotenv.load(
-    fileName: "assets/.env",
-  );
-  final themeCubit = ThemeCubit();
-  await themeCubit.loadTheme(); // Load saved theme before running the app
-  runApp(
-    EasyLocalization(
-      supportedLocales: const [
-        Locale('en'),
-        Locale('ar'),
-      ],
-      path: 'assets/translations',
-      fallbackLocale: const Locale('en'),
-      child: BlocProvider(
-        create: (context) => ThemeCubit(),
-        child: MultiProvider(
-          providers: [
-            ChangeNotifierProvider(create: (_) => CartProvider()),
-            ChangeNotifierProvider(create: (_) => OrderProvider()),
-          ],
-          child: const DeepLinkListener(
-            child: MyApp(),
-          ),
+}
+
+/// Builds the root widget wrapped with localization, providers, and theming
+Widget _buildApp(ThemeCubit themeCubit) {
+  return EasyLocalization(
+    supportedLocales: const [Locale('en'), Locale('ar')],
+    path: 'assets/translations',
+    fallbackLocale: const Locale('en'),
+    child: BlocProvider.value(
+      value: themeCubit,
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => CartProvider()),
+          ChangeNotifierProvider(create: (_) => OrderProvider()),
+        ],
+        child: const DeepLinkListener(
+          child: MyApp(),
         ),
       ),
     ),

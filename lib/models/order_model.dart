@@ -22,6 +22,7 @@ class Order {
   double serviceFee;
   double deliveryFee;
   String? deliveryId;
+  int? deliveryTip;
   DateTime? updatedAt;
   DateTime? assignedDateTime;
   DateTime? deliveredDateTime;
@@ -40,6 +41,7 @@ class Order {
       required this.orderCodeForRestaurant,
       required this.orderTable,
       this.deliveryId,
+      this.deliveryTip,
       required this.status,
       required this.paymentType,
       this.notes,
@@ -68,6 +70,7 @@ class Order {
           data['orderCodeForRestaurant'] ?? 'noOrderCodeForRestaurant',
       orderTable: data['orderTable'] ?? 'noOrderTable',
       deliveryId: data['deliveryId'] ?? 'noDeliveryId',
+      deliveryTip: data['deliveryTip'] ?? 'noDeliveryTip',
       status: Status.values
           // ignore: prefer_interpolation_to_compose_strings
           .firstWhere((e) => e.toString() == 'Status.' + data['status']),
@@ -109,6 +112,7 @@ class Order {
       'orderCodeForRestaurant': orderCodeForRestaurant,
       'orderTable': orderTable,
       'deliveryId': deliveryId,
+      'deliveryTip': deliveryTip,
       'status': status.toString().split('.').last,
       'paymentType': paymentType.toString().split('.').last,
       'notes': notes,

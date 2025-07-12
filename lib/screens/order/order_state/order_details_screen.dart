@@ -545,6 +545,35 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
+                              "Delivery Tip",
+                              style: TextStyle(
+                                color: state.themeMode == ThemeMode.light
+                                    ? Colors.black
+                                    : Colors.white,
+                                fontSize: 12,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            const Spacer(),
+                            Text(
+                              '${AppLocalizations.of(context)!.egp} ${widget.order.deliveryTip}',
+                              style: TextStyle(
+                                color: state.themeMode == ThemeMode.light
+                                    ? Colors.black
+                                    : Colors.white,
+                                fontSize: 12,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
                               AppLocalizations.of(context)!.payment_method,
                               style: TextStyle(
                                 color: state.themeMode == ThemeMode.light

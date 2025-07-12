@@ -937,7 +937,7 @@ Widget buildOrderDeliveredStateWidget({
                           ),
                         ),
                         child: CachedNetworkImage(
-                          imageUrl: restaurant.imageUrl!,
+                          imageUrl: restaurant.imageUrl ?? '',
                           fit: BoxFit.cover,
                           width: double.infinity,
                           height: 40,

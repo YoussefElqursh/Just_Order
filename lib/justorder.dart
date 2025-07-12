@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -18,133 +16,119 @@ import 'package:just_order/services/deep_link_listener.dart';
 import 'package:just_order/shared/routing/app_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => FingerprintCubit()),
-        BlocProvider(create: (context) => LanguageCubit()),
-        BlocProvider(create: (context) => LoginCubit(LoginRepository())),
-        BlocProvider(create: (context) => SignUpCubit()),
+        BlocProvider(create: (_) => FingerprintCubit()),
+        BlocProvider(create: (_) => LanguageCubit()),
+        BlocProvider(create: (_) => LoginCubit(LoginRepository())),
+        BlocProvider(create: (_) => SignUpCubit()),
       ],
       child: ScreenUtilInit(
-        designSize: const Size(
-          360,
-          690,
-        ),
+        designSize: const Size(360, 690),
         minTextAdapt: true,
         splitScreenMode: true,
-        builder: (BuildContext context, child) {
-          return BlocBuilder<LanguageCubit, Locale>(
-            builder: (context, locale) {
-              return BlocBuilder<ThemeCubit, ThemeState>(
-                builder: (context, state) {
-                  return DeepLinkListener(
-                    child: MaterialApp(
-                      supportedLocales: L10n.all,
-                      locale: locale,
-                      // Locale from LanguageCubit
-                      localeResolutionCallback: (locale, supportedLocales) {
-                        if (locale != null &&
-                            supportedLocales.contains(locale)) {
-                          return locale;
-                        }
-                        return const Locale('en'); // Default fallback
-                      },
-                      localizationsDelegates: const [
-                        AppLocalizations.delegate,
-                        GlobalMaterialLocalizations.delegate,
-                        GlobalWidgetsLocalizations.delegate,
-                        GlobalCupertinoLocalizations.delegate,
-                      ],
-                      debugShowCheckedModeBanner: false,
-                      title: 'Just Order',
-                      themeMode: state.themeMode,
-                      darkTheme: ThemeData(
-                        useMaterial3: true,
-                        brightness: Brightness.dark,
-                        scaffoldBackgroundColor: Colors.black,
-                        primaryColor: const Color(0xFFE02C45),
-                        indicatorColor: const Color(0xFFE02C45),
-                        appBarTheme: const AppBarTheme(
-                          color: Colors.black,
-                          foregroundColor: Colors.black,
-                          surfaceTintColor: Colors.black,
-                          elevation: 0.5,
-                        ),
-                        bottomNavigationBarTheme:
-                            const BottomNavigationBarThemeData(
-                          selectedItemColor: Color(0xFFE02C45),
-                          unselectedItemColor: Color(0xFF898888),
-                          type: BottomNavigationBarType.fixed,
-                          backgroundColor: Colors.black,
-                          selectedLabelStyle: TextStyle(
-                            color: Color(0xFFE02C45),
-                            fontSize: 12,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w600,
-                          ),
-                          unselectedLabelStyle: TextStyle(
-                            color: Color(0xFF898888),
-                            fontSize: 12,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                      theme: ThemeData(
-                        useMaterial3: true,
-                        brightness: Brightness.light,
-                        scaffoldBackgroundColor: Colors.white,
-                        primaryColor: const Color(0xFFE02C45),
-                        indicatorColor: const Color(0xFFE02C45),
-                        appBarTheme: const AppBarTheme(
-                          color: Colors.white,
-                          foregroundColor: Colors.white,
-                          surfaceTintColor: Colors.white,
-                          elevation: 0.5,
-                        ),
-                        bottomNavigationBarTheme:
-                            const BottomNavigationBarThemeData(
-                          selectedItemColor: Color(0xFFE02C45),
-                          unselectedItemColor: Color(0xFF898888),
-                          type: BottomNavigationBarType.fixed,
-                          backgroundColor: Colors.white,
-                          selectedLabelStyle: TextStyle(
-                            color: Color(0xFFE02C45),
-                            fontSize: 12,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w600,
-                          ),
-                          unselectedLabelStyle: TextStyle(
-                            color: Color(0xFF898888),
-                            fontSize: 12,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                      onGenerateRoute: AppRouter.onGenerateRoute,
-                      initialRoute: SplashScreen.routeName,
-                    ),
-                  );
-                },
-              );
-            },
-          );
-        },
+        builder: (context, child) => const _AppView(),
       ),
     );
   }
 }
+
+class _AppView extends StatelessWidget {
+  const _AppView();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<LanguageCubit, Locale>(
+      builder: (context, locale) {
+        return BlocBuilder<ThemeCubit, ThemeState>(
+          builder: (context, themeState) {
+            return DeepLinkListener(
+              child: MaterialApp(
+                title: 'Just Order',
+                debugShowCheckedModeBanner: false,
+                locale: locale,
+                supportedLocales: L10n.all,
+                localizationsDelegates: const [
+                  AppLocalizations.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                ],
+                localeResolutionCallback: (deviceLocale, supportedLocales) {
+                  return supportedLocales.contains(deviceLocale)
+                      ? deviceLocale
+                      : const Locale('en');
+                },
+                themeMode: themeState.themeMode,
+                theme: _lightTheme,
+                darkTheme: _darkTheme,
+                onGenerateRoute: AppRouter.onGenerateRoute,
+                initialRoute: SplashScreen.routeName,
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+}
+
+// Theme Constants
+const _primaryColor = Color(0xFFE02C45);
+const _unselectedColor = Color(0xFF898888);
+
+const _textStyle = TextStyle(
+  fontFamily: 'Inter',
+  fontSize: 12,
+  fontWeight: FontWeight.w600,
+);
+
+final _bottomNavBarTheme = BottomNavigationBarThemeData(
+  selectedItemColor: _primaryColor,
+  unselectedItemColor: _unselectedColor,
+  type: BottomNavigationBarType.fixed,
+  selectedLabelStyle: _textStyle.copyWith(color: _primaryColor),
+  unselectedLabelStyle: _textStyle.copyWith(color: _unselectedColor),
+);
+
+final _lightTheme = ThemeData(
+  useMaterial3: true,
+  brightness: Brightness.light,
+  scaffoldBackgroundColor: Colors.white,
+  primaryColor: _primaryColor,
+  indicatorColor: _primaryColor,
+  appBarTheme: const AppBarTheme(
+    color: Colors.white,
+    foregroundColor: Colors.black,
+    surfaceTintColor: Colors.white,
+    elevation: 0.5,
+  ),
+  bottomNavigationBarTheme: _bottomNavBarTheme.copyWith(
+    backgroundColor: Colors.white,
+  ),
+);
+
+final _darkTheme = ThemeData(
+  useMaterial3: true,
+  brightness: Brightness.dark,
+  scaffoldBackgroundColor: Colors.black,
+  primaryColor: _primaryColor,
+  indicatorColor: _primaryColor,
+  appBarTheme: const AppBarTheme(
+    color: Colors.black,
+    foregroundColor: Colors.white,
+    surfaceTintColor: Colors.black,
+    elevation: 0.5,
+  ),
+  bottomNavigationBarTheme: _bottomNavBarTheme.copyWith(
+    backgroundColor: Colors.black,
+  ),
+);
 
 Future<Locale> getUserPreferredLocal() async {
   final prefs = await SharedPreferences.getInstance();

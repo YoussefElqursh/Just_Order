@@ -49,10 +49,25 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
 
   final TextEditingController _deliveryTipController = TextEditingController();
 
+  double deliveryTip = 0.0;
+  double baseTotal = 0.0;
+  double finalTotal = 0.0;
+
+
   @override
   void initState() {
     super.initState();
     _loadRestaurant();
+    baseTotal = widget.order.totalAmount; // Your original total value
+    finalTotal = widget.order.totalAmount; // Your original total value
+    _deliveryTipController.addListener(_updateTipValue);
+  }
+
+  @override
+  void dispose() {
+    _deliveryTipController.removeListener(_updateTipValue);
+    _deliveryTipController.dispose();
+    super.dispose();
   }
 
   Future<void> _loadRestaurant() async {
@@ -65,6 +80,19 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
         restaurant = Restaurant.fromJson(restaurantString);
       });
     }
+  }
+
+  void _updateTipValue() {
+    final text = _deliveryTipController.text;
+    setState(() {
+      if (text.isEmpty) {
+        deliveryTip = 0.0;
+      } else {
+        deliveryTip = double.tryParse(text) ?? 0.0;
+        deliveryTip = deliveryTip.abs();
+      }
+      finalTotal = baseTotal + deliveryTip;
+    });
   }
 
   @override
@@ -484,7 +512,7 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                                 child: _buildLabeledTextField(
                                   hint: '0.00',
                                   controller: _deliveryTipController,
-                                  keyboardType: TextInputType.number,
+                                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
                                   themeMode: state.themeMode,
                                   themeDark: state.themeMode == ThemeMode.light
                                       ? false
@@ -514,7 +542,7 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                               ),
                               const Spacer(),
                               Text(
-                                '${AppLocalizations.of(context)!.egp} ${widget.order.totalAmount}',
+                                '${AppLocalizations.of(context)!.egp} ${(finalTotal).toStringAsFixed(2)}',
                                 style: TextStyle(
                                   color: state.themeMode == ThemeMode.light
                                       ? Colors.black
@@ -540,6 +568,8 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                     child: MaterialButton(
                       onPressed: () async {
                         if (widget.order.paymentType.name == 'cash') {
+                          widget.order.totalAmount = finalTotal;
+                          widget.order.deliveryTip = int.parse(_deliveryTipController.text);
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -551,6 +581,8 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                           );
                         } else {
                           // We keep track to to two digits after point
+                          widget.order.totalAmount = finalTotal;
+                          widget.order.deliveryTip = int.parse(_deliveryTipController.text);
                           int amount = (widget.order.totalAmount * 100).toInt();
                           final fp.Either<String, String> res =
                               await _paymentRepository.pay(

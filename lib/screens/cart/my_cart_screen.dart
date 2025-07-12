@@ -680,6 +680,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                               processed: false,
                               addedToInvoice: false,
                               deliveredByRestaurant: restaurant!.hasOwnDelivery,
+                              deliveryTip:0,
                             );
                             String orderCode =
                                 await order.generateUniqueOrderCode();

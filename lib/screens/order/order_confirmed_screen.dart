@@ -8,6 +8,7 @@ import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/layouts/main_layout.dart';
 import 'package:just_order/models/cart_item_model.dart';
 import 'package:just_order/models/order_model.dart';
+import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/network/dio_helper.dart';
 import 'package:just_order/repository/user_repository/user_repository.dart';
 import 'package:lottie/lottie.dart';
@@ -60,21 +61,36 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
     await userRepository.pushOrder(widget.order, widget.cartItems);
     final prefs = await SharedPreferences.getInstance();
     final localeCode = prefs.getString('locale') ?? 'en';
+    final restaurantString =
+        // ignore: use_build_context_synchronously
+        prefs.getString(AppLocalizations.of(context)!.restaurant_name);
+    Restaurant? restaurant;
+    if (restaurantString != null) {
+      setState(() {
+        restaurant = Restaurant.fromJson(restaurantString);
+      });
+    }
     Map<String, dynamic> body = {};
     body['from'] = widget.order.userId;
-    body['to'] = widget.order.restaurantId;
+    body['to'] = restaurant?.managerId;
     body['topic'] = 'client_to_restaurant';
     body['messageId'] = 1;
     body['locale'] = localeCode;
     body['orderId'] = widget.order.orderId;
-    unawaited(DioHelperPayment.postData(
-        url: 'https://notify.justorder-eg.com/events', data: body));
+    unawaited(
+      DioHelperPayment.postData(
+        url: 'https://notify.justorder-eg.com/events',
+        data: body,
+      ),
+    );
   }
 
   Future<bool> _onWillPop() async {
     Navigator.pushAndRemoveUntil(
       context,
-      MaterialPageRoute(builder: (context) => MainLayout()),
+      MaterialPageRoute(
+        builder: (context) => MainLayout(),
+      ),
       (route) => false,
     );
     return false;
@@ -235,6 +251,41 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                                 const Spacer(),
                                 Text(
                                   '${AppLocalizations.of(context)!.egp} ${widget.order.deliveryFee}',
+                                  style: TextStyle(
+                                    color: state.themeMode == ThemeMode.light
+                                        ? Colors.black
+                                        : Colors.white,
+                                    fontSize: 12,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 12),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Delivery Tip',
+                                  style: TextStyle(
+                                    color: state.themeMode == ThemeMode.light
+                                        ? Colors.black
+                                        : Colors.white,
+                                    fontSize: 12,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                                const Spacer(),
+                                Text(
+                                  '${AppLocalizations.of(context)!.egp} ${widget.order.deliveryTip}',
                                   style: TextStyle(
                                     color: state.themeMode == ThemeMode.light
                                         ? Colors.black
