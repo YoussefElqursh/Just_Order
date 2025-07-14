@@ -404,7 +404,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 TextButton(
                                   onPressed: () {
                                     Navigator.pushNamed(
-                                        context, 'PopularTodayScreenRoute');
+                                      context,
+                                      'PopularTodayScreenRoute',
+                                    );
                                   },
                                   style: ButtonStyle(
                                     overlayColor: WidgetStateProperty.all(
@@ -475,7 +477,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   buildHomeFilterWidget(
                                 filters[index],
                                 index,
-                                onPressed: () {},
+                                onPressed: (){},
                               ),
                               separatorBuilder: (context, index) =>
                                   const SizedBox(width: 10.0),

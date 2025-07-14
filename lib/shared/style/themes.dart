@@ -1,75 +1,53 @@
 import 'package:flutter/material.dart';
+import 'package:just_order/shared/style/colors.dart';
 
+
+const _primaryColor = AppColor.primaryColor;
+const _unselectedColor = AppColor.grayDarkColor;
+const _textStyle = TextStyle(
+  fontFamily: 'Inter',
+  fontSize: 12,
+  fontWeight: FontWeight.w600,
+);
+final _bottomNavBarTheme = BottomNavigationBarThemeData(
+  selectedItemColor: _primaryColor,
+  unselectedItemColor: _unselectedColor,
+  type: BottomNavigationBarType.fixed,
+  selectedLabelStyle: _textStyle.copyWith(color: _primaryColor),
+  unselectedLabelStyle: _textStyle.copyWith(color: _unselectedColor),
+);
 class AppThemes {
-  static final ThemeData lightTheme = ThemeData(
+  static final lightTheme = ThemeData(
     useMaterial3: true,
-    primarySwatch: const MaterialColor(
-      0xFFE02C45,
-      <int, Color>{
-        50: Color(0xFFE02C45),
-      },
-    ),
+    brightness: Brightness.light,
     scaffoldBackgroundColor: Colors.white,
+    primaryColor: _primaryColor,
+    indicatorColor: _primaryColor,
     appBarTheme: const AppBarTheme(
       color: Colors.white,
-      foregroundColor: Colors.white,
+      foregroundColor: Colors.black,
       surfaceTintColor: Colors.white,
       elevation: 0.5,
     ),
-    textTheme: const TextTheme(
-      bodyLarge: TextStyle(
-        color: Colors.black,
-        fontSize: 16,
-      ),
-      bodyMedium: TextStyle(
-        color: Colors.black54,
-        fontSize: 14,
-      ),
-    ),
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        foregroundColor: Colors.white,
-        backgroundColor: const Color(0xFFE02C45),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
-      ),
+    bottomNavigationBarTheme: _bottomNavBarTheme.copyWith(
+      backgroundColor: Colors.white,
     ),
   );
 
-  static final ThemeData darkTheme = ThemeData(
+  static final darkTheme = ThemeData(
     useMaterial3: true,
-    primarySwatch: const MaterialColor(
-      0xFFE02C45,
-      <int, Color>{
-        50: Color(0xFFE02C45),
-      },
-    ),
+    brightness: Brightness.dark,
     scaffoldBackgroundColor: Colors.black,
+    primaryColor: _primaryColor,
+    indicatorColor: _primaryColor,
     appBarTheme: const AppBarTheme(
       color: Colors.black,
-      foregroundColor: Colors.black,
+      foregroundColor: Colors.white,
       surfaceTintColor: Colors.black,
       elevation: 0.5,
     ),
-    textTheme: const TextTheme(
-      bodyLarge: TextStyle(
-        color: Colors.white,
-        fontSize: 16,
-      ),
-      bodyMedium: TextStyle(
-        color: Colors.white70,
-        fontSize: 14,
-      ),
-    ),
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        foregroundColor: Colors.black,
-        backgroundColor: const Color(0xFFE02C45),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
-      ),
+    bottomNavigationBarTheme: _bottomNavBarTheme.copyWith(
+      backgroundColor: Colors.black,
     ),
   );
 }

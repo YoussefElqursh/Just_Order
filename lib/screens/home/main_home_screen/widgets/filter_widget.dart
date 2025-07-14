@@ -69,7 +69,7 @@ List<FilterModel> filters = [
   FilterModel(Icons.keyboard_arrow_down_outlined,
       prefix: Icons.star_border, filterTitle: 'Rating 0.4+'),
   FilterModel(Icons.keyboard_arrow_down_outlined,
-      prefix: Icons.delivery_dining_outlined, filterTitle: 'Free Delivery '),
+      prefix: Icons.delivery_dining_outlined, filterTitle: 'Free Delivery'),
   FilterModel(Icons.keyboard_arrow_down_outlined,
       prefix: Icons.timer_outlined, filterTitle: 'Under 30 mins'),
 ];

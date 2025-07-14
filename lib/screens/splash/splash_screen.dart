@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -5,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:just_order/blocs/theming/theming_cubit.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/layouts/main_layout.dart';
@@ -13,9 +13,9 @@ import 'package:just_order/models/user_model.dart';
 import 'package:just_order/screens/QR/select_your_place_screen.dart';
 import 'package:just_order/screens/login/login_screen.dart';
 import 'package:just_order/shared/function/functions.dart';
+import 'package:just_order/shared/function/connectivity_plus.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../services/notification_service.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -31,109 +31,133 @@ class SplashScreen extends StatefulWidget {
   }
 
   @override
-  // ignore: library_private_types_in_public_api
-  _SplashScreenState createState() => _SplashScreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  Timer? _retryTimer;
   bool _dialogShown = false;
-  String _appVersion = '';
 
   @override
   void initState() {
     super.initState();
-    _loadAppVersion();
-    Future.delayed(
-      const Duration(seconds: 5),
-      () => _checkInternetConnection(),
-    );
+    Future.delayed(const Duration(seconds: 2), _initializeApp);
   }
 
-  Future<void> _loadAppVersion() async {
+  Future<String> _getAppVersion() async {
     final packageInfo = await PackageInfo.fromPlatform();
-    setState(() {
-      _appVersion = 'Version ${packageInfo.version}';
-    });
+    return 'Version ${packageInfo.version}';
   }
 
-  Future<void> _checkInternetConnection() async {
-    bool isConnected = await InternetConnectionChecker.instance.hasConnection;
-    if (isConnected) {
-      _navigateBasedOnUser();
-    } else {
-      _showNoInternetDialog();
-    }
-  }
-
-  void _showNoInternetDialog() {
-    if (!_dialogShown) {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text(AppLocalizations.of(context)!.no_internet_connection),
-          content: Text(AppLocalizations.of(context)!
-              .please_check_your_internet_connection_and_try_again),
-        ),
-      );
-    }
-    _dialogShown = true;
-    Future.delayed(const Duration(seconds: 2), () {
-      _checkInternetConnection();
-    });
-  }
-
-  Future<void> _navigateBasedOnUser() async {
+  Future<(User?, String?, int?)> _loadUserAndTableInfo() async {
     final prefs = await SharedPreferences.getInstance();
     final userString = prefs.getString('user');
     final tableCode = prefs.getString('code');
     final timestamp = prefs.getInt('timestamp');
-    final validTime = DateTime.now().day;
-    FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-    if (userString != null) {
-      final user = User.fromJson(jsonDecode(userString));
-      final QuerySnapshot result = await firestore
-          .collection('users')
-          .where('email', isEqualTo: user?.email)
-          .where('password', isEqualTo: user?.password)
-          .where('emailVerified', isEqualTo: true)
-          .where('phoneNumberVerified', isEqualTo: true)
-          .where('userType', isEqualTo: 'customer')
-          .get();
+    final user = userString != null ? User.fromJson(jsonDecode(userString)) : null;
+    return (user, tableCode, timestamp);
+  }
 
-      if (result.docs.isNotEmpty) {
-        // ignore: use_build_context_synchronously
-        if (tableCode != null &&
-            tableCode.isNotEmpty &&
-            timestamp != null &&
-            timestamp == validTime) {
-          // ignore: use_build_context_synchronously
-          Navigator.of(context).pushReplacement(
-            MainLayout.route(),
-          );
-        } else {
-          // ignore: use_build_context_synchronously
-          Navigator.of(context).pushReplacement(
-            SelectYourPlace.route(),
-          );
-        }
-        await NotificationService.initialize(user!.email);
+  Future<void> _initializeApp() async {
+    try {
+      final results = await Future.wait([
+        isConnected(),
+        _loadUserAndTableInfo(),
+      ]);
+
+      final isConnectedResult = results[0] as bool;
+      final (User? user, String? tableCode, int? timestamp) = results[1] as (User?, String?, int?);
+
+      if (!mounted) return;
+
+      if (isConnectedResult) {
+        await _navigate(user, tableCode, timestamp);
       } else {
-        // ignore: use_build_context_synchronously
-        Navigator.of(context).pushReplacement(
-          LoginScreen.route(),
-        );
+        _showNoInternetDialog();
       }
-    } else {
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Initialization failed: $e')),
+        );
+        debugPrint('Initialization failed: $e');
+      }
+    }
+  }
+
+  void _showNoInternetDialog() {
+    if (!_dialogShown && mounted) {
+      _dialogShown = true;
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(AppLocalizations.of(context)!.no_internet_connection),
+          content: Text(
+            AppLocalizations.of(context)!
+                .please_check_your_internet_connection_and_try_again,
+          ),
+        ),
+      );
+    }
+
+    _retryTimer = Timer.periodic(const Duration(seconds: 3), (timer) async {
+      final isConnect = await isConnected();
+      if (!mounted) return;
+
+      if (isConnect) {
+        timer.cancel();
+        _initializeApp();
+      }
+    });
+  }
+
+  Future<void> _navigate(User? user, String? tableCode, int? timestamp) async {
+    if (user == null) {
+      if (mounted) Navigator.of(context).pushReplacement(LoginScreen.route());
+      return;
+    }
+
+    final firestore = FirebaseFirestore.instance;
+
+    final result = await firestore
+        .collection('users')
+        .where('email', isEqualTo: user.email)
+        .where('password', isEqualTo: user.password)
+        .where('emailVerified', isEqualTo: true)
+        .where('phoneNumberVerified', isEqualTo: true)
+        .where('userType', isEqualTo: 'customer')
+        .get();
+
+    if (!mounted) return;
+
+    if (result.docs.isNotEmpty) {
+      await NotificationService.initialize(user.email);
+
+      final isValidTable = tableCode != null &&
+          tableCode.isNotEmpty &&
+          timestamp != null &&
+          timestamp == DateTime.now().day;
+
       // ignore: use_build_context_synchronously
       Navigator.of(context).pushReplacement(
-        LoginScreen.route(),
+        isValidTable ? MainLayout.route() : SelectYourPlace.route(),
       );
+    } else {
+      Navigator.of(context).pushReplacement(LoginScreen.route());
     }
   }
 
   @override
+  void dispose() {
+    _retryTimer?.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.sizeOf(context).height;
+
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, state) {
         return Scaffold(
@@ -143,11 +167,8 @@ class _SplashScreenState extends State<SplashScreen> {
             alignment: Alignment.center,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(
-                  height: MediaQuery.sizeOf(context).height * 0.35,
-                ),
+                SizedBox(height: screenHeight * 0.35),
                 setPhoto(
                   kind: 1,
                   path: 'assets/images/logo.svg',
@@ -165,24 +186,23 @@ class _SplashScreenState extends State<SplashScreen> {
                     fontSize: 16,
                     fontFamily: 'IBM Plex Sans',
                     fontWeight: FontWeight.w600,
-                    letterSpacing: 3.20,
+                    letterSpacing: 3.2,
                   ),
                 ),
-                SizedBox(
-                  height: MediaQuery.sizeOf(context).height * 0.35,
-                ),
+                SizedBox(height: screenHeight * 0.35),
                 const CircularProgressIndicator(
                   color: Color(0xFFe02c45),
                 ),
-                SizedBox(
-                  height: MediaQuery.sizeOf(context).height * 0.04,
+                SizedBox(height: screenHeight * 0.04),
+                FutureBuilder<String>(
+                  future: _getAppVersion(),
+                  builder: (context, snapshot) {
+                    return Text(
+                      snapshot.data ?? '',
+                      style: TextStyle(fontSize: 12.0.sp),
+                    );
+                  },
                 ),
-                Text(
-                  _appVersion,
-                  style: TextStyle(
-                    fontSize: 12.0.sp,
-                  ),
-                )
               ],
             ),
           ),

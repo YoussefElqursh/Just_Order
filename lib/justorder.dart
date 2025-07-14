@@ -14,6 +14,7 @@ import 'package:just_order/repository/auth_repository/login_repository.dart';
 import 'package:just_order/screens/splash/splash_screen.dart';
 import 'package:just_order/services/deep_link_listener.dart';
 import 'package:just_order/shared/routing/app_router.dart';
+import 'package:just_order/shared/style/themes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MyApp extends StatelessWidget {
@@ -65,8 +66,8 @@ class _AppView extends StatelessWidget {
                       : const Locale('en');
                 },
                 themeMode: themeState.themeMode,
-                theme: _lightTheme,
-                darkTheme: _darkTheme,
+                theme: AppThemes.lightTheme,
+                darkTheme: AppThemes.darkTheme,
                 onGenerateRoute: AppRouter.onGenerateRoute,
                 initialRoute: SplashScreen.routeName,
               ),
@@ -77,59 +78,6 @@ class _AppView extends StatelessWidget {
     );
   }
 }
-
-// Theme Constants
-const _primaryColor = Color(0xFFE02C45);
-const _unselectedColor = Color(0xFF898888);
-
-const _textStyle = TextStyle(
-  fontFamily: 'Inter',
-  fontSize: 12,
-  fontWeight: FontWeight.w600,
-);
-
-final _bottomNavBarTheme = BottomNavigationBarThemeData(
-  selectedItemColor: _primaryColor,
-  unselectedItemColor: _unselectedColor,
-  type: BottomNavigationBarType.fixed,
-  selectedLabelStyle: _textStyle.copyWith(color: _primaryColor),
-  unselectedLabelStyle: _textStyle.copyWith(color: _unselectedColor),
-);
-
-final _lightTheme = ThemeData(
-  useMaterial3: true,
-  brightness: Brightness.light,
-  scaffoldBackgroundColor: Colors.white,
-  primaryColor: _primaryColor,
-  indicatorColor: _primaryColor,
-  appBarTheme: const AppBarTheme(
-    color: Colors.white,
-    foregroundColor: Colors.black,
-    surfaceTintColor: Colors.white,
-    elevation: 0.5,
-  ),
-  bottomNavigationBarTheme: _bottomNavBarTheme.copyWith(
-    backgroundColor: Colors.white,
-  ),
-);
-
-final _darkTheme = ThemeData(
-  useMaterial3: true,
-  brightness: Brightness.dark,
-  scaffoldBackgroundColor: Colors.black,
-  primaryColor: _primaryColor,
-  indicatorColor: _primaryColor,
-  appBarTheme: const AppBarTheme(
-    color: Colors.black,
-    foregroundColor: Colors.white,
-    surfaceTintColor: Colors.black,
-    elevation: 0.5,
-  ),
-  bottomNavigationBarTheme: _bottomNavBarTheme.copyWith(
-    backgroundColor: Colors.black,
-  ),
-);
-
 Future<Locale> getUserPreferredLocal() async {
   final prefs = await SharedPreferences.getInstance();
   final localeCode = prefs.getString('locale') ?? 'en';
