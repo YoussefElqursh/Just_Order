@@ -469,8 +469,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           .get();
 
       if (existingUser.docs.isEmpty) {
-        // ignore: use_build_context_synchronously
+
         debugPrint(
+          // ignore: use_build_context_synchronously
             AppLocalizations.of(context)!.user_with_this_email_not_exists);
         showNotification(
             message: "Some went wrong , please try again", errorMessage: true);

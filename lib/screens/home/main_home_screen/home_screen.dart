@@ -5,7 +5,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:just_order/blocs/theming/theming_cubit.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/category_model.dart';
@@ -17,11 +16,11 @@ import 'package:just_order/screens/home/main_home_screen/place_details_sheet.dar
 import 'package:just_order/screens/home/main_home_screen/widgets/categories_widget.dart';
 import 'package:just_order/screens/home/main_home_screen/widgets/custom_search_delegate_widget.dart';
 import 'package:just_order/screens/home/main_home_screen/widgets/filter_widget.dart';
+import 'package:just_order/screens/home/main_home_screen/widgets/home_shimmer_widget.dart';
 import 'package:just_order/screens/home/main_home_screen/widgets/popular_today_widget.dart';
 import 'package:just_order/screens/home/main_home_screen/widgets/restaurants_widget.dart';
 import 'package:just_order/shared/style/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shimmer/shimmer.dart';
 
 class HomeScreen extends StatefulWidget {
   final String? tableCode;
@@ -42,9 +41,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final ValueNotifier<int> _currentPageNotifier = ValueNotifier<int>(0);
   String tableCode = '';
   late User user;
-  int _currentPage = 0;
   List<Restaurant> restaurants = [];
   List<Categories?> categories = [];
   bool isLoading = true; // Track loading state
@@ -100,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
         this.categories = categories;
       });
     } catch (e) {
-      // Handle error (e.g., show a snackbar or log the error)\
+      // Handle error (e.g., show a SnackBar or log the error)\
       // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Failed to load data: $e')),
@@ -133,81 +132,10 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildShimmerPlaceholder() {
-    return Shimmer.fromColors(
-      baseColor: Colors.grey[300]!,
-      highlightColor: Colors.grey[100]!,
-      child: Column(
-        children: [
-          // Ads Placeholder
-          Container(
-            width: double.infinity,
-            height: 140,
-            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-            ),
-          ),
-          const SizedBox(height: 15),
-
-          // Categories Placeholder
-          SizedBox(
-            height: 50,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemCount: 5,
-              itemBuilder: (context, index) => Container(
-                width: 50,
-                height: 50,
-                margin: const EdgeInsets.symmetric(horizontal: 10),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              separatorBuilder: (context, index) => const SizedBox(width: 10),
-            ),
-          ),
-          const SizedBox(height: 20),
-
-          // Popular Today Placeholder
-          SizedBox(
-            height: 150,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemCount: 3,
-              itemBuilder: (context, index) => Container(
-                width: 150,
-                height: 200,
-                margin: const EdgeInsets.symmetric(horizontal: 10),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              separatorBuilder: (context, index) => const SizedBox(width: 10),
-            ),
-          ),
-          const SizedBox(height: 20),
-
-          // Restaurants Placeholder
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: 4,
-            itemBuilder: (context, index) => Container(
-              margin: const EdgeInsets.symmetric(vertical: 5),
-              height: 50.h,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+  @override
+  void dispose() {
+    _currentPageNotifier.dispose();
+    super.dispose();
   }
 
   @override
@@ -335,7 +263,7 @@ class _HomeScreenState extends State<HomeScreen> {
             onRefresh: _refreshData,
             // Trigger data refresh
             child: isLoading
-                ? _buildShimmerPlaceholder()
+                ? buildShimmerPlaceholder()
                 : SingleChildScrollView(
                     scrollDirection: Axis.vertical,
                     physics: const BouncingScrollPhysics(),
@@ -366,40 +294,47 @@ class _HomeScreenState extends State<HomeScreen> {
                                 )
                                 .toList(),
                             options: CarouselOptions(
-                                initialPage: 0,
-                                autoPlay: true,
-                                autoPlayInterval: const Duration(seconds: 5),
-                                enlargeCenterPage: true,
-                                enlargeFactor: 0.3,
-                                onPageChanged: (value, _) {
-                                  setState(() {
-                                    _currentPage = value;
-                                  });
-                                }),
+                              initialPage: 0,
+                              autoPlay: true,
+                              autoPlayInterval: const Duration(seconds: 5),
+                              enlargeCenterPage: true,
+                              enlargeFactor: 0.3,
+                              onPageChanged: (value, _) {
+                                _currentPageNotifier.value = value;
+                              },
+                            ),
                           ),
                           const SizedBox(height: 5.0),
-                          Container(
-                            width: MediaQuery.sizeOf(context).width,
-                            alignment: Alignment.center,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                for (int i = 0; i < adsImageList.length; i++)
-                                  Container(
-                                    margin: const EdgeInsets.all(5),
-                                    height: 8,
-                                    width: 8,
-                                    decoration: BoxDecoration(
-                                      color: i == _currentPage
-                                          ? const Color(0xFFE02C45)
-                                          : state.themeMode == ThemeMode.light
-                                              ? const Color(0x0CE02C45)
-                                              : const Color(0x5FE02C45),
-                                      shape: BoxShape.circle,
-                                    ),
+                          ValueListenableBuilder<int>(
+                            valueListenable: _currentPageNotifier,
+                            builder: (context, currentPage, _) {
+                              return Container(
+                                width: MediaQuery.sizeOf(context).width,
+                                alignment: Alignment.center,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: List.generate(
+                                    adsImageList.length,
+                                    (i) {
+                                      return Container(
+                                        margin: const EdgeInsets.all(5),
+                                        height: 8,
+                                        width: 8,
+                                        decoration: BoxDecoration(
+                                          color: i == currentPage
+                                              ? const Color(0xFFE02C45)
+                                              : Theme.of(context).brightness ==
+                                                      Brightness.light
+                                                  ? const Color(0x0CE02C45)
+                                                  : const Color(0x5FE02C45),
+                                          shape: BoxShape.circle,
+                                        ),
+                                      );
+                                    },
                                   ),
-                              ],
-                            ),
+                                ),
+                              );
+                            },
                           ),
                           const SizedBox(height: 25.0),
                           // All Categories

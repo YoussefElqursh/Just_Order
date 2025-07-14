@@ -208,8 +208,8 @@ Widget buildPopularTodayScreen({
           Container(
             width: MediaQuery.sizeOf(context).width,
             height: 120,
-            decoration: ShapeDecoration(
-              shape: const RoundedRectangleBorder(
+            decoration: const ShapeDecoration(
+              shape: RoundedRectangleBorder(
                 side: BorderSide(
                   width: 1.50,
                   strokeAlign: BorderSide.strokeAlignCenter,

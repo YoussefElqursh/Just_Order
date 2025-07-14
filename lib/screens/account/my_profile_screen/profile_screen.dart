@@ -447,8 +447,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           .get();
 
       if (existingUser.docs.isEmpty) {
-        // ignore: use_build_context_synchronously
+
         debugPrint(
+          // ignore: use_build_context_synchronously
             AppLocalizations.of(context)!.user_with_this_email_not_exists);
         return;
       }
