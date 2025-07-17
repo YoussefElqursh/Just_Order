@@ -36,16 +36,11 @@ class NotificationService {
 
 
       String? token = await FirebaseMessaging.instance.getToken();
-      if (token != null) {
-        await _sendTokenToServer(
-          email,
-          token,
-        );
-      } else {
-        // Log the error
-        debugPrint("Token is null");
-      }
-
+      await _sendTokenToServer(
+        email,
+        token ?? '',
+      );
+    
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
         debugPrint(
           'Received message while in foreground: ${message.notification?.title}',

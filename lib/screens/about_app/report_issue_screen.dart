@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:just_order/localization_i18n_arb/app_localizations.dart';
 import 'package:http/http.dart' as http;
 import 'package:just_order/shared/style/colors.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:just_order/localization_i18n_arb/app_localizations.dart';
 
 import 'contact_us_screen.dart';
 import 'faq_screen.dart';

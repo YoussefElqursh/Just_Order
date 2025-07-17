@@ -101,7 +101,7 @@ class LoginCubit extends Cubit<LoginState> {
 
         await FirebaseFirestore.instance.collection('users').add(user.toJson());
         await user.saveUserToPreferences(user);
-        await NotificationService.initialize(user!.email);
+        await NotificationService.initialize(user.email);
         emit(LoginSuccess(user));
       }
     } catch (e) {

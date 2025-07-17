@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:just_order/localization_i18n_arb/app_localizations.dart';
 import 'package:just_order/screens/account/main_account_screen/account_screen.dart';
 import 'package:just_order/screens/home/main_home_screen/home_screen.dart';
 import 'package:just_order/screens/order/orders/order_screen.dart';
