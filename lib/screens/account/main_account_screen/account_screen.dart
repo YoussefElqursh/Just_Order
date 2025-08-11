@@ -185,24 +185,24 @@ class _AccountScreenState extends State<AccountScreen> {
                       },
                       state: state,
                     ),
-                    accountFunctionWidget(
-                      context: context,
-                      icon: const Icon(
-                        Icons.notifications_outlined,
-                        color: Color(0xFFE02C45),
-                        size: 20,
-                      ),
-                      label: 'Notifications',
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const NotificationScreen(),
-                          ),
-                        );
-                      },
-                      state: state,
-                    ),
+                    // accountFunctionWidget(
+                    //   context: context,
+                    //   icon: const Icon(
+                    //     Icons.notifications_outlined,
+                    //     color: Color(0xFFE02C45),
+                    //     size: 20,
+                    //   ),
+                    //   label: 'Notifications',
+                    //   onPressed: () {
+                    //     Navigator.push(
+                    //       context,
+                    //       MaterialPageRoute(
+                    //         builder: (context) => const NotificationScreen(),
+                    //       ),
+                    //     );
+                    //   },
+                    //   state: state,
+                    // ),
                     accountFunctionWidget(
                       context: context,
                       icon: Image.asset(

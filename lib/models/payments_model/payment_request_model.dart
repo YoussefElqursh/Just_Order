@@ -17,7 +17,7 @@ class PaymentRequestModel {
         (json["payment_keys"] as List)[0],
         json["intention_detail"] as Map,
         (json["payment_methods"] as List)[0],
-        (json["card_tokens"] as List) ?? [],
+        (json["card_tokens"] as List),
         json["id"] as String,
         json["client_secret"] as String,
         json["special_reference"] as String);
