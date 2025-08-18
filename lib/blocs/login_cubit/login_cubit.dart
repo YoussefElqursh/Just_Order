@@ -37,18 +37,16 @@ class LoginCubit extends Cubit<LoginState> {
 
   void changePasswordState() {
     isPassword = !isPassword;
-    suffixIcon =
-        isPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;
+    suffixIcon = isPassword
+        ? Icons.visibility_outlined
+        : Icons.visibility_off_outlined;
     emit(LoginShowPassword());
   }
 
   Future<void> loginWithGoogle() async {
     emit(LoginLoading());
     final GoogleSignIn googleSignIn = GoogleSignIn(
-      scopes: <String>[
-        'email',
-        'profile',
-      ],
+      scopes: <String>['email', 'profile'],
     );
 
     try {
@@ -66,27 +64,31 @@ class LoginCubit extends Cubit<LoginState> {
       }
 
       // Retrieve user details from Google account
-      final String email = googleUser.email; // Email address
+      final String email = googleUser.email;
       final QuerySnapshot result = await FirebaseFirestore.instance
           .collection('users')
           .where('email', isEqualTo: email)
           .get();
       final List<DocumentSnapshot> documents = result.docs;
+
       if (documents.isNotEmpty) {
-        User? user =
-            await User.fromMap(documents.first.data() as Map<String, dynamic>);
-        final prefs = await SharedPreferences.getInstance();
-        prefs.setString('user', jsonEncode(user?.toJson()));
+        // ✅ Existing user
+        User? user = await User.fromMap(
+          documents.first.data() as Map<String, dynamic>,
+        );
+        await SharedPreferences.getInstance().then(
+          (prefs) => prefs.setString('user', jsonEncode(user?.toJson())),
+        );
         emit(LoginSuccess(user!));
       } else {
-        // User not found, sign up the user (create a new Firestore document)
+        // ✅ New user registration
+        final String googleId = googleUser.id;
+        final String name = googleUser.displayName ?? "No Name Provided";
 
-        final String googleId = googleUser.id; // Unique ID from Google
-        final String name =
-            googleUser.displayName ?? "No Name Provided"; // Name
-
+        // Create user instance without userId initially
         final user = User(
-          userId: googleId,
+          userId: '',
+          googleId: googleId,
           firstName: name,
           lastName: '',
           email: email,
@@ -99,9 +101,17 @@ class LoginCubit extends Cubit<LoginState> {
           createdAt: Timestamp.now().toDate(),
         );
 
-        await FirebaseFirestore.instance.collection('users').add(user.toJson());
+        // ✅ Add to Firestore with auto ID and set userId before saving
+        final docRef = FirebaseFirestore.instance
+            .collection('users')
+            .doc(); // generate ID
+        user.userId = docRef.id; // update user object
+        await docRef.set(user.toJson()); // single write
+
+        // ✅ Save to preferences & notifications
         await user.saveUserToPreferences(user);
         await NotificationService.initialize(user.email);
+
         emit(LoginSuccess(user));
       }
     } catch (e) {

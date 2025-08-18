@@ -216,45 +216,45 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            actions: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  right: 20.0,
-                  top: 10.0,
-                ),
-                child: Container(
-                  width: 36,
-                  height: 36,
-                  clipBehavior: Clip.antiAlias,
-                  decoration: ShapeDecoration(
-                    color: const Color(0xFFF4F4F4),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  child: IconButton(
-                    onPressed: () {
-                      showSearch(
-                        context: context,
-                        delegate: CustomSearchDelegateWidget(),
-                      );
-                    },
-                    icon: const Icon(
-                      Icons.search_outlined,
-                      color: AppColor.primaryColor,
-                      size: 20,
-                    ),
-                    style: ButtonStyle(
-                      shape: WidgetStatePropertyAll(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
+            // actions: [
+            //   Padding(
+            //     padding: const EdgeInsets.only(
+            //       right: 20.0,
+            //       top: 10.0,
+            //     ),
+            //     child: Container(
+            //       width: 36,
+            //       height: 36,
+            //       clipBehavior: Clip.antiAlias,
+            //       decoration: ShapeDecoration(
+            //         color: const Color(0xFFF4F4F4),
+            //         shape: RoundedRectangleBorder(
+            //           borderRadius: BorderRadius.circular(8),
+            //         ),
+            //       ),
+            //       child: IconButton(
+            //         onPressed: () {
+            //           showSearch(
+            //             context: context,
+            //             delegate: CustomSearchDelegateWidget(),
+            //           );
+            //         },
+            //         icon: const Icon(
+            //           Icons.search_outlined,
+            //           color: AppColor.primaryColor,
+            //           size: 20,
+            //         ),
+            //         style: ButtonStyle(
+            //           shape: WidgetStatePropertyAll(
+            //             RoundedRectangleBorder(
+            //               borderRadius: BorderRadius.circular(8),
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ],
           ),
           body: RefreshIndicator(
             color: AppColor.primaryColor,

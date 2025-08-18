@@ -12,6 +12,7 @@ class User {
   String email;
   String password;
   String phoneNumber;
+  String? googleId;
   UserType userType;
   bool emailVerified;
   bool phoneNumberVerified;
@@ -32,6 +33,7 @@ class User {
     this.loginWithGoogle = false,
     required this.createdAt,
     this.updatedAt,
+    this.googleId,
   });
 
   static Future<User>? fromMap(Object? data) {
@@ -58,6 +60,7 @@ class User {
       updatedAt: map['updatedAt'] != null
           ? _parseDate(map['updatedAt'])
           : DateTime.now(),
+      googleId: map['googleId'] as String?,
     ));
   }
 
@@ -80,6 +83,7 @@ class User {
       'loginWithGoogle': loginWithGoogle,
       'createdAt': createdAt.toIso8601String(),
       'updatedAt': updatedAt?.toIso8601String(),
+      'googleId': googleId
     };
   }
 
@@ -113,6 +117,7 @@ class User {
               ? (json['updatedAt'] as Timestamp).toDate()
               : DateTime.parse(json['updatedAt'])
           : null,
+      googleId: json['googleId'],
     );
   }
 
