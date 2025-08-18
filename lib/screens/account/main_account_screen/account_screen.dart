@@ -11,7 +11,6 @@ import 'package:just_order/screens/about_app/about_app_screen.dart';
 import 'package:just_order/screens/account/app_settings/app_settings_screen.dart';
 import 'package:just_order/screens/account/history_screen/history_screen.dart';
 import 'package:just_order/screens/account/main_account_screen/widgets/account_functions_widget.dart';
-import 'package:just_order/screens/notification/ui/screen/notification_screen.dart';
 import 'package:just_order/shared/function/functions.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
