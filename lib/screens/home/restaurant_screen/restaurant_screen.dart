@@ -667,22 +667,9 @@ class _RestaurantScreenState extends State<RestaurantScreen>
                   ],
                 ),
                 const SizedBox(width: 30.0),
-                Transform(
-                  transform: Matrix4.identity()
-                    ..translate(0.0, 0.0)
-                    ..rotateZ(1.57),
-                  child: Container(
-                    width: 15,
-                    decoration: const ShapeDecoration(
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(
-                          width: 1,
-                          strokeAlign: BorderSide.strokeAlignCenter,
-                          color: Color(0x66AFAFAF),
-                        ),
-                      ),
-                    ),
-                  ),
+                const VerticalDivider(
+                  color: Color(0x66AFAFAF),
+                  width: 2,
                 ),
                 const SizedBox(width: 20.0),
                 Row(
@@ -757,6 +744,7 @@ class _RestaurantScreenState extends State<RestaurantScreen>
     return Expanded(
       flex: 1,
       child: TabBarView(
+        physics: const BouncingScrollPhysics(),
         children: [
           for (final category in filter)
             KeepAliveWidget(
