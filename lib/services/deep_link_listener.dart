@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
+import 'package:just_order/layouts/main_layout.dart';
 
 class DeepLinkListener extends StatefulWidget {
   const DeepLinkListener({super.key, required this.child});
@@ -20,12 +21,14 @@ class _DeepLinkListenerState extends State<DeepLinkListener> {
       log('URI: ${uri.toString()}');
       if (uri.pathSegments.isNotEmpty &&
           uri.pathSegments.first == 'TableCode') {
-        final tableCode =
-            uri.pathSegments.length > 1 ? uri.pathSegments[1] : null;
+        final tableCode = uri.pathSegments.length > 1
+            ? uri.pathSegments[1]
+            : null;
         if (tableCode != null && mounted) {
-          Navigator.of(context).pushNamed(
-            'TableCodeRoute',
-            arguments: tableCode,
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (_) => MainLayout(tableCode: tableCode,),),
+            (route) => false,
           );
         }
       }

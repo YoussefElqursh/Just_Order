@@ -213,24 +213,18 @@ class _SelectYourPlaceState extends State<SelectYourPlace>
                                           onDetect: (barcode) async {
                                             if (!isScanCompleted) {
                                               isScanCompleted = true;
-                                              String code = barcode.barcodes
-                                                      .firstOrNull?.rawValue ??
-                                                  "---";
+                                              String rawValue = barcode.barcodes.firstOrNull?.rawValue ?? "---";
+                                              String extractedCode = rawValue.split('/').last;
+                                              if (!RegExp(r'^\d+$').hasMatch(extractedCode)) {
+                                                extractedCode = '';
+                                              }
                                               Navigator.pushReplacement(
-                                                // ignore: use_build_context_synchronously
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (context) {
-                                                    final currentDate =
-                                                        DateTime.now().day;
-                                                    prefs.setString(
-                                                      'code',
-                                                      code,
-                                                    );
-                                                    prefs.setInt(
-                                                      'timestamp',
-                                                      currentDate,
-                                                    );
+                                                    final currentDate = DateTime.now().day;
+                                                    prefs.setString('code', extractedCode);
+                                                    prefs.setInt('timestamp', currentDate);
                                                     return MainLayout();
                                                   },
                                                 ),
