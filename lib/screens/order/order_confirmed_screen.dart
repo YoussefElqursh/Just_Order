@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_order/localization_i18n_arb/app_localizations.dart';
@@ -32,13 +31,8 @@ class OrderConfirmedScreen extends StatefulWidget {
     required List<CartItem> cartItems,
   }) {
     return MaterialPageRoute(
-      settings: const RouteSettings(
-        name: routeName,
-      ),
-      builder: (context) => OrderConfirmedScreen(
-        order: order,
-        cartItems: cartItems,
-      ),
+      settings: const RouteSettings(name: routeName),
+      builder: (_) => OrderConfirmedScreen(order: order, cartItems: cartItems),
     );
   }
 
@@ -47,13 +41,20 @@ class OrderConfirmedScreen extends StatefulWidget {
 }
 
 class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
-  late String formattedDate;
-  late String formattedTime;
-  UserRepository userRepository = UserRepository();
+  final UserRepository userRepository = UserRepository();
 
   @override
   void initState() {
     super.initState();
+    Future.delayed(const Duration(minutes: 1), () {
+      if (mounted) {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (_) => MainLayout()),
+              (route) => false,
+        );
+      }
+    });
     _pushOrderToDatabase();
   }
 
@@ -61,22 +62,22 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
     await userRepository.pushOrder(widget.order, widget.cartItems);
     final prefs = await SharedPreferences.getInstance();
     final localeCode = prefs.getString('locale') ?? 'en';
-    final restaurantString =
-        // ignore: use_build_context_synchronously
-        prefs.getString(AppLocalizations.of(context)!.restaurant_name);
+    final restaurantString = prefs.getString('restaurant_name');
+
     Restaurant? restaurant;
     if (restaurantString != null) {
-      setState(() {
-        restaurant = Restaurant.fromJson(restaurantString);
-      });
+      restaurant = Restaurant.fromJson(restaurantString);
     }
-    Map<String, dynamic> body = {};
-    body['from'] = widget.order.userId;
-    body['to'] = restaurant?.managerId;
-    body['topic'] = 'client_to_restaurant';
-    body['messageId'] = 1;
-    body['locale'] = localeCode;
-    body['orderId'] = widget.order.orderId;
+
+    final body = {
+      'from': widget.order.userId,
+      'to': restaurant?.managerId,
+      'topic': 'client_to_restaurant',
+      'messageId': 1,
+      'locale': localeCode,
+      'orderId': widget.order.orderId,
+    };
+
     unawaited(
       DioHelperPayment.postData(
         url: 'https://notify.justorder-eg.com/events',
@@ -88,9 +89,7 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
   Future<bool> _onWillPop() async {
     Navigator.pushAndRemoveUntil(
       context,
-      MaterialPageRoute(
-        builder: (context) => MainLayout(),
-      ),
+      MaterialPageRoute(builder: (_) => MainLayout()),
       (route) => false,
     );
     return false;
@@ -98,334 +97,179 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final media = MediaQuery.sizeOf(context);
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, state) {
+        final isLight = state.themeMode == ThemeMode.light;
+        final textColor = isLight ? Colors.black : Colors.white;
+
         return WillPopScope(
           onWillPop: _onWillPop,
           child: Scaffold(
-            body: SizedBox(
-              width: MediaQuery.sizeOf(context).width,
-              height: MediaQuery.sizeOf(context).height,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(height: MediaQuery.sizeOf(context).width * 0.5),
-                  Stack(
-                    alignment: Alignment.topCenter,
-                    clipBehavior: Clip.none,
+            body: SafeArea(
+              child: SingleChildScrollView(
+                child: SizedBox(
+                  width: media.width,
+                  height: media.height,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Container(
-                        width: 280,
-                        height: MediaQuery.sizeOf(context).height * 0.60,
-                        padding: const EdgeInsets.all(20),
-                        decoration: ShapeDecoration(
-                          color: state.themeMode == ThemeMode.dark
-                              ? Colors.black
-                              : Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          shadows: const [
-                            BoxShadow(
-                              color: Color(0x19000000),
-                              blurRadius: 10,
-                              offset: Offset(0, 2),
-                              spreadRadius: 0,
-                            )
-                          ],
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const SizedBox(height: 60.0),
-                            Text(
-                              AppLocalizations.of(context)!.bon_appetit,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                color: Color(0xFFE02C45),
-                                fontSize: 12,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w600,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
+                      Stack(
+                        alignment: Alignment.topCenter,
+                        clipBehavior: Clip.none,
+                        children: [
+                          Container(
+                            width: media.width * 0.85,
+                            padding: EdgeInsets.all(media.width * 0.05),
+                            decoration: BoxDecoration(
+                              color: isLight ? Colors.white : Colors.black,
+                              borderRadius: BorderRadius.circular(12),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Color(0x19000000),
+                                  blurRadius: 10,
+                                  offset: Offset(0, 2),
+                                ),
+                              ],
                             ),
-                            const SizedBox(height: 12.0),
-                            Text(
-                              AppLocalizations.of(context)!.order_confirmed,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: state.themeMode == ThemeMode.light
-                                    ? Colors.black
-                                    : Colors.white,
-                                fontSize: 16,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w700,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                            ),
-                            const SizedBox(height: 12.0),
-                            QrImageView(
-                              data: widget.order.orderCode,
-                              size: 120,
-                              version: QrVersions.auto,
-                              backgroundColor: state.themeMode == ThemeMode.dark
-                                  ? Colors.black
-                                  : Colors.white,
-                              foregroundColor:
-                                  state.themeMode == ThemeMode.light
-                                      ? Colors.black
-                                      : Colors.white,
-                            ),
-                            Text(
-                              widget.order.orderCode,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: state.themeMode == ThemeMode.light
-                                    ? Colors.black
-                                    : Colors.white,
-                                fontSize: 18,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w700,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                            ),
-                            const SizedBox(height: 32.0),
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                            child: Column(
                               children: [
-                                Text(
+                                SizedBox(height: media.height * 0.08),
+                                _headerText(
+                                  AppLocalizations.of(context)!.bon_appetit,
+                                  color: const Color(0xFFE02C45),
+                                  size: 14,
+                                ),
+                                const SizedBox(height: 12),
+                                _headerText(
+                                  AppLocalizations.of(context)!.order_confirmed,
+                                  color: textColor,
+                                  size: 18,
+                                  weight: FontWeight.w700,
+                                ),
+                                const SizedBox(height: 12),
+                                QrImageView(
+                                  data: widget.order.orderCode,
+                                  size: media.width * 0.35,
+                                  backgroundColor: isLight
+                                      ? Colors.white
+                                      : Colors.black,
+                                  foregroundColor: textColor,
+                                ),
+                                const SizedBox(height: 8),
+                                _headerText(
+                                  widget.order.orderCode,
+                                  color: textColor,
+                                  size: 16,
+                                  weight: FontWeight.bold,
+                                ),
+                                const SizedBox(height: 24),
+                                _infoRow(
                                   AppLocalizations.of(context)!.subtotal,
-                                  style: TextStyle(
-                                    color: state.themeMode == ThemeMode.light
-                                        ? Colors.black
-                                        : Colors.white,
-                                    fontSize: 12,
-                                    fontFamily: 'Inter',
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
+                                  '${AppLocalizations.of(context)!.egp} ${widget.cartItems.fold(0.0, (sum, item) => sum + item.totalPrice)}',
+                                  textColor,
                                 ),
-                                const Spacer(),
-                                Text(
-                                  '${AppLocalizations.of(context)!.egp} ${widget.cartItems.fold(0.0, (previousValue, element) => previousValue + element.totalPrice)}',
-                                  style: TextStyle(
-                                    color: state.themeMode == ThemeMode.light
-                                        ? Colors.black
-                                        : Colors.white,
-                                    fontSize: 12,
-                                    fontFamily: 'Inter',
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 12),
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
+                                _infoRow(
                                   AppLocalizations.of(context)!.delivery_fee,
-                                  style: TextStyle(
-                                    color: state.themeMode == ThemeMode.light
-                                        ? Colors.black
-                                        : Colors.white,
-                                    fontSize: 12,
-                                    fontFamily: 'Inter',
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                ),
-                                const Spacer(),
-                                Text(
                                   '${AppLocalizations.of(context)!.egp} ${widget.order.deliveryFee}',
-                                  style: TextStyle(
-                                    color: state.themeMode == ThemeMode.light
-                                        ? Colors.black
-                                        : Colors.white,
-                                    fontSize: 12,
-                                    fontFamily: 'Inter',
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
+                                  textColor,
                                 ),
-                              ],
-                            ),
-                            const SizedBox(height: 12),
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
+                                _infoRow(
                                   'Delivery Tip',
-                                  style: TextStyle(
-                                    color: state.themeMode == ThemeMode.light
-                                        ? Colors.black
-                                        : Colors.white,
-                                    fontSize: 12,
-                                    fontFamily: 'Inter',
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                ),
-                                const Spacer(),
-                                Text(
                                   '${AppLocalizations.of(context)!.egp} ${widget.order.deliveryTip}',
-                                  style: TextStyle(
-                                    color: state.themeMode == ThemeMode.light
-                                        ? Colors.black
-                                        : Colors.white,
-                                    fontSize: 12,
-                                    fontFamily: 'Inter',
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
+                                  textColor,
                                 ),
-                              ],
-                            ),
-                            const SizedBox(height: 12),
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
+                                _infoRow(
                                   AppLocalizations.of(context)!.service_fee,
-                                  style: TextStyle(
-                                    color: state.themeMode == ThemeMode.light
-                                        ? Colors.black
-                                        : Colors.white,
-                                    fontSize: 12,
-                                    fontFamily: 'Inter',
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                ),
-                                const Spacer(),
-                                Text(
                                   '${AppLocalizations.of(context)!.egp} ${widget.order.serviceFee}',
-                                  style: const TextStyle(
-                                    color: Color(0xFFE02C45),
-                                    fontSize: 12,
-                                    fontFamily: 'Inter',
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
+                                  textColor,
                                 ),
-                              ],
-                            ),
-                            const SizedBox(height: 12),
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
+                                _infoRow(
                                   AppLocalizations.of(context)!.payment_method,
-                                  style: TextStyle(
-                                    color: state.themeMode == ThemeMode.light
-                                        ? Colors.black
-                                        : Colors.white,
-                                    fontSize: 12,
-                                    fontFamily: 'Inter',
-                                    fontWeight: FontWeight.w400,
-                                    height: 0,
-                                  ),
-                                ),
-                                const Spacer(),
-                                Text(
                                   widget.order.paymentType.name,
-                                  textAlign: TextAlign.right,
-                                  style: TextStyle(
-                                    color: state.themeMode == ThemeMode.light
-                                        ? Colors.black
-                                        : Colors.white,
-                                    fontSize: 12,
-                                    fontFamily: 'Inter',
-                                    fontWeight: FontWeight.w500,
-                                    height: 0,
-                                  ),
+                                  textColor,
                                 ),
-                              ],
-                            ),
-                            const SizedBox(height: 12),
-                            const Divider(
-                              height: 1,
-                              color: Color(0x4CC8C8C8),
-                            ),
-                            const SizedBox(height: 12),
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
+                                const Divider(color: Color(0x4CC8C8C8)),
+                                const SizedBox(height: 8),
+                                _infoRow(
                                   AppLocalizations.of(context)!.total,
-                                  style: TextStyle(
-                                    color: state.themeMode == ThemeMode.light
-                                        ? Colors.black
-                                        : Colors.white,
-                                    fontSize: 14,
-                                    fontFamily: 'Inter',
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                ),
-                                const Spacer(),
-                                Text(
                                   '${AppLocalizations.of(context)!.egp} ${widget.order.totalAmount}',
-                                  style: TextStyle(
-                                    color: state.themeMode == ThemeMode.light
-                                        ? Colors.black
-                                        : Colors.white,
-                                    fontSize: 14,
-                                    fontFamily: 'Inter',
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
+                                  textColor,
+                                  isBold: true,
                                 ),
                               ],
                             ),
-                          ],
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 330,
-                        child: Lottie.asset(
-                          height: 350,
-                          width: 350,
-                          'assets/animation/Done.json',
-                          repeat: false,
-                        ),
+                          ),
+                          Positioned(
+                            top: -media.height * 0.15,
+                            child: Lottie.asset(
+                              'assets/animation/Done.json',
+                              height: media.width * 0.8,
+                              width: media.width * 0.8,
+                              repeat: false,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ],
+                ),
               ),
             ),
           ),
         );
       },
+    );
+  }
+
+  Widget _headerText(
+    String text, {
+    Color color = Colors.black,
+    double size = 14,
+    FontWeight weight = FontWeight.w600,
+  }) {
+    return Text(
+      text,
+      textAlign: TextAlign.center,
+      style: TextStyle(color: color, fontSize: size, fontWeight: weight),
+      overflow: TextOverflow.ellipsis,
+      maxLines: 1,
+    );
+  }
+
+  Widget _infoRow(
+    String title,
+    String value,
+    Color textColor, {
+    bool isBold = false,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6.0),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              title,
+              style: TextStyle(
+                color: textColor,
+                fontSize: 12,
+                fontWeight: FontWeight.w400,
+              ),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          Text(
+            value,
+            style: TextStyle(
+              color: textColor,
+              fontSize: 12,
+              fontWeight: isBold ? FontWeight.w700 : FontWeight.w500,
+            ),
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
+      ),
     );
   }
 }
