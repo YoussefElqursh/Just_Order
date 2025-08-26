@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:just_order/localization_i18n_arb/app_localizations.dart';
+import 'package:just_order/shared/style/colors.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ContactUsScreen extends StatelessWidget {
@@ -32,25 +33,19 @@ class ContactUsScreen extends StatelessWidget {
                   title: AppLocalizations.of(context)!.customer_service,
                   url: "https://www.talabat.com/egypt",
                 ),
-                const SizedBox(
-                  height: 8,
-                ),
+                const SizedBox(height: 8),
                 ContactTile(
                   icon: Icons.language,
                   title: AppLocalizations.of(context)!.website,
-                  url: "https://www.talabat.com/egypt",
+                  url: "https://justorder-eg.com/",
                 ),
-                const SizedBox(
-                  height: 8,
-                ),
+                const SizedBox(height: 8),
                 ContactTile(
                   icon: Icons.facebook,
                   title: AppLocalizations.of(context)!.facebook,
                   url: "https://www.talabat.com/egypt",
                 ),
-                const SizedBox(
-                  height: 8,
-                ),
+                const SizedBox(height: 8),
                 ContactTile(
                   icon: Icons.camera_alt,
                   title: AppLocalizations.of(context)!.instagram,
@@ -77,15 +72,32 @@ class ContactTile extends StatelessWidget {
     required this.url,
   });
 
-  void _launchURL() async {
+  void _launchURL(context) async {
     final Uri uri = Uri.parse(url);
     if (await canLaunchUrl(uri)) {
-      await launchUrl(
-        uri,
-        mode: LaunchMode.externalApplication,
-      );
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
     } else {
-      debugPrint("Could not launch $url");
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'This service is not available now.',
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 14,
+              color: AppColor.whiteColor,
+              fontFamily: 'Inter',
+            ),
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadiusGeometry.all(Radius.circular(8.0)),
+          ),
+          padding: EdgeInsets.all(12),
+          backgroundColor: AppColor.primaryColor,
+          dismissDirection: DismissDirection.horizontal,
+          showCloseIcon: true,
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
     }
   }
 
@@ -104,10 +116,7 @@ class ContactTile extends StatelessWidget {
         ),
       ),
       child: ListTile(
-        leading: Icon(
-          icon,
-          color: const Color(0xFFE02C45),
-        ),
+        leading: Icon(icon, color: const Color(0xFFE02C45)),
         title: Text(
           title,
           style: const TextStyle(
@@ -117,7 +126,7 @@ class ContactTile extends StatelessWidget {
             fontWeight: FontWeight.w500,
           ),
         ),
-        onTap: _launchURL, // Open the link when tapped
+        onTap: () => _launchURL(context), // Open the link when tapped
       ),
     );
   }
