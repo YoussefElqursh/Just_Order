@@ -144,7 +144,7 @@ class _PayMethodScreenState extends State<PayMethodScreen> {
                       },
                       child: Container(
                         width: MediaQuery.sizeOf(context).width,
-                        height: 65,
+                        height: 75,
                         padding: const EdgeInsets.symmetric(horizontal: 12.0),
                         clipBehavior: Clip.antiAlias,
                         decoration: ShapeDecoration(
