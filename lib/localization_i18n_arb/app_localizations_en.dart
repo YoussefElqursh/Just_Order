@@ -288,7 +288,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get options => 'Options';
 
   @override
-  String get plus_egp => '+EGP';
+  String get plus_egp => 'EGP';
 
   @override
   String get optional => 'Optional';

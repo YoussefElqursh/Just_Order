@@ -641,7 +641,7 @@ abstract class AppLocalizations {
   /// No description provided for @plus_egp.
   ///
   /// In en, this message translates to:
-  /// **'+EGP'**
+  /// **'EGP'**
   String get plus_egp;
 
   /// No description provided for @optional.

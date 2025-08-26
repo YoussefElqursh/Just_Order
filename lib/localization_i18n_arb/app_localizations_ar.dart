@@ -288,7 +288,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get options => 'اختيارات';
 
   @override
-  String get plus_egp => '+ج م ';
+  String get plus_egp => 'ج م';
 
   @override
   String get optional => 'اختياري';
