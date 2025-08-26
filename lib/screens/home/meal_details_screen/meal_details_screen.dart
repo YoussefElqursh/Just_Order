@@ -18,10 +18,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class MealDetailsScreen extends StatefulWidget {
   final Item item;
 
-  const MealDetailsScreen({
-    super.key,
-    required this.item,
-  });
+  const MealDetailsScreen({super.key, required this.item});
 
   static const String routeName = 'MealDetailsScreenRoute';
 
@@ -61,8 +58,10 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
     double basePrice = selectedSize != null
         ? widget.item.sizes![selectedSize]!
         : widget.item.price;
-    double extrasPrice =
-        selectedExtras.values.fold(0.0, (sum, item) => sum + item);
+    double extrasPrice = selectedExtras.values.fold(
+      0.0,
+      (sum, item) => sum + item,
+    );
     totalPrice = (basePrice + extrasPrice) * counter;
   }
 
@@ -106,9 +105,11 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
     final cartProvider = Provider.of<CartProvider>(context);
     final filteredItems = restaurant != null
         ? cartProvider.items
-            .where((item) =>
-                item.cartItemId.endsWith('_${restaurant!.restaurantId}'))
-            .toList()
+              .where(
+                (item) =>
+                    item.cartItemId.endsWith('_${restaurant!.restaurantId}'),
+              )
+              .toList()
         : cartProvider.items;
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, state) {
@@ -140,9 +141,10 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                             ),
                             errorWidget: (context, url, error) =>
                                 const Icon(Icons.broken_image_rounded),
-                            memCacheWidth: (MediaQuery.of(context).size.width *
-                                    MediaQuery.of(context).devicePixelRatio)
-                                .round(),
+                            memCacheWidth:
+                                (MediaQuery.of(context).size.width *
+                                        MediaQuery.of(context).devicePixelRatio)
+                                    .round(),
                           ),
                           Visibility(
                             visible: item.discount > 0,
@@ -157,7 +159,9 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                 width: 60,
                                 height: 30,
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 6, vertical: 4),
+                                  horizontal: 6,
+                                  vertical: 4,
+                                ),
                                 clipBehavior: Clip.antiAlias,
                                 decoration: const ShapeDecoration(
                                   color: Color(0xFFE02C45),
@@ -320,8 +324,8 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                       style: TextStyle(
                                         color:
                                             state.themeMode == ThemeMode.light
-                                                ? Colors.black
-                                                : Colors.white,
+                                            ? Colors.black
+                                            : Colors.white,
                                         fontSize: 14,
                                         fontFamily: 'Inter',
                                         fontWeight: FontWeight.w600,
@@ -331,8 +335,9 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                     ),
                                     const SizedBox(height: 6),
                                     Text(
-                                      AppLocalizations.of(context)!
-                                          .choose_1_option,
+                                      AppLocalizations.of(
+                                        context,
+                                      )!.choose_1_option,
                                       style: const TextStyle(
                                         color: Color(0xFFAFAFAF),
                                         fontSize: 12,
@@ -382,7 +387,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                     '(${AppLocalizations.of(context)!.plus_egp} ${item.sizes![size]!.toStringAsFixed(2)})',
                                 width: MediaQuery.sizeOf(context).width,
                                 hasDivider: true,
-                                label: size,
+                                label: size.toUpperCase(),
                                 value: size,
                                 groupName: selectedSize,
                                 onChanged: (value) {
@@ -409,30 +414,34 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(AppLocalizations.of(context)!.extras,
-                                        style: TextStyle(
-                                          color:
-                                              state.themeMode == ThemeMode.light
-                                                  ? Colors.black
-                                                  : Colors.white,
-                                          fontSize: 14,
-                                          fontFamily: 'Inter',
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 1),
+                                    Text(
+                                      AppLocalizations.of(context)!.extras,
+                                      style: TextStyle(
+                                        color:
+                                            state.themeMode == ThemeMode.light
+                                            ? Colors.black
+                                            : Colors.white,
+                                        fontSize: 14,
+                                        fontFamily: 'Inter',
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                    ),
                                     const SizedBox(height: 6),
                                     Text(
-                                        AppLocalizations.of(context)!
-                                            .choose_up_to_1_option,
-                                        style: const TextStyle(
-                                          color: Color(0xFFAFAFAF),
-                                          fontSize: 12,
-                                          fontFamily: 'Inter',
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 1),
+                                      AppLocalizations.of(
+                                        context,
+                                      )!.choose_up_to_1_option,
+                                      style: const TextStyle(
+                                        color: Color(0xFFAFAFAF),
+                                        fontSize: 12,
+                                        fontFamily: 'Inter',
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                    ),
                                   ],
                                 ),
                                 const Spacer(),
@@ -470,14 +479,16 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                 context: context,
                                 hasExtraText: true,
                                 extraText:
-                                    '(${AppLocalizations.of(context)!.plus_egp} ${item.extras![extra]!.toStringAsFixed(2)})',
+                                    '(+${AppLocalizations.of(context)!.plus_egp} ${item.extras![extra]!.toStringAsFixed(2)})',
                                 label: extra,
                                 value: selectedExtras.containsKey(extra),
                                 onChanged: (value) {
                                   setState(() {
                                     if (value != null && value) {
                                       selectedExtras.putIfAbsent(
-                                          extra, () => item.extras![extra]!);
+                                        extra,
+                                        () => item.extras![extra]!,
+                                      );
                                     } else {
                                       selectedExtras.remove(extra);
                                     }
@@ -511,9 +522,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
               },
               backgroundColor: const Color(0xFFE02C45),
               shape: const CircleBorder(
-                side: BorderSide(
-                  color: Color(0xFFE02C45),
-                ),
+                side: BorderSide(color: Color(0xFFE02C45)),
               ),
               child: Image.asset(
                 'assets/icons/cart.png',
@@ -532,10 +541,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Divider(
-                    height: 1,
-                    color: Color(0x4CC8C8C8),
-                  ),
+                  const Divider(height: 1, color: Color(0x4CC8C8C8)),
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: SizedBox(
@@ -549,17 +555,19 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text(AppLocalizations.of(context)!.quantity_order,
-                                  style: TextStyle(
-                                    color: state.themeMode == ThemeMode.light
-                                        ? Colors.black
-                                        : Colors.white,
-                                    fontSize: 14,
-                                    fontFamily: 'Inter',
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1),
+                              Text(
+                                AppLocalizations.of(context)!.quantity_order,
+                                style: TextStyle(
+                                  color: state.themeMode == ThemeMode.light
+                                      ? Colors.black
+                                      : Colors.white,
+                                  fontSize: 14,
+                                  fontFamily: 'Inter',
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              ),
                               const Spacer(),
                               Container(
                                 width: 34,
@@ -570,7 +578,8 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                       ? const Color(0x0CE02C45)
                                       : const Color(0x5FE02C45),
                                   shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8)),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
                                 ),
                                 child: IconButton(
                                   onPressed: () {
@@ -594,17 +603,19 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                 ),
                               ),
                               const SizedBox(width: 10.0),
-                              Text('$counter',
-                                  style: TextStyle(
-                                    color: state.themeMode == ThemeMode.light
-                                        ? Colors.black
-                                        : Colors.white,
-                                    fontSize: 12,
-                                    fontFamily: 'Inter',
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1),
+                              Text(
+                                '$counter',
+                                style: TextStyle(
+                                  color: state.themeMode == ThemeMode.light
+                                      ? Colors.black
+                                      : Colors.white,
+                                  fontSize: 12,
+                                  fontFamily: 'Inter',
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              ),
                               const SizedBox(width: 10.0),
                               Container(
                                 width: 34,
@@ -615,7 +626,8 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
                                       ? const Color(0x0CE02C45)
                                       : const Color(0x5FE02C45),
                                   shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8)),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
                                 ),
                                 child: IconButton(
                                   onPressed: () {
