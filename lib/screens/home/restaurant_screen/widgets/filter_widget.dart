@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/item_model.dart';
 import 'package:just_order/screens/home/restaurant_screen/widgets/meal_widget.dart';
@@ -36,7 +37,7 @@ class FilterWidgetState extends State<FilterWidget> {
               color: widget.state.themeMode == ThemeMode.light
                   ? Colors.black
                   : Colors.white,
-              fontSize: 14,
+              fontSize: 14.sp,
               fontFamily: 'Inter',
               fontWeight: FontWeight.w600,
             ),
