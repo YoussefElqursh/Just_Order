@@ -121,7 +121,7 @@ class CategoryScreen extends StatelessWidget {
               itemCount: state.categories.length,
               itemBuilder: (context, index) {
                 final category = state.categories[index]!;
-                return buildCategoryWidget(category, themeState,context);
+                return buildCategoryWidget(category, themeState, context);
               },
             );
           } else if (state is CategoryError) {

@@ -203,7 +203,7 @@ class _HomeScreenState extends State<HomeScreen>
         const SizedBox(height: 25),
         _buildSectionHeader(
           context,
-          title: AppLocalizations.of(context)!.all_restaurants,
+          title: "Categories",
           onViewAll: () => Navigator.pushNamed(context, 'CategoryScreenRoute'),
         ),
         const SizedBox(height: 12),
@@ -215,8 +215,7 @@ class _HomeScreenState extends State<HomeScreen>
             physics: const BouncingScrollPhysics(),
             itemCount: categories.length,
             separatorBuilder: (_, _) => const SizedBox(width: 10),
-            itemBuilder: (context, index) =>
-                buildCategoriesWidget(categories[index]!, state),
+            itemBuilder: (context, index) => buildCategoriesWidget(categories[index]!, state, context),
           ),
         ),
         const SizedBox(height: 25),
