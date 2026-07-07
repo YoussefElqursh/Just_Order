@@ -16,7 +16,7 @@ class AppColor {
   static const Color backgroundBTNColor = Color(0x7FAFAFAF);
   static const Color paginationBackgroundBTNColor = Color(0xFFF4F4F4);
   static const Color deleteTextColor = Color(0xFFF44336);
-  static Color borderColor = const Color(0xB0B0B04D).withOpacity(0.2);
+  static Color borderColor = const Color(0xB0B0B04D).withValues(alpha: 0.2);
   static Color textFieldBorderColor = const Color(0x4CAFAFAF);
   static Color textFieldHintColor = const Color(0xFFCCCCCC);
   static Color dividerColor = const Color(0xFFAFAFAF);

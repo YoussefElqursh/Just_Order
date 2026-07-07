@@ -5,7 +5,7 @@ import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/models/user_model.dart';
 import 'package:just_order/screens/home/restaurant_screen/restaurant_screen.dart';
-import 'package:just_order/shared/style/colors.dart';
+import 'package:just_order/core/theme/colors.dart';
 
 class RestaurantWidget extends StatefulWidget {
   final Restaurant restaurant;

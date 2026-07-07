@@ -15,7 +15,7 @@ import 'package:just_order/repository/order_repository/order_repository.dart';
 import 'package:just_order/shared/function/functions.dart';
 import 'package:just_order/shared/widget/common_order_state_widget.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:just_order/core/storage/storage_service.dart';
 
 class OrderScreen extends StatefulWidget {
   const OrderScreen({super.key});
@@ -46,7 +46,7 @@ class _OrderScreenState extends State<OrderScreen> {
   }
 
   void _loadUserFromPreferences() async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = StorageService.instance;
     final userJson = prefs.getString('user');
     if (userJson != null) {
       setState(() {

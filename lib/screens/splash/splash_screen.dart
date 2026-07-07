@@ -15,8 +15,10 @@ import 'package:just_order/screens/login/login_screen.dart';
 import 'package:just_order/shared/function/functions.dart';
 import 'package:just_order/shared/function/connectivity_plus.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../../services/notification_service.dart';
+import 'package:just_order/core/storage/storage_service.dart';
+import 'package:just_order/core/services/notification_service.dart';
+import 'package:just_order/core/di/service_locator.dart';
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -50,7 +52,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<(User?, String?, int?)> _loadUserAndTableInfo() async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = StorageService.instance;
     final userString = prefs.getString('user');
     final tableCode = prefs.getString('code');
     final timestamp = prefs.getInt('timestamp');
@@ -132,7 +134,7 @@ class _SplashScreenState extends State<SplashScreen> {
     if (!mounted) return;
 
     if (result.docs.isNotEmpty) {
-      await NotificationService.initialize(user.email);
+      await getIt<NotificationService>().initialize(user.email);
 
       final isValidTable = tableCode != null &&
           tableCode.isNotEmpty &&

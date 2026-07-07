@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class NotificationService {
-  static final FirebaseMessaging _messaging = FirebaseMessaging.instance;
-  static final Dio _dio = Dio();
+  final FirebaseMessaging _messaging = FirebaseMessaging.instance;
+  final Dio _dio = Dio();
 
-  static final FlutterLocalNotificationsPlugin _localNotificationsPlugin =
-  FlutterLocalNotificationsPlugin();
+  final FlutterLocalNotificationsPlugin _localNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
-  static Future<void> initialize(String email) async {
+  Future<void> initialize(String email) async {
     try {
       await FirebaseMessaging.instance.requestPermission(
         criticalAlert: true,
@@ -32,7 +32,7 @@ class NotificationService {
       const InitializationSettings initializationSettings = InitializationSettings(
         android: initializationSettingsAndroid,
       );
-      await _localNotificationsPlugin.initialize(initializationSettings);
+      await _localNotificationsPlugin.initialize(settings: initializationSettings);
 
 
       String? token = await FirebaseMessaging.instance.getToken();
@@ -51,10 +51,10 @@ class NotificationService {
 
         if (notification != null && android != null) {
           _localNotificationsPlugin.show(
-            notification.hashCode,
-            notification.title,
-            notification.body,
-            const NotificationDetails(
+            id: notification.hashCode,
+            title: notification.title,
+            body: notification.body,
+            notificationDetails: const NotificationDetails(
               android: AndroidNotificationDetails(
                 'default_channel',
                 'Default Channel',
@@ -80,7 +80,7 @@ class NotificationService {
     }
   }
 
-  static Future<void> _sendTokenToServer(String email, String token) async {
+  Future<void> _sendTokenToServer(String email, String token) async {
     const String endpoint = 'https://notify.justorder-eg.com/register_fcm_token';
 
     try {

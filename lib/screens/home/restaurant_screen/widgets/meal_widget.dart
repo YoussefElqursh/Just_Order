@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/item_model.dart';
-import 'package:just_order/shared/style/colors.dart';
+import 'package:just_order/core/theme/colors.dart';
 
 Widget buildMealWidget({
   required BuildContext context,

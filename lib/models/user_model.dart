@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:just_order/core/storage/storage_service.dart';
 
 import 'enums/user_type.dart';
 
@@ -42,30 +42,33 @@ class User {
     }
 
     final Map<String, dynamic> map = data as Map<String, dynamic>;
-    return Future.value(User(
-      userId: map['userId'] as String,
-      firstName: map['firstName'] as String,
-      lastName: map['lastName'] as String,
-      email: map['email'] as String,
-      password: map['password'] as String,
-      phoneNumber: map['phoneNumber'] as String,
-      userType: UserType.values
-          .firstWhere((e) => e.toString() == 'UserType.${map['userType']}'),
-      emailVerified: map['emailVerified'] as bool,
-      loginWithGoogle: map["loginWithGoogle"] as bool,
-      phoneNumberVerified: map['phoneNumberVerified'] as bool,
-      createdAt: map['createdAt'] != null
-          ? _parseDate(map['createdAt'])
-          : DateTime.now(),
-      updatedAt: map['updatedAt'] != null
-          ? _parseDate(map['updatedAt'])
-          : DateTime.now(),
-      googleId: map['googleId'] as String?,
-    ));
+    return Future.value(
+      User(
+        userId: map['userId'] as String,
+        firstName: map['firstName'] as String,
+        lastName: map['lastName'] as String,
+        email: map['email'] as String,
+        password: map['password'] as String,
+        phoneNumber: map['phoneNumber'] as String,
+        userType: UserType.values.firstWhere(
+          (e) => e.toString() == 'UserType.${map['userType']}',
+        ),
+        emailVerified: map['emailVerified'] as bool,
+        loginWithGoogle: map["loginWithGoogle"] as bool,
+        phoneNumberVerified: map['phoneNumberVerified'] as bool,
+        createdAt: map['createdAt'] != null
+            ? _parseDate(map['createdAt'])
+            : DateTime.now(),
+        updatedAt: map['updatedAt'] != null
+            ? _parseDate(map['updatedAt'])
+            : DateTime.now(),
+        googleId: map['googleId'] as String?,
+      ),
+    );
   }
 
   Future<void> saveUserToPreferences(User user) async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = StorageService.instance;
     prefs.setString('user', jsonEncode(user.toJson()));
   }
 
@@ -83,12 +86,12 @@ class User {
       'loginWithGoogle': loginWithGoogle,
       'createdAt': createdAt.toIso8601String(),
       'updatedAt': updatedAt?.toIso8601String(),
-      'googleId': googleId
+      'googleId': googleId,
     };
   }
 
   static Future<User?> getUserFromPreferences() async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = StorageService.instance;
     final user = prefs.getString('user');
     if (user == null) {
       return null;
@@ -104,8 +107,9 @@ class User {
       email: json['email'],
       password: json['password'],
       phoneNumber: json['phoneNumber'],
-      userType: UserType.values
-          .firstWhere((e) => e.toString() == 'UserType.${json['userType']}'),
+      userType: UserType.values.firstWhere(
+        (e) => e.toString() == 'UserType.${json['userType']}',
+      ),
       emailVerified: json['emailVerified'],
       phoneNumberVerified: json['phoneNumberVerified'],
       loginWithGoogle: json['loginWithGoogle'],
@@ -114,8 +118,8 @@ class User {
           : DateTime.parse(json['createdAt']),
       updatedAt: json['updatedAt'] != null
           ? json['updatedAt'] is Timestamp
-              ? (json['updatedAt'] as Timestamp).toDate()
-              : DateTime.parse(json['updatedAt'])
+                ? (json['updatedAt'] as Timestamp).toDate()
+                : DateTime.parse(json['updatedAt'])
           : null,
       googleId: json['googleId'],
     );
@@ -130,5 +134,20 @@ class User {
       // We can throw Exception here but for now we will add current timestamp
       return Timestamp.now().toDate();
     }
+  }
+
+  static User empty() {
+    return User(
+      userId: 'userId',
+      firstName: 'firstName',
+      lastName: 'lastName',
+      email: 'email',
+      password: 'password',
+      phoneNumber: 'phoneNumber',
+      userType: UserType.customer,
+      emailVerified: true,
+      phoneNumberVerified: true,
+      createdAt: DateTime.now(),
+    );
   }
 }

@@ -8,7 +8,7 @@ import 'package:just_order/models/enums/payment_type.dart';
 import 'package:just_order/models/order_model.dart';
 import 'package:just_order/shared/function/functions.dart';
 import 'package:just_order/shared/widget/custom_radio_button_widget.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:just_order/core/storage/storage_service.dart';
 
 class PayMethodScreen extends StatefulWidget {
   final Order order;
@@ -53,7 +53,7 @@ class _PayMethodScreenState extends State<PayMethodScreen> {
   }
 
   Future<void> _loadSavedCards() async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = StorageService.instance;
     final cards = prefs.getStringList('savedCards') ?? [];
     setState(() {
       savedCards = cards;

@@ -20,21 +20,20 @@ class CategoryCubit extends Cubit<CategoryState> {
 
   Future<void> fetchCategoriesByIds(List<String> categoryIds) async {
     try {
+      if (isClosed) return;
       emit(const CategoryState.loading());
-      List<Categories> categories = [];
 
-      for (var categoryId in categoryIds) {
-        final category = await _categoryRepository.getCategoryById(categoryId);
-        if (category != null) {
-          categories.add(category);
-        }
-      }
+      final futures = categoryIds.map((id) => _categoryRepository.getCategoryById(id));
+      final results = await Future.wait(futures);
 
-      emit(CategoryState.success(categories)); // Emit list of categories
+      final categories = results.whereType<Categories>().toList();
+
+      if (!isClosed) emit(CategoryState.success(categories));
     } catch (e) {
-      emit(CategoryState.error(e.toString()));
+      if (!isClosed) emit(CategoryState.error(e.toString()));
     }
   }
+
 
   Future<void> addCategory(Categories category, String restaurantId) async {
     emit(const CategoryState.loading()); // Emit loading state

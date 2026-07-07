@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:just_order/localization_i18n_arb/app_localizations.dart';
-import 'package:just_order/shared/style/colors.dart';
+import 'package:just_order/core/theme/colors.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ContactUsScreen extends StatelessWidget {
@@ -72,11 +72,12 @@ class ContactTile extends StatelessWidget {
     required this.url,
   });
 
-  void _launchURL(context) async {
+  void _launchURL(BuildContext context) async {
     final Uri uri = Uri.parse(url);
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
     } else {
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(

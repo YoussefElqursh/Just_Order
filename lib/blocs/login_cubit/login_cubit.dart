@@ -8,9 +8,9 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:just_order/models/enums/user_type.dart';
 import 'package:just_order/models/user_model.dart';
 import 'package:just_order/repository/auth_repository/login_repository.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:just_order/core/services/notification_service.dart';
+import 'package:just_order/core/di/service_locator.dart';
 
-import '../../services/notification_service.dart';
 import 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
@@ -45,21 +45,14 @@ class LoginCubit extends Cubit<LoginState> {
 
   Future<void> loginWithGoogle() async {
     emit(LoginLoading());
-    final GoogleSignIn googleSignIn = GoogleSignIn(
-      scopes: <String>['email', 'profile'],
-    );
+    final GoogleSignIn googleSignIn = GoogleSignIn.instance;
 
     try {
-      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
-      if (googleUser == null) {
-        emit(LoginFailure("Google sign-in aborted"));
-        return;
-      }
+      final GoogleSignInAccount googleUser = await googleSignIn.authenticate();
 
-      final GoogleSignInAuthentication googleAuth =
-          await googleUser.authentication;
-      if (googleAuth.idToken == null && googleAuth.accessToken == null) {
-        emit(LoginFailure("Google sign-in failed"));
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      if (googleAuth.idToken == null) {
+        emit(LoginFailure("Google sign-in failed: No ID token found"));
         return;
       }
 
@@ -76,9 +69,11 @@ class LoginCubit extends Cubit<LoginState> {
         User? user = await User.fromMap(
           documents.first.data() as Map<String, dynamic>,
         );
-        await SharedPreferences.getInstance().then(
-          (prefs) => prefs.setString('user', jsonEncode(user?.toJson())),
-        );
+
+        if (user != null) {
+          await user.saveUserToPreferences(user);
+        }
+
         emit(LoginSuccess(user!));
       } else {
         // ✅ New user registration
@@ -92,7 +87,7 @@ class LoginCubit extends Cubit<LoginState> {
           firstName: name,
           lastName: '',
           email: email,
-          password: digestPassword(googleAuth.accessToken.toString()),
+          password: digestPassword(googleUser.id),
           loginWithGoogle: true,
           phoneNumber: '--',
           userType: UserType.customer,
@@ -110,10 +105,18 @@ class LoginCubit extends Cubit<LoginState> {
 
         // ✅ Save to preferences & notifications
         await user.saveUserToPreferences(user);
-        await NotificationService.initialize(user.email);
+        await getIt<NotificationService>().initialize(user.email);
 
         emit(LoginSuccess(user));
       }
+    } on GoogleSignInException catch (e) {
+      if (e.code == GoogleSignInExceptionCode.canceled) {
+        // User backed out of the account picker — not a real error.
+        debugPrint("Google sign-in canceled");
+        emit(LoginInitial()); // swap for your actual idle/initial state
+        return;
+      }
+      emit(LoginFailure("Google sign-in failed: ${e.description ?? e.code}"));
     } catch (e) {
       emit(LoginFailure("An error occurred: ${e.toString()}"));
     }

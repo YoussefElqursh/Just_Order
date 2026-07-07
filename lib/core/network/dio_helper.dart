@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:just_order/shared/constant/payment_gateway_constants.dart';
+import 'package:just_order/core/constants/payment_gateway_constants.dart';
 
 class DioHelperPayment {
   static late Dio dio;

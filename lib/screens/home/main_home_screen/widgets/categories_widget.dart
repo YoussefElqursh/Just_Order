@@ -2,9 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/category_model.dart';
-import 'package:just_order/shared/style/colors.dart';
+import 'package:just_order/core/theme/colors.dart';
 
-Widget buildCategoriesWidget(Categories restaurant, ThemeState state) {
+Widget buildCategoriesWidget(Categories categories, ThemeState state) {
   return Stack(
     alignment: Alignment.topCenter,
     children: [
@@ -31,7 +31,7 @@ Widget buildCategoriesWidget(Categories restaurant, ThemeState state) {
                 alignment: Alignment.bottomCenter,
                 padding: const EdgeInsets.only(left: 5, bottom: 10, right: 5),
                 child: Text(
-                  restaurant.categoryName,
+                  categories.categoryName,
                   style: TextStyle(
                     color: state.themeMode == ThemeMode.light
                         ? Colors.black
@@ -57,10 +57,14 @@ Widget buildCategoriesWidget(Categories restaurant, ThemeState state) {
           ),
         ),
         child: CachedNetworkImage(
-          imageUrl: restaurant.categoryImage,
+          imageUrl: categories.categoryImage,
           fit: BoxFit.cover,
           width: 70,
           height: 70,
+          memCacheHeight: 400,
+          memCacheWidth: 400,
+          maxHeightDiskCache: 400,
+          maxWidthDiskCache: 400,
           placeholder: (context, url) => const Center(
             child: CircularProgressIndicator(
               color: AppColor.primaryColor,

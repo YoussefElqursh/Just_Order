@@ -18,36 +18,35 @@ import 'package:just_order/screens/home/main_home_screen/widgets/filter_widget.d
 import 'package:just_order/screens/home/main_home_screen/widgets/home_shimmer_widget.dart';
 import 'package:just_order/screens/home/main_home_screen/widgets/popular_today_widget.dart';
 import 'package:just_order/screens/home/main_home_screen/widgets/restaurants_widget.dart';
-import 'package:just_order/shared/style/colors.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:just_order/core/theme/colors.dart';
+import 'package:just_order/core/storage/storage_service.dart';
 
 class HomeScreen extends StatefulWidget {
   final String? tableCode;
-
   const HomeScreen({super.key, this.tableCode});
 
   static const String routeName = 'HomeScreenRoute';
-
-  static Route route() {
-    return MaterialPageRoute(
-      settings: const RouteSettings(name: routeName),
-      builder: (context) => const HomeScreen(),
-    );
-  }
+  static Route route() => MaterialPageRoute(
+    settings: const RouteSettings(name: routeName),
+    builder: (_) => const HomeScreen(),
+  );
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen>
+    with AutomaticKeepAliveClientMixin {
   final ValueNotifier<int> _currentPageNotifier = ValueNotifier<int>(0);
-  String tableCode = '';
+
+  late Future<void> _initFuture;
   late User user;
+  String tableCode = '';
+
   List<Restaurant> restaurants = [];
   List<Categories?> categories = [];
-  bool isLoading = true; // Track loading state
 
-  final List<String> adsImageList = [
+  final adsImageList = const [
     "assets/images/blackAdv.jpg",
     "assets/images/basicAdv.jpg",
     "assets/images/blackAdv.jpg",
@@ -55,79 +54,49 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   void initState() {
     super.initState();
-    _loadTableCode();
-    _userFromPreferences();
-  }
+    _initFuture = _initializeData();
 
-  Future<void> _loadTableCode() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      tableCode = prefs.getString('code') ?? 'Unknown';
+    // Auto dismiss after 1 minute (if needed)
+    Future.delayed(const Duration(minutes: 1), () {
+      if (mounted && Navigator.canPop(context)) Navigator.pop(context);
     });
-    _loadRestaurantsAndCategories();
   }
 
-  Future<void> _userFromPreferences() async {
-    final prefs = await SharedPreferences.getInstance();
-    final userString = prefs.getString('user');
-    if (userString != null) {
-      final user = User.fromJson(jsonDecode(userString));
-      setState(() {
-        this.user = user!;
-      });
-    }
+  Future<void> _initializeData() async {
+    final prefs = StorageService.instance;
+    final storedUser = prefs.getString('user');
+    final storedTableCode = prefs.getString('code') ?? widget.tableCode ?? 'Unknown';
+
+    user = (storedUser != null ? User.fromJson(jsonDecode(storedUser)) : User.empty())!;
+    tableCode = storedTableCode;
+
+    final userRepository = UserRepository();
+    final categoryRepository = CategoryRepository();
+
+    final results = await Future.wait([
+      userRepository.getRestaurants(storedTableCode),
+      categoryRepository.getCategories(),
+    ]);
+
+    restaurants = results[0] as List<Restaurant>;
+    categories = results[1] as List<Categories?>;
   }
 
-  Future<void> _loadRestaurantsAndCategories() async {
-    setState(() {
-      isLoading = true; // Set loading state to true
-    });
-
-    try {
-      final UserRepository userRepository = UserRepository();
-      final List<Restaurant> restaurants =
-          await userRepository.getRestaurants(tableCode);
-      final CategoryRepository categoryRepository = CategoryRepository();
-      final List<Categories?> categories =
-          await categoryRepository.getCategories();
-
-      setState(() {
-        this.restaurants = restaurants;
-        this.categories = categories;
-      });
-    } catch (e) {
-      // Handle error (e.g., show a SnackBar or log the error)\
-      // ignore: use_build_context_synchronously
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to load data: $e')),
-      );
-    } finally {
-      setState(() {
-        isLoading = false; // Reset loading state
-      });
-    }
-  }
-
-  Future<void> _refreshData() async {
-    await _loadRestaurantsAndCategories(); // Reload data
-  }
-
-  void openBottomSheet(BuildContext context) {
+  void _openBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      builder: (_) {
-        return PlaceDetailsSheet(
-          tableCode: tableCode,
-        );
-      },
       useSafeArea: true,
       backgroundColor: Colors.white,
       constraints: BoxConstraints(
         maxHeight: 400,
         maxWidth: MediaQuery.sizeOf(context).width,
       ),
+      builder: (_) => PlaceDetailsSheet(tableCode: tableCode),
     );
   }
 
@@ -139,389 +108,270 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, state) {
         return Scaffold(
-          appBar: AppBar(
-            leadingWidth: 200,
-            shadowColor: Colors.grey,
-            leading: Padding(
-              padding: const EdgeInsets.only(left: 20.0, top: 10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+          appBar: _buildAppBar(context, state),
+          body: FutureBuilder(
+            future: _initFuture,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return buildShimmerPlaceholder();
+              }
+              if (snapshot.hasError) {
+                return Center(
+                  child: Text('Error: ${snapshot.error}'),
+                );
+              }
+              return RefreshIndicator(
+                color: AppColor.primaryColor,
+                onRefresh: _initializeData,
+                child: _buildHomeContent(context, state),
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  PreferredSizeWidget _buildAppBar(BuildContext context, ThemeState state) {
+    final isLight = state.themeMode == ThemeMode.light;
+    return AppBar(
+      leadingWidth: 200,
+      shadowColor: Colors.grey,
+      leading: Padding(
+        padding: const EdgeInsets.only(left: 20, top: 10),
+        child: Row(
+          children: [
+            Container(
+              width: 36,
+              height: 36,
+              decoration: BoxDecoration(
+                color: isLight
+                    ? const Color(0x0CE02C45)
+                    : const Color(0x5FE02C45),
+                borderRadius: BorderRadius.circular(6),
+              ),
+              child: const Icon(Icons.location_on_outlined,
+                  color: Color(0xFFE02C45)),
+            ),
+            const SizedBox(width: 8),
+            GestureDetector(
+              onTap: () => _openBottomSheet(context),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    width: 36,
-                    height: 36,
-                    clipBehavior: Clip.antiAlias,
-                    decoration: ShapeDecoration(
-                      color: state.themeMode == ThemeMode.light
-                          ? const Color(0x0CE02C45)
-                          : const Color(0x5FE02C45),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                    ),
-                    child: const Center(
-                      child: Icon(
-                        Icons.location_on_outlined,
-                        color: Color(0xFFE02C45),
-                      ),
+                  Text(
+                    AppLocalizations.of(context)!.delivering_to,
+                    style: TextStyle(
+                      color: isLight ? const Color(0xFF878787) : Colors.white,
+                      fontSize: 8,
+                      fontWeight: FontWeight.w400,
                     ),
                   ),
-                  SizedBox(
-                    width: 100,
-                    height: 36,
-                    child: MaterialButton(
-                      onPressed: () {
-                        openBottomSheet(context);
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.delivering_to,
-                            style: TextStyle(
-                              color: state.themeMode == ThemeMode.light
-                                  ? const Color(0xFF878787)
-                                  : Colors.white,
-                              fontSize: 8,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w400,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                          ),
-                          const SizedBox(height: 3),
-                          Text(
-                            '${AppLocalizations.of(context)!.table} $tableCode',
-                            style: TextStyle(
-                              color: state.themeMode == ThemeMode.light
-                                  ? Colors.black
-                                  : Colors.white,
-                              fontSize: 10,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w500,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                          ),
-                        ],
-                      ),
+                  const SizedBox(height: 3),
+                  Text(
+                    '${AppLocalizations.of(context)!.table} $tableCode',
+                    style: TextStyle(
+                      color: isLight ? Colors.black : Colors.white,
+                      fontSize: 10,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ],
               ),
             ),
-            // actions: [
-            //   Padding(
-            //     padding: const EdgeInsets.only(
-            //       right: 20.0,
-            //       top: 10.0,
-            //     ),
-            //     child: Container(
-            //       width: 36,
-            //       height: 36,
-            //       clipBehavior: Clip.antiAlias,
-            //       decoration: ShapeDecoration(
-            //         color: const Color(0xFFF4F4F4),
-            //         shape: RoundedRectangleBorder(
-            //           borderRadius: BorderRadius.circular(8),
-            //         ),
-            //       ),
-            //       child: IconButton(
-            //         onPressed: () {
-            //           showSearch(
-            //             context: context,
-            //             delegate: CustomSearchDelegateWidget(),
-            //           );
-            //         },
-            //         icon: const Icon(
-            //           Icons.search_outlined,
-            //           color: AppColor.primaryColor,
-            //           size: 20,
-            //         ),
-            //         style: ButtonStyle(
-            //           shape: WidgetStatePropertyAll(
-            //             RoundedRectangleBorder(
-            //               borderRadius: BorderRadius.circular(8),
-            //             ),
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ],
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHomeContent(BuildContext context, ThemeState state) {
+    final width = MediaQuery.sizeOf(context).width;
+    final isLight = state.themeMode == ThemeMode.light;
+
+    return ListView(
+      physics: const BouncingScrollPhysics(),
+      padding: const EdgeInsets.symmetric(vertical: 16),
+      children: [
+        _buildCarousel(width),
+        const SizedBox(height: 25),
+        _buildSectionHeader(
+          context,
+          title: AppLocalizations.of(context)!.all_restaurants,
+          onViewAll: () => Navigator.pushNamed(context, 'CategoryScreenRoute'),
+        ),
+        const SizedBox(height: 12),
+        SizedBox(
+          height: 100,
+          child: ListView.separated(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            scrollDirection: Axis.horizontal,
+            physics: const BouncingScrollPhysics(),
+            itemCount: categories.length,
+            separatorBuilder: (_, _) => const SizedBox(width: 10),
+            itemBuilder: (context, index) =>
+                buildCategoriesWidget(categories[index]!, state),
           ),
-          body: RefreshIndicator(
-            color: AppColor.primaryColor,
-            elevation: 0.0,
-            backgroundColor: Colors.transparent,
-            onRefresh: _refreshData,
-            // Trigger data refresh
-            child: isLoading
-                ? buildShimmerPlaceholder()
-                : SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    physics: const BouncingScrollPhysics(),
-                    child: SizedBox(
-                      width: MediaQuery.sizeOf(context).width,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // ads Part
-                          CarouselSlider(
-                            items: adsImageList
-                                .map(
-                                  (e) => Center(
-                                    child: Container(
-                                      width: MediaQuery.sizeOf(context).width,
-                                      height: 150.0,
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                        image: DecorationImage(
-                                          image: AssetImage(e),
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                )
-                                .toList(),
-                            options: CarouselOptions(
-                              initialPage: 0,
-                              autoPlay: true,
-                              autoPlayInterval: const Duration(seconds: 5),
-                              enlargeCenterPage: true,
-                              enlargeFactor: 0.3,
-                              onPageChanged: (value, _) {
-                                _currentPageNotifier.value = value;
-                              },
-                            ),
-                          ),
-                          const SizedBox(height: 5.0),
-                          ValueListenableBuilder<int>(
-                            valueListenable: _currentPageNotifier,
-                            builder: (context, currentPage, _) {
-                              return Container(
-                                width: MediaQuery.sizeOf(context).width,
-                                alignment: Alignment.center,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: List.generate(
-                                    adsImageList.length,
-                                    (i) {
-                                      return Container(
-                                        margin: const EdgeInsets.all(5),
-                                        height: 8,
-                                        width: 8,
-                                        decoration: BoxDecoration(
-                                          color: i == currentPage
-                                              ? const Color(0xFFE02C45)
-                                              : Theme.of(context).brightness ==
-                                                      Brightness.light
-                                                  ? const Color(0x0CE02C45)
-                                                  : const Color(0x5FE02C45),
-                                          shape: BoxShape.circle,
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                          const SizedBox(height: 25.0),
-                          // All Categories
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 20.0),
-                            child: Text(
-                              AppLocalizations.of(context)!.all_restaurants,
-                              style: TextStyle(
-                                color: state.themeMode == ThemeMode.light
-                                    ? Colors.black
-                                    : Colors.white,
-                                fontSize: 14,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w600,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                            ),
-                          ),
-                          const SizedBox(height: 12.0),
-                          SizedBox(
-                            width: MediaQuery.sizeOf(context).width,
-                            height: 100.0,
-                            child: ListView.separated(
-                              itemBuilder: (context, index) =>
-                                  buildCategoriesWidget(
-                                categories[index]!,
-                                state,
-                              ),
-                              separatorBuilder: (context, index) =>
-                                  const SizedBox(width: 10.0),
-                              itemCount: categories.length,
-                              scrollDirection: Axis.horizontal,
-                              physics: const BouncingScrollPhysics(),
-                              shrinkWrap: true,
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 20.0,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 25.0),
-                          // Popular Today
-                          Container(
-                            width: MediaQuery.sizeOf(context).width,
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 20.0),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  AppLocalizations.of(context)!.popular_today,
-                                  style: TextStyle(
-                                    color: state.themeMode == ThemeMode.light
-                                        ? Colors.black
-                                        : Colors.white,
-                                    fontSize: 14,
-                                    fontFamily: 'Inter',
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                ),
-                                const Spacer(),
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.pushNamed(
-                                      context,
-                                      'PopularTodayScreenRoute',
-                                    );
-                                  },
-                                  style: ButtonStyle(
-                                    overlayColor: WidgetStateProperty.all(
-                                        Colors.transparent),
-                                  ),
-                                  child: const Text(
-                                    'View All',
-                                    style: TextStyle(
-                                      color: Color(0xFFE02C45),
-                                      fontSize: 10,
-                                      fontFamily: 'Inter',
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 12.0),
-                          SizedBox(
-                            width: MediaQuery.sizeOf(context).width,
-                            height: 201.0,
-                            child: ListView.separated(
-                              itemBuilder: (context, index) =>
-                                  buildPopularTodayWidget(
-                                context: context,
-                                restaurant: restaurants[index],
-                                state: state,
-                                user: user,
-                              ),
-                              separatorBuilder: (context, index) =>
-                                  const SizedBox(width: 10.0),
-                              itemCount: min(restaurants.length, 5),
-                              scrollDirection: Axis.horizontal,
-                              physics: const BouncingScrollPhysics(),
-                              shrinkWrap: true,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20.0),
-                            ),
-                          ),
-                          const SizedBox(height: 25.0),
-                          // Restaurants
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 20.0),
-                            child: Text(
-                              AppLocalizations.of(context)!.all_restaurants,
-                              style: TextStyle(
-                                color: state.themeMode == ThemeMode.light
-                                    ? Colors.black
-                                    : Colors.white,
-                                fontSize: 14,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w600,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                            ),
-                          ),
-                          const SizedBox(height: 12.0),
-                          SizedBox(
-                            width: MediaQuery.sizeOf(context).width,
-                            height: 31.0,
-                            child: ListView.separated(
-                              itemBuilder: (context, index) =>
-                                  buildHomeFilterWidget(
-                                filters[index],
-                                index,
-                                onPressed: (){},
-                              ),
-                              separatorBuilder: (context, index) =>
-                                  const SizedBox(width: 10.0),
-                              itemCount: filters.length,
-                              scrollDirection: Axis.horizontal,
-                              physics: const BouncingScrollPhysics(),
-                              shrinkWrap: true,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20.0),
-                            ),
-                          ),
-                          const SizedBox(height: 12.0),
-                          SizedBox(
-                            width: MediaQuery.sizeOf(context).width,
-                            child: ListView.separated(
-                              itemBuilder: (context, index) => RestaurantWidget(
-                                restaurant: restaurants[index],
-                                state: state,
-                                user: user,
-                              ),
-                              separatorBuilder: (context, index) =>
-                                  const Padding(
-                                padding: EdgeInsets.symmetric(
-                                  vertical: 10.0,
-                                ),
-                                child: Divider(
-                                  height: 1,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                              itemCount: restaurants.length,
-                              scrollDirection: Axis.vertical,
-                              physics: const BouncingScrollPhysics(),
-                              shrinkWrap: true,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20.0),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+        ),
+        const SizedBox(height: 25),
+        _buildSectionHeader(
+          context,
+          title: AppLocalizations.of(context)!.popular_today,
+          onViewAll: () =>
+              Navigator.pushNamed(context, 'PopularTodayScreenRoute'),
+        ),
+        const SizedBox(height: 12),
+        SizedBox(
+          height: 201,
+          child: ListView.separated(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            scrollDirection: Axis.horizontal,
+            physics: const BouncingScrollPhysics(),
+            itemCount: min(restaurants.length, 5),
+            separatorBuilder: (_, _) => const SizedBox(width: 10),
+            itemBuilder: (context, index) => buildPopularTodayWidget(
+              context: context,
+              restaurant: restaurants[index],
+              state: state,
+              user: user,
+            ),
+          ),
+        ),
+        const SizedBox(height: 25),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Text(
+            AppLocalizations.of(context)!.all_restaurants,
+            style: TextStyle(
+              color: isLight ? Colors.black : Colors.white,
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+        const SizedBox(height: 12),
+        SizedBox(
+          height: 31,
+          child: ListView.separated(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            scrollDirection: Axis.horizontal,
+            physics: const BouncingScrollPhysics(),
+            itemCount: filters.length,
+            separatorBuilder: (_, _) => const SizedBox(width: 10),
+            itemBuilder: (context, index) => buildHomeFilterWidget(
+              filters[index],
+              index,
+              onPressed: () {},
+            ),
+          ),
+        ),
+        const SizedBox(height: 12),
+        ListView.separated(
+          itemCount: restaurants.length,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          separatorBuilder: (_, _) => const Divider(height: 1),
+          itemBuilder: (context, index) => RestaurantWidget(
+            restaurant: restaurants[index],
+            state: state,
+            user: user,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildCarousel(double width) {
+    return Column(
+      children: [
+        CarouselSlider(
+          items: adsImageList
+              .map(
+                (e) => Container(
+              width: width,
+              height: 100,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                image: DecorationImage(
+                  image: AssetImage(e),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          )
+              .toList(),
+          options: CarouselOptions(
+            autoPlay: true,
+            autoPlayInterval: const Duration(seconds: 5),
+            enlargeCenterPage: true,
+            enlargeFactor: 0.3,
+            onPageChanged: (i, _) => _currentPageNotifier.value = i,
+          ),
+        ),
+        const SizedBox(height: 5),
+        ValueListenableBuilder<int>(
+          valueListenable: _currentPageNotifier,
+          builder: (_, currentPage, _) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(
+                adsImageList.length,
+                    (i) => Container(
+                  margin: const EdgeInsets.all(5),
+                  height: 8,
+                  width: 8,
+                  decoration: BoxDecoration(
+                    color: i == currentPage
+                        ? const Color(0xFFE02C45)
+                        : const Color(0x2FE02C45),
+                    shape: BoxShape.circle,
                   ),
+                ),
+              ),
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSectionHeader(BuildContext context,
+      {required String title, required VoidCallback onViewAll}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        children: [
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+            ),
           ),
-        );
-      },
+          const Spacer(),
+          TextButton(
+            onPressed: onViewAll,
+            style: ButtonStyle(
+              overlayColor: WidgetStateProperty.all(Colors.transparent),
+            ),
+            child: const Text(
+              'View All',
+              style: TextStyle(
+                color: Color(0xFFE02C45),
+                fontSize: 10,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

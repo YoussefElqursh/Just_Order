@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:just_order/shared/style/colors.dart';
+import 'package:just_order/core/theme/colors.dart';
 
 
 const _primaryColor = AppColor.primaryColor;

@@ -1,18 +1,24 @@
 {
   "project_info": {
     "project_number": "1073837037972",
+    "firebase_url": "https://just-order-cbc6a-default-rtdb.firebaseio.com",
     "project_id": "just-order-cbc6a",
-    "storage_bucket": "just-order-cbc6a.appspot.com"
+    "storage_bucket": "just-order-cbc6a.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1073837037972:android:130797c7ac4965517dd781",
+        "mobilesdk_app_id": "1:1073837037972:android:5a93f052fcc82eab7dd781",
         "android_client_info": {
-          "package_name": "com.JustOnTime.just_order_restaurant"
+          "package_name": "com.JustOnTime.JustOrderDelivery.just_order_delivery"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1073837037972-18ouopa5q59dqu8qbfqu86v4og4ipbk9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAVk6rBqSvlf3gYnqCqLLGq3_pBTh37SYc"
@@ -20,7 +26,91 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1073837037972-18ouopa5q59dqu8qbfqu86v4og4ipbk9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1073837037972-7eqdt5q78113jq6a52ut97h3amc1tpfj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.JustOrder.justOrder"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1073837037972:android:d69c549f37f801ef7dd781",
+        "android_client_info": {
+          "package_name": "com.JustOnTime.just_order_admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1073837037972-18ouopa5q59dqu8qbfqu86v4og4ipbk9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVk6rBqSvlf3gYnqCqLLGq3_pBTh37SYc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1073837037972-18ouopa5q59dqu8qbfqu86v4og4ipbk9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1073837037972-7eqdt5q78113jq6a52ut97h3amc1tpfj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.JustOrder.justOrder"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1073837037972:android:130797c7ac4965517dd781",
+        "android_client_info": {
+          "package_name": "com.JustOnTime.just_order_restaurant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1073837037972-18ouopa5q59dqu8qbfqu86v4og4ipbk9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVk6rBqSvlf3gYnqCqLLGq3_pBTh37SYc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1073837037972-18ouopa5q59dqu8qbfqu86v4og4ipbk9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1073837037972-7eqdt5q78113jq6a52ut97h3amc1tpfj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.JustOrder.justOrder"
+              }
+            }
+          ]
         }
       }
     },
@@ -31,7 +121,36 @@
           "package_name": "com.Just_Order.just_order"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1073837037972-c64jth01eu2nnbganj5mes8cj85v865b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.Just_Order.just_order",
+            "certificate_hash": "d13021f4de294c0283a28a61e52148e752fd1dd7"
+          }
+        },
+        {
+          "client_id": "1073837037972-dt9ioo5ll1nerbeusf6a30g36kjpq4id.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.Just_Order.just_order",
+            "certificate_hash": "70a65779b730897269b99b8a277eaeac366110bc"
+          }
+        },
+        {
+          "client_id": "1073837037972-tb0q4bl9q40d8r4ie0d4pok51ob802bf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.Just_Order.just_order",
+            "certificate_hash": "1b03731492c29e876828dffaa0da9dce5ca3550e"
+          }
+        },
+        {
+          "client_id": "1073837037972-18ouopa5q59dqu8qbfqu86v4og4ipbk9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAVk6rBqSvlf3gYnqCqLLGq3_pBTh37SYc"
@@ -39,7 +158,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1073837037972-18ouopa5q59dqu8qbfqu86v4og4ipbk9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1073837037972-7eqdt5q78113jq6a52ut97h3amc1tpfj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.JustOrder.justOrder"
+              }
+            }
+          ]
         }
       }
     }

@@ -16,7 +16,7 @@ import 'package:just_order/models/user_model.dart';
 import 'package:just_order/screens/account/app_settings/app_settings_screen.dart';
 import 'package:just_order/shared/function/connectivity_plus.dart';
 import 'package:local_auth/local_auth.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:just_order/core/storage/storage_service.dart';
 
 import '../../../shared/function/validations.dart';
 
@@ -58,7 +58,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   }
 
   Future<void> loadUserFromPreferences() async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = StorageService.instance;
     final userString = prefs.getString('user');
     if (userString != null) {
       final loadedUser = User.fromJson(jsonDecode(userString));
@@ -285,11 +285,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                 bool authenticated = await auth.authenticate(
                                   localizedReason:
                                       'Please authenticate to access the app',
-                                  options: const AuthenticationOptions(
-                                    biometricOnly: true,
-                                    // Use only biometrics (Face ID or Touch ID)
-                                    stickyAuth: true,
-                                  ),
+                                  biometricOnly: true,
+                                  persistAcrossBackgrounding: true,
                                 );
                                 if (authenticated) {
                                   updateUserPassword(

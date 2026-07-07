@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_order/blocs/theming/theming_cubit.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:just_order/core/storage/storage_service.dart';
 
 class SwitchBtnWidget extends StatefulWidget {
   const SwitchBtnWidget({super.key});
@@ -19,17 +19,17 @@ class _SwitchBtnWidgetState extends State<SwitchBtnWidget> {
     _loadSwitchState();
   }
 
-  // Load the saved state from SharedPreferences
+  // Load the saved state from StorageService
   Future<void> _loadSwitchState() async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = StorageService.instance;
     setState(() {
       _lights = prefs.getBool('switch_state') ?? false; // Default to false
     });
   }
 
-  // Save the state to SharedPreferences
+  // Save the state to StorageService
   Future<void> _saveSwitchState(bool value) async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = StorageService.instance;
     await prefs.setBool('switch_state', value);
   }
 

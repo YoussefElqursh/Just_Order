@@ -13,7 +13,7 @@ import 'package:just_order/screens/account/app_settings/widget/settings_app_item
 import 'package:just_order/screens/account/app_settings/widget/switch_btn_widget/switch_btn_widget.dart';
 import 'package:just_order/shared/function/functions.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:just_order/core/storage/storage_service.dart';
 
 class AppSettingsScreen extends StatefulWidget {
   const AppSettingsScreen({super.key});
@@ -48,7 +48,7 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
   }
 
   Future<void> showChangePassword() async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = StorageService.instance;
     final userString = prefs.getString('user');
     if (userString != null) {
       final loadedUser = User.fromJson(jsonDecode(userString));
@@ -79,8 +79,11 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
               maxLines: 1,
             ),
             leading: Padding(
-              padding:
-                  const EdgeInsets.only(left: 20.0, top: 10.0, bottom: 10.0),
+              padding: const EdgeInsets.only(
+                left: 20.0,
+                top: 10.0,
+                bottom: 10.0,
+              ),
               child: Container(
                 width: 34,
                 height: 34,
@@ -88,16 +91,15 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
                 decoration: ShapeDecoration(
                   color: const Color(0xFFF4F4F4),
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8)),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                 ),
                 child: IconButton(
                   onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => MainLayout(
-                          pageNumber: 2,
-                        ),
+                        builder: (context) => MainLayout(pageNumber: 2),
                       ),
                     );
                   },

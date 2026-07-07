@@ -11,10 +11,10 @@ import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/localization_i18n_arb/l10n.dart';
 import 'package:just_order/repository/auth_repository/login_repository.dart';
 import 'package:just_order/screens/splash/splash_screen.dart';
-import 'package:just_order/services/deep_link_listener.dart';
+import 'package:just_order/core/services/deep_link_listener.dart';
 import 'package:just_order/shared/routing/app_router.dart';
-import 'package:just_order/shared/style/themes.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:just_order/core/theme/themes.dart';
+import 'package:just_order/core/storage/storage_service.dart';
 
 import 'localization_i18n_arb/app_localizations.dart';
 
@@ -80,7 +80,7 @@ class _AppView extends StatelessWidget {
   }
 }
 Future<Locale> getUserPreferredLocal() async {
-  final prefs = await SharedPreferences.getInstance();
-  final localeCode = prefs.getString('locale') ?? 'en';
+  final storage = StorageService.instance;
+  final localeCode = storage.getString('locale') ?? 'en';
   return Locale(localeCode);
 }

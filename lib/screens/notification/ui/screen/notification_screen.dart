@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:just_order/blocs/theming/theming_cubit.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/screens/notification/ui/widget/notification_item.dart';
-import 'package:just_order/shared/style/colors.dart';
+import 'package:just_order/core/theme/colors.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
@@ -243,7 +243,7 @@ class NotificationScreenState extends State<NotificationScreen> {
     );
   }
 
-  allNotificationWidget() {
+  Widget allNotificationWidget() {
     return ListView.separated(
       shrinkWrap: true,
       itemCount: 5,
@@ -261,7 +261,7 @@ class NotificationScreenState extends State<NotificationScreen> {
     );
   }
 
-  unreadNotificationWidget() {
+  Widget unreadNotificationWidget() {
     return ListView.builder(
       shrinkWrap: true,
       itemBuilder: (BuildContext context, int index) {

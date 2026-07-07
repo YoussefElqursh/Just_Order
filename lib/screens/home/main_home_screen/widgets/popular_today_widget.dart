@@ -4,7 +4,7 @@ import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/models/user_model.dart';
 import 'package:just_order/screens/home/restaurant_screen/restaurant_screen.dart';
-import 'package:just_order/shared/style/colors.dart';
+import 'package:just_order/core/theme/colors.dart';
 
 Widget buildPopularTodayWidget({
   required BuildContext context,
@@ -61,31 +61,6 @@ Widget buildPopularTodayWidget({
                     .round(),
               ),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.only(top: 10.0, right: 10.0),
-            //   child: Container(
-            //     width: 25,
-            //     height: 25,
-            //     clipBehavior: Clip.antiAlias,
-            //     decoration: const ShapeDecoration(
-            //       color: Color(0xFFF4F4F4),
-            //       shape: CircleBorder(),
-            //     ),
-            //     child: IconButton(
-            //       onPressed: () {},
-            //       icon: const Icon(
-            //         Icons.favorite_border,
-            //         color: Colors.black,
-            //         size: 10,
-            //       ),
-            //       style: const ButtonStyle(
-            //         shape: WidgetStatePropertyAll(
-            //           CircleBorder(),
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // )
           ],
         ),
         SizedBox(

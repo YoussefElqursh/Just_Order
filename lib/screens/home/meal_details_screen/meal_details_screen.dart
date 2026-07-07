@@ -9,11 +9,11 @@ import 'package:just_order/models/item_model.dart';
 import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/repository/cart_provider.dart';
 import 'package:just_order/shared/function/functions.dart';
-import 'package:just_order/shared/style/colors.dart';
+import 'package:just_order/core/theme/colors.dart';
 import 'package:just_order/shared/widget/custom_check_box_button_widget.dart';
 import 'package:just_order/shared/widget/custom_radio_button_widget.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:just_order/core/storage/storage_service.dart';
 
 class MealDetailsScreen extends StatefulWidget {
   final Item item;
@@ -65,7 +65,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
     totalPrice = (basePrice + extrasPrice) * counter;
   }
 
-  updatePrice() {
+  void updatePrice() {
     if (selectedSize != null) {
       price = widget.item.sizes![selectedSize]!;
     } else {
@@ -74,7 +74,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
   }
 
   void _addToCart() async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = StorageService.instance;
     final restaurantString =
         // ignore: use_build_context_synchronously
         prefs.getString(AppLocalizations.of(context)!.restaurant_name);

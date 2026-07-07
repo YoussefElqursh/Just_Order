@@ -61,7 +61,7 @@ class Restaurant {
     return Restaurant.fromMap(jsonDecode(restaurantString));
   }
 
-  static empty() {
+  static Restaurant empty() {
     return Restaurant(
         restaurantId: '',
         name: '',

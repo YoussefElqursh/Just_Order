@@ -35,7 +35,7 @@ kind: it's required and have 4 values 0,1,2,3.
 path: this is path of picture.
 */
 Widget setPhoto({
-  required kind,
+  required int kind,
   String? path,
   double? height,
   double? width,

@@ -9,7 +9,7 @@ import 'package:just_order/layouts/main_layout.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_scanner_overlay/qr_scanner_overlay.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:just_order/core/storage/storage_service.dart';
 
 class SelectYourPlace extends StatefulWidget {
   const SelectYourPlace({super.key});
@@ -33,13 +33,13 @@ class _SelectYourPlaceState extends State<SelectYourPlace>
   bool isCheckingPermission = true;
   bool isScanCompleted = false;
   MobileScannerController cameraController = MobileScannerController();
-  late SharedPreferences prefs;
+  late StorageService prefs;
   bool isRoot = true;
 
   @override
   void initState() {
     super.initState();
-    _initSharedPreferences();
+    _initStorageService();
     WidgetsBinding.instance.addObserver(this);
     unawaited(cameraController.start());
     _checkCameraPermission();
@@ -89,8 +89,8 @@ class _SelectYourPlaceState extends State<SelectYourPlace>
     openAppSettings();
   }
 
-  Future<void> _initSharedPreferences() async {
-    prefs = await SharedPreferences.getInstance();
+  Future<void> _initStorageService() async {
+    prefs = StorageService.instance;
   }
 
   void closeScreen() {

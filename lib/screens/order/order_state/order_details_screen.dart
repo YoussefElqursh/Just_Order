@@ -9,7 +9,7 @@ import 'package:just_order/models/cart_item_model.dart';
 import 'package:just_order/models/order_model.dart';
 import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/repository/order_repository/order_repository.dart';
-import 'package:just_order/shared/style/colors.dart';
+import 'package:just_order/core/theme/colors.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 import '../widgets/order_components_widget.dart';

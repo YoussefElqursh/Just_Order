@@ -13,7 +13,7 @@ import 'package:just_order/screens/account/history_screen/history_screen.dart';
 import 'package:just_order/screens/account/main_account_screen/widgets/account_functions_widget.dart';
 import 'package:just_order/shared/function/functions.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:just_order/core/storage/storage_service.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -43,7 +43,7 @@ class _AccountScreenState extends State<AccountScreen> {
 
   // ignore: non_constant_identifier_names
   Future<void> _UserFromPreferences() async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = StorageService.instance;
     final userString = prefs.getString('user');
     if (userString != null) {
       final user = User.fromJson(jsonDecode(userString));

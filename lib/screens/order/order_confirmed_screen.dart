@@ -8,11 +8,11 @@ import 'package:just_order/layouts/main_layout.dart';
 import 'package:just_order/models/cart_item_model.dart';
 import 'package:just_order/models/order_model.dart';
 import 'package:just_order/models/restaurant_model.dart';
-import 'package:just_order/network/dio_helper.dart';
+import 'package:just_order/core/network/dio_helper.dart';
 import 'package:just_order/repository/user_repository/user_repository.dart';
 import 'package:lottie/lottie.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:just_order/core/storage/storage_service.dart';
 
 class OrderConfirmedScreen extends StatefulWidget {
   final Order order;
@@ -60,7 +60,7 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
 
   Future<void> _pushOrderToDatabase() async {
     await userRepository.pushOrder(widget.order, widget.cartItems);
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = StorageService.instance;
     final localeCode = prefs.getString('locale') ?? 'en';
     final restaurantString = prefs.getString('restaurant_name');
 

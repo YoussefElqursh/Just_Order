@@ -5,12 +5,13 @@ import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:just_order/models/user_model.dart';
-import 'package:just_order/services/notification_service.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:just_order/core/services/notification_service.dart';
+import 'package:just_order/core/di/service_locator.dart';
+import 'package:just_order/core/storage/storage_service.dart';
 
 class LoginRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
 
   Future<User?> login(String email, String password) async {
     final bytes = utf8.encode(password);
@@ -34,7 +35,7 @@ class LoginRepository {
     final user = User.fromJson(doc.data() as Map<String, dynamic>);
 
     await user?.saveUserToPreferences(user);
-    await NotificationService.initialize(user!.email);
+    await getIt<NotificationService>().initialize(user!.email);
 
     return user;
   }
@@ -45,7 +46,7 @@ class LoginRepository {
       await _googleSignIn.signOut();
       debugPrint("User signed out successfully.");
 
-      final prefs = await SharedPreferences.getInstance();
+      final prefs = StorageService.instance;
       await prefs.clear();
 
       // Attempt to disconnect (optional, handle failure gracefully)

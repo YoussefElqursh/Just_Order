@@ -11,8 +11,8 @@ import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/repository/payment_repository/payment_repository.dart';
 import 'package:just_order/screens/order/order_confirmed_screen.dart';
 import 'package:just_order/screens/order/widgets/order_components_widget.dart';
-import 'package:just_order/shared/style/colors.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:just_order/core/theme/colors.dart';
+import 'package:just_order/core/storage/storage_service.dart';
 
 class OrderSummaryScreen extends StatefulWidget {
   final Order order;
@@ -53,14 +53,24 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
   double baseTotal = 0.0;
   double finalTotal = 0.0;
 
+  bool _restaurantLoaded = false;
 
   @override
   void initState() {
     super.initState();
-    _loadRestaurant();
-    baseTotal = widget.order.totalAmount; // Your original total value
-    finalTotal = widget.order.totalAmount; // Your original total value
+    baseTotal = widget.order.totalAmount;
+    finalTotal = widget.order.totalAmount;
     _deliveryTipController.addListener(_updateTipValue);
+    // _loadRestaurant() moved out of initState
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_restaurantLoaded) {
+      _restaurantLoaded = true;
+      _loadRestaurant();
+    }
   }
 
   @override
@@ -71,11 +81,10 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
   }
 
   Future<void> _loadRestaurant() async {
-    final prefs = await SharedPreferences.getInstance();
-    final restaurantString =
-        // ignore: use_build_context_synchronously
-        prefs.getString(AppLocalizations.of(context)!.restaurant_name);
-    if (restaurantString != null) {
+    final prefs = StorageService.instance;
+    final restaurantKey = AppLocalizations.of(context)!.restaurant_name;
+    final restaurantString = prefs.getString(restaurantKey);
+    if (restaurantString != null && mounted) {
       setState(() {
         restaurant = Restaurant.fromJson(restaurantString);
       });
@@ -94,7 +103,6 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
       finalTotal = baseTotal + deliveryTip;
     });
   }
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeCubit, ThemeState>(

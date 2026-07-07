@@ -30,10 +30,8 @@ class FingerprintCubit extends Cubit<FingerprintState> {
       // Authenticate user
       bool isAuthenticated = await _localAuth.authenticate(
         localizedReason: 'Please authenticate to continue',
-        options: const AuthenticationOptions(
-          biometricOnly: true,
-          stickyAuth: true,
-        ),
+        biometricOnly: true,
+        persistAcrossBackgrounding: true,
       );
 
       if (isAuthenticated) {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:just_order/localization_i18n_arb/app_localizations.dart';
-import 'package:just_order/shared/style/colors.dart';
+import 'package:just_order/core/theme/colors.dart';
 
 class FAQSection extends StatefulWidget {
   final String selectedFilter;
@@ -77,7 +77,7 @@ class _FAQSectionState extends State<FAQSection> {
                 const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
             scrollDirection: Axis.horizontal,
             itemCount: filters.length,
-            separatorBuilder: (_, __) => const SizedBox(width: 8),
+            separatorBuilder: (_, _) => const SizedBox(width: 8),
             itemBuilder: (context, index) {
               final filter = filters[index];
               final isSelected = _selectedFilter == filter['key'];

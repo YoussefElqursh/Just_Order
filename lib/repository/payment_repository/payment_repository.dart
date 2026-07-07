@@ -5,8 +5,8 @@ import 'package:just_order/models/cart_item_model.dart';
 
 import '../../models/payments_model/payment_request_model.dart';
 import '../../models/user_model.dart';
-import '../../network/dio_helper.dart';
-import '../../shared/constant/payment_gateway_constants.dart';
+import 'package:just_order/core/network/dio_helper.dart';
+import 'package:just_order/core/constants/payment_gateway_constants.dart';
 
 class PaymentRepository {
   Future<Either<String, String>> pay(

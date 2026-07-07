@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/order_model.dart';
 import 'package:just_order/models/restaurant_model.dart';
-import 'package:just_order/shared/style/colors.dart';
+import 'package:just_order/core/theme/colors.dart';
 import 'package:just_order/shared/widget/common_button.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 

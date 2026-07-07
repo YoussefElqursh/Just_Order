@@ -9,9 +9,10 @@ import 'package:just_order/screens/account/change_password/change_password_scree
 import 'package:just_order/screens/account/my_profile_screen/profile_screen.dart';
 import 'package:just_order/screens/cart/my_cart_screen.dart';
 import 'package:just_order/screens/forgot_password_screen/forgot_password_screen.dart';
+import 'package:just_order/screens/home/categories_screen/screens/category_screen.dart';
 import 'package:just_order/screens/home/main_home_screen/home_screen.dart';
 import 'package:just_order/screens/home/meal_details_screen/meal_details_screen.dart';
-import 'package:just_order/screens/home/popular_today_screen/popular_today_screen.dart';
+import 'package:just_order/screens/home/popular_today_screen/screen/popular_today_screen.dart';
 import 'package:just_order/screens/home/restaurant_screen/restaurant_screen.dart';
 import 'package:just_order/screens/login/login_screen.dart';
 import 'package:just_order/screens/order/order_confirmed_screen.dart';
@@ -52,6 +53,8 @@ class AppRouter {
         return HomeScreen.route();
       case 'MainLayoutRoute':
         return MainLayout.route();
+      case 'CategoryScreenRoute':
+        return CategoryScreen.route();
       case 'RestaurantScreenRoute':
         if (settings.arguments is RestaurantScreenArguments) {
           final args = settings.arguments as RestaurantScreenArguments;

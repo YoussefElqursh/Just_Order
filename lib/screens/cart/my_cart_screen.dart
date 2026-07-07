@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_order/localization_i18n_arb/app_localizations.dart';
-import 'package:just_order/Utils/util.dart';
+import 'package:just_order/core/utils/util.dart';
 import 'package:just_order/blocs/theming/theming_cubit.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/enums/payment_type.dart';
@@ -15,9 +15,9 @@ import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/models/user_model.dart';
 import 'package:just_order/repository/cart_provider.dart';
 import 'package:just_order/screens/cart/widgets/order_cart_widget.dart';
-import 'package:just_order/shared/style/colors.dart';
+import 'package:just_order/core/theme/colors.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:just_order/core/storage/storage_service.dart';
 
 class MyCartScreen extends StatefulWidget {
   const MyCartScreen({super.key});
@@ -43,16 +43,27 @@ class _MyCartScreenState extends State<MyCartScreen> {
   String tableCode = '';
   double serviceFees = 0;
 
+  bool _initialized = false;
+
   @override
   void initState() {
     super.initState();
-    _loadRestaurantAndUser();
     _loadTableCode();
     _getServiceFees();
+    // Don't call _loadRestaurantAndUser() here anymore
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_initialized) {
+      _initialized = true;
+      _loadRestaurantAndUser();
+    }
   }
 
   Future<void> _loadTableCode() async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = StorageService.instance;
     setState(() {
       tableCode = prefs.getString('code') ?? 'Unknown';
     });
@@ -68,17 +79,16 @@ class _MyCartScreenState extends State<MyCartScreen> {
   }
 
   Future<void> _loadRestaurantAndUser() async {
-    final prefs = await SharedPreferences.getInstance();
-    final restaurantString =
-// ignore: use_build_context_synchronously
-        prefs.getString(AppLocalizations.of(context)!.restaurant_name);
+    final prefs = StorageService.instance;
+    final restaurantKey = AppLocalizations.of(context)!.restaurant_name;
+    final restaurantString = prefs.getString(restaurantKey);
     final userString = prefs.getString('user');
-    if (restaurantString != null) {
+    if (restaurantString != null && mounted) {
       setState(() {
         restaurant = Restaurant.fromJson(restaurantString);
       });
     }
-    if (userString != null) {
+    if (userString != null && mounted) {
       setState(() {
         user = User.fromJson(jsonDecode(userString));
       });
