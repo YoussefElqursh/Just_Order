@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_order/localization_i18n_arb/app_localizations.dart';
 import 'package:just_order/blocs/theming/theming_cubit.dart';
@@ -10,6 +11,7 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_scanner_overlay/qr_scanner_overlay.dart';
 import 'package:just_order/core/storage/storage_service.dart';
+import 'package:just_order/screens/entry/app_entry_screen.dart';
 
 class SelectYourPlace extends StatefulWidget {
   const SelectYourPlace({super.key});
@@ -93,10 +95,33 @@ class _SelectYourPlaceState extends State<SelectYourPlace>
     prefs = StorageService.instance;
   }
 
-  void closeScreen() {
+    void closeScreen() {
     isScanCompleted = false;
   }
 
+  Future<bool> _onWillPop() async {
+    if (isRoot) {
+      final shouldExit = await showDialog<bool>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Exit app'),
+          content: const Text('Do you want to exit the app?'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context, true),
+              child: const Text('Exit'),
+            ),
+          ],
+        ),
+      );
+      return shouldExit ?? false;
+    }
+    return true;
+  }
   @override
   Widget build(BuildContext context) {
     isRoot = ModalRoute.of(context)?.isFirst ?? false;
@@ -104,11 +129,17 @@ class _SelectYourPlaceState extends State<SelectYourPlace>
       builder: (context, state) {
         return PopScope(
           canPop: false,
+          onPopInvoked: (didPop) async {
+            if (!didPop) {
+              final shouldExit = await _onWillPop();
+              if (shouldExit && context.mounted) {
+                SystemNavigator.pop();
+              }
+            }
+          },
           child: Scaffold(
             appBar: AppBar(
-              leading: isRoot
-                  ? null
-                  : Padding(
+              leading: Padding(
                       padding: const EdgeInsets.only(
                         left: 20.0,
                         top: 10.0,
@@ -126,7 +157,12 @@ class _SelectYourPlaceState extends State<SelectYourPlace>
                         ),
                         child: IconButton(
                           onPressed: () {
-                            Navigator.pop(context);
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const AppEntryScreen(),
+                              ),
+                            );
                           },
                           icon: const Icon(
                             Icons.arrow_back,
@@ -425,3 +461,8 @@ class _SelectYourPlaceState extends State<SelectYourPlace>
     );
   }
 }
+
+
+
+
+

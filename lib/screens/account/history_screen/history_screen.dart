@@ -12,7 +12,7 @@ import 'package:just_order/models/user_model.dart';
 import 'package:just_order/repository/order_provider.dart';
 import 'package:just_order/repository/order_repository/order_repository.dart';
 import 'package:just_order/shared/function/functions.dart';
-import 'package:just_order/shared/widget/common_order_state_widget.dart';
+import 'package:just_order/shared/widget/order_widget/common_order_state_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:just_order/core/storage/storage_service.dart';
 

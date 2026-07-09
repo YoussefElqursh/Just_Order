@@ -8,7 +8,7 @@ import 'package:just_order/blocs/theming/theming_cubit.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/user_model.dart';
 import 'package:just_order/repository/auth_repository/login_repository.dart';
-import 'package:just_order/screens/QR/select_your_place_screen.dart';
+import 'package:just_order/screens/entry/app_entry_screen.dart';
 import 'package:just_order/shared/function/functions.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -66,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               );
-              navigateToWithoutBack(context, const SelectYourPlace());
+              navigateToWithoutBack(context, const AppEntryScreen());
             }
           },
           child: BlocBuilder<LoginCubit, LoginState>(
@@ -421,7 +421,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      const SelectYourPlace()),
+                                      const AppEntryScreen()),
                               (route) => false, // Remove all previous routes
                             );
                           } else {
@@ -594,3 +594,4 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+

@@ -10,7 +10,7 @@ import 'package:just_order/blocs/theming/theming_cubit.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/layouts/main_layout.dart';
 import 'package:just_order/models/user_model.dart';
-import 'package:just_order/screens/QR/select_your_place_screen.dart';
+import 'package:just_order/screens/entry/app_entry_screen.dart';
 import 'package:just_order/screens/login/login_screen.dart';
 import 'package:just_order/shared/function/functions.dart';
 import 'package:just_order/shared/function/connectivity_plus.dart';
@@ -116,7 +116,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> _navigate(User? user, String? tableCode, int? timestamp) async {
     if (user == null) {
-      if (mounted) Navigator.of(context).pushReplacement(LoginScreen.route());
+      if (mounted) Navigator.of(context).pushReplacement(AppEntryScreen.route());
       return;
     }
 
@@ -143,10 +143,10 @@ class _SplashScreenState extends State<SplashScreen> {
 
       // ignore: use_build_context_synchronously
       Navigator.of(context).pushReplacement(
-        isValidTable ? MainLayout.route() : SelectYourPlace.route(),
+        isValidTable ? MainLayout.route() : AppEntryScreen.route(),
       );
     } else {
-      Navigator.of(context).pushReplacement(LoginScreen.route());
+      Navigator.of(context).pushReplacement(AppEntryScreen.route());
     }
   }
 
@@ -213,3 +213,5 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 }
+
+

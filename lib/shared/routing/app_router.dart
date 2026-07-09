@@ -5,6 +5,7 @@ import 'package:just_order/models/item_model.dart';
 import 'package:just_order/models/order_model.dart';
 import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/screens/QR/select_your_place_screen.dart';
+import 'package:just_order/screens/entry/app_entry_screen.dart';
 import 'package:just_order/screens/account/change_password/change_password_screen.dart';
 import 'package:just_order/screens/account/my_profile_screen/profile_screen.dart';
 import 'package:just_order/screens/cart/my_cart_screen.dart';
@@ -45,6 +46,8 @@ class AppRouter {
         return _errorRoute();
       case 'SplashScreenRoute':
         return SplashScreen.route();
+      case 'AppEntryScreenRoute':
+        return AppEntryScreen.route();
       case 'PopularTodayScreenRoute':
         return PopularTodayScreen.route();
       case 'SelectYourPlaceRoute':
@@ -214,3 +217,4 @@ class AppRouter {
     );
   }
 }
+

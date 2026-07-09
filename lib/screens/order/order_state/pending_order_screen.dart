@@ -7,7 +7,7 @@ import 'package:just_order/models/order_model.dart';
 import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/shared/function/functions.dart';
 
-import '../../../shared/widget/common_order_state_widget.dart';
+import '../../../shared/widget/order_widget/common_order_state_widget.dart';
 
 class PendingOrderScreen extends StatefulWidget {
   final List<Order> orders;
