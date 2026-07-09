@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_order/localization_i18n_arb/app_localizations.dart';
 import 'package:just_order/blocs/theming/theming_cubit.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
+import 'package:just_order/models/enums/status.dart';
 import 'package:just_order/models/order_model.dart';
 import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/shared/function/functions.dart';
@@ -33,6 +34,19 @@ class OnWayOrderScreen extends StatefulWidget {
 }
 
 class _OnWayOrderScreenState extends State<OnWayOrderScreen> {
+  List<Order> getFilteredTimeOrders(List<Order> orders) {
+    final filtered = orders.where((order) {
+      return [
+        Status.onTheWay
+      ].contains(order.status);
+    }).toList();
+
+    // Sort by deliveredAt or other relevant datetime field
+    filtered.sort((a, b) => (b.deliveredDateTime ?? b.createdAt)
+        .compareTo(a.deliveredDateTime ?? a.createdAt)); // Descending order
+
+    return filtered;
+  }
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeCubit, ThemeState>(
@@ -121,15 +135,19 @@ class _OnWayOrderScreenState extends State<OnWayOrderScreen> {
                       ),
                     );
                   } else {
+
                     return ListView.separated(
-                      itemBuilder: (context, index) => buildOrderStateWidget(
+                      itemBuilder: (context, index) {
+                        final order = getFilteredTimeOrders(widget.orders)[index];
+                        return buildOrderStateWidget(
                         context: context,
                         width: 70,
-                        order: widget.orders[index],
+                        order: order,
                         restaurant: widget
                             .restaurantMap[widget.orders[index].restaurantId]!,
                         state: state,
-                      ),
+                      );
+                      },
                       separatorBuilder: (context, index) => const SizedBox(
                         height: 12.0,
                       ),

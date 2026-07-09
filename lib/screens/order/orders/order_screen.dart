@@ -148,6 +148,14 @@ class _OrderScreenState extends State<OrderScreen> {
         .where((o) => o.status == Status.declined || o.status == Status.autoDeclined)
         .toList();
 
+    List<Order> getFilteredTimeOrders(List<Order> orders) {
+      // Sort by deliveredAt or other relevant datetime field
+      orders.sort((a, b) => (b.deliveredDateTime ?? b.createdAt)
+          .compareTo(a.deliveredDateTime ?? a.createdAt)); // Descending order
+
+      return orders;
+    }
+
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       scrollDirection: Axis.vertical,
@@ -167,15 +175,17 @@ class _OrderScreenState extends State<OrderScreen> {
                 'PendingOrderScreenRoute',
                 arguments: [pendingOrders, _restaurantMap],
               ),
-              itemBuilder: (context, order, restaurant, index) =>
-                  buildOrderPendingStateWidget(
+              itemBuilder: (context, order, restaurant, index) {
+                final order = getFilteredTimeOrders(pendingOrders)[index];
+                return buildOrderPendingStateWidget(
                 context: context,
                 width: 70,
                 order: order,
                 restaurant: restaurant,
                 state: state,
                 onPressed: () => _cancelOrder(order),
-              ),
+              );
+              },
             ),
             const Divider(color: Color(0xFFF4F4F4)),
             OrderStatusSection(
@@ -189,14 +199,16 @@ class _OrderScreenState extends State<OrderScreen> {
                 'PreparingOrderScreenRoute',
                 arguments: [preparingOrders, _restaurantMap],
               ),
-              itemBuilder: (context, order, restaurant, index) =>
-                  buildOrderPreparingStateWidget(
+              itemBuilder: (context, order, restaurant, index) {
+                final order = getFilteredTimeOrders(preparingOrders)[index];
+                return buildOrderPreparingStateWidget(
                 context: context,
                 width: 70,
                 order: order,
                 restaurant: restaurant,
                 state: state,
-              ),
+              );
+              },
             ),
             const Divider(color: Color(0xFFF4F4F4)),
             OrderStatusSection(
@@ -210,8 +222,9 @@ class _OrderScreenState extends State<OrderScreen> {
                 'OnWayOrderScreenRoute',
                 arguments: [onWayOrders, _restaurantMap],
               ),
-              itemBuilder: (context, order, restaurant, index) =>
-                  buildOrderOnWayStateWidget(
+              itemBuilder: (context, order, restaurant, index) {
+                final order = getFilteredTimeOrders(onWayOrders)[index];
+                return buildOrderOnWayStateWidget(
                 context: context,
                 order: order,
                 width: 70,
@@ -219,7 +232,8 @@ class _OrderScreenState extends State<OrderScreen> {
                 state: state,
                 isExpanded: _isOnWayCardExpanded,
                 onTap: _toggleOnWayCard,
-              ),
+              );
+              },
             ),
             const Divider(color: Color(0xFFF4F4F4)),
             OrderStatusSection(
@@ -233,14 +247,16 @@ class _OrderScreenState extends State<OrderScreen> {
                 'DeliveredOrderScreenRoute',
                 arguments: [deliveredOrders, _restaurantMap],
               ),
-              itemBuilder: (context, order, restaurant, index) =>
-                  buildOrderDeliveredStateWidget(
+              itemBuilder: (context, order, restaurant, index) {
+                final order = getFilteredTimeOrders(deliveredOrders)[index];
+                return buildOrderDeliveredStateWidget(
                 context: context,
                 order: order,
                 width: 70,
                 restaurant: restaurant,
                 state: state,
-              ),
+              );
+              },
             ),
             const Divider(color: Color(0xFFF4F4F4)),
             OrderStatusSection(
@@ -254,8 +270,9 @@ class _OrderScreenState extends State<OrderScreen> {
                 'DeclineOrderScreenRoute',
                 arguments: [declinedOrders, _restaurantMap],
               ),
-              itemBuilder: (context, order, restaurant, index) =>
-                  order.status == Status.autoDeclined
+              itemBuilder: (context, order, restaurant, index) {
+                final order = getFilteredTimeOrders(declinedOrders)[index];
+                return order.status == Status.autoDeclined
                       ? buildOrderAutoDeclinedStateWidget(
                           context: context,
                           order: order,
@@ -269,7 +286,8 @@ class _OrderScreenState extends State<OrderScreen> {
                           width: 70,
                           restaurant: restaurant,
                           state: state,
-                        ),
+                        );
+              },
             ),
           ],
         ),

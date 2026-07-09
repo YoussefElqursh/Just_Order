@@ -74,18 +74,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
         .listenToOrders(user?.userId ?? '');
   }
 
-  List<Order> getFilteredOrders(List<Order> orders) {
-    return orders.where((order) {
-      return [
-        Status.delivered,
-        Status.declined,
-        Status.cancelled,
-        Status.autoDeclined,
-        Status.finalized
-      ].contains(order.status);
-    }).toList();
-  }
-
   List<Order> getFilteredTimeOrders(List<Order> orders) {
     final filtered = orders.where((order) {
       return [

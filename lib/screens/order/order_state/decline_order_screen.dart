@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_order/localization_i18n_arb/app_localizations.dart';
 import 'package:just_order/blocs/theming/theming_cubit.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
+import 'package:just_order/models/enums/status.dart';
 import 'package:just_order/models/order_model.dart';
 import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/shared/function/functions.dart';
@@ -33,6 +34,22 @@ class DeclineOrderScreen extends StatefulWidget {
 }
 
 class _DeclineOrderScreenState extends State<DeclineOrderScreen> {
+
+  List<Order> getFilteredTimeOrders(List<Order> orders) {
+    final filtered = orders.where((order) {
+      return [
+        Status.declined,
+        Status.cancelled,
+        Status.autoDeclined,
+      ].contains(order.status);
+    }).toList();
+
+    // Sort by deliveredAt or other relevant datetime field
+    filtered.sort((a, b) => (b.deliveredDateTime ?? b.createdAt)
+        .compareTo(a.deliveredDateTime ?? a.createdAt)); // Descending order
+
+    return filtered;
+  }
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeCubit, ThemeState>(
@@ -123,7 +140,7 @@ class _DeclineOrderScreenState extends State<DeclineOrderScreen> {
                   } else {
                     return ListView.separated(
                       itemBuilder: (context, index) {
-                        final order = widget.orders[index];
+                        final order = getFilteredTimeOrders(widget.orders)[index];
                         final restaurant =
                             widget.restaurantMap[order.restaurantId] ??
                                 Restaurant.empty();
