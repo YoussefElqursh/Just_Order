@@ -27,14 +27,14 @@ class FilterWidget extends StatefulWidget {
 class FilterWidgetState extends State<FilterWidget> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          // Header text
-          Text(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        // Header text
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Text(
             widget.filters,
             style: TextStyle(
               color: widget.state.themeMode == ThemeMode.light
@@ -47,41 +47,40 @@ class FilterWidgetState extends State<FilterWidget> {
             overflow: TextOverflow.ellipsis,
             maxLines: 1,
           ),
-          const SizedBox(height: 12.0),
+        ),
 
-          // Content area
-          Expanded(
-            child: widget.items.isNotEmpty
-                ? ListView.separated(
-                    physics: const BouncingScrollPhysics(),
-                    itemBuilder: (context, index) => buildMealWidget(
-                      context: context,
-                      item: widget.items[index],
-                      state: widget.state,
-                      restaurant: widget.restaurant,
-                    ),
-                    separatorBuilder: (context, index) => const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10.0),
-                      child: Divider(
-                        height: 1,
-                        color: Colors.grey,
-                      ),
-                    ),
-                    itemCount: widget.items.length,
-                  )
-                : Center(
-                    child: Text(
-                      'No Meals',
-                      style: TextStyle(
-                        color: widget.state.themeMode == ThemeMode.light
-                            ? Colors.black
-                            : Colors.white,
-                      ),
+        // Content area
+        Expanded(
+          child: widget.items.isNotEmpty
+              ? ListView.separated(
+                  physics: const BouncingScrollPhysics(),
+                  itemBuilder: (context, index) => buildMealWidget(
+                    context: context,
+                    item: widget.items[index],
+                    state: widget.state,
+                    restaurant: widget.restaurant,
+                  ),
+                  separatorBuilder: (context, index) => const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                    child: Divider(
+                      height: 1,
+                      color: Colors.grey,
                     ),
                   ),
-          ),
-        ],
-      ),
+                  itemCount: widget.items.length,
+                )
+              : Center(
+                  child: Text(
+                    'No Meals',
+                    style: TextStyle(
+                      color: widget.state.themeMode == ThemeMode.light
+                          ? Colors.black
+                          : Colors.white,
+                    ),
+                  ),
+                ),
+        ),
+      ],
     );
   }
 }

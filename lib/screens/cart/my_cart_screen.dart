@@ -19,15 +19,18 @@ import 'package:just_order/core/theme/colors.dart';
 import 'package:provider/provider.dart';
 import 'package:just_order/core/storage/storage_service.dart';
 
+
 class MyCartScreen extends StatefulWidget {
-  const MyCartScreen({super.key});
+  final Restaurant restaurant;
+
+  const MyCartScreen({super.key, required this.restaurant});
 
   static const String routeName = 'MyCartScreenRoute';
 
-  static Route route() {
+  static Route route(Restaurant restaurant) {
     return MaterialPageRoute(
-      settings: const RouteSettings(name: routeName),
-      builder: (context) => const MyCartScreen(),
+      settings: RouteSettings(name: routeName, arguments: restaurant),
+      builder: (context) => MyCartScreen(restaurant: restaurant),
     );
   }
 
@@ -36,30 +39,21 @@ class MyCartScreen extends StatefulWidget {
 }
 
 class _MyCartScreenState extends State<MyCartScreen> {
-  Restaurant? restaurant;
   User? user;
 
   bool isVisible = true;
   String tableCode = '';
   double serviceFees = 0;
 
-  bool _initialized = false;
+  // Restaurant comes directly from the widget — no prefs lookup needed.
+  Restaurant get restaurant => widget.restaurant;
 
   @override
   void initState() {
     super.initState();
     _loadTableCode();
     _getServiceFees();
-    // Don't call _loadRestaurantAndUser() here anymore
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (!_initialized) {
-      _initialized = true;
-      _loadRestaurantAndUser();
-    }
+    _loadUser();
   }
 
   Future<void> _loadTableCode() async {
@@ -78,16 +72,9 @@ class _MyCartScreenState extends State<MyCartScreen> {
     }
   }
 
-  Future<void> _loadRestaurantAndUser() async {
+  Future<void> _loadUser() async {
     final prefs = StorageService.instance;
-    final restaurantKey = AppLocalizations.of(context)!.restaurant_name;
-    final restaurantString = prefs.getString(restaurantKey);
     final userString = prefs.getString('user');
-    if (restaurantString != null && mounted) {
-      setState(() {
-        restaurant = Restaurant.fromJson(restaurantString);
-      });
-    }
     if (userString != null && mounted) {
       setState(() {
         user = User.fromJson(jsonDecode(userString));
@@ -98,14 +85,11 @@ class _MyCartScreenState extends State<MyCartScreen> {
   @override
   Widget build(BuildContext context) {
     final cartProvider = Provider.of<CartProvider>(context);
-    final filteredItems = restaurant != null
-        ? cartProvider.items
-            .where(
-              (item) =>
-                  item.cartItemId.endsWith('_${restaurant!.restaurantId}'),
-            )
-            .toList()
-        : cartProvider.items;
+    final filteredItems = cartProvider.items
+        .where(
+          (item) => item.cartItemId.endsWith('_${restaurant.restaurantId}'),
+        )
+        .toList();
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, state) {
         return Scaffold(
@@ -198,7 +182,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                   ),
                                 ),
                                 child: CachedNetworkImage(
-                                  imageUrl: restaurant?.imageUrl ?? '',
+                                  imageUrl: restaurant.imageUrl ?? '',
                                   fit: BoxFit.cover,
                                   width: double.infinity,
                                   height: 250,
@@ -230,9 +214,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      restaurant?.name ??
-                                          AppLocalizations.of(context)!
-                                              .restaurant_name,
+                                      restaurant.name,
                                       style: TextStyle(
                                         color:
                                             state.themeMode == ThemeMode.light
@@ -519,7 +501,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                               ),
                               const Spacer(),
                               Text(
-                                '${AppLocalizations.of(context)!.egp} ${restaurant?.deliveryFee ?? 0.0}',
+                                '${AppLocalizations.of(context)!.egp} ${restaurant.deliveryFee ?? 0.0}',
                                 style: TextStyle(
                                   color: state.themeMode == ThemeMode.light
                                       ? Colors.black
@@ -592,8 +574,8 @@ class _MyCartScreenState extends State<MyCartScreen> {
                               ),
                               const Spacer(),
                               Text(
-                                // ignore: avoid_types_as_parameter_names
-                                '${AppLocalizations.of(context)!.egp}${(filteredItems.fold(0.0, (sum, item) => sum + item.totalPrice) + serviceFees + (restaurant?.deliveryFee ?? 0.0)).toStringAsFixed(2)}',
+                                 // ignore: avoid_types_as_parameter_names
+                                 '${AppLocalizations.of(context)!.egp}${(filteredItems.fold(0.0, (sum, item) => sum + item.totalPrice) + serviceFees + (restaurant.deliveryFee ?? 0.0)).toStringAsFixed(2)}',
                                 style: TextStyle(
                                   color: state.themeMode == ThemeMode.light
                                       ? Colors.black
@@ -663,15 +645,14 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                   .doc()
                                   .id,
                               userId: user?.userId ?? 'userId',
-                              clubId: restaurant?.clubId ?? 'clubId',
-                              restaurantId:
-                                  restaurant?.restaurantId ?? 'restaurantId',
+                              clubId: restaurant.clubId,
+                               restaurantId: restaurant.restaurantId,
                               orderCode: 'temp',
                               status: Status.pending,
                               paymentType: PaymentType.cash,
                               serviceFee: serviceFees,
-                              deliveryFee: (restaurant!.deliveryFee)!,
-                              orderTimeOut: restaurant?.orderTimeOut ?? 0,
+                               deliveryFee: restaurant.deliveryFee ?? 0.0,
+                               orderTimeOut: restaurant.orderTimeOut,
                               createdAt: DateTime.now(),
                               subTotal: filteredItems.fold(
                                 0.0, // ignore: avoid_types_as_parameter_names
@@ -682,14 +663,14 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                     0.0, // ignore: avoid_types_as_parameter_names
                                     (summation, item) =>
                                         summation + item.totalPrice,
-                                  ) +
-                                  serviceFees +
-                                  restaurant!.deliveryFee!,
+                                   ) +
+                                   serviceFees +
+                                   (restaurant.deliveryFee ?? 0.0),
                               orderCodeForRestaurant: 'temp',
                               orderTable: tableCode,
                               processed: false,
                               addedToInvoice: false,
-                              deliveredByRestaurant: restaurant!.hasOwnDelivery,
+                               deliveredByRestaurant: restaurant.hasOwnDelivery,
                               deliveryTip:0,
                             );
                             String orderCode =

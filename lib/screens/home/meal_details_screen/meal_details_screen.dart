@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,12 +8,12 @@ import 'package:just_order/models/cart_item_model.dart';
 import 'package:just_order/models/item_model.dart';
 import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/repository/cart_provider.dart';
-import 'package:just_order/shared/function/functions.dart';
 import 'package:just_order/core/theme/colors.dart';
 import 'package:just_order/shared/widget/custom_check_box_button_widget.dart';
 import 'package:just_order/shared/widget/custom_radio_button_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:just_order/core/storage/storage_service.dart';
+
 
 class MealDetailsScreen extends StatefulWidget {
   final Item item;
@@ -98,12 +97,8 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
       size: selectedSize != null ? {selectedSize!: price} : null,
     );
     cartProvider.addItem(cartItem);
-    if (activeRestaurant != null) {
-      await prefs.setString(
-        AppLocalizations.of(context)!.restaurant_name,
-        jsonEncode(activeRestaurant.toJson()),
-      );
-    }
+    // NOTE: We no longer persist the restaurant to SharedPreferences here.
+    // The restaurant is passed directly as a route argument to MyCartScreen.
     // ignore: use_build_context_synchronously
     Navigator.pop(context);
   }
@@ -527,7 +522,14 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
             smallSize: 12,
             child: FloatingActionButton(
               onPressed: () {
-                navigateTo(context, 'MyCartScreenRoute');
+                final dest = restaurant;
+                if (dest != null) {
+                  Navigator.pushNamed(
+                    context,
+                    'MyCartScreenRoute',
+                    arguments: dest,
+                  );
+                }
               },
               backgroundColor: const Color(0xFFE02C45),
               shape: const CircleBorder(

@@ -42,7 +42,7 @@ class _RestaurantSliverAppBarState extends State<RestaurantSliverAppBar> {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      expandedHeight: 360,
+      expandedHeight: 405,
       pinned: true,
       backgroundColor: _isLight ? Colors.white : Colors.black,
       leading: _BackButton(isLight: _isLight),
@@ -137,7 +137,7 @@ class _FavoriteButton extends StatelessWidget {
         height: 34,
         clipBehavior: Clip.antiAlias,
         decoration: ShapeDecoration(
-          color: const Color(0xFFF4F4F4),
+          color: isLight ? const Color(0xFFF4F4F4) : Colors.white24,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         ),
         child: IconButton(
@@ -171,7 +171,7 @@ class _CollapsedTitle extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 25,
-          backgroundColor: Colors.white,
+          backgroundColor: isLight ? Colors.white : Colors.white24,
           child: CachedNetworkImage(
             imageUrl: restaurant.imageUrl!,
             fit: BoxFit.cover,
@@ -215,7 +215,7 @@ class _HeroImage extends StatelessWidget {
         color: isLight ? Colors.white : Colors.black,
         shape: Border(
           bottom: BorderSide(
-            color: isLight ? const Color(0xFFE5E5E5) : Colors.black,
+            color: isLight ? const Color(0xFFE5E5E5) : Colors.white12,
             width: 1,
           ),
         ),

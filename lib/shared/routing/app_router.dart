@@ -74,7 +74,11 @@ class AppRouter {
         }
         return _errorRoute();
       case 'MyCartScreenRoute':
-        return MyCartScreen.route();
+        if (settings.arguments is Restaurant) {
+          final restaurant = settings.arguments as Restaurant;
+          return MyCartScreen.route(restaurant);
+        }
+        return _errorRoute();
       case 'PayMethodScreenRoute':
         if (settings.arguments is Map<String, dynamic>) {
           final args = settings.arguments as Map<String, dynamic>;

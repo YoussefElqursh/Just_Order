@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:just_order/shared/function/functions.dart';
+import 'package:just_order/models/restaurant_model.dart';
 
-/// FAB that opens the cart, badged with the current item count.
+/// FAB that opens the cart for a specific restaurant, badged with the current item count.
 class CartFabButton extends StatelessWidget {
   final int itemCount;
+  final Restaurant restaurant;
 
-  const CartFabButton({super.key, required this.itemCount});
+  const CartFabButton({super.key, required this.itemCount, required this.restaurant});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,11 @@ class CartFabButton extends StatelessWidget {
       isLabelVisible: true,
       smallSize: 12,
       child: FloatingActionButton(
-        onPressed: () => navigateTo(context, 'MyCartScreenRoute'),
+        onPressed: () => Navigator.pushNamed(
+          context,
+          'MyCartScreenRoute',
+          arguments: restaurant,
+        ),
         backgroundColor: const Color(0xFFE02C45),
         shape: const CircleBorder(side: BorderSide(color: Color(0xFFE02C45))),
         child: Image.asset('assets/icons/cart.png', height: 20, width: 20),

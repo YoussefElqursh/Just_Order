@@ -187,7 +187,7 @@ class _RestaurantScaffold extends StatelessWidget {
                 SliverToBoxAdapter(
                   child: Column(
                     children: [
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 10),
                       RestaurantTabBar(filters: filters, state: themeState),
                     ],
                   ),
@@ -210,7 +210,7 @@ class _RestaurantScaffold extends StatelessWidget {
               ],
             ),
           ),
-          floatingActionButton: CartFabButton(itemCount: filteredCartItems.length),
+          floatingActionButton: CartFabButton(itemCount: filteredCartItems.length, restaurant: restaurant),
         ),
       ),
     );
