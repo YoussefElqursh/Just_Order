@@ -1,17 +1,23 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
-import 'package:just_order/models/item_model.dart';
 import 'package:just_order/core/theme/colors.dart';
+import 'package:just_order/models/item_model.dart';
+import 'package:just_order/models/restaurant_model.dart';
+import 'package:just_order/screens/home/meal_details_screen/meal_details_screen.dart';
 
 Widget buildMealWidget({
   required BuildContext context,
   required Item item,
   required ThemeState state,
+  required Restaurant restaurant,
 }) {
   return GestureDetector(
     onTap: () {
-      Navigator.pushNamed(context, 'MealDetailsScreenRoute', arguments: item);
+      Navigator.push(
+        context,
+        MealDetailsScreen.route(item, restaurant),
+      );
     },
     child: Row(
       children: [

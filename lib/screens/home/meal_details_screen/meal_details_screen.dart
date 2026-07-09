@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,15 +18,16 @@ import 'package:just_order/core/storage/storage_service.dart';
 
 class MealDetailsScreen extends StatefulWidget {
   final Item item;
+  final Restaurant? restaurant;
 
-  const MealDetailsScreen({super.key, required this.item});
+  const MealDetailsScreen({super.key, required this.item, this.restaurant});
 
   static const String routeName = 'MealDetailsScreenRoute';
 
-  static Route route(Item item) {
+  static Route route(Item item, [Restaurant? restaurant]) {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
-      builder: (context) => MealDetailsScreen(item: item),
+      builder: (context) => MealDetailsScreen(item: item, restaurant: restaurant),
     );
   }
 
@@ -44,6 +46,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
   @override
   void initState() {
     super.initState();
+    restaurant = widget.restaurant;
     price = widget.item.price;
     if (widget.item.sizes != null && widget.item.sizes!.isNotEmpty) {
       selectedSize = widget.item.sizes!.keys.first;
@@ -73,21 +76,21 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
     }
   }
 
-  void _addToCart() async {
+  Future<void> _addToCart() async {
     final prefs = StorageService.instance;
-    final restaurantString =
-        // ignore: use_build_context_synchronously
-        prefs.getString(AppLocalizations.of(context)!.restaurant_name);
-    Restaurant? restaurant;
-    if (restaurantString != null) {
-      setState(() {
-        restaurant = Restaurant.fromJson(restaurantString);
-      });
+    Restaurant? activeRestaurant = restaurant;
+    if (activeRestaurant == null) {
+      final restaurantString =
+          // ignore: use_build_context_synchronously
+          prefs.getString(AppLocalizations.of(context)!.restaurant_name);
+      if (restaurantString != null) {
+        activeRestaurant = Restaurant.fromJson(restaurantString);
+      }
     }
     // ignore: use_build_context_synchronously
     final cartProvider = Provider.of<CartProvider>(context, listen: false);
     final cartItem = CartItem(
-      cartItemId: '${UniqueKey().toString()}_${restaurant?.restaurantId}',
+      cartItemId: '${UniqueKey().toString()}_${activeRestaurant?.restaurantId}',
       item: widget.item,
       quantity: counter,
       price: price,
@@ -95,6 +98,12 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
       size: selectedSize != null ? {selectedSize!: price} : null,
     );
     cartProvider.addItem(cartItem);
+    if (activeRestaurant != null) {
+      await prefs.setString(
+        AppLocalizations.of(context)!.restaurant_name,
+        jsonEncode(activeRestaurant.toJson()),
+      );
+    }
     // ignore: use_build_context_synchronously
     Navigator.pop(context);
   }
@@ -725,3 +734,4 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
     );
   }
 }
+

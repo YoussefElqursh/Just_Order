@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/models/item_model.dart';
+import 'package:just_order/models/restaurant_model.dart';
 import 'package:just_order/screens/home/restaurant_screen/widgets/meal_widget.dart';
 import 'package:just_order/shared/widget/shimmer_widget.dart';
 
@@ -9,12 +10,14 @@ class FilterWidget extends StatefulWidget {
   final List<Item> items;
   final String filters;
   final ThemeState state;
+  final Restaurant restaurant;
 
   const FilterWidget({
     required this.items,
     super.key,
     required this.filters,
     required this.state,
+    required this.restaurant,
   });
 
   @override
@@ -55,6 +58,7 @@ class FilterWidgetState extends State<FilterWidget> {
                       context: context,
                       item: widget.items[index],
                       state: widget.state,
+                      restaurant: widget.restaurant,
                     ),
                     separatorBuilder: (context, index) => const Padding(
                       padding: EdgeInsets.symmetric(vertical: 10.0),
@@ -119,3 +123,4 @@ class FilterWidgetShimmer extends StatelessWidget {
     );
   }
 }
+

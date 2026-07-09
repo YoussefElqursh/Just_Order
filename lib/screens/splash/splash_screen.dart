@@ -11,7 +11,6 @@ import 'package:just_order/blocs/theming/theming_state.dart';
 import 'package:just_order/layouts/main_layout.dart';
 import 'package:just_order/models/user_model.dart';
 import 'package:just_order/screens/entry/app_entry_screen.dart';
-import 'package:just_order/screens/login/login_screen.dart';
 import 'package:just_order/shared/function/functions.dart';
 import 'package:just_order/shared/function/connectivity_plus.dart';
 import 'package:package_info_plus/package_info_plus.dart';

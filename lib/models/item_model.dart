@@ -8,6 +8,7 @@ class Item {
   String description;
   String type;
   String category;
+  String? restaurantId;
   Map<String, double>? sizes;
   Map<String, double>? extras;
 
@@ -23,6 +24,7 @@ class Item {
     required this.category,
     this.sizes,
     this.extras,
+    this.restaurantId,
   });
 
   static Item fromMap(Map<String, dynamic> item) {
@@ -36,6 +38,7 @@ class Item {
       description: item['description'],
       type: item['type'],
       category: item['category'],
+      restaurantId: item['restaurantId'] as String?,
       sizes: item['sizes'] != null
           ? (item['sizes'] as Map<String, dynamic>).map(
               (key, value) => MapEntry(
@@ -66,8 +69,10 @@ class Item {
       'description': description,
       'type': type,
       'category': category,
+      'restaurantId': restaurantId,
       'sizes': sizes,
       'extras': extras,
     };
   }
 }
+

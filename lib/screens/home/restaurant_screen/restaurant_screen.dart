@@ -204,6 +204,7 @@ class _RestaurantScaffold extends StatelessWidget {
                       items: detailState.itemsFor(category),
                       filters: category,
                       state: themeState,
+                      restaurant: restaurant,
                     ),
                   ),
               ],
