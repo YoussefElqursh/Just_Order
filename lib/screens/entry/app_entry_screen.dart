@@ -164,7 +164,7 @@ class _AppEntryScreenState extends State<AppEntryScreen> {
                 }
               },
               child: Scaffold(
-                backgroundColor: Colors.white,
+                backgroundColor: isDark ? const Color(0xFF121212) : Colors.white,
                 body: SafeArea(
                   child: Padding(
                     padding: const EdgeInsets.all(20),

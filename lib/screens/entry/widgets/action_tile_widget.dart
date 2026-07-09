@@ -17,8 +17,9 @@ class ActionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     return Material(
-      color: Colors.white,
+      color: isDark ? const Color(0xFF1B1B1B) : Colors.white,
       borderRadius: BorderRadius.circular(18),
       child: ListTile(
         shape: RoundedRectangleBorder(
