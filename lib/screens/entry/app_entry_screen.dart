@@ -122,19 +122,41 @@ class _AppEntryScreenState extends State<AppEntryScreen> {
   }
 
   Future<bool> _onWillPop() async {
-    final shouldExit = await showDialog<bool>(
+    final shouldExit = await showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Exit app'),
-        content: const Text('Do you want to exit the app?'),
+        title: const Text('Exit App'),
+        content: const Text('Are you sure you want to exit the app?'),
+        backgroundColor: Colors.white,
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel'),
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text(
+              'Cancel',
+              style: TextStyle(
+                color: Colors.black,
+              ),
+            ),
           ),
           TextButton(
-            onPressed: () => Navigator.pop(context, true),
-            child: const Text('Exit'),
+            onPressed: () => Navigator.of(context).pop(true),
+            style: ButtonStyle(
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              backgroundColor: MaterialStateProperty.all<Color>(
+                const Color(0xFFE02C45),
+              ),
+              shape: WidgetStatePropertyAll(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+            ),
+            child: const Text(
+              'Exit',
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
           ),
         ],
       ),
