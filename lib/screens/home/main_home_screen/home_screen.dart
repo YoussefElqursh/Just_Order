@@ -70,9 +70,12 @@ class _HomeScreenState extends State<HomeScreen>
   Future<void> _initializeData() async {
     final prefs = StorageService.instance;
     final storedUser = prefs.getString('user');
-    final storedTableCode = prefs.getString('code') ?? widget.tableCode ?? 'Unknown';
+    final storedTableCode =
+        prefs.getString('code') ?? widget.tableCode ?? 'Unknown';
 
-    user = (storedUser != null ? User.fromJson(jsonDecode(storedUser)) : User.empty())!;
+    user = (storedUser != null
+        ? User.fromJson(jsonDecode(storedUser))
+        : User.empty())!;
     tableCode = storedTableCode;
 
     final userRepository = UserRepository();
@@ -121,9 +124,7 @@ class _HomeScreenState extends State<HomeScreen>
                 return buildShimmerPlaceholder();
               }
               if (snapshot.hasError) {
-                return Center(
-                  child: Text('Error: ${snapshot.error}'),
-                );
+                return Center(child: Text('Error: ${snapshot.error}'));
               }
               return RefreshIndicator(
                 color: AppColor.primaryColor,
@@ -155,8 +156,10 @@ class _HomeScreenState extends State<HomeScreen>
                     : const Color(0x5FE02C45),
                 borderRadius: BorderRadius.circular(6),
               ),
-              child: const Icon(Icons.location_on_outlined,
-                  color: Color(0xFFE02C45)),
+              child: const Icon(
+                Icons.location_on_outlined,
+                color: Color(0xFFE02C45),
+              ),
             ),
             const SizedBox(width: 8),
             GestureDetector(
@@ -215,7 +218,8 @@ class _HomeScreenState extends State<HomeScreen>
             physics: const BouncingScrollPhysics(),
             itemCount: categories.length,
             separatorBuilder: (_, _) => const SizedBox(width: 10),
-            itemBuilder: (context, index) => buildCategoriesWidget(categories[index]!, state, context),
+            itemBuilder: (context, index) =>
+                buildCategoriesWidget(categories[index]!, state, context),
           ),
         ),
         const SizedBox(height: 25),
@@ -244,30 +248,78 @@ class _HomeScreenState extends State<HomeScreen>
         ),
         const SizedBox(height: 25),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Text(
-            AppLocalizations.of(context)!.all_restaurants,
-            style: TextStyle(
-              color: isLight ? Colors.black : Colors.white,
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ),
-        const SizedBox(height: 12),
-        SizedBox(
-          height: 31,
-          child: ListView.separated(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            scrollDirection: Axis.horizontal,
-            physics: const BouncingScrollPhysics(),
-            itemCount: filters.length,
-            separatorBuilder: (_, _) => const SizedBox(width: 10),
-            itemBuilder: (context, index) => buildHomeFilterWidget(
-              filters[index],
-              index,
-              onPressed: () {},
-            ),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                AppLocalizations.of(context)!.all_restaurants,
+                style: TextStyle(
+                  color: isLight ? Colors.black : Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              InkWell(
+                onTap: () => showFilterBottomSheet(context, state),
+                borderRadius: BorderRadius.circular(100),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
+                  decoration: BoxDecoration(
+                    color: state.themeMode == ThemeMode.light
+                        ? AppColor.primaryColor.withAlpha(20)
+                        : AppColor.primaryColor.withAlpha(40),
+                    borderRadius: BorderRadius.circular(100),
+                    border: Border.all(
+                      color: AppColor.primaryColor.withAlpha(40),
+                      width: 1,
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(
+                        Icons.tune_rounded,
+                        color: AppColor.primaryColor,
+                        size: 16,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Filters',
+                        style: TextStyle(
+                          color: state.themeMode == ThemeMode.light
+                              ? AppColor.primaryColor
+                              : Colors.white,
+                          fontSize: 13,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(width: 6),
+                      // Optional Badge: Appears if filters are active (e.g., hardcoded to '3' items here as placeholder)
+                      Container(
+                        padding: const EdgeInsets.all(5),
+                        decoration: const BoxDecoration(
+                          color: AppColor.primaryColor,
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Text(
+                          '3',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
         const SizedBox(height: 12),
@@ -294,17 +346,17 @@ class _HomeScreenState extends State<HomeScreen>
           items: adsImageList
               .map(
                 (e) => Container(
-              width: width,
-              height: 100,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                image: DecorationImage(
-                  image: AssetImage(e),
-                  fit: BoxFit.cover,
+                  width: width,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    image: DecorationImage(
+                      image: AssetImage(e),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          )
+              )
               .toList(),
           options: CarouselOptions(
             autoPlay: true,
@@ -322,7 +374,7 @@ class _HomeScreenState extends State<HomeScreen>
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(
                 adsImageList.length,
-                    (i) => Container(
+                (i) => Container(
                   margin: const EdgeInsets.all(5),
                   height: 8,
                   width: 8,
@@ -341,18 +393,18 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
 
-  Widget _buildSectionHeader(BuildContext context,
-      {required String title, required VoidCallback onViewAll}) {
+  Widget _buildSectionHeader(
+    BuildContext context, {
+    required String title,
+    required VoidCallback onViewAll,
+  }) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         children: [
           Text(
             title,
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-            ),
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
           ),
           const Spacer(),
           TextButton(
