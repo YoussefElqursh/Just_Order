@@ -2,6 +2,9 @@
 // ignore_for_file: dangling_library_doc_comments, implementation_imports
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lottie/lottie.dart';
+import 'package:lottie/src/lottie_builder.dart';
+import 'package:lottie/src/composition.dart';
 
 class Assets {
   Assets._();
@@ -16,38 +19,29 @@ class $AssetsImagesGen {
   const $AssetsImagesGen();
 
   final AssetGenImage appIconPng = const AssetGenImage(
-    'assets/images/AppIcon.png',
-  );
+      'assets/images/AppIcon.png');
   final SvgGenImage mastercard = const SvgGenImage(
-    'assets/images/Mastercard.svg',
-  );
+      'assets/images/Mastercard.svg');
   final SvgGenImage meeza = const SvgGenImage('assets/images/Meeza.svg');
   final AssetGenImage qr = const AssetGenImage('assets/images/Qr.png');
   final SvgGenImage visa = const SvgGenImage('assets/images/Visa.svg');
   final AssetGenImage appIconPng1 = const AssetGenImage(
-    'assets/images/app_icon.png',
-  );
+      'assets/images/app_icon.png');
   final SvgGenImage backgroundLogin = const SvgGenImage(
-    'assets/images/background_login.svg',
-  );
+      'assets/images/background_login.svg');
   final AssetGenImage basicAdv = const AssetGenImage(
-    'assets/images/basicAdv.jpg',
-  );
+      'assets/images/basicAdv.jpg');
   final AssetGenImage blackAdv = const AssetGenImage(
-    'assets/images/blackAdv.jpg',
-  );
+      'assets/images/blackAdv.jpg');
   final SvgGenImage cash = const SvgGenImage('assets/images/cash.svg');
   final SvgGenImage credit = const SvgGenImage('assets/images/credit.svg');
   final SvgGenImage google = const SvgGenImage('assets/images/google.svg');
   final AssetGenImage launcherIcon = const AssetGenImage(
-    'assets/images/launcher_icon.png',
-  );
+      'assets/images/launcher_icon.png');
   final SvgGenImage loginLogo = const SvgGenImage(
-    'assets/images/login_logo.svg',
-  );
+      'assets/images/login_logo.svg');
   final SvgGenImage loginLogoBlack = const SvgGenImage(
-    'assets/images/login_logo_black.svg',
-  );
+      'assets/images/login_logo_black.svg');
   final SvgGenImage logo = const SvgGenImage('assets/images/logo.svg');
   final AssetGenImage order = const AssetGenImage('assets/images/order.png');
 }
@@ -56,45 +50,34 @@ class $AssetsIconsGen {
   const $AssetsIconsGen();
 
   final AssetGenImage appVersion = const AssetGenImage(
-    'assets/icons/app_version.png',
-  );
+      'assets/icons/app_version.png');
   final AssetGenImage cart = const AssetGenImage('assets/icons/cart.png');
   final AssetGenImage deliveryTaxes = const AssetGenImage(
-    'assets/icons/delivery_taxes.png',
-  );
+      'assets/icons/delivery_taxes.png');
   final AssetGenImage helpSupport = const AssetGenImage(
-    'assets/icons/help_support.png',
-  );
+      'assets/icons/help_support.png');
   final AssetGenImage home = const AssetGenImage('assets/icons/home.png');
   final AssetGenImage info = const AssetGenImage('assets/icons/info.png');
   final AssetGenImage logout = const AssetGenImage('assets/icons/logout.png');
   final AssetGenImage notificationBellNew = const AssetGenImage(
-    'assets/icons/notification-bell-new.png',
-  );
+      'assets/icons/notification-bell-new.png');
   final AssetGenImage order = const AssetGenImage('assets/icons/order.png');
   final AssetGenImage privacyPolicy = const AssetGenImage(
-    'assets/icons/privacy_policy.png',
-  );
+      'assets/icons/privacy_policy.png');
   final AssetGenImage search = const AssetGenImage('assets/icons/search.png');
   final AssetGenImage settings = const AssetGenImage(
-    'assets/icons/settings.png',
-  );
+      'assets/icons/settings.png');
   final AssetGenImage termsConditions = const AssetGenImage(
-    'assets/icons/terms_conditions.png',
-  );
+      'assets/icons/terms_conditions.png');
   final AssetGenImage timerPng = const AssetGenImage('assets/icons/timer.png');
   final AssetGenImage timerPng1 = const AssetGenImage(
-    'assets/icons/timer_.png',
-  );
+      'assets/icons/timer_.png');
   final AssetGenImage unselectedHome = const AssetGenImage(
-    'assets/icons/unselected_home.png',
-  );
+      'assets/icons/unselected_home.png');
   final AssetGenImage unselectedOrder = const AssetGenImage(
-    'assets/icons/unselected_order.png',
-  );
+      'assets/icons/unselected_order.png');
   final AssetGenImage unselectedSettings = const AssetGenImage(
-    'assets/icons/unselected_settings.png',
-  );
+      'assets/icons/unselected_settings.png');
 }
 
 class $AssetsFontsGen {
@@ -114,6 +97,7 @@ class AssetGenImage {
   const AssetGenImage(this._assetName, {this.size, this.flavors = const {}});
 
   final String _assetName;
+
 
   final Size? size;
   final Set<String> flavors;
@@ -171,8 +155,15 @@ class AssetGenImage {
     );
   }
 
-  ImageProvider provider({AssetBundle? bundle, String? package}) {
-    return AssetImage(_assetName, bundle: bundle, package: package);
+  ImageProvider provider({
+    AssetBundle? bundle,
+    String? package,
+  }) {
+    return AssetImage(
+      _assetName,
+      bundle: bundle,
+      package: package,
+    );
   }
 
   Widget custom({
@@ -250,3 +241,4 @@ class SvgGenImage {
 
   String get keyName => _assetName;
 }
+
