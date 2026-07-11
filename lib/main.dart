@@ -48,7 +48,6 @@ Future<void> _initFirebase() async {
     await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   } on FirebaseException catch (e) {
     if (e.code != 'duplicate-app') rethrow;
-    // Already initialized natively — safe to continue.
     debugPrint('Firebase already initialized natively, skipping.');
   }
 }
